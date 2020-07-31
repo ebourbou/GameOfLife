@@ -1,0 +1,112 @@
+@startuml
+
+package User{
+
+
+    class Player {
+        name
+    }
+
+    class Activity {}
+    class User extends Player {
+        creationDate
+        lastLogin
+    }
+    enum Role {
+        ADMIN
+        DESIGNER
+    }
+    User o-- "0..2" Role : hasRole >
+            Player --> "1..*" Activity
+
+
+
+}
+
+package Security {}
+
+package Infrastructure {
+    class Article {
+        publishFrom
+        publishTill
+    }
+    interface Rule {
+        description
+        nextState(Cell)
+    }
+    interface Structure{
+        name
+        description
+        exampleGame
+        shape
+    }
+    enum StructureType {
+        EXPLODER
+        IMPLODER
+        OSCILLATOR
+        MOVER
+        STATIC
+    }
+
+    Structure *-- "1..*" StructureType : isOf
+}
+
+
+package Game {
+    class Game {
+        timestamp
+        currentGeneration
+    }
+    class GameBoard {
+    }
+    class Cell {
+        lastStateChange
+    }
+    enum State {
+      ALIVE
+      DEAD
+    }
+    class Position {
+        row
+        column
+        isAtBorder
+    }
+    enum Visibility {
+      PUBLIC
+      PRIVATE
+      FEATURED
+    }
+    class Snapshot {
+    }
+    class Scenario {
+        description
+        generations
+        rows
+        columns
+    }
+
+    GameBoard ..> Structure : uses
+    GameBoard *-- "9..*" Cell  : contains
+    Game o-- "1" Scenario
+    Game o-- "1" GameBoard : consists of
+    Scenario o-- "1..*" Rule : ruleSet
+    Scenario o-- "1" Visibility : has
+    Cell --> Position : locatedAt
+    Cell --> State : is
+    Cell --> "*" Cell : neighbours
+
+    Game *-- "0..1"Snapshot : atStart
+    Game *-- "0..1"Snapshot : atEnd
+    Player "1" *-- "0..*" Game
+}
+
+package Statistics {
+    GameScore --* Game
+    GameGraph --* Game
+    Player *-- PlayerScore
+    class HighScore
+    class GameGraph
+
+}
+
+@enduml
