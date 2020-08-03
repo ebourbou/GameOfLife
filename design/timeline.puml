@@ -1,0 +1,39 @@
+@startgantt
+projectscale weekly
+
+-- Milestones --
+Project starts 2020-08-01
+[Projektidee] starts 2020-08-01 and ends 2020-08-26
+[Abgabe Projektidee] happens at 2020-08-27
+then [Technischer Prototyp] starts after [Projektidee]'s end and ends 2020-10-27
+[Abgabe Technischer Prototyp] happens at 2020-10-28
+then [Umsetzung] starts after [Technischer Prototyp]'s end and ends 2021-01-12
+[Offizieller Kick-Off] happens at 2020-10-21
+[Präsentation] happens at 2021-01-13
+then [ShrinkWrap] starts after [Umsetzung]'s end and ends 2021-01-16
+[Abgabe] happens at 2021-01-17
+
+-- Sprints --
+[Prototyp 1] starts after [Projektidee]'s end and ends 2020-09-29
+then [Prototyp 2] starts after [Prototyp 1]'s end and ends 2020-10-27
+[Umsetzung 1] starts after [Prototyp 2]'s end and ends 2020-11-25
+[Umsetzung 2] starts after [Umsetzung 1]'s end and ends 2020-12-23
+[Feature Complete] happens at 2020-12-24
+[Bugfixin & Redesign & Refactoring] starts after [Umsetzung 2]'s end and ends 2021-01-12
+
+-- Vorlesungen --
+[Angular Praxis 1] happens at 2020-08-20
+[HTML&CSS 2 Tools/Frameworks] happens at 2020-09-02
+[Angular Praxis 2] happens at 2020-09-09
+[Angular Praxis 3 / ProgressiveWebApps] happens at 2020-09-16
+[Serverless Data-Management] happens at 2020-09-23
+[Komplexe Sites & Modularisierung] happens at 2020-09-30
+[Herbstferien] starts 2020-10-01 and ends 2020-10-19
+[HTML&CSS 3 Praxis] happens at 2020-10-28
+[Site Optimization] happens at 2020-11-18
+[Web Security] happens at 2020-11-25
+[Accessibility] happens at 2020-12-02
+[Usability Testing] happens at 2020-12-09
+[Web Components / Stencil] happens at 2020-12-16
+
+@endgantt
