@@ -1,0 +1,93 @@
+@startuml
+left to right direction
+
+actor Player
+actor User
+actor Admin
+actor Designer
+Admin --|> User
+User --|> Player
+Designer --|> User
+
+package UserMgmt {
+    (User und Profil \n erfassen) as UserErfassen
+    (Profil bearbeiten) as ProfilBearbeiten
+    (User löschen) as UserLoeschen
+    (Aktivität anzeigen) as AktivitaetenLesen
+    (Aktivität protokollieren) as AktivitaetProtokollieren
+    (Profil anzeigen) as ProfilAnzeigen
+
+    User --> ProfilBearbeiten
+    User --> UserErfassen
+    Admin --> UserLoeschen
+    Admin --> AktivitaetenLesen
+    Admin --> ProfilAnzeigen
+    User --> ProfilAnzeigen
+    UserLoeschen .> AktivitaetProtokollieren
+    ProfilBearbeiten .> AktivitaetProtokollieren
+
+    UserErfassen .> ProfilBearbeiten
+}
+
+package Infrastrucure {
+    (Struktur erfassen/bearbeiten) as StrukturErfassen
+
+    (Struktur anzeigen) as StrukturAnzeigen
+    (Rule erfassen/bearbeiten) as RuleErfassen
+    (Rule anzeigen) as RuleAnzeigen
+    (Artikel erfassen/bearbeiten) as ArtikelErfassen
+    (Artikel anzeigen) as ArtikelAnzeigen
+
+    Designer --> StrukturErfassen
+    Designer --> StrukturAnzeigen
+    Designer --> RuleAnzeigen
+    Designer --> RuleErfassen
+
+    Admin --> ArtikelErfassen
+    Player --> ArtikelAnzeigen
+}
+
+package Statistics {
+    (HighScore anzeigen) as HighScore
+    (PlayerScore anzeigen) as PlayerScore
+    (GameScore anzeigen) as GameScore
+    (GameGraph anzeigen) as GameGraph
+
+    Player --> HighScore
+    User --> PlayerScore
+
+
+}
+
+package Game {
+    (Spiel erfassen) as SpielErfassen
+    (Spiel publizieren) as SpielPublizieren
+    (Spiel spielen) as SpielSpielen
+    (Gespeichertes \n Spiel anzeigen) as SpielAnzeigen
+    (Spiel speichern) as SpielSpeichern
+    note right of SpielSpeichern : nicht für Player, \nnur für User
+
+    (Spiel kopieren) as SpielKopieren
+    note right of SpielKopieren : Falls gespeichertes \nSpiel als Vorlage
+
+    SpielErfassen .> RuleAnzeigen
+    SpielErfassen .> StrukturAnzeigen
+    SpielErfassen .> SpielKopieren
+    SpielSpielen .> SpielErfassen
+    SpielSpielen .> SpielSpeichern
+    SpielSpeichern .> SpielPublizieren
+    note right of SpielPublizieren : Mit Visibility
+
+    SpielKopieren .> SpielAnzeigen
+
+    Player --> SpielSpielen
+    User --> SpielAnzeigen
+    User --> SpielPublizieren
+    Player --> SpielAnzeigen
+
+    SpielAnzeigen .> GameScore
+    SpielSpielen .> GameGraph
+    SpielAnzeigen .> GameGraph
+}
+
+@enduml
