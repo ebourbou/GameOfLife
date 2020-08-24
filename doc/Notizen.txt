@@ -1,0 +1,18 @@
+Technischer Prototyp:
+Landing-Page
+Simpelste Spielengine mit fixen Parametern
+Möglichkeit zum Einloggen
+Artikel vom Server schreiben und lesen
+
+
+
+
+
+Optional:
+Toroid - 3d Geometrien
+Kleine Modulare Gameengines in Kacheln auf der Landingpage
+Social-Media - Sharing
+LogIn mit Google/Facebook
+Als Designer kann ich Artikel und andere Inhalte erfassen, publizieren und löschen
+Als Player erhalte ich Echtzeitstatistiken (GameGraph) während der Laufzeit meines Spiels.
+Drag und Drop
