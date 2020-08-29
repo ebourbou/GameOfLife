@@ -56,8 +56,12 @@ package Game {
     class Game {
         timestamp
         currentGeneration
+        description
+        generations
     }
     class GameBoard {
+        rows
+        columns
     }
     class Cell {
         lastStateChange
@@ -78,19 +82,12 @@ package Game {
     }
     class Snapshot {
     }
-    class Scenario {
-        description
-        generations
-        rows
-        columns
-    }
 
     GameBoard ..> Structure : uses
     GameBoard *-- "9..*" Cell  : contains
-    Game o-- "1" Scenario
-    Game o-- "1" GameBoard : consists of
-    Scenario o-- "1..*" Rule : ruleSet
-    Scenario o-- "1" Visibility : has
+    Game *-- "1" GameBoard : consists of
+    Game o-- "1..*" Rule : ruleSet
+    Game o-- "1" Visibility : has
     Cell --> Position : locatedAt
     Cell --> State : is
     Cell --> "*" Cell : neighbours
