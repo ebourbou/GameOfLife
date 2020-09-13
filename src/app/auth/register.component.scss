@@ -1,0 +1,17 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card {
+  max-width: 400px;
+}
+
+.form-container > * {
+  width: 400px;
+}
+
+.glider-animated {
+  background-image: url('../../assets/img/icon/gliderAnimated.gif');
+  background-size: cover;
+}

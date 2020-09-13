@@ -1,0 +1,41 @@
+﻿<mat-card class="loginCard" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <mat-card-header>
+    <div mat-card-avatar class="glider-animated"></div>
+     <mat-card-title><mat-icon aria-hidden="false" aria-label=""></mat-icon>Game of life.</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+            <mat-error *ngIf="loginInvalid">
+              The username and password were not recognised
+            </mat-error>
+          <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Benutzer</mat-label>
+            <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+          </mat-form-field>
+            </div>
+          <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Passwort</mat-label>
+            <input matInput type="text"  formControlName="password" placeholder="Passwort" required>
+            <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginFormControl.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          </div>
+          <div class="form-group">
+                <button type="submit" mat-raised-button color="primary"  class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Anmelden
+                </button>
+
+                <a routerLink="../register" class="btn btn-link">Kein Login? Registrieren..</a>
+            </div>
+
+        </form>
+
+    </mat-card-content>
+  </mat-card>

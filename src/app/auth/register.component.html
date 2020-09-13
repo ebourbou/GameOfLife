@@ -1,0 +1,38 @@
+﻿<mat-card class="registerCard" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <mat-card-header>
+    <div mat-card-avatar class="glider-animated"></div>
+    <mat-card-title><mat-icon aria-hidden="false" aria-label=""></mat-icon>Benutzer Registrierung</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Benutzer</mat-label>
+              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>eMail</mat-label>
+              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+              <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+                <button type="submit" [disabled]="loading" mat-raised-button color="primary" >
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Registrieren
+                </button>
+                <a routerLink="../login" class="btn btn-link">Abbrechen</a>
+            </div>
+        </form>
+  </mat-card-content>
+</mat-card>
