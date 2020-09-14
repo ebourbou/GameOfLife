@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {AlertService, AuthService} from '../_services';
+import {Role} from '../_models/role';
+import {enumSelector} from '../_helpers/util';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -11,14 +13,14 @@ export class AddEditComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
-
+    roles = enumSelector(Role);
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService,
         private alertService: AlertService
-    ) {}
+    ) {   }
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
