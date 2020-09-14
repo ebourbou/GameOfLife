@@ -1,5 +1,5 @@
-﻿<h1 *ngIf="isAddMode">Add User</h1>
-<h1 *ngIf="!isAddMode">Edit User</h1>
+﻿<h1 *ngIf="isAddMode">Benutezr hinzufügen</h1>
+<h1 *ngIf="!isAddMode">Benutzer editieren</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
         <div class="form-group col">
@@ -11,14 +11,17 @@
         </div>
       <div class="form-group col">
         <label for="role">Rolle</label>
-        <select>
+        <select formControlName="role" class="form-control">
           <option *ngFor="let item of roles" [value]="item.key">{{item.value}}</option>
         </select>
+        <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+          <div *ngIf="f.role.errors.required">Rolle wird benötigt</div>
+        </div>
       </div>
         <div class="form-group col">
             <label for="password">
                 Passwort
-                <em *ngIf="!isAddMode">(Leer lassen um nicht zu ändern)</em>
+                <em *ngIf="!isAddMode">(Leer für nicht ändern)</em>
             </label>
             <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
