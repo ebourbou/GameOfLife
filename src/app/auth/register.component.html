@@ -14,13 +14,13 @@
           <div>
             <mat-form-field appearance="fill">
               <mat-label>eMail</mat-label>
-              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+              <input matInput type="text"  formControlName="email" placeholder="eMail">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field appearance="fill">
-              <mat-label>Password</mat-label>
-              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+              <mat-label>Passwort</mat-label>
+              <input matInput type="text"  formControlName="password" placeholder="Passwort">
               <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
