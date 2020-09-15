@@ -1,7 +1,8 @@
 ﻿<mat-card class="loginCard" fxLayout="column" fxLayoutAlign="space-around stretch">
   <mat-card-header>
     <div mat-card-avatar class="glider-animated"></div>
-     <mat-card-title><mat-icon aria-hidden="false" aria-label=""></mat-icon>Game of life.</mat-card-title>
+     <mat-card-title>Game of life</mat-card-title>
+     <mat-card-subtitle>Login</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" >
@@ -17,12 +18,18 @@
           <div>
           <mat-form-field appearance="fill">
             <mat-label>Passwort</mat-label>
-            <input matInput type="password"  formControlName="password" placeholder="Passwort" required>
+            <input matInput type="password"  formControlName="password" placeholder="Passwort" >
             <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
             <mat-error *ngIf="loginFormControl.hasError('required')">
-              Password is <strong>required</strong>
+              Passwort ist erforderlich
+            </mat-error>
+            <mat-error *ngIf="loginFormControl.hasError('minlength')">
+              Passwort muss mindestens 8 Zeichen enthalten
+            </mat-error>
+            <mat-error *ngIf="loginFormControl.hasError('maxlength')">
+              Passwort darf maximal 20 Zeichen enthalten
             </mat-error>
           </mat-form-field>
           </div>
@@ -34,11 +41,6 @@
 
                 <a routerLink="../register" class="btn btn-link">Kein Login? Registrieren..</a>
             </div>
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div>
         </form>
 
     </mat-card-content>

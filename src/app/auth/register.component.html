@@ -1,7 +1,8 @@
 ﻿<mat-card class="registerCard" fxLayout="column" fxLayoutAlign="space-around stretch">
   <mat-card-header>
     <div mat-card-avatar class="glider-animated"></div>
-    <mat-card-title><mat-icon aria-hidden="false" aria-label=""></mat-icon>Benutzer Registrierung</mat-card-title>
+    <mat-card-title>Game Of Life</mat-card-title>
+    <mat-card-subtitle>Benutzer Registrierung</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -27,8 +28,9 @@
               <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
-              <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
             </mat-form-field>
+            <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
+
             <small id="passwordHelpBlock" class="form-text text-muted">
               Das Passwort muss 8-20 Zeichen lang sein, Buchstaben und Zahlen und darf keine Leerzeichen enthalten.
             </small>

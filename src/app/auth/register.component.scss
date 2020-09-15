@@ -7,9 +7,24 @@
   max-width: 400px;
 }
 
+.mat-card-title {
+  font-size: 40px;
+  padding-bottom: 10px;
+}
+
+.mat-card-subtitle {
+  font-size: 20px;
+}
+
 .form-container > * {
   width: 400px;
 }
+
+.mat-card-header{
+  margin-bottom: 15px;
+}
+.mat-form-field{ width: 100%; }
+
 
 .glider-animated {
   background-image: url('../../assets/img/icon/gliderAnimated.gif');
