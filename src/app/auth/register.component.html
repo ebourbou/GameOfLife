@@ -14,17 +14,24 @@
           <div>
             <mat-form-field appearance="fill">
               <mat-label>eMail</mat-label>
-              <input matInput type="text"  formControlName="email" placeholder="eMail">
+              <input matInput type="text"  formControlName="email" placeholder="eMail" autocomplete='email' [ngClass]="{'is-invalid':email.invalid && (email.dirty || email.touched)}">
+              <div class="invalid-feedback">
+                 Please provide a email.
+              </div>
             </mat-form-field>
           </div>
           <div>
             <mat-form-field appearance="fill">
               <mat-label>Passwort</mat-label>
-              <input matInput type="text"  formControlName="password" placeholder="Passwort">
+              <input matInput type="password" aria-describedby="passwordHelpBlock" formControlName="password" placeholder="Passwort">
               <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
+              <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
             </mat-form-field>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+              Das Passwort muss 8-20 Zeichen lang sein, Buchstaben und Zahlen und darf keine Leerzeichen enthalten.
+            </small>
           </div>
           <div class="form-group">
                 <button type="submit" [disabled]="loading" mat-raised-button color="primary" >

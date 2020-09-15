@@ -6,17 +6,19 @@ import { UsersRoutingModule } from './users-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
+import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        UsersRoutingModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    UsersRoutingModule,
+    PasswordStrengthMeterModule
+  ],
     declarations: [
         LayoutComponent,
         ListComponent,
         AddEditComponent
     ]
 })
-export class UsersModule { }
+export class UsersModule {}

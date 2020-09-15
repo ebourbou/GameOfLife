@@ -9,7 +9,7 @@ export class AlertService {
     private defaultId = 'default-alert';
 
     // enable subscribing to alerts observable
-    onAlert(id = this.defaultId): Observable<Alert> {
+    onAlert(id = this.defaultId) {
         return this.subject.asObservable().pipe(filter(x => x && x.id === id));
     }
 

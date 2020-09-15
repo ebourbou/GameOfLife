@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import {AlertService, AuthService} from '../_services';
 import {Role} from '../_models/role';
 import {enumSelector} from '../_helpers/util';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -19,7 +20,8 @@ export class AddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private snackBarService: MatSnackBar
     ) {   }
 
     ngOnInit() {
@@ -27,15 +29,15 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
 
         // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
+        const passwordValidators = [Validators.minLength(8)];
         if (this.isAddMode) {
             passwordValidators.push(Validators.required);
         }
 
         this.form = this.formBuilder.group({
             username: ['', Validators.required],
-            email: ['', Validators.required],
-            role: ['',Validators.required],
+            email: ['', [Validators.required, Validators.pattern('[^ @]*@[^ @]*')]],
+            role: ['', Validators.required],
             password: ['', passwordValidators]
         });
 
@@ -52,6 +54,10 @@ export class AddEditComponent implements OnInit {
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
+
+    get password() {
+      return this.form.get('password');
+    }
 
     onSubmit() {
         this.submitted = true;
@@ -77,8 +83,14 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-                    this.router.navigate(['.', { relativeTo: this.route }]);
+                    //this.alertService.success('Benutzer erfolh added successfully', { keepAfterRouteChange: true });
+                    this.router.navigate(['.', { relativeTo: this.route }]).then((navigated: boolean) => {
+                      if (navigated) {
+                        this.snackBarService.open('Benutzer ' + this.form.get('username').value + ' wurde angelegt.', 'Schliessen',  {
+                          duration: 2000,
+                        });
+                      }
+                    });
                 },
                 error => {
                     this.alertService.error(error);
@@ -87,16 +99,24 @@ export class AddEditComponent implements OnInit {
     }
 
     private updateUser() {
-        this.authService.update(this.id, this.form.value)
+      console.log('Update ' + this.form.get('role').value);
+      this.authService.update(this.id, this.form.value)
             .pipe(first())
             .subscribe(
                 data => {
                     this.alertService.success('Update successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['..', { relativeTo: this.route }]);
+                    this.router.navigate(['..', { relativeTo: this.route }]).then((navigated: boolean) => {
+                      if (navigated) {
+                        this.snackBarService.open('Benutzer ' + this.form.get('username').value + ' wurde gespeichert.', 'Schliessen',  {
+                          duration: 2000,
+                        });
+                      }
+                  });
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
-    }
+
+  }
 }

@@ -14,13 +14,13 @@ export class ListComponent implements OnInit {
             .subscribe(users => this.users = users);
     }
 
-    deleteUser(id: string) {
+    deleteUser(id: string): void {
         const user = this.users.find(x => x.id === id);
         user.isDeleting = true;
         this.authService.delete(id)
             .pipe(first())
             .subscribe(() => {
-                this.users = this.users.filter(x => x.id !== id)
+                this.users = this.users.filter(x => x.id !== id);
             });
     }
 }

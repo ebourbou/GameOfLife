@@ -12,19 +12,21 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FlexModule} from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
+import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    AccountRoutingModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    FlexModule,
-    MatButtonModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        AccountRoutingModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        FlexModule,
+        MatButtonModule,
+        PasswordStrengthMeterModule
+    ],
     declarations: [
         LayoutComponent,
         LoginComponent,

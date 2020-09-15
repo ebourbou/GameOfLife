@@ -21,12 +21,19 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            email: ['', Validators.required, Validators.email],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            email: ['', Validators.required,  Validators.pattern('[^ @]*@[^ @]*')],
+            username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+            password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
         });
     }
 
+  get password() {
+    return this.form.get('password');
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
@@ -48,7 +55,7 @@ export class RegisterComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+                    this.alertService.success('Registrierung erfolgreich', { keepAfterRouteChange: true });
                     this.router.navigate(['../login'], { relativeTo: this.route });
                 },
                 error => {
