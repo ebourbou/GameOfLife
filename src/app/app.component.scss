@@ -1,1 +1,25 @@
+.role {
+  color: darkgray;
+}
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav {
+  border: 0em;
+  margin: 0em;
+}
+.title {
+  color: black;
+  font-size: larger;
+}
+
+.user {
+  margin-left: 0.1em;
+}
+
+.role {
+  display:inline-block;
+  margin-left: 0.1em;
+}

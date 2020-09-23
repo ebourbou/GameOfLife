@@ -49,6 +49,10 @@ export class AuthService {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
+    getPage(pageIndex: number, pageSize: number) {
+        return this.http.get<User[]>(`${environment.apiUrl}/users&pageSize=${pageSize}&pageIndex=${pageIndex}&`);
+    }
+
     getById(id: string) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
@@ -79,4 +83,6 @@ export class AuthService {
                 return x;
             }));
     }
+
+
 }

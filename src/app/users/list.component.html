@@ -1,31 +1,39 @@
-﻿<h1>Users</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Benutzer Hinzufügen</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 30%">Benutzer</th>
-            <th style="width: 30%">eMail</th>
-            <th style="width: 30%">Rolle</th>
-            <th style="width: 10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{user.username}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.role}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
-                    <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!user.isDeleting">Löschen</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!users">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
-    </tbody>
-</table>
+﻿<h1>Benutzerverwaltung</h1>
+<div class="add-user">
+  <a routerLink="add" mat-raised-button>Benutzer Hinzufügen</a>
+</div>
+<mat-table [dataSource]="users" matSort matSortActive="seqNo" matSortDirection="asc" matSortDisableClear>
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Benutzer</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{user.username}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>eMail</mat-header-cell>
+    <mat-cell class="description-cell"
+              *matCellDef="let user">{{user.email}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="role">
+    <mat-header-cell *matHeaderCellDef>Rolle</mat-header-cell>
+    <mat-cell class="duration-cell"
+              *matCellDef="let user">{{user.role}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Aktionen</mat-header-cell>
+    <mat-cell *matCellDef="let user"> <a mat-stroked-button routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+      <button mat-stroked-button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
+        <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+        <span *ngIf="!user.isDeleting">Löschen</span>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<mat-paginator #paginator [length]="users?.length" [pageSize]="3"
+               [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+

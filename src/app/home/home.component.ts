@@ -9,5 +9,6 @@ export class HomeComponent {
 
     constructor(private accountService: AuthService) {
         this.user = this.accountService.userValue;
+        console.log(this.user);
     }
 }

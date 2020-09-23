@@ -4,16 +4,24 @@
 }
 
 .login-card {
-  max-width: 400px;
+  max-width: 200em;
+}
+
+.cancel-button {
+  margin-left: 2em;
+}
+
+.form-element{
+  padding-bottom: 0.7em;
 }
 
 .mat-card-title {
-  font-size: 40px;
-  padding-bottom: 10px;
+  font-size: 3em;
+  padding-bottom: 0.1em;
 }
 
 .mat-card-subtitle {
-  font-size: 20px;
+  font-size: 1.5em;
 }
 
 .form-container > * {
@@ -25,6 +33,9 @@
 }
 .mat-form-field{ width: 100%; }
 
+.form-group {
+  padding-top: 10px;
+}
 
 .glider-animated {
   background-image: url('../../assets/img/icon/gliderAnimated.gif');

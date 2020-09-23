@@ -5,29 +5,52 @@
     <mat-card-subtitle>Benutzer Registrierung</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div>
+        <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <div class="form-element">
             <mat-form-field appearance="fill">
               <mat-label>Benutzer</mat-label>
-              <input matInput type="text"  formControlName="username" placeholder="Benutzer">
+              <input matInput ngModel type="text" name="username" [(ngModel)]="user.username" placeholder="Benutzer"
+                     required  minlength="3" maxlength="20" #username="ngModel" [errorStateMatcher]="matcher">
+              <mat-hint align="end">{{user.username?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="username.dirty && form.invalid">
+                Benutzernamen ist erforderlich
+              </mat-error>
+              <mat-error *ngIf="username.hasError('minlength')">
+                Benutzernamen muss mindestens 3 Zeichen enthalten
+              </mat-error>
+              <mat-error *ngIf="username.hasError('maxlength')">
+                Benutzernamen darf maximal 20 Zeichen enthalten
+              </mat-error>
             </mat-form-field>
           </div>
-          <div>
+          <div class="form-element">
             <mat-form-field appearance="fill">
               <mat-label>eMail</mat-label>
-              <input matInput type="text"  formControlName="email" placeholder="eMail" autocomplete='email' [ngClass]="{'is-invalid':email.invalid && (email.dirty || email.touched)}">
-              <div class="invalid-feedback">
-                 Please provide a email.
-              </div>
+              <input matInput ngModel type="text" name="email" [(ngModel)]="user.email" placeholder="eMail"
+                     required #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+              <mat-error *ngIf="email.dirty && email.invalid">
+              Bitte eine gültige eMail Adresse eingeben
+            </mat-error>
             </mat-form-field>
           </div>
-          <div>
+          <div class="form-element">
             <mat-form-field appearance="fill">
               <mat-label>Passwort</mat-label>
-              <input matInput type="password" aria-describedby="passwordHelpBlock" formControlName="password" placeholder="Passwort">
-              <button mat-icon-button matSuffix class="mat-icon-button mat-button-base" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [(ngModel)]="user.password" placeholder="Passwort"
+                     required minlength="8" maxlength="20" [errorStateMatcher]="matcher" #password="ngModel">
+              <mat-hint align="end">{{user.password?.length || 0}}/20</mat-hint>
+              <button type="button" mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePwd">
+                <mat-icon>{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
+              <mat-error *ngIf="password.hasError('required')">
+                Passwort ist erforderlich
+              </mat-error>
+              <mat-error *ngIf="password.hasError('minlength')">
+                Passwort muss mindestens 8 Zeichen enthalten
+              </mat-error>
+              <mat-error *ngIf="password.hasError('maxlength')">
+                Passwort darf maximal 20 Zeichen enthalten
+              </mat-error>
             </mat-form-field>
             <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
 
@@ -36,11 +59,11 @@
             </small>
           </div>
           <div class="form-group">
-                <button type="submit" [disabled]="loading" mat-raised-button color="primary" >
+                <button mat-raised-button type="submit" [disabled]="!form.valid || loading" mat-raised-button color="primary" >
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Registrieren
                 </button>
-                <a routerLink="../login" class="btn btn-link">Abbrechen</a>
+                <a class="cancel-button" mat-raised-button routerLink="../login">Abbrechen</a>
             </div>
         </form>
   </mat-card-content>

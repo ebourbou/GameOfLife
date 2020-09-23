@@ -1,64 +1,56 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AuthService, AlertService } from '../_services';
+import { AuthService } from '../_services';
+import {User} from '../_models';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {FormControl, NgForm} from '@angular/forms';
+
+/*
+ TODO:  password confirm field
+ */
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.scss']  })
 export class LoginComponent implements OnInit {
-    form: FormGroup;
+    user = new User();
     public loginInvalid: boolean;
     loading = false;
-    hide = true;
+    hidePwd = true;
     submitted = false;
     returnUrl: string;
-    loginFormControl = new FormControl('', [
-      Validators.required
-    ]);
 
+    @ViewChild(NgForm) ngForm: NgForm;
 
     constructor(
-        private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService,
-        private alertService: AlertService
+        private snackBarService: MatSnackBar
     ) { }
 
     ngOnInit(): void {
-        this.form = this.formBuilder.group({
-           username: ['', [Validators.required]],
-           password: ['', [Validators.required, Validators.minLength(6)]]
-        });
-
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
-
     onSubmit(): void {
-
-      if (!(this.form.dirty && this.form.valid)) {
-        return;
-      }
       this.loginInvalid = false;
       this.submitted = true;
 
-        // reset alerts on submit
-      this.alertService.clear();
-
-      console.log('auth');
       this.loading = true;
-      this.authService.login(this.form.value.username, this.form.value.password)
+      this.authService.login(this.ngForm.value.username, this.ngForm.value.password)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                  this.router.navigate([this.returnUrl]).then((navigated: boolean) => {
+                    if (navigated) {
+                      this.snackBarService.open('Willkommen zurück ' + data.username, 'Schliessen', {
+                        duration: 2000
+                      });
+                    }
+                  });
                 },
                 error => {
-                    this.alertService.error(error);
                     this.loading = false;
                 });
     }

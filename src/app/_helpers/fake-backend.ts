@@ -70,6 +70,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getUsers() {
             if (!isLoggedIn()) { return unauthorized(); }
+            // const size = pageSizeFromUrl();
+            // const page = pageIndexFromUrl();
+           // return ok(users.slice(page * size, page * size + size));
             return ok(users);
         }
 
@@ -128,6 +131,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function idFromUrl() {
             const urlParts = url.split('/');
             return parseInt(urlParts[urlParts.length - 1]);
+        }
+
+        function pageSizeFromUrl() {
+          // Todo
+          return 3;
+        }
+        function pageIndexFromUrl() {
+          // Todo
+          return 0;
         }
     }
 }

@@ -1,14 +1,37 @@
 <!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
-  <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Benutzerverwaltung</a>
-    <a class="nav-item nav-link" (click)="logout()">Logout</a>
-  </div>
-</nav>
+  <mat-toolbar>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <span><a class="title" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Game of Life</a></span>
+    <span class="spacer"></span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dashboard</mat-icon>
+        <a mat-button routerLink="/designer" routerLinkActive="active">Design Editor</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>rule</mat-icon>
+        <a mat-button routerLink="/rules" routerLinkActive="active">Regel Editor</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <a mat-button routerLink="/users" routerLinkActive="active">Benutzerverwaltung</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>login</mat-icon>
+        <a mat-button  (click)="logout()">Logout</a>
+      </button>
+    </mat-menu>
+    <span class="spacer"></span>
 
+      <mat-icon>face</mat-icon>
+    <div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>
+
+  </mat-toolbar>
+</nav>
 <!-- main app container -->
 <div class="app-container" [ngClass]="{ 'bg-light': user }">
-  <alert></alert>
   <router-outlet></router-outlet>
 </div>
