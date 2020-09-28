@@ -15,20 +15,20 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {
       // Todo
-        //this.authService.getPage(this.paginator.pageIndex, this.paginator.pageSize)
-      this.authService.getAll()
+        // this.authService.getPage(this.paginator.pageIndex, this.paginator.pageSize)
+    /*  this.authService.getAll()
             .pipe(first())
-            .subscribe(users => this.users = users);
+            .subscribe(users => this.users = users);*/
     }
 
     deleteUser(id: string): void {
         const user = this.users.find(x => x.id === id);
         user.isDeleting = true;
-        this.authService.delete(id)
+     /*   this.authService.delete(id)
             .pipe(first())
             .subscribe(() => {
                 this.users = this.users.filter(x => x.id !== id);
-            });
+            });*/
     }
 
 /*public getPaginatorData(event: PageEvent): PageEvent {

@@ -1,88 +1,97 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
 
-import { environment } from '../../../../angular-9-registration-login-example/src/environments/environment';
 import {User} from '../_models';
+import {Auth} from 'aws-amplify';
+import {fromPromise} from 'rxjs/internal-compatibility';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private userSubject: BehaviorSubject<User>;
-    public user: Observable<User>;
 
-    constructor(
-        private router: Router,
-        private http: HttpClient
-    ) {
-        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-        this.user = this.userSubject.asObservable();
-    }
+  public loggedIn: BehaviorSubject<boolean>;
 
-    public get userValue(): User {
-        return this.userSubject.value;
-    }
+  constructor(
+    private router: Router
+  ) {
+    this.loggedIn = new BehaviorSubject<boolean>(false);
+  }
 
-    login(username, password) {
-        return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-            .pipe(map(user => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                return user;
-            }));
-    }
+  public getUser(): Observable<User>{
+    Auth.currentAuthenticatedUser().then(u =>
+    {
+      const user = new User();
+      user.username = u.username;
+      user.email = u.attributes.email;
+      return user;
+    });
+    return null;
+  }
+  /** signup */
+  public register(user, pwd, mail): Observable<any> {
+    return fromPromise(Auth.signUp({
+      username: user,
+      password: pwd,
+      attributes: {
+        email: mail
+      }}));
+  }
 
-    logout() {
-        // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-        this.router.navigate(['/auth/login']);
-    }
+  /** confirm code */
+  public verify(email, code): Observable<any> {
+    return fromPromise(Auth.confirmSignUp(email, code));
+  }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
-    }
+  /** signin */
+  public login(email, password): Observable<any> {
+    return fromPromise(Auth.signIn(email, password))
+      .pipe(
+        tap(() => {
+          this.loggedIn.next(true);
+        })
+      );
+  }
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
-    }
+  /** get authenticat state */
+  public isAuthenticated(): Observable<boolean> {
+    // @ts-ignore
+    return fromPromise(Auth.currentAuthenticatedUser())
+      .pipe(
+        map(result => {
+          this.loggedIn.next(true);
+          return true;
+        }),
+        catchError(error => {
+          this.loggedIn.next(false);
+          return of(false);
+        })
+      );
+  }
 
-    getPage(pageIndex: number, pageSize: number) {
-        return this.http.get<User[]>(`${environment.apiUrl}/users&pageSize=${pageSize}&pageIndex=${pageIndex}&`);
-    }
+  /** signout */
+  public logout() {
+    fromPromise(Auth.signOut())
+      .subscribe(
+        result => {
+          this.loggedIn.next(false);
+        },
+        error => console.log(error)
+      );
+  }
 
-    getById(id: string) {
-        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
-    }
+  public async updateUser(mail: string, role: string){
+    const user = await Auth.currentAuthenticatedUser();
+    const result = await Auth.updateUserAttributes(user, {
+      'custom:role': role,
+      email: mail
+    });
+  }
 
-    update(id, params) {
-        return this.http.put(`${environment.apiUrl}/users/${id}`, params)
-            .pipe(map(x => {
-                // update stored user if the logged in user updated their own record
-                if (id == this.userValue.id) {
-                    // update local storage
-                    const user = { ...this.userValue, ...params };
-                    localStorage.setItem('user', JSON.stringify(user));
-
-                    // publish updated user to subscribers
-                    this.userSubject.next(user);
-                }
-                return x;
-            }));
-    }
-
-    delete(id: string) {
-        return this.http.delete(`${environment.apiUrl}/users/${id}`)
-            .pipe(map(x => {
-                // auto logout if the logged in user deleted their own record
-                if (id == this.userValue.id) {
-                    this.logout();
-                }
-                return x;
-            }));
-    }
-
-
+  getToken(): string {
+    Auth.currentUserPoolUser().then(pool => {
+       return pool.signInUserSession.idToken.jwtToken;
+    });
+    return null;
+  }
 }

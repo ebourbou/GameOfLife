@@ -1,0 +1,16 @@
+# this is an auto generated file. This will be overwritten
+mutation CreatePattern($input: CreatePatternInput!) {
+  createPattern(input: $input) {
+    Id
+  }
+}
+mutation UpdatePattern($input: UpdatePatternInput!) {
+  updatePattern(input: $input) {
+    Id
+  }
+}
+mutation DeletePattern($input: DeletePatternInput!) {
+  deletePattern(input: $input) {
+    Id
+  }
+}

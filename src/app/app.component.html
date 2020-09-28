@@ -1,10 +1,11 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="authenticated">
   <mat-toolbar>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <span><a class="title" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Game of Life</a></span>
+    <span><a class="title" routerLink="/" routerLinkActive="active">Game of Life</a></span>
     <span class="spacer"></span>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>
@@ -27,7 +28,7 @@
     <span class="spacer"></span>
 
       <mat-icon>face</mat-icon>
-    <div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>
+   <!-- <div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>-->
 
   </mat-toolbar>
 </nav>

@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Auth } from 'aws-amplify';
 
 import { AuthService } from '../_services';
 
@@ -11,14 +12,12 @@ export class AuthGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const user = this.authService.userValue;
-        if (user) {
-            // authorised so return true
-            return true;
-        }
+      return Auth.currentAuthenticatedUser().then(() => { return true; })
+        .catch(() => {
+          this.router.navigate(['/auth/login']);
+          return false;
+        });
 
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url }});
-        return false;
+      return true;
     }
 }

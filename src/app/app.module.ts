@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { fakeBackendProvider } from './_helpers';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +19,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-
+import { PatternModule } from './designer/pattern.module';
+import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -43,7 +44,10 @@ import {MatMenuModule} from '@angular/material/menu';
     PasswordStrengthMeterModule,
     MatOptionModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    PatternModule,
+    AmplifyAngularModule,
+    MatDialogModule
   ],
   declarations: [
     AppComponent,
@@ -54,9 +58,7 @@ import {MatMenuModule} from '@angular/material/menu';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
-
-    // provider used to create fake backend
-    fakeBackendProvider
+    AmplifyService
   ],
   bootstrap: [AppComponent]
 })

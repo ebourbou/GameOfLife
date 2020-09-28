@@ -1,0 +1,13 @@
+﻿<!--<mat-selection-list >#patterns [multiple]="false">
+
+  <mat-list-option [ngClass]="{selected : pattern.name == currentPattern.name}" *ngFor="let pattern of patterns">
+    <a mat-list-item (click)="onSelect(pattern.id)"><span>{{ pattern.name }}</span> </a>
+  </mat-list-option>
+</mat-selection-list>-->
+
+
+<mat-selection-list [multiple]="false">
+  <mat-list-option *ngFor="let pattern of patterns" [value]="pattern" (click)="onSelect(pattern)">
+  {{pattern.name}} [{{pattern.author}} - {{pattern.year}}]
+  </mat-list-option>
+</mat-selection-list>

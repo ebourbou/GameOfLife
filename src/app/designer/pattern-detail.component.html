@@ -1,0 +1,12 @@
+﻿<mat-card class="patternCard" fxLayout="column" fxLayoutAlign="space-around stretch" *ng-if="!pattern">
+  <mat-card-header>
+    <mat-card-title>{{pattern?.name}}</mat-card-title>
+     <mat-card-subtitle>{{pattern?.description}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+    {{pattern?.year}}
+    {{pattern?.author}}
+    </p>
+  </mat-card-content>
+ </mat-card>

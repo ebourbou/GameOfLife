@@ -46,11 +46,11 @@ export class AddEditComponent implements OnInit {
             passwordValidators.push(Validators.required);
         }
       if (!this.isAddMode) {
-        this.authService.getById(this.id)
+       /* this.authService.getById(this.id)
                 .pipe(first())
                 .subscribe(data => {
                       this.user = data;
-                });
+                });*/
         }
     }
 
@@ -66,12 +66,12 @@ export class AddEditComponent implements OnInit {
         if (this.isAddMode) {
             this.createUser();
         } else {
-            this.updateUser();
+            // this.updateUser();
         }
     }
 
     private createUser(): void {
-      this.authService.register(this.user)
+      this.authService.register(this.user.username, this.user.password, this.user.email)
         .pipe(first())
         .subscribe(
           data => {
@@ -87,22 +87,4 @@ export class AddEditComponent implements OnInit {
             this.loading = false;
           });
     }
-
-    private updateUser(): void {
-      this.authService.update(this.id, this.user)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.router.navigate(['..', { relativeTo: this.route }]).then((navigated: boolean) => {
-                      if (navigated) {
-                        this.snackBarService.open('Benutzer ' + this.user.username + ' wurde aktualisiert.', 'Schliessen',  {
-                          duration: 2000,
-                        });
-                      }
-                  });
-                },
-                error => {
-                    this.loading = false;
-                });
-  }
 }

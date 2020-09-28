@@ -7,7 +7,7 @@
   <mat-card-content>
         <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
           <div class="form-element">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="!validationMode">
               <mat-label>Benutzer</mat-label>
               <input matInput ngModel type="text" name="username" [(ngModel)]="user.username" placeholder="Benutzer"
                      required  minlength="3" maxlength="20" #username="ngModel" [errorStateMatcher]="matcher">
@@ -24,7 +24,7 @@
             </mat-form-field>
           </div>
           <div class="form-element">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="!validationMode">
               <mat-label>eMail</mat-label>
               <input matInput ngModel type="text" name="email" [(ngModel)]="user.email" placeholder="eMail"
                      required #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
@@ -34,7 +34,18 @@
             </mat-form-field>
           </div>
           <div class="form-element">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="validationMode">
+              <mat-label>Code</mat-label>
+              <input matInput ngModel type="number" name="code" [(ngModel)]="user.code" placeholder="code"
+                     required #code="ngModel">
+              <mat-hint>Wir haben den Verifizierungscode an deine eMail Adresse verschickt</mat-hint>
+              <mat-error *ngIf="code.dirty && code.invalid">
+                Bitte Verifizieungs Code eingeben
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-element">
+            <mat-form-field appearance="fill" *ngIf="!validationMode">
               <mat-label>Passwort</mat-label>
               <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [(ngModel)]="user.password" placeholder="Passwort"
                      required minlength="8" maxlength="20" [errorStateMatcher]="matcher" #password="ngModel">
@@ -51,20 +62,24 @@
               <mat-error *ngIf="password.hasError('maxlength')">
                 Passwort darf maximal 20 Zeichen enthalten
               </mat-error>
+              <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
             </mat-form-field>
-            <password-strength-meter [password]="password.value" [enableFeedback]="true"></password-strength-meter>
 
-            <small id="passwordHelpBlock" class="form-text text-muted">
+            <small id="passwordHelpBlock" class="form-text text-muted" *ngIf="!validationMode">
               Das Passwort muss 8-20 Zeichen lang sein, Buchstaben und Zahlen und darf keine Leerzeichen enthalten.
             </small>
           </div>
           <div class="form-group">
-                <button mat-raised-button type="submit" [disabled]="!form.valid || loading" mat-raised-button color="primary" >
+                <button mat-raised-button type="submit" [disabled]="!form.valid || loading" mat-raised-button color="primary" *ngIf="!validationMode">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Registrieren
                 </button>
-                <a class="cancel-button" mat-raised-button routerLink="../login">Abbrechen</a>
-            </div>
+              <button mat-raised-button type="submit" [disabled]="!form.valid || loading" mat-raised-button color="primary" *ngIf="validationMode">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Validieren
+              </button>
+              <a class="cancel-button" mat-raised-button routerLink="../login">Abbrechen</a>
+              </div>
         </form>
   </mat-card-content>
 </mat-card>
