@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit {
             });
 
         this.authService.login(this.form.controls.username.value, this.form.controls.password.value).subscribe((data) => {
-          console.log(data);
+          console.log('data ' + JSON.stringify(data));
           this.loading = false;
           this.router.navigate([this.returnUrl]).then((navigated: boolean) => {
             if (navigated) {
               this.loginInvalid = false;
-              this.snackBarService.open('Willkommen zurück ', 'Schliessen', {
+              this.snackBarService.open('Willkommen zurück ' +data.username , 'Schliessen', {
                 duration: 2000
               });
             }

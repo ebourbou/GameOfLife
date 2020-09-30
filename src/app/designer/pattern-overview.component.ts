@@ -24,7 +24,7 @@ export class PatternOverviewComponent implements OnInit {
           this.currentPattern = this.patterns[0];
           this.rowClick.emit(this.currentPattern);
         }*/
-      this.apiService.listPatterns().then(
+      this.apiService.ListPatterns().then(
         value => {
           value.items.forEach(item => {
             this.patterns.push(item);

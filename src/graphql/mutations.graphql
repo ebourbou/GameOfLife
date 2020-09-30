@@ -14,3 +14,18 @@ mutation DeletePattern($input: DeletePatternInput!) {
     Id
   }
 }
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    name
+  }
+}
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    name
+  }
+}
+mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
+    name
+  }
+}

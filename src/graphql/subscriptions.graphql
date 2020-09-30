@@ -14,3 +14,18 @@ subscription OnDeletePattern($Id: String) {
     Id
   }
 }
+subscription OnCreateUser($name: String) {
+  onCreateUser(name: $name) {
+    name
+  }
+}
+subscription OnUpdateUser($name: String) {
+  onUpdateUser(name: $name) {
+    name
+  }
+}
+subscription OnDeleteUser($name: String) {
+  onDeleteUser(name: $name) {
+    name
+  }
+}

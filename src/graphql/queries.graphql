@@ -16,3 +16,20 @@ query ListPatterns(
     nextToken
   }
 }
+query GetUser($name: String!) {
+  getUser(name: $name) {
+    name
+  }
+}
+query ListUsers(
+  $filter: TableUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      name
+    }
+    nextToken
+  }
+}

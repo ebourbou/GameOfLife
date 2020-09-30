@@ -11,7 +11,7 @@ const patternModule = () => import('./designer/pattern.module').then(x => x.Patt
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
-  { path: 'auth', loadChildren: accountModule, canActivate: [AuthGuard] },
+  { path: 'auth', loadChildren: accountModule },
   { path: 'designer', loadChildren: patternModule, canActivate: [AuthGuard] },
 
 

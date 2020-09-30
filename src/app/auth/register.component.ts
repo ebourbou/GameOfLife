@@ -50,29 +50,13 @@ export class RegisterComponent implements OnInit {
       this.submitted = true;
       this.loading = true;
 
-      this.amplifyService.authStateChange$
-        .subscribe(authState => {
-          if (!authState.user) {
-            this.user = null;
-          } else {
-            this.user = authState.user;
-          }
-        });
       try {
-        const {user} = await Auth.signUp({
-          username: this.form.controls.username.value,
-          password: this.form.controls.password.value,
-          attributes: {
-            email: this.form.controls.email.value
-          }
-        });
+         this.authService.register(this.form.controls.username.value,
+          this.form.controls.password.value,
+          this.form.controls.email.value);
 
-        this.user.email = this.form.controls.email.value;
-        this.user.username = this.form.controls.username.value;
-
-        this.loading = false;
-        this.validationMode = true;
-        console.log(user);
+         this.loading = false;
+         this.validationMode = true;
       } catch (error) {
         console.log('error signing up:', error);
         this.loading = false;
@@ -99,8 +83,7 @@ export class RegisterComponent implements OnInit {
     }else {
       // Validation
       const verificationCode = this.form.controls.code.value;
-      Auth.confirmSignUp(this.user.username, verificationCode.toString()).then(
-        res => {
+      this.authService.verify(this.user.username, verificationCode.toString()).then( () => {
           this.router.navigate(['/login']).then((navigated: boolean) => {
             if (navigated) {
               this.snackBarService.open('Benutzer Registrierung abgeschlossen', 'Schliessen', {
@@ -108,9 +91,6 @@ export class RegisterComponent implements OnInit {
               });
             }
           });
-        },
-        err => {
-          alert(err.message);
         }
       );
     }

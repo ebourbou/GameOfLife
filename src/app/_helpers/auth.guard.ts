@@ -3,21 +3,27 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Auth } from 'aws-amplify';
 
 import { AuthService } from '../_services';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authService: AuthService
+        private auth: AuthService
     ) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      return Auth.currentAuthenticatedUser().then(() => { return true; })
-        .catch(() => {
-          this.router.navigate(['/auth/login']);
-          return false;
-        });
-
-      return true;
-    }
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> {
+    return this.auth.isAuthenticated()
+      .pipe(
+        tap(loggedIn => {
+          if (!loggedIn) {
+            console.log('Logged out');
+            this.router.navigate(['/auth/login']);
+          }
+        })
+      );
+  }
 }

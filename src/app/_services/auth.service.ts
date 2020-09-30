@@ -2,23 +2,23 @@
 import { Router } from '@angular/router';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
-
 import {User} from '../_models';
 import {Auth} from 'aws-amplify';
 import {fromPromise} from 'rxjs/internal-compatibility';
+import {APIService} from '../API.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  public loggedIn: BehaviorSubject<boolean>;
+  public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public user: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(
-    private router: Router
-  ) {
-    this.loggedIn = new BehaviorSubject<boolean>(false);
-  }
+    private router: Router,
+    private api: APIService
+  ) {}
 
-  public getUser(): Observable<User>{
+  public getUser(): User{
     Auth.currentAuthenticatedUser().then(u =>
     {
       const user = new User();
@@ -35,26 +35,30 @@ export class AuthService {
       password: pwd,
       attributes: {
         email: mail
-      }}));
+      }})
+    );
   }
 
   /** confirm code */
-  public verify(email, code): Observable<any> {
-    return fromPromise(Auth.confirmSignUp(email, code));
+  public verify(username, code) {
+    return Auth.confirmSignUp(username, code);
   }
 
   /** signin */
-  public login(email, password): Observable<any> {
-    return fromPromise(Auth.signIn(email, password))
+  public login(username, password): Observable < any > {
+    return fromPromise(Auth.signIn(username, password))
       .pipe(
         tap(() => {
           this.loggedIn.next(true);
+          const user = new User();
+          user.username = username;
+          this.user.next(user);
         })
       );
   }
 
-  /** get authenticat state */
-  public isAuthenticated(): Observable<boolean> {
+  /** get authenticate state */
+  public isAuthenticated(): Observable < boolean > {
     // @ts-ignore
     return fromPromise(Auth.currentAuthenticatedUser())
       .pipe(
@@ -75,6 +79,7 @@ export class AuthService {
       .subscribe(
         result => {
           this.loggedIn.next(false);
+          this.user.next(null);
         },
         error => console.log(error)
       );
@@ -88,7 +93,7 @@ export class AuthService {
     });
   }
 
-  getToken(): string {
+  public getToken(): string {
     Auth.currentUserPoolUser().then(pool => {
        return pool.signInUserSession.idToken.jwtToken;
     });

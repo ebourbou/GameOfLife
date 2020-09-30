@@ -1,29 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {User} from './_models';
 import {AuthService} from './_services';
 import {AmplifyService} from 'aws-amplify-angular';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Auth} from 'aws-amplify';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit{
   title = 'GameOfLife';
   user: User;
   authenticated = false;
 
   constructor(
-    public amplify: AmplifyService,
-    private authService: AuthService,
+    private amplify: AmplifyService,
+    public authService: AuthService,
     private router: Router,
     private snackBarService: MatSnackBar) {
   }
 
   logout() {
     this.authService.logout();
+    this.authenticated = false;
+    this.user = null;
     this.router.navigate(['/auth/login']).then((navigated: boolean) => {
       if (navigated) {
         this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
@@ -33,18 +37,19 @@ export class AppComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
-      this.authenticated = true;
+  async ngOnInit() {
 
-      const user = this.authService.getUser();
-      if (user) {
-        this.authService.getUser().toPromise().then(u => {
-          this.user = u;
-        });
-      }
-    }else {
-      this.authenticated = false;
-    }
+    await Auth.currentAuthenticatedUser({
+      bypassCache: false
+    })
+      .then((user) => {
+        if (user) {
+          this.authenticated = true;
+        }
+      })
+      .catch(() => {
+        this.authenticated = false;
+        this.router.navigate(['/auth/login']);
+      });
   }
 }
