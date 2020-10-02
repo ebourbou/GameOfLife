@@ -1,0 +1,61 @@
+# this is an auto generated file. This will be overwritten
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+query ListUsers(
+  $filter: TableUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      role
+      email
+      lastLogin
+    }
+    nextToken
+  }
+}
+query GetPattern($id: ID!) {
+  getPattern(id: $id) {
+    id
+    author
+    boxX
+    boxY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+  }
+}
+query ListPatterns(
+  $filter: TablePatternFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      author
+      boxX
+      boxY
+      description
+      heat
+      name
+      pattern
+      type
+      year
+    }
+    nextToken
+  }
+}

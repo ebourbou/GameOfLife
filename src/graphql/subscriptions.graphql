@@ -1,0 +1,142 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateUser(
+  $id: ID
+  $username: String
+  $role: String
+  $email: AWSEmail
+  $lastLogin: AWSDateTime
+) {
+  onCreateUser(
+    id: $id
+    username: $username
+    role: $role
+    email: $email
+    lastLogin: $lastLogin
+  ) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+subscription OnUpdateUser(
+  $id: ID
+  $username: String
+  $role: String
+  $email: AWSEmail
+  $lastLogin: AWSDateTime
+) {
+  onUpdateUser(
+    id: $id
+    username: $username
+    role: $role
+    email: $email
+    lastLogin: $lastLogin
+  ) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+subscription OnDeleteUser(
+  $id: ID
+  $username: String
+  $role: String
+  $email: AWSEmail
+  $lastLogin: AWSDateTime
+) {
+  onDeleteUser(
+    id: $id
+    username: $username
+    role: $role
+    email: $email
+    lastLogin: $lastLogin
+  ) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+subscription OnCreatePattern(
+  $id: ID
+  $author: String
+  $boxX: Int
+  $boxY: Int
+  $description: String
+) {
+  onCreatePattern(
+    id: $id
+    author: $author
+    boxX: $boxX
+    boxY: $boxY
+    description: $description
+  ) {
+    id
+    author
+    boxX
+    boxY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+  }
+}
+subscription OnUpdatePattern(
+  $id: ID
+  $author: String
+  $boxX: Int
+  $boxY: Int
+  $description: String
+) {
+  onUpdatePattern(
+    id: $id
+    author: $author
+    boxX: $boxX
+    boxY: $boxY
+    description: $description
+  ) {
+    id
+    author
+    boxX
+    boxY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+  }
+}
+subscription OnDeletePattern(
+  $id: ID
+  $author: String
+  $boxX: Int
+  $boxY: Int
+  $description: String
+) {
+  onDeletePattern(
+    id: $id
+    author: $author
+    boxX: $boxX
+    boxY: $boxY
+    description: $description
+  ) {
+    id
+    author
+    boxX
+    boxY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+  }
+}
