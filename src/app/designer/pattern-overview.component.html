@@ -5,9 +5,9 @@
   </mat-list-option>
 </mat-selection-list>-->
 
-
+<h2>Pattern</h2>
 <mat-selection-list [multiple]="false">
-  <mat-list-option *ngFor="let pattern of patterns" [value]="pattern" (click)="onSelect(pattern)">
+  <mat-list-option *ngFor="let pattern of patterns" [value]="pattern" (click)="selectedChange.emit(pattern)">
   {{pattern.name}} [{{pattern.author}} - {{pattern.year}}]
   </mat-list-option>
 </mat-selection-list>

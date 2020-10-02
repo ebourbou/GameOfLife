@@ -12,20 +12,13 @@ import {PatternOverviewComponent} from './pattern-overview.component';
 @Component({ selector: 'app-pattern-detail', templateUrl: 'pattern-detail.component.html', styleUrls: ['pattern-detail.component.scss']  })
 export class PatternDetailComponent implements OnInit {
 
-    private pattern: Pattern;
-    @Input() setPattern(pattern: Pattern) {
-      this.pattern = pattern;
-    }
-
-   // @ViewChild(NgForm) ngForm: NgForm;
-
+  @Input() pattern: Pattern;
     constructor(
         private route: ActivatedRoute,
         private snackBarService: MatSnackBar
     ) { }
 
     ngOnInit(): void {
-        // get return url from route parameters or default to '/'
-       // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
+
 }

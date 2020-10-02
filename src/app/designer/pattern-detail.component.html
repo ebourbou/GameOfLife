@@ -1,4 +1,4 @@
-﻿<mat-card class="patternCard" fxLayout="column" fxLayoutAlign="space-around stretch" *ng-if="!pattern">
+﻿<mat-card class="patternCard" fxLayout="column" fxLayoutAlign="space-around stretch" *ng-if="(pattern$ | async)">
   <mat-card-header>
     <mat-card-title>{{pattern?.name}}</mat-card-title>
      <mat-card-subtitle>{{pattern?.description}}</mat-card-subtitle>

@@ -11,19 +11,16 @@ import {APIService} from '../API.service';
 
 @Component({ selector: 'app-pattern-list', templateUrl: 'pattern-overview.component.html', styleUrls: ['pattern-overview.component.scss']  })
 export class PatternOverviewComponent implements OnInit {
-    public patterns;
+    private patterns = [];
+
+  @Input() selected: Pattern;
+  @Output() selectedChange: EventEmitter = new EventEmitter();
 
     constructor(
-        private apiService: APIService,
-        private route: ActivatedRoute,
-        private snackBarService: MatSnackBar
+        private apiService: APIService
     ) { }
 
     ngOnInit(): void {
-      /*  if (this.patterns && this.patterns.length > 0) {
-          this.currentPattern = this.patterns[0];
-          this.rowClick.emit(this.currentPattern);
-        }*/
       this.apiService.ListPatterns().then(
         value => {
           value.items.forEach(item => {
@@ -35,10 +32,4 @@ export class PatternOverviewComponent implements OnInit {
 
     onSubmit(): void {
     }
-
-  public onSelect(pattern: Pattern): void {
-   // this.rowClick.emit(pattern);
-
-  }
-
 }
