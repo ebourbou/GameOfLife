@@ -1,15 +1,12 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AuthService } from '../_services';
 import {User} from '../_models';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormControl, NgForm} from '@angular/forms';
-import {Auth} from 'aws-amplify';
 import { AmplifyService } from 'aws-amplify-angular';
 import { AuthState } from 'aws-amplify-angular/dist/src/providers';
-import { Hub } from 'aws-amplify';
-import { Logger } from 'aws-amplify';
+import {NgForm} from '@angular/forms';
+
 
 /*
  TODO:  password confirm field
@@ -60,17 +57,42 @@ export class LoginComponent implements OnInit {
             });
 
         this.authService.login(this.form.controls.username.value, this.form.controls.password.value).subscribe((data) => {
-          console.log('data ' + JSON.stringify(data));
+         // console.log('data ' + JSON.stringify(data));
           this.loading = false;
           this.router.navigate([this.returnUrl]).then((navigated: boolean) => {
             if (navigated) {
               this.loginInvalid = false;
-              this.snackBarService.open('Willkommen zurück ' +data.username , 'Schliessen', {
+              this.snackBarService.open('Willkommen zurück ' + data.username , 'Schliessen', {
                 duration: 2000
               });
             }
           });
-        });
+        }, (error) => {
+          this.loading = false;
+          this.loginInvalid = true;
+
+          console.log('errSignIn: ' + JSON.stringify(error));
+          let errMsg = 'unbekannt';
+          switch (error.code){
+            case 'NetworkError':
+              errMsg = 'Keine Verbindung zum Internet';
+              break;
+            case 'UserNotFoundException':
+              errMsg = 'Benutzer oder Passwort falsch';
+              break;
+            case 'NotAuthorizedException':
+              errMsg = 'Benutzer oder Passwort falsch';
+              break;
+          }
+          this.snackBarService.open('Fehler beim Anmelden: ' + errMsg, 'Schliessen', {
+            duration: 3000,
+            panelClass: ['snackbar-error']
+          });
+        }
+        );
+
+
+
 
         /*
           .next(user => {

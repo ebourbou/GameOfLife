@@ -2,36 +2,77 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 import { Injectable } from "@angular/core";
-import API, { graphqlOperation } from "@aws-amplify/api";
-import { GraphQLResult } from "@aws-amplify/api/lib/types";
+import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
-export type CreatePatternInput = {
-  Id: string;
-};
-
-export type UpdatePatternInput = {
-  Id: string;
-};
-
-export type DeletePatternInput = {
-  Id: string;
-};
-
 export type CreateUserInput = {
-  name: string;
+  id: string;
+  username?: string | null;
+  role?: string | null;
+  email?: string | null;
+  lastLogin?: string | null;
 };
 
 export type UpdateUserInput = {
-  name: string;
+  id: string;
+  username?: string | null;
+  role?: string | null;
+  email?: string | null;
+  lastLogin?: string | null;
 };
 
 export type DeleteUserInput = {
-  name: string;
+  id: string;
 };
 
-export type TablePatternFilterInput = {
-  Id?: TableStringFilterInput | null;
+export type CreatePatternInput = {
+  author?: string | null;
+  boxX: number;
+  boxY: number;
+  description?: string | null;
+  heat?: number | null;
+  name: string;
+  pattern: string;
+  type?: string | null;
+  year?: number | null;
+};
+
+export type UpdatePatternInput = {
+  id: string;
+  author?: string | null;
+  boxX?: number | null;
+  boxY?: number | null;
+  description?: string | null;
+  heat?: number | null;
+  name?: string | null;
+  pattern?: string | null;
+  type?: string | null;
+  year?: number | null;
+};
+
+export type DeletePatternInput = {
+  id: string;
+};
+
+export type TableUserFilterInput = {
+  id?: TableIDFilterInput | null;
+  username?: TableStringFilterInput | null;
+  role?: TableStringFilterInput | null;
+  email?: TableStringFilterInput | null;
+  lastLogin?: TableStringFilterInput | null;
+};
+
+export type TableIDFilterInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export type TableStringFilterInput = {
@@ -47,109 +88,300 @@ export type TableStringFilterInput = {
   beginsWith?: string | null;
 };
 
-export type TableUserFilterInput = {
+export type TablePatternFilterInput = {
+  id?: TableIDFilterInput | null;
+  author?: TableStringFilterInput | null;
+  boxX?: TableIntFilterInput | null;
+  boxY?: TableIntFilterInput | null;
+  description?: TableStringFilterInput | null;
+  heat?: TableIntFilterInput | null;
   name?: TableStringFilterInput | null;
+  pattern?: TableStringFilterInput | null;
+  type?: TableStringFilterInput | null;
+  year?: TableIntFilterInput | null;
 };
 
-export type CreatePatternMutation = {
-  __typename: "Pattern";
-  Id: string;
-};
-
-export type UpdatePatternMutation = {
-  __typename: "Pattern";
-  Id: string;
-};
-
-export type DeletePatternMutation = {
-  __typename: "Pattern";
-  Id: string;
+export type TableIntFilterInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  contains?: number | null;
+  notContains?: number | null;
+  between?: Array<number | null> | null;
 };
 
 export type CreateUserMutation = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type UpdateUserMutation = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type DeleteUserMutation = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
-export type GetPatternQuery = {
+export type CreatePatternMutation = {
   __typename: "Pattern";
-  Id: string;
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
 };
 
-export type ListPatternsQuery = {
-  __typename: "PatternConnection";
-  items: Array<{
-    __typename: "Pattern";
-    Id: string;
-  } | null> | null;
-  nextToken: string | null;
+export type UpdatePatternMutation = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+};
+
+export type DeletePatternMutation = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
 };
 
 export type GetUserQuery = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type ListUsersQuery = {
   __typename: "UserConnection";
   items: Array<{
     __typename: "User";
-    name: string;
+    id: string;
+    username: string | null;
+    role: string | null;
+    email: string | null;
+    lastLogin: string | null;
   } | null> | null;
   nextToken: string | null;
 };
 
-export type OnCreatePatternSubscription = {
+export type GetPatternQuery = {
   __typename: "Pattern";
-  Id: string;
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
 };
 
-export type OnUpdatePatternSubscription = {
-  __typename: "Pattern";
-  Id: string;
-};
-
-export type OnDeletePatternSubscription = {
-  __typename: "Pattern";
-  Id: string;
+export type ListPatternsQuery = {
+  __typename: "PatternConnection";
+  items: Array<{
+    __typename: "Pattern";
+    id: string;
+    author: string | null;
+    boxX: number;
+    boxY: number;
+    description: string | null;
+    heat: number | null;
+    name: string;
+    pattern: string;
+    type: string | null;
+    year: number | null;
+  } | null> | null;
+  nextToken: string | null;
 };
 
 export type OnCreateUserSubscription = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type OnUpdateUserSubscription = {
   __typename: "User";
-  name: string;
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type OnDeleteUserSubscription = {
   __typename: "User";
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
+};
+
+export type OnCreatePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
   name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+};
+
+export type OnUpdatePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+};
+
+export type OnDeletePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  boxX: number;
+  boxY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
 };
 
 @Injectable({
   providedIn: "root"
 })
 export class APIService {
+  async CreateUser(input: CreateUserInput): Promise<CreateUserMutation> {
+    const statement = `mutation CreateUser($input: CreateUserInput!) {
+        createUser(input: $input) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateUserMutation>response.data.createUser;
+  }
+  async UpdateUser(input: UpdateUserInput): Promise<UpdateUserMutation> {
+    const statement = `mutation UpdateUser($input: UpdateUserInput!) {
+        updateUser(input: $input) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateUserMutation>response.data.updateUser;
+  }
+  async DeleteUser(input: DeleteUserInput): Promise<DeleteUserMutation> {
+    const statement = `mutation DeleteUser($input: DeleteUserInput!) {
+        deleteUser(input: $input) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteUserMutation>response.data.deleteUser;
+  }
   async CreatePattern(
     input: CreatePatternInput
   ): Promise<CreatePatternMutation> {
     const statement = `mutation CreatePattern($input: CreatePatternInput!) {
         createPattern(input: $input) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -166,7 +398,16 @@ export class APIService {
     const statement = `mutation UpdatePattern($input: UpdatePatternInput!) {
         updatePattern(input: $input) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -183,7 +424,16 @@ export class APIService {
     const statement = `mutation DeletePattern($input: DeletePatternInput!) {
         deletePattern(input: $input) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -194,105 +444,19 @@ export class APIService {
     )) as any;
     return <DeletePatternMutation>response.data.deletePattern;
   }
-  async CreateUser(input: CreateUserInput): Promise<CreateUserMutation> {
-    const statement = `mutation CreateUser($input: CreateUserInput!) {
-        createUser(input: $input) {
+  async GetUser(id: string): Promise<GetUserQuery> {
+    const statement = `query GetUser($id: ID!) {
+        getUser(id: $id) {
           __typename
-          name
+          id
+          username
+          role
+          email
+          lastLogin
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateUserMutation>response.data.createUser;
-  }
-  async UpdateUser(input: UpdateUserInput): Promise<UpdateUserMutation> {
-    const statement = `mutation UpdateUser($input: UpdateUserInput!) {
-        updateUser(input: $input) {
-          __typename
-          name
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateUserMutation>response.data.updateUser;
-  }
-  async DeleteUser(input: DeleteUserInput): Promise<DeleteUserMutation> {
-    const statement = `mutation DeleteUser($input: DeleteUserInput!) {
-        deleteUser(input: $input) {
-          __typename
-          name
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteUserMutation>response.data.deleteUser;
-  }
-  async GetPattern(Id: string): Promise<GetPatternQuery> {
-    const statement = `query GetPattern($Id: String!) {
-        getPattern(Id: $Id) {
-          __typename
-          Id
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      Id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetPatternQuery>response.data.getPattern;
-  }
-  async ListPatterns(
-    filter?: TablePatternFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListPatternsQuery> {
-    const statement = `query ListPatterns($filter: TablePatternFilterInput, $limit: Int, $nextToken: String) {
-        listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            Id
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListPatternsQuery>response.data.listPatterns;
-  }
-  async GetUser(name: string): Promise<GetUserQuery> {
-    const statement = `query GetUser($name: String!) {
-        getUser(name: $name) {
-          __typename
-          name
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      name
+      id
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -309,7 +473,11 @@ export class APIService {
           __typename
           items {
             __typename
-            name
+            id
+            username
+            role
+            email
+            lastLogin
           }
           nextToken
         }
@@ -329,14 +497,131 @@ export class APIService {
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
   }
+  async GetPattern(id: string): Promise<GetPatternQuery> {
+    const statement = `query GetPattern($id: ID!) {
+        getPattern(id: $id) {
+          __typename
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetPatternQuery>response.data.getPattern;
+  }
+  async ListPatterns(
+    filter?: TablePatternFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListPatternsQuery> {
+    const statement = `query ListPatterns($filter: TablePatternFilterInput, $limit: Int, $nextToken: String) {
+        listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            author
+            boxX
+            boxY
+            description
+            heat
+            name
+            pattern
+            type
+            year
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListPatternsQuery>response.data.listPatterns;
+  }
+  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onCreateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`
+    )
+  ) as Observable<OnCreateUserSubscription>;
+
+  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onUpdateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`
+    )
+  ) as Observable<OnUpdateUserSubscription>;
+
+  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onDeleteUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`
+    )
+  ) as Observable<OnDeleteUserSubscription>;
+
   OnCreatePatternListener: Observable<
     OnCreatePatternSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreatePattern($Id: String) {
-        onCreatePattern(Id: $Id) {
+      `subscription OnCreatePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
+        onCreatePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`
     )
@@ -346,10 +631,19 @@ export class APIService {
     OnUpdatePatternSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePattern($Id: String) {
-        onUpdatePattern(Id: $Id) {
+      `subscription OnUpdatePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
+        onUpdatePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`
     )
@@ -359,45 +653,21 @@ export class APIService {
     OnDeletePatternSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeletePattern($Id: String) {
-        onDeletePattern(Id: $Id) {
+      `subscription OnDeletePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
+        onDeletePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
           __typename
-          Id
+          id
+          author
+          boxX
+          boxY
+          description
+          heat
+          name
+          pattern
+          type
+          year
         }
       }`
     )
   ) as Observable<OnDeletePatternSubscription>;
-
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateUser($name: String) {
-        onCreateUser(name: $name) {
-          __typename
-          name
-        }
-      }`
-    )
-  ) as Observable<OnCreateUserSubscription>;
-
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateUser($name: String) {
-        onUpdateUser(name: $name) {
-          __typename
-          name
-        }
-      }`
-    )
-  ) as Observable<OnUpdateUserSubscription>;
-
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteUser($name: String) {
-        onDeleteUser(name: $name) {
-          __typename
-          name
-        }
-      }`
-    )
-  ) as Observable<OnDeleteUserSubscription>;
 }

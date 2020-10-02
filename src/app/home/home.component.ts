@@ -1,7 +1,9 @@
 ﻿import {Component, OnInit} from '@angular/core';
-
-import { User } from '../_models';
-import { AuthService } from '../_services';
+import {Auth} from 'aws-amplify';
+import {User} from '../_models';
+import {AuthService} from '../_services';
+import {APIService, CreateUserInput, GetUserQuery} from '../API.service';
+import {Role} from '../_models/role';
 
 
 @Component({ templateUrl: 'home.component.html' , styleUrls: ['home.component.scss'] })
@@ -9,17 +11,44 @@ export class HomeComponent implements  OnInit{
     user: User;
 
     constructor(
-      private authService: AuthService
-    ) {
+      private authService: AuthService,
+      private api: APIService
+    ) {}
 
-    }
+   ngOnInit(): void {
+      Auth.currentAuthenticatedUser().then(async u => {
+      // First time login create user in DB
+      // User cognito internal id (attributes.sub)
 
-  async ngOnInit() {
-   /* await Auth.currentAuthenticatedUser().then(u => {
-      this.user = new User();
-      this.user.username = u.username;
-      this.user.id = u.attributes.sub;
+        // Todo move to DAO handling class
+      const result = await this.api.GetUser(u.attributes.sub);
+      if (!result) {
+        this.user = new User();
+        this.user.id = u.attributes.sub;
+        this.user.username = u.username;
+        this.user.role = Role.User; // default to user
+        this.user.email = u.attributes.email;
+        this.user.lastLogin = new Date().toISOString();
+        await this.api.CreateUser({
+          id: this.user.id,
+          email: this.user.email,
+          username: this.user.username,
+          role: this.user.role,
+          lastLogin: this.user.lastLogin
+        });
+      } else {
+        this.user = new User();
+        this.user.id = result.id;
+        this.user.username = result.username;
+        this.user.role = Role[result.role];
+        this.user.email = result.email;
+        this.user.lastLogin = new Date().toISOString();
+
+
+      }
     });
+
+   /*
     console.log(this.user);*/
   }
 }

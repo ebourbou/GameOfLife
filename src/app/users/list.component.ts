@@ -2,23 +2,29 @@
 import { first } from 'rxjs/operators';
 import {AuthService} from '../_services';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {APIService, ListUsersQuery} from '../API.service';
 
 @Component({ templateUrl: 'list.component.html', styleUrls: ['list.component.scss']})
 export class ListComponent implements OnInit {
     users = null;
     lowValue = 0;
     highValue = 20;
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService,
+                private api: APIService) {}
     displayedColumns = ['username', 'email', 'role', 'actions'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     ngOnInit() {
+      this.api.ListUsers().then((list: ListUsersQuery) => {
+        this.users = list.items;
+      });
+
       // Todo
-        // this.authService.getPage(this.paginator.pageIndex, this.paginator.pageSize)
-    /*  this.authService.getAll()
-            .pipe(first())
-            .subscribe(users => this.users = users);*/
+      // this.authService.getPage(this.paginator.pageIndex, this.paginator.pageSize)
+      /*  this.authService.getAll()
+              .pipe(first())
+              .subscribe(users => this.users = users);*/
     }
 
     deleteUser(id: string): void {
