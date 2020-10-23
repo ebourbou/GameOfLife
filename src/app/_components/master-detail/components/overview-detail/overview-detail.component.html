@@ -1,0 +1,16 @@
+<section class="overview"
+  [class.--is-desktop]="breakpoints.isDesktop">
+
+  <ng-content></ng-content>
+
+</section>
+
+<section class="detail"
+  *ngIf="breakpoints.isDesktop">
+
+  <router-outlet #detailOutlet
+    (activate)="onOutletActivated($event)"
+    (deactivate)="onOutletDeactivated($event)">
+  </router-outlet>
+
+</section>

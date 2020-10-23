@@ -4,7 +4,7 @@ import {AuthService} from './_services';
 import {AmplifyService} from 'aws-amplify-angular';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Auth} from 'aws-amplify';
+import {Auth} from '@aws-amplify/auth';
 
 @Component({
   selector: 'app-root',

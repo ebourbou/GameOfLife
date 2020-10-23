@@ -3,9 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../_services';
 import {User} from '../_models';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { AmplifyService } from 'aws-amplify-angular';
-import { AuthState } from 'aws-amplify-angular/dist/src/providers';
+import Auth from '@aws-amplify/auth';
+import { Amplify } from 'aws-amplify';
 import {NgForm} from '@angular/forms';
+import {AmplifyService} from 'aws-amplify-angular';
 
 
 /*
@@ -16,7 +17,7 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent implements OnInit {
     user = new User();
     public loginInvalid: boolean;
-    public authState: AuthState;
+  //  public authState: AuthState;
 
     loading = false;
     hidePwd = true;

@@ -14,7 +14,7 @@
 
 commands on client side
 - npm install -g @aws-amplify/cli
-- amplify init
+- amplify ini
 - amplify add auth
 - amplify add codegen --apiId u6z54gfvwfb3pk7r7m6mhhryvy
 - amplify codegen

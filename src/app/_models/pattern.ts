@@ -1,5 +1,5 @@
 ﻿
-export class Pattern {
+export interface Pattern {
     id: string;
     name: string;
     description: string;
@@ -9,4 +9,5 @@ export class Pattern {
     sizeX: number;
     sizeY: number;
     pattern: string;
+    type: string;
 }

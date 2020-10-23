@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { PatternRoutingModule } from './pattern-routing.module';
 import { LayoutComponent } from './layout.component';
 import { PatternDetailComponent } from './pattern-detail.component';
 import {MatCardModule} from '@angular/material/card';
@@ -11,9 +10,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FlexModule} from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
-import {PatternOverviewComponent} from './pattern-overview.component';
+import {PatternListComponent} from './pattern-list.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {PatternRoutingModule} from './pattern-routing.module';
 
 @NgModule({
   imports: [
@@ -33,7 +33,7 @@ import {MatListModule} from '@angular/material/list';
   declarations: [
     LayoutComponent,
     PatternDetailComponent,
-    PatternOverviewComponent
+    PatternListComponent
   ]
 })
 export class PatternModule { }

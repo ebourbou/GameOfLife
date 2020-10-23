@@ -1,8 +1,6 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import { first } from 'rxjs/operators';
-import {Auth} from 'aws-amplify';
 import {AuthService} from '../_services';
 import {User} from '../_models';
 import {ErrorStateMatcher} from '@angular/material/core';

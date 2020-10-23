@@ -19,9 +19,15 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-import { PatternModule } from './designer/pattern.module';
+import { DesignerModule } from './designer/designer.module';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 import {MatDialogModule} from '@angular/material/dialog';
+import { StoreModule } from '@ngrx/store';
+import {MasterDetailModule} from './_components/master-detail/master-detail.module';
+import {HeaderComponent} from './designer/components';
+import {OverviewRouterLinkDirective} from './_components/master-detail/directives';
+import {EffectsModule} from '@ngrx/effects';
+import {PatternService} from './designer/services/patterns.service';
 
 
 @NgModule({
@@ -31,7 +37,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -45,9 +50,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatOptionModule,
     MatToolbarModule,
     MatMenuModule,
-    PatternModule,
+    DesignerModule,
     AmplifyAngularModule,
-    MatDialogModule
+    MatDialogModule,
+    MasterDetailModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   declarations: [
     AppComponent,
