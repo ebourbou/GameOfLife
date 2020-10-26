@@ -16,7 +16,8 @@ import {OverviewDetailComponent} from '../_components/master-detail/components';
 @NgModule({
   declarations: [
     MasterComponent,
-    DetailComponent
+    DetailComponent,
+    HeaderComponent
   ],
   imports: [
     DesignerRoutingModule,
