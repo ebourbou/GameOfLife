@@ -1,0 +1,8 @@
+
+<mat-card class="board">
+  <div class="row" *ngFor="let row of this.board.rowsAndCells.values()">
+    <div class="cell" *ngFor="let cell of row" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" (click)="cell.switchState()">
+    </div>
+  </div>
+</mat-card>
+

@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  width: 1%;
+  height: 1%;
+  background: none;
+  border-radius: 50%;
+  padding-bottom: 1%; /* = width for a 1:1 aspect ratio */
+}
+
+.isAlive {
+  background-color: black;
+}
+
+.isDead {
+  background-color: white;
+}

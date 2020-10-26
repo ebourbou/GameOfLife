@@ -1,0 +1,21 @@
+<mat-card>
+  <form class="controls"  (submit)="onPlay()">
+      <p>Geschwindigkeit</p>
+      <mat-slider class="slider" min="0" max="2000" invert="true" value="{{this.controls.speed}}" (change)="onChangeSpeed(speedElement.value)" #speedElement ></mat-slider>
+    <mat-form-field>
+      <input matInput type="number" maxlength="4" required placeholder="Generationen" value="{{this.controls.generations}}" (change)="onChangeGenerations(generationsElement.value)" #generationsElement>
+    </mat-form-field>
+    <div (change)="onResize({x:xSizeElement.value, y:ySizeElement.value})">
+      <mat-form-field >
+        <input matInput type="number" placeholder="Zellen X-Achse"  required #xSizeElement value="{{this.controls.xAxisSize}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Zellen Y-Achse"  required #ySizeElement value="{{this.controls.yAxisSize}}">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit">Play</button>
+  </form>
+</mat-card>
+
+
+

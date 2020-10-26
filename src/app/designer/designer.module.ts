@@ -1,24 +1,20 @@
-
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DetailComponent, MasterComponent } from './pages';
-import {HeaderComponent, ListItemComponent} from './components';
+import { HeaderComponent, ListItemComponent } from './components';
 import { StoreModule } from '@ngrx/store';
 import { DesignerRoutingModule } from './designer-routing.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {MasterDetailModule} from '../_components/master-detail/master-detail.module';
-import {CommonModule} from '@angular/common';
-import {featureStateName, PatternEffects, patternReducer} from './state';
-import {EffectsModule} from '@ngrx/effects';
-import {LayoutComponent} from './layout.component';
-import {OverviewDetailComponent} from '../_components/master-detail/components';
+import { MasterDetailModule } from '../_components/master-detail/master-detail.module';
+import { CommonModule } from '@angular/common';
+import { featureStateName, PatternEffects, patternReducer } from './state';
+import { EffectsModule } from '@ngrx/effects';
+import { LayoutComponent } from './layout.component';
+import { OverviewDetailComponent } from '../_components/master-detail/components';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    MasterComponent,
-    DetailComponent,
-    HeaderComponent
-  ],
+  declarations: [MasterComponent, DetailComponent, HeaderComponent],
   imports: [
     DesignerRoutingModule,
     StoreModule.forFeature(featureStateName, patternReducer),
@@ -26,15 +22,12 @@ import {OverviewDetailComponent} from '../_components/master-detail/components';
     StoreDevtoolsModule.instrument(),
     MasterDetailModule,
     CommonModule,
+    SharedModule,
   ],
-  bootstrap: [
-    OverviewDetailComponent
-  ]
+  bootstrap: [OverviewDetailComponent],
 })
 export class DesignerModule {
   constructor() {
     console.log('Designer Module');
   }
-
-
 }
