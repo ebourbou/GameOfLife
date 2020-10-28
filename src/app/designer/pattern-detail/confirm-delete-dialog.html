@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Pattern Löschen</h1>
+<div mat-dialog-content>Soll das Pattern <strong>{{data.patternName}}</strong> wirklich gelöscht werden?</div>
+<div mat-dialog-actions>
+  <button mat-raised-button  mat-dialog-close="true" >Löschen</button>
+  <button mat-raised-button color="primary" mat-dialog-close cdkFocusInitial (click)="onCancelClick()">Abbrechen</button>
+</div>

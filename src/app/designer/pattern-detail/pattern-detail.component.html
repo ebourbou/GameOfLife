@@ -1,0 +1,122 @@
+<div *ngIf="pattern">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Pattern {{pattern.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="pattern">
+    <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern)" >
+      <div class="header">
+        <div>
+        <mat-form-field >
+          <mat-label>Name</mat-label>
+          <input matInput ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
+          <mat-error *ngIf="name.hasError('required')">
+            Pattern Name ist erforderlich
+          </mat-error>
+        </mat-form-field>
+        </div>
+        <div class="editor-header">
+            <mat-label>Breite [{{("0"+pattern.sizeX).slice(-2)}}]</mat-label>
+            <mat-slider
+              class="example-margin"
+              [max]="20"
+              [min]="1"
+              [step]="1"
+              [thumbLabel]= true
+              [(ngModel)]="pattern.sizeX"
+              ngModel name="sizeX">
+            </mat-slider>
+            <mat-label>Höhe [{{("0"+pattern.sizeY).slice(-2)}}]</mat-label>
+            <mat-slider
+              class="example-margin"
+              [max]="20"
+              [min]="1"
+              [step]="1"
+              [thumbLabel]= true
+              [(ngModel)]="pattern.sizeY"
+              ngModel name="sizeY">
+            </mat-slider>
+        </div>
+      </div>
+      <div class="fields-editor">
+        <div class="fields">
+          <mat-form-field appearance="fill" >
+              <mat-label>Pattern Typ</mat-label>
+              <mat-select ngModel [(ngModel)]="pattern.type" name="type" required>
+                <mat-option value="static">Statisch</mat-option>
+                <mat-option value="spaceship" >Raumschiff Gleiter</mat-option>
+                <mat-option value="oscillator">Oszillator</mat-option>
+                <mat-option value="buffer">Puffer</mat-option>
+                <mat-option value="other">Andere</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+              <mat-label>Autor</mat-label>
+              <input matInput ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
+              <mat-error *ngIf="author.hasError('required')">
+                Autor ist erforderlich
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+              <mat-label>Jahr</mat-label>
+              <input matInput ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
+          </mat-form-field>
+          <div>
+            <mat-label>Hitze [{{("0"+pattern.heat).slice(-2)}}]</mat-label>
+            <mat-slider
+              class="example-margin"
+              [max]="10"
+              [min]="0"
+              [step]="1"
+              [thumbLabel]= true
+              [(ngModel)]="pattern.heat"
+              ngModel name="heat">
+            </mat-slider>
+          </div>
+        </div>
+        <div class="editor">
+           Editor
+        </div>
+      </div>
+      <mat-form-field class="description">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput ngModel class="description-field"
+                  [(ngModel)]="pattern.description" #description="ngModel" name="description"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="3"
+                  cdkAutosizeMaxRows="5">{{pattern.description}}</textarea>
+        <mat-error *ngIf="description.hasError('required')">
+          Beschreibung ist erforderlich
+        </mat-error>
+      </mat-form-field>
+
+      <div class="actions" >
+        <div *ngIf="form.dirty"  >
+          <button mat-raised-button color="primary" (click)="onRevert()"
+                  [disabled]="!form.dirty">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Abbrechen
+          </button>
+        </div>
+        <div class="update-button">
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="!form.dirty">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Speichern
+          </button>
+        </div>
+      </div>
+      <div class="buttons">
+      <button mat-fab color="primary" aria-label="Neues Pattern" (click)="initPattern()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-fab color="warn" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>

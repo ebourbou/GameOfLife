@@ -1,44 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MasterComponent, DetailComponent } from './pages';
 
-/* Use a variable for detail routes,
-   as they need to be added to the route
-   map in 2 places (see below)... */
-const detailRoutes = [
-  {
-    path: 'detail/:id',
-    component: DetailComponent
-  }
-];
+import { LayoutComponent } from './layout.component';
+import { PatternDetailComponent } from './pattern-detail/pattern-detail.component';
+import { PatternsComponent } from './pattern-list/patterns.component';
+import { GameComponent } from '../game/container/game.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'master',
-    pathMatch: 'full'
-  },
-  {
-    path: 'master',
-    component: MasterComponent,
-    children: [
-      // Mobile 'Detail' Routes
-      // are children of the master...
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'detail'
-      },
-      {
-        path: 'detail',
-        component: DetailComponent
-      },
-      ...detailRoutes
-    ]
-  },
-  // Desktop 'Detail' Routes
-  // are siblings of the master...
-  ...detailRoutes
+  { path: "designer", component: PatternsComponent },
+  { path: "", redirectTo: "designer", pathMatch: "full" },
 ];
 
 @NgModule({

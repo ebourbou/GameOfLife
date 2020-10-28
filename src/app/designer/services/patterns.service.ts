@@ -1,5 +1,12 @@
 import {Injectable} from '@angular/core';
-import {APIService, CreatePatternInput, DeletePatternInput, ListPatternsQuery, ListUsersQuery} from '../../API.service';
+import {
+  APIService,
+  CreatePatternInput,
+  DeletePatternInput,
+  ListPatternsQuery,
+  ListUsersQuery,
+  UpdatePatternInput
+} from '../../API.service';
 import {Observable, of} from 'rxjs';
 import {Pattern} from '../../_models/pattern';
 
@@ -30,11 +37,8 @@ export class PatternService {
           type: item.type
         };
         response.push(pat);
-        console.log('Pat: ' + JSON.stringify(pat));
-        console.log('All: ' + JSON.stringify(response));
       });
     });
-    console.log('All: ' + JSON.stringify(response));
     return of(response);
 
   }
@@ -67,6 +71,28 @@ export class PatternService {
     return new Observable<Pattern>(response);
   }
 
+  updatePattern(pattern: Pattern): Observable<Pattern> {
+    let response;
+    let input: UpdatePatternInput;
+    input = {
+      id: pattern.id,
+      author: pattern.author,
+      boxX: pattern.sizeX,
+      boxY: pattern.sizeY,
+      description: pattern.description,
+      heat: pattern.heat,
+      name: pattern.name,
+      pattern: pattern.pattern,
+      type: pattern.type,
+      year: pattern.year
+    };
+    this.api.UpdatePattern(input).then(event => {
+      response = event;
+    });
+    return new Observable<Pattern>(response);
+  }
+
+
   deletePattern(idToDelete: string): Observable<Pattern> {
     let response;
     let input: DeletePatternInput;
@@ -79,4 +105,5 @@ export class PatternService {
     });
     return new Observable<Pattern>(response);
   }
+
 }

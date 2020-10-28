@@ -9,10 +9,9 @@ export class LayoutComponent {
         private router: Router,
         private authService: AuthService
     ) {
-      console.log('Layout Designer');
-        // redirect to home if already logged in
+        /*/ redirect to home if already logged in
         if (this.authService.isAuthenticated()) {
             this.router.navigate(['/']);
-        }
+        }*/
     }
 }

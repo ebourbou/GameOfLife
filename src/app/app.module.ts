@@ -19,17 +19,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { DesignerModule } from './designer/designer.module';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StoreModule } from '@ngrx/store';
 import { MasterDetailModule } from './_components/master-detail/master-detail.module';
-import { HeaderComponent } from './designer/components';
-import { OverviewRouterLinkDirective } from './_components/master-detail/directives';
 import { EffectsModule } from '@ngrx/effects';
-import { PatternService } from './designer/services/patterns.service';
-import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { ConfirmDeleteDialog } from './designer/pattern-detail/confirm-delete-dialog.component';
+import { DesignerModule } from './designer/designer.module';
 
 @NgModule({
   imports: [
@@ -59,7 +56,11 @@ import { SharedModule } from './shared/shared.module';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
   ],
-  declarations: [AppComponent, UserComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    UserComponent,
+    HomeComponent,
+    ConfirmDeleteDialog],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

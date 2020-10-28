@@ -1,0 +1,71 @@
+.pattern {
+  padding: 0.2em;
+  margin:0.1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.editor-header {
+  display: flex;
+  align-content: flex-end;
+  flex-direction: row;
+}
+
+.description {
+  display: flex;
+  margin-top: 10px;
+  align-content: stretch;
+  flex-direction: row;
+  flex: 1;
+}
+
+.description-field {
+  display: flex;
+  align-content: stretch;
+  flex-direction: row;
+  flex: 1;
+  order: 1;
+}
+
+.fields-editor {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  flex: 1;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor {
+  display: flex;
+  align-content: stretch;
+  order: 1;
+  flex: 1;
+  margin-left: 10px;
+  background-color: lightblue;
+}
+
+.actions {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.buttons {
+  margin: 10px;
+  padding: 10px;
+}
+
+.update-button{
+  padding-left: 10px;
+}
+
+

@@ -5,12 +5,12 @@ import { AuthGuard } from './_helpers';
 
 const accountModule = () => import('./auth/account.module').then((x) => x.AccountModule);
 const usersModule = () => import('./users/users.module').then((x) => x.UsersModule);
-const patternModule = () => import('./designer/designer.module').then((x) => x.DesignerModule);
+const designerModule = () => import('./designer/designer.module').then((x) => x.DesignerModule);
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
-  { path: 'designer', loadChildren: patternModule, canActivate: [AuthGuard] },
+  { path: 'designer', loadChildren: designerModule, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: accountModule },
   { path: 'game', loadChildren: () => import('./game/game.module').then((m) => m.GameModule) },
 

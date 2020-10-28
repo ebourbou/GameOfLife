@@ -1,0 +1,19 @@
+<div class="designer">
+  <div class="pattern-list">
+    <mat-selection-list [multiple]="false" [(ngModel)]="selectedPattern" #patternList
+                        >
+      <mat-list-option *ngFor="let pattern of patterns$ | async" [value]="pattern" (click)="onSelect(pattern)">
+        {{pattern.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div class="pattern-detail">
+    <app-pattern-detail [pattern]="selectedPattern"></app-pattern-detail>
+  </div>
+</div>
+
+
+
+
+
+
