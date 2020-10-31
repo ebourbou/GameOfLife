@@ -9,8 +9,11 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { SparklineComponent } from './sparkline/sparkline.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
-const MATERIAL = [MatBadgeModule, MatInputModule, MatFormFieldModule, MatCardModule, MatListModule, MatSliderModule];
+const MATERIAL = [MatBadgeModule, MatIconModule, MatSelectModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatListModule, MatSliderModule];
 
 @NgModule({
   declarations: [SparklineComponent],
