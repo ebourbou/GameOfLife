@@ -4,7 +4,7 @@
     <mat-card-title>Pattern {{pattern.name}}</mat-card-title>
   </mat-card-header>
   <mat-card-content class="pattern">
-    <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern)" >
+    <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern); form.reset()" >
       <div class="header">
         <div>
         <mat-form-field >
@@ -94,7 +94,7 @@
 
       <div class="actions" >
         <div *ngIf="form.dirty"  >
-          <button mat-raised-button color="primary" (click)="onRevert()"
+          <button type="button" mat-raised-button color="primary" (click)="onRevert()"
                   [disabled]="!form.dirty">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Abbrechen
@@ -109,10 +109,10 @@
         </div>
       </div>
       <div class="buttons">
-      <button mat-fab color="primary" aria-label="Neues Pattern" (click)="initPattern()">
+      <button [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
         <mat-icon>add</mat-icon>
       </button>
-      <button mat-fab color="warn" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
+      <button [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
         <mat-icon>delete</mat-icon>
       </button>
       </div>

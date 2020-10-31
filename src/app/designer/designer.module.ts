@@ -1,33 +1,38 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { DetailComponent, MasterComponent } from './pages';
-import { HeaderComponent, ListItemComponent } from './components';
-import { StoreModule } from '@ngrx/store';
-import { DesignerRoutingModule } from './designer-routing.module';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MasterDetailModule } from '../_components/master-detail/master-detail.module';
+import { NgModule } from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { featureStateName, PatternEffects, patternReducer } from './state';
-import { EffectsModule } from '@ngrx/effects';
 import { LayoutComponent } from './layout.component';
-import { OverviewDetailComponent } from '../_components/master-detail/components';
-import { SharedModule } from '../shared/shared.module';
+import { PatternDetailComponent } from './pattern-detail/pattern-detail.component';
+import { PatternsComponent } from './pattern-list/patterns.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { DesignerRoutingModule } from './designer-routing.module';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [MasterComponent, DetailComponent, HeaderComponent],
   imports: [
-    DesignerRoutingModule,
-    StoreModule.forFeature(featureStateName, patternReducer),
-    EffectsModule.forFeature([PatternEffects]),
-    StoreDevtoolsModule.instrument(),
-    MasterDetailModule,
     CommonModule,
-    SharedModule,
+    DesignerRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatListModule,
+    MatSliderModule,
+    MatCardModule,
+    MatIconModule
   ],
-  bootstrap: [OverviewDetailComponent],
+  declarations: [
+    LayoutComponent,
+    PatternDetailComponent,
+    PatternsComponent
+  ]
 })
-export class DesignerModule {
-  constructor() {
-    console.log('Designer Module');
-  }
-}
+export class DesignerModule {}

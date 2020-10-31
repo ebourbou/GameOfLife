@@ -8,17 +8,19 @@ import {
   UpdatePatternInput
 } from '../../API.service';
 import {Observable, of} from 'rxjs';
-import {Pattern} from '../../_models/pattern';
+import {Pattern} from '../../shared/model/pattern';
+import { AmplifyService } from 'aws-amplify-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatternService {
 
-  constructor(private api: APIService) {}
+  constructor(private api: APIService,
+              private amplify: AmplifyService) {
+  }
 
   getPatterns(): Observable<Pattern[]> {
-    console.log('Get patterns');
     const response = new Array<Pattern>();
     this.api.ListPatterns().then(items => {
       const reply = items.items;

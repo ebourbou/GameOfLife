@@ -1,12 +1,13 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {AuthService} from '../_services';
-import {User} from '../_models';
+
 import {ErrorStateMatcher} from '@angular/material/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AmplifyService} from 'aws-amplify-angular';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { User } from '../shared/model/user';
+import { AuthService } from '../core/services/auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class FormErrorStateMatcher implements ErrorStateMatcher {

@@ -1,10 +1,11 @@
 import {Component, NgModule, OnInit} from '@angular/core';
-import {User} from './_models';
-import {AuthService} from './_services';
+
 import {AmplifyService} from 'aws-amplify-angular';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Auth} from '@aws-amplify/auth';
+import { User } from './shared/model/user';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',

@@ -1,12 +1,11 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../_services';
-import {User} from '../_models';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import Auth from '@aws-amplify/auth';
-import { Amplify } from 'aws-amplify';
+
 import {NgForm} from '@angular/forms';
 import {AmplifyService} from 'aws-amplify-angular';
+import { User } from '../shared/model/user';
+import { AuthService } from '../core/services/auth.service';
 
 
 /*

@@ -1,5 +1,5 @@
 import {Action, createAction, props} from '@ngrx/store';
-import { Pattern } from '../../_models/pattern';
+import { Pattern } from '../../shared/model/pattern';
 
 export const LOAD_ALL_PATTERNS = '[Patterns] load all';
 export const LOAD_SINGLE_PATTERN = '[Patterns] load';

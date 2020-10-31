@@ -2,13 +2,12 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, FormsModule, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
-import {AuthService} from '../_services';
-import {Role} from '../_models/role';
-import {enumSelector} from '../_helpers/util';
+import {Role} from '../shared/model/role';
+import {enumSelector} from './util';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormErrorStateMatcher} from '../auth/register.component';
-import {User} from '../_models';
-import {Observable} from 'rxjs';
+import { User } from '../shared/model/user';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -20,11 +19,6 @@ export class AddEditComponent implements OnInit {
     roles = enumSelector(Role);
     hidePwd = true;
 
-/* username: FormControl = new FormControl('', [Validators.required, Validators.min(3), Validators.max(20)]);
-    email: FormControl = new FormControl('', [Validators.required, Validators.email]);
-    role: FormControl = new FormControl('', [Validators.required]);
-    password: FormControl = new FormControl('', [Validators.required, Validators.min(3), Validators.max(20)]);
-*/
     matcher = new FormErrorStateMatcher();
    @ViewChild('form', { read: NgForm }) form: NgForm;
 

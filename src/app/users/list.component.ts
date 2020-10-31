@@ -1,8 +1,8 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { first } from 'rxjs/operators';
-import {AuthService} from '../_services';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {APIService, ListUsersQuery} from '../API.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({ templateUrl: 'list.component.html', styleUrls: ['list.component.scss']})
 export class ListComponent implements OnInit {

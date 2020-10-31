@@ -1,18 +1,22 @@
-import {Component, OnInit, Input, ViewChild} from '@angular/core';
-import {Pattern} from '../../_models/pattern';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import {Pattern} from '../../shared/model/pattern';
 import {NgForm} from '@angular/forms';
 import {ConfirmDeleteDialog} from './confirm-delete-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import { PatternService } from '../services/patterns.service';
+import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatternsComponent } from '../pattern-list/patterns.component';
 
 @Component({
   selector: 'app-pattern-detail',
   templateUrl: './pattern-detail.component.html',
   styleUrls: ['./pattern-detail.component.scss']
 })
-export class PatternDetailComponent implements OnInit {
+export class PatternDetailComponent implements OnChanges {
   @Input() pattern: Pattern;
 
+  selectedPattern: Pattern;
   isAddMode: boolean;
   loading = false;
   submitted = false;
@@ -21,15 +25,21 @@ export class PatternDetailComponent implements OnInit {
 
   patternOriginal: Pattern;
   private patternService: PatternService;
+  private patternsComponent: PatternsComponent;
 
   constructor(public dialog: MatDialog,
-              patternService: PatternService) {
+              patternService: PatternService,
+              patternsComponent: PatternsComponent,
+              private snackBarService: MatSnackBar) {
     this.patternService = patternService;
+    this.snackBarService = snackBarService;
+    this.patternsComponent = patternsComponent;
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     if (this.pattern) {
-      this.patternService.getPattern(this.pattern.id);
+      this.patternOriginal = this.pattern;
+      this.pattern = JSON.parse(JSON.stringify(this.pattern));
     }
   }
 
@@ -51,7 +61,7 @@ export class PatternDetailComponent implements OnInit {
     this.loading = false;
   }
 
-  openConfirmDeleteDialog(): void{
+  openConfirmDeleteDialog(patternToDelete: Pattern): void{
       const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
         width: '25em',
         data: {patternName: this.pattern.name}
@@ -59,12 +69,17 @@ export class PatternDetailComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result){
-          console.log('Delete');
+          this.patternService.deletePattern(patternToDelete.id);
+          this.snackBarService.open('Pattern ' + patternToDelete.name + ' wurde gelöscht', 'Schliessen', {
+            duration: 2000
+          });
+          this.patternsComponent.reload();
         }
       });
   }
 
   onRevert(): void{
+    this.form.resetForm();
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
   }
 
@@ -88,12 +103,21 @@ export class PatternDetailComponent implements OnInit {
     // Todo Temp pattern
     patternToCreate.pattern = 'oooooo';
     this.patternService.addPattern(patternToCreate);
+    this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
+      duration: 2000
+    });
+    this.patternsComponent.reload();
   }
   updatePattern(patternToUpdate: Pattern): void{
     this.patternService.updatePattern(patternToUpdate);
+    this.snackBarService.open('Pattern ' + patternToUpdate.name + ' wurde aktualisiert.', 'Schliessen', {
+      duration: 2000
+    });
+    this.patternsComponent.reload();
   }
 
   deletePattern(patternToDelete: Pattern): void{
-    this.patternService.deletePattern(patternToDelete.id);
+    this.openConfirmDeleteDialog(patternToDelete);
+    this.patternsComponent.selectPattern(null);
   }
 }

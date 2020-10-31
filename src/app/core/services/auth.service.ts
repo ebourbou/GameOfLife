@@ -2,10 +2,10 @@
 import { Router } from '@angular/router';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
-import {User} from '../_models';
 import {Auth} from '@aws-amplify/auth';
 import {fromPromise} from 'rxjs/internal-compatibility';
-import {APIService} from '../API.service';
+import {APIService} from '../../API.service';
+import { User } from '../../shared/model/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

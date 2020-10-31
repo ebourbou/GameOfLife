@@ -1,5 +1,5 @@
 import {Action, on, createReducer} from '@ngrx/store';
-import { Pattern } from '../../_models/pattern';
+import { Pattern } from '../../shared/model/pattern';
 import * as patternActions from './patterns.actions';
 
 export interface ReducerPatternState {

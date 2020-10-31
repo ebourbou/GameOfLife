@@ -4,11 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserComponent } from './_components';
 import { HomeComponent } from './home';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { ErrorStateMatcher, MatOptionModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -22,11 +20,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StoreModule } from '@ngrx/store';
-import { MasterDetailModule } from './_components/master-detail/master-detail.module';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from './shared/shared.module';
 import { ConfirmDeleteDialog } from './designer/pattern-detail/confirm-delete-dialog.component';
 import { DesignerModule } from './designer/designer.module';
+import { ErrorInterceptor } from './auth/error.interceptor';
+import { JwtInterceptor } from './auth/jwt.interceptor';
+import { UserComponent } from './users/user.component';
 
 @NgModule({
   imports: [
@@ -51,7 +51,6 @@ import { DesignerModule } from './designer/designer.module';
     DesignerModule,
     AmplifyAngularModule,
     MatDialogModule,
-    MasterDetailModule,
     SharedModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
