@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
 import {Pattern} from '../../shared/model/pattern';
 import {NgForm} from '@angular/forms';
-import {ConfirmDeleteDialog} from './confirm-delete-dialog.component';
+import {ConfirmDeleteDialog} from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import { PatternService } from '../services/patterns.service';
-import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
+import { Board } from '../../game/model/Board';
+import { GameUtils } from '../../game/util/GameUtils';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -16,10 +17,10 @@ import { PatternsComponent } from '../pattern-list/patterns.component';
 export class PatternDetailComponent implements OnChanges {
   @Input() pattern: Pattern;
 
-  selectedPattern: Pattern;
   isAddMode: boolean;
   loading = false;
   submitted = false;
+  public editor: Board;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
 
@@ -37,9 +38,12 @@ export class PatternDetailComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+
+    console.log("Changed: "+ JSON.stringify(this.pattern));
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
+      this.editor = GameUtils.build(this.pattern.sizeX, this.pattern.sizeY);
     }
   }
 
@@ -57,6 +61,7 @@ export class PatternDetailComponent implements OnChanges {
     } else {
       this.updatePattern(pattern);
     }
+    this.form.reset();
     this.submitted = true;
     this.loading = false;
   }
@@ -73,14 +78,13 @@ export class PatternDetailComponent implements OnChanges {
           this.snackBarService.open('Pattern ' + patternToDelete.name + ' wurde gelöscht', 'Schliessen', {
             duration: 2000
           });
-          this.patternsComponent.reload();
         }
       });
   }
 
   onRevert(): void{
-    this.form.resetForm();
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
+    this.form.reset(this.pattern);
   }
 
   initPattern(): void{
@@ -106,18 +110,19 @@ export class PatternDetailComponent implements OnChanges {
     this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
       duration: 2000
     });
-    this.patternsComponent.reload();
+    //this.patternsComponent.reload(patternToCreate);
   }
   updatePattern(patternToUpdate: Pattern): void{
     this.patternService.updatePattern(patternToUpdate);
     this.snackBarService.open('Pattern ' + patternToUpdate.name + ' wurde aktualisiert.', 'Schliessen', {
       duration: 2000
     });
-    this.patternsComponent.reload();
+    //this.patternsComponent.reload(patternToUpdate);
   }
 
   deletePattern(patternToDelete: Pattern): void{
     this.openConfirmDeleteDialog(patternToDelete);
-    this.patternsComponent.selectPattern(null);
+    this.patternsComponent.onSelect(null);
+    //this.patternsComponent.reload(null);
   }
 }

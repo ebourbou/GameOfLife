@@ -4,7 +4,7 @@
     <mat-card-title>Pattern {{pattern.name}}</mat-card-title>
   </mat-card-header>
   <mat-card-content class="pattern">
-    <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern); form.reset()" >
+    <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern);" >
       <div class="header">
         <div>
         <mat-form-field >
@@ -76,15 +76,17 @@
           </div>
         </div>
         <div class="editor">
-           Editor
+          <!--<gol-board class="board" [board]="editor"></gol-board>-->
         </div>
       </div>
-      <mat-form-field class="description">
+
+
+      <mat-form-field appearance="fill" class="description">
         <mat-label>Beschreibung</mat-label>
-        <textarea matInput ngModel class="description-field"
+        <textarea matInput ngModel
+                  class
                   [(ngModel)]="pattern.description" #description="ngModel" name="description"
                   cdkTextareaAutosize
-                  #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="3"
                   cdkAutosizeMaxRows="5">{{pattern.description}}</textarea>
         <mat-error *ngIf="description.hasError('required')">

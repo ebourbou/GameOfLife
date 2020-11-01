@@ -20,17 +20,13 @@
 .description {
   display: flex;
   margin-top: 10px;
-  align-content: stretch;
-  flex-direction: row;
-  flex: 1;
+  flex-direction: column;
 }
 
 .description-field {
-  display: flex;
-  align-content: stretch;
-  flex-direction: row;
-  flex: 1;
-  order: 1;
+  flex-grow: 1;
+  flex-direction: column;
+  background-color: darkblue;
 }
 
 .fields-editor {
@@ -51,7 +47,7 @@
   order: 1;
   flex: 1;
   margin-left: 10px;
-  background-color: lightblue;
+  border: 1px round(5);
 }
 
 .actions {

@@ -7,6 +7,9 @@ import { DesignerRoutingModule } from './designer-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { Board } from '../game/model/Board';
+import { BoardComponent } from '../game/board/board.component';
+import { GameModule } from '../game/game.module';
 
 
 @NgModule({
@@ -17,7 +20,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     SharedModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    GameModule
   ],
   declarations: [
     PatternDetailComponent,

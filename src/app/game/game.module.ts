@@ -20,10 +20,12 @@ import { MatRippleModule } from '@angular/material/core';
     SharedModule,
     StatisticModule,
     CoreModule,
-    DesignerModule,
     StoreModule.forFeature(gameStore.gameFeatureKey, gameStore.gameActionReducer),
     EffectsModule.forFeature([GameEffects]),
-    MatRippleModule,
+    MatRippleModule
   ],
+  exports: [
+    BoardComponent
+  ]
 })
 export class GameModule {}

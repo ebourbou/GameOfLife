@@ -22,7 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from './shared/shared.module';
-import { ConfirmDeleteDialog } from './designer/pattern-detail/confirm-delete-dialog.component';
+import { ConfirmDeleteDialog } from './designer/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';

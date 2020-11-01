@@ -1,9 +1,9 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormBuilder, FormsModule, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {Role} from '../shared/model/role';
-import {enumSelector} from './util';
+import {enumSelector} from './utils/util';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormErrorStateMatcher} from '../auth/register.component';
 import { User } from '../shared/model/user';

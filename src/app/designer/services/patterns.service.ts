@@ -20,8 +20,9 @@ export class PatternService {
               private amplify: AmplifyService) {
   }
 
-  getPatterns(): Observable<Pattern[]> {
+  getPatterns(): Pattern[] {
     const response = new Array<Pattern>();
+
     this.api.ListPatterns().then(items => {
       const reply = items.items;
       items.items.map(item => {
@@ -41,7 +42,7 @@ export class PatternService {
         response.push(pat);
       });
     });
-    return of(response);
+    return response;
 
   }
 
