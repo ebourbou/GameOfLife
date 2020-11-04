@@ -1,8 +1,8 @@
-﻿import {Component, OnInit} from '@angular/core';
-import {Auth} from '@aws-amplify/auth';
+﻿import { Component, OnInit } from '@angular/core';
+import { Auth } from '@aws-amplify/auth';
 
-import {APIService, CreateUserInput, GetUserQuery} from '../API.service';
-import {Role} from '../shared/model/role';
+import { APIService } from '../API.service';
+import { Role } from '../shared/model/role';
 import { User } from '../shared/model/user';
 import { AuthService } from '../core/services/auth.service';
 

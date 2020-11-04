@@ -6,8 +6,8 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AmplifyService} from 'aws-amplify-angular';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { User } from '../shared/model/user';
-import { AuthService } from '../core/services/auth.service';
+import { User } from '../../shared/model/user';
+import { AuthService } from '../../core/services/auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class FormErrorStateMatcher implements ErrorStateMatcher {
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
             errMsg = 'Benutzer oder Passwort falsch';
             break;
           case 'UsernameExistsException':
-            errMsg = 'Benutzernamwe wird schon verwendet';
+            errMsg = 'Benutzername wird schon verwendet';
             break;
         }
 

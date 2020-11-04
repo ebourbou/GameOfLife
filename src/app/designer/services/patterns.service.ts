@@ -1,16 +1,14 @@
 import {Injectable} from '@angular/core';
 import {
   APIService,
-  CreatePatternInput, CreatePatternMutation,
-  DeletePatternInput, DeletePatternMutation, GetPatternQuery,
+  CreatePatternMutation,
+  DeletePatternMutation, GetPatternQuery,
   ListPatternsQuery,
-  ListUsersQuery,
-  UpdatePatternInput, UpdatePatternMutation
+  UpdatePatternMutation
 } from '../../API.service';
-import {Observable, of} from 'rxjs';
+
 import {Pattern} from '../../shared/model/pattern';
 import { AmplifyService } from 'aws-amplify-angular';
-import { API } from '@aws-amplify/api';
 import { PatternUtils } from '../util/pattern-util';
 
 @Injectable({
@@ -18,8 +16,7 @@ import { PatternUtils } from '../util/pattern-util';
 })
 export class PatternService {
 
-  constructor(private api: APIService,
-              private amplify: AmplifyService) {
+  constructor(private api: APIService) {
   }
 
   async getPatterns(): Promise<ListPatternsQuery> {

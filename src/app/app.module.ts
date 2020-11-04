@@ -26,7 +26,6 @@ import { ConfirmDeleteDialog } from './designer/confirm-delete-dialog/confirm-de
 import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
-import { UserComponent } from './users/user.component';
 
 @NgModule({
   imports: [
@@ -57,7 +56,6 @@ import { UserComponent } from './users/user.component';
   ],
   declarations: [
     AppComponent,
-    UserComponent,
     HomeComponent,
     ConfirmDeleteDialog],
   providers: [

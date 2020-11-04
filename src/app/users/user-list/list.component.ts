@@ -1,22 +1,17 @@
-﻿import {Component, OnInit, ViewChild} from '@angular/core';
-import { first } from 'rxjs/operators';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {APIService, ListUsersQuery} from '../API.service';
-import { AuthService } from '../core/services/auth.service';
+﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { ListUsersQuery } from '../../API.service';
+import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../services/users.service';
 
 @Component({ templateUrl: 'list.component.html', styleUrls: ['list.component.scss']})
 export class ListComponent implements OnInit {
     users = null;
-    lowValue = 0;
-    highValue = 20;
     constructor(private authService: AuthService,
-                private api: APIService) {}
+                private userService: UserService) {}
     displayedColumns = ['username', 'email', 'role', 'actions'];
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
     ngOnInit() {
-      this.api.ListUsers().then((list: ListUsersQuery) => {
+      this.userService.getUsers().then((list: ListUsersQuery) => {
         this.users = list.items;
       });
 
