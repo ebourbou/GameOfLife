@@ -1,11 +1,11 @@
 ﻿<h1>Benutzerrolle editieren</h1>
+<div *ngIf="user">
 <form novalidate #form="ngForm" (ngSubmit)="onSubmit(user)">
     <div class="form-row">
         <div class="form-group col">
           <mat-form-field appearance="fill">
           <mat-label>Benutzer</mat-label>
-            <input matInput ngModel type="text" name="username" [ngModel]="user.username" placeholder="Benutzer"
-                   required disabled  minLength="3">
+            <input matInput type="text" name="username" [ngModel]="user.username" placeholder="Benutzer" disabled>
           </mat-form-field>
         </div>
      <div class="form-group col">
@@ -30,3 +30,4 @@
     </div>
     </div>
 </form>
+</div>

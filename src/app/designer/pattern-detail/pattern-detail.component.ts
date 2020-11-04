@@ -39,8 +39,6 @@ export class PatternDetailComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-
-    console.log("Changed: "+ JSON.stringify(this.pattern));
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
