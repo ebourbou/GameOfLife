@@ -19,7 +19,11 @@ export class UserService {
     return this.api.GetUser(id);
   }
 
-  updateUser(user: User): Promise<UpdateUserMutation> {
-    return this.api.UpdateUser(user);
+  updateUserRole(user: User): Promise<UpdateUserMutation> {
+    const update = {
+      id: user.id,
+      role: user.role.valueOf()
+    }
+    return this.api.UpdateUser(update);
   }
 }

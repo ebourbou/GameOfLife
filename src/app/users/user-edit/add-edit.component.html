@@ -1,49 +1,29 @@
-﻿<h1>Benutzer editieren</h1>
+﻿<h1>Benutzerrolle editieren</h1>
 <form novalidate #form="ngForm" (ngSubmit)="onSubmit(user)">
     <div class="form-row">
         <div class="form-group col">
           <mat-form-field appearance="fill">
-            <mat-label>Benutzer</mat-label>
-            <input matInput ngModel type="text" name="username" [(ngModel)]="user.username" placeholder="Benutzer"
-               required minlength="3" maxlength="20" #username="ngModel">
-            <mat-hint align="end">{{user.username?.length || 0}}/20</mat-hint>
-            <mat-error *ngIf="username.dirty && form.invalid">
-              Benutzernamen ist erforderlich
-            </mat-error>
-            <mat-error *ngIf="username.hasError('minlength')">
-              Benutzernamen muss mindestens 3 Zeichen enthalten
-            </mat-error>
-            <mat-error *ngIf="username.hasError('maxlength')">
-              Benutzernamen darf maximal 20 Zeichen enthalten
-            </mat-error>
+          <mat-label>Benutzer</mat-label>
+            <input matInput ngModel type="text" name="username" [ngModel]="user.username" placeholder="Benutzer"
+                   required disabled  minLength="3">
           </mat-form-field>
         </div>
-       <div class="form-group col">
-        <mat-form-field appearance="fill">
-          <mat-label>eMail</mat-label>
-          <input matInput ngModel type="text" name="email" [(ngModel)]="user.email" placeholder="eMail"
-                 required #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-          <mat-error *ngIf="email.dirty && email.invalid">
-            Bitte eine gültige eMail Adresse eingeben
-          </mat-error>
-        </mat-form-field>
-      </div>
      <div class="form-group col">
        <mat-form-field appearance="fill">
        <mat-label>Benutzer Rolle</mat-label>
         <mat-select placeholder="Rolle" [(ngModel)]="user.role" name="role" required #role="ngModel">
           <mat-option *ngFor="let item of roles" [value]="item.title" >{{item.value}}</mat-option>
         </mat-select>
-       <mat-error *ngIf="role.hasError('minlength')">
+       <mat-error *ngIf="role.required">
          Rolle muss gewählt sein
        </mat-error>
        </mat-form-field>
      </div>
 
     <div class="form-group">
-      <a mat-stroked-button routerLink="/users" class="btn btn-link">Abbrechen</a>
+      <a mat-raised-button routerLink="/users">Abbrechen</a>
 
-      <button [disabled]="loading || !form.form.valid" mat-stroked-button type="submit">
+      <button color="primary" [disabled]="loading || !form.form.valid" mat-raised-button type="submit">
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         Speichern
       </button>

@@ -8,7 +8,7 @@ import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../services/users.service';
 
-@Component({ templateUrl: 'add-edit.component.html' })
+@Component({ templateUrl: 'add-edit.component.html', styleUrls: ['add-edit.component.scss']})
 export class AddEditComponent implements OnInit {
     id: string;
     user: User = null;
@@ -42,28 +42,11 @@ export class AddEditComponent implements OnInit {
         }
 
         this.loading = true;
-        this.userService.updateUser(user).then((value) => (
-          this.snackBarService.open('Benutzer ' + this.user.username + ' wurde aktualisiert.',
-            'Schliessen', {duration: 2000})
-        ));
+        this.userService.updateUserRole(user).then((value) => {
+          this.snackBarService.open('Benutzerrolle für ' + this.user.username + ' wurde aktualisiert.',
+            'Schliessen', { duration: 2000 });
+          this.router.navigate(['/users']);
+        });
         this.loading = false;
     }
-/*
-    private createUser(user: User): void {
-      this.authService.register(this.user.username, this.user.password, this.user.email)
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.router.navigate(['.', {relativeTo: this.route}]).then((navigated: boolean) => {
-              if (navigated) {
-                this.snackBarService.open('Benutzer ' + this.user.username + ' wurde angelegt.', 'Schliessen', {
-                  duration: 2000,
-                });
-              }
-            });
-          },
-          error => {
-            this.loading = false;
-          });
-    }*/
 }

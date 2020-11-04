@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core'
+import localeDECH from '@angular/common/locales/de-CH';
+
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +28,9 @@ import { ConfirmDeleteDialog } from './designer/confirm-delete-dialog/confirm-de
 import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeDECH);
 
 @NgModule({
   imports: [
@@ -62,6 +67,7 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: LOCALE_ID, useValue: "de-CH" },
     AmplifyService,
   ],
   bootstrap: [AppComponent],
