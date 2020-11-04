@@ -2,7 +2,7 @@
   <div class="pattern-list">
     <mat-selection-list #patternList [multiple]="false"
                         (selectionChange)="onPatternSelection(patternList.selectedOptions.selected[0])">
-      <mat-list-option
+      <mat-list-option [selected]="selectedPattern.id === pattern.id"
            *ngFor="let pattern of patterns" [value]="pattern">
         {{pattern.name}}
       </mat-list-option>

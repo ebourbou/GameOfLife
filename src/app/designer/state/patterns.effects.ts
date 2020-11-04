@@ -10,7 +10,7 @@ import * as patternActions from './patterns.actions';
 export class PatternEffects {
   constructor(private actions$: Actions, private patternService: PatternService) {}
 
-  loadPatterns$ = createEffect(() =>
+ /* loadPatterns$ = createEffect(() =>
     this.actions$.pipe(
       ofType(patternActions.loadAllPatterns),
       switchMap(action =>
@@ -34,8 +34,9 @@ export class PatternEffects {
       )
     )
   );
+  */
 
-  addPattern$ = createEffect(() =>
+  /*addPattern$ = createEffect(() =>
     this.actions$.pipe(
       ofType(patternActions.addPattern),
       map(action => action.payload),
@@ -59,5 +60,5 @@ export class PatternEffects {
         )
       )
     )
-  );
+  );*/
 }

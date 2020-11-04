@@ -3,16 +3,17 @@ import {Pattern} from '../../shared/model/pattern';
 import { PatternService } from '../services/patterns.service';
 import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
-import { APIService } from '../../API.service';
+import { APIService, ListPatternsQuery, OnDeletePatternSubscription } from '../../API.service';
 import { PatternUtils } from '../util/pattern-util';
 import { PatternDetailComponent } from '../pattern-detail/pattern-detail.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patterns',
   templateUrl: './patterns.component.html',
   styleUrls: ['./patterns.component.scss']
 })
-export class PatternsComponent implements OnInit, OnChanges {
+export class PatternsComponent implements OnInit {
   patterns: Pattern[];
   selectedPattern: Pattern;
   private _patternService: PatternService;
@@ -29,25 +30,36 @@ export class PatternsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // Subscriptions to GraphQL via websockets on cerate,delete & update
-    this.apiService.OnCreatePatternListener.subscribe(pattern => {
-      this.patterns.push(PatternUtils.convertPattern(pattern));
-      }
-    );
-    this.apiService.OnDeletePatternListener.subscribe(pattern => {
-      const patternToDelete: Pattern = PatternUtils.convertPattern(pattern);
-      const foundIndex = this.patterns.findIndex(x => x.id === patternToDelete.id);
-      this.patterns.splice(foundIndex, 1);
-      }
-    );
-
-    this.apiService.OnUpdatePatternListener.subscribe(pattern => {
-        const patternToUpdate: Pattern = PatternUtils.convertPattern(pattern);
-        const foundIndex = this.patterns.findIndex(x => x.id === patternToUpdate.id);
-        this.patterns[foundIndex] = patternToUpdate;
+    // Subscriptions to GraphQL via websockets on create,delete & update
+    this.apiService.OnCreatePatternListener.subscribe((value) => {
+      /*console.log('create (subscription)');
+      const patternCreated: Pattern =  PatternUtils.fromAwsPattern(value);
+      this.patterns.push(patternCreated);
+      this.onSelect(patternCreated);*/
+      this.load(null);
       }
     );
 
+    this.apiService.OnDeletePatternListener.subscribe((value) => {
+        /*console.log('delete (subscription)');
+        const patternToDelete: Pattern = PatternUtils.fromAwsPattern(value);
+        const foundIndex = this.patterns.findIndex(x => x.id === patternToDelete.id);
+        this.patterns.splice(foundIndex, 1);
+        //this.onSelect(null);*/
+      this.load(null);
+      }
+    );
+
+    this.apiService.OnUpdatePatternListener.subscribe((value) => {
+         console.log('update (subscription)'+ value);
+       /*  const patternToUpdate: Pattern = PatternUtils.fromAwsPattern(value);
+         console.log("updated pattern"+ JSON.stringify(patternToUpdate));
+         const foundIndex = this.patterns.findIndex(x => x.id === patternToUpdate.id);
+         this.patterns[foundIndex] = patternToUpdate;
+         this.selectedPattern = patternToUpdate;*/
+         this.load(null);
+      }
+    );
     this.load(null);
   }
 
@@ -66,28 +78,13 @@ export class PatternsComponent implements OnInit, OnChanges {
     this.selectedPattern = select.value;
   }
 
-  async load(selectedPattern: Pattern) {
-
-    console.log("Loading");
-    this.patterns = await this._patternService.getPatterns();
-    console.log("Reloaded"+ this.patterns?.length);
-    this.selectedPattern = selectedPattern ? selectedPattern : (this.patterns.length > 0 ? this.patterns[0] : null);
-    this.onSelect(selectedPattern);
-    /*
-      error => {
-        console.log("Error handling");
-      },
-      () => {
-        console.log("Reloaded");
-        this.selectedPattern = selectedPattern ? selectedPattern : (this.patterns.length > 0 ? this.patterns[0] : null);
-        this.onSelect(selectedPattern);
+  load(selectedPattern: Pattern): void {
+      this._patternService.getPatterns().then((result) => {
+      this.patterns = result.items.map(function(item){return PatternUtils.fromAwsPattern(item)});
+      this.selectedPattern = selectedPattern ? selectedPattern : (this.patterns.length > 0 ? this.patterns[0] : null);
+      this.onSelect(selectedPattern);
       }
-    );*/
-    console.log("load done. " + this.selectedPattern?.name + " patterns" + this.patterns.length);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("Changes:"+changes);
+    );
   }
 }
 

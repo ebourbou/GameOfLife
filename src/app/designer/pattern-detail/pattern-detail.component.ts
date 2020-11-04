@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../game/model/Board';
 import { GameUtils } from '../../game/util/GameUtils';
+import { PatternUtils } from '../util/pattern-util';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -60,8 +61,8 @@ export class PatternDetailComponent implements OnChanges {
       this.createPattern(pattern);
     } else {
       this.updatePattern(pattern);
+      this.form.reset();
     }
-    this.form.reset();
     this.submitted = true;
     this.loading = false;
   }
@@ -74,9 +75,10 @@ export class PatternDetailComponent implements OnChanges {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result){
-          this.patternService.deletePattern(patternToDelete.id);
-          this.snackBarService.open('Pattern ' + patternToDelete.name + ' wurde gelöscht', 'Schliessen', {
-            duration: 2000
+          this.patternService.deletePattern(patternToDelete.id).then((result) => {
+            this.snackBarService.open('Pattern ' + result.name + ' wurde gelöscht', 'Schliessen', {
+              duration: 2000
+            });
           });
         }
       });
@@ -103,26 +105,28 @@ export class PatternDetailComponent implements OnChanges {
      type: null};
    }
 
-  createPattern(patternToCreate: Pattern): void{
+  createPattern(patternToCreate: Pattern): Pattern {
     // Todo Temp pattern
-    patternToCreate.pattern = 'oooooo';
-    this.patternService.addPattern(patternToCreate);
-    this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
-      duration: 2000
-    });
-    //this.patternsComponent.reload(patternToCreate);
+    patternToCreate.pattern = 'DummyPatternContent';
+
+    this.patternService.addPattern(patternToCreate).then(data => {
+      this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
+        duration: 2000
+      });
+      return data;
+    }).catch(); // Error
+    return null;
   }
+
   updatePattern(patternToUpdate: Pattern): void{
-    this.patternService.updatePattern(patternToUpdate);
-    this.snackBarService.open('Pattern ' + patternToUpdate.name + ' wurde aktualisiert.', 'Schliessen', {
-      duration: 2000
-    });
-    //this.patternsComponent.reload(patternToUpdate);
+    this.patternService.updatePattern(patternToUpdate).then((result) => {
+      this.snackBarService.open('Pattern ' + result.name + ' wurde aktualisiert.', 'Schliessen', {
+        duration: 2000
+      });
+    });;
   }
 
   deletePattern(patternToDelete: Pattern): void{
     this.openConfirmDeleteDialog(patternToDelete);
-    this.patternsComponent.onSelect(null);
-    //this.patternsComponent.reload(null);
   }
 }

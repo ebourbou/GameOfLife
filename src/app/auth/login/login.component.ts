@@ -4,8 +4,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {NgForm} from '@angular/forms';
 import {AmplifyService} from 'aws-amplify-angular';
-import { User } from '../shared/model/user';
-import { AuthService } from '../core/services/auth.service';
+import { User } from '../../shared/model/user';
+import { AuthService } from '../../core/services/auth.service';
 
 
 /*
