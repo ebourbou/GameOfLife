@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Auth } from '@aws-amplify/auth';
-
-import { APIService, CreateUserInput, GetUserQuery } from '../API.service';
+import { APIService } from '../API.service';
 import { Role } from '../shared/model/role';
 import { User } from '../shared/model/user';
 import { AuthService } from '../core/services/auth.service';
@@ -12,7 +11,12 @@ export class HomeComponent implements OnInit {
     { src: '../../../assets/img/weltbild.jpg', text: 'Entwerfe Welten' },
     { src: '../../../assets/img/michelangelo_1.jpg', text: 'Erschaffe Leben' },
     { src: '../../../assets/img/commandments.jpg', text: 'Bestimme die Regeln' },
-    { src: '../../../assets/img/breeder-animation.gif', text: 'Spiel das Spiel des Lebens', link: 'game', linkLabel: 'Zum Spiel' },
+    {
+      src: '../../../assets/img/breeder-animation.gif',
+      text: 'Spiel das Spiel des Lebens',
+      link: 'game',
+      linkLabel: 'Zum Spiel',
+    },
   ];
 
   user: User;
@@ -49,8 +53,5 @@ export class HomeComponent implements OnInit {
         this.user.lastLogin = new Date().toISOString();
       }
     });
-
-    /*
-    console.log(this.user);*/
   }
 }

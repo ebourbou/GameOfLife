@@ -12,7 +12,6 @@ import { SparklineComponent } from './sparkline/sparkline.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { MatOptionModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -20,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -35,7 +35,10 @@ const MATERIAL = [
   MatToolbarModule,
   MatMenuModule,
   MatDialogModule,
-  MatTableModule
+  MatTableModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatSelectModule,
 ];
 
 @NgModule({
