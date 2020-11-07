@@ -13,8 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 
-const MATERIAL = [MatBadgeModule, MatIconModule, MatSelectModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatListModule, MatTableModule, MatSliderModule];
+const MATERIAL = [MatBadgeModule, MatIconModule, MatSelectModule, MatButtonModule, MatInputModule,
+                  MatFormFieldModule, MatCardModule, MatListModule, MatTableModule, MatSliderModule,
+                  MatSnackBarModule, MatMenuModule, MatToolbarModule, MatDialogModule];
 
 @NgModule({
   declarations: [SparklineComponent],

@@ -3,6 +3,7 @@ import { ListUsersQuery } from '../../API.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../services/users.service';
 
+
 @Component({ templateUrl: 'list.component.html', styleUrls: ['list.component.scss']})
 export class ListComponent implements OnInit {
     users = null;

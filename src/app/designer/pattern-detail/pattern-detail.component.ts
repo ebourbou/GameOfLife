@@ -42,7 +42,7 @@ export class PatternDetailComponent implements OnChanges {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-      this.editor = GameUtils.build(this.pattern.sizeX, this.pattern.sizeY);
+      this.editor = GameUtils.build(8,8);//this.pattern.sizeX, this.pattern.sizeY);
     }
   }
 

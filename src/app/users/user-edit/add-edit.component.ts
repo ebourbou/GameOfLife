@@ -19,13 +19,15 @@ export class AddEditComponent implements OnInit {
    @ViewChild('form', { read: NgForm }) form: NgForm;
 
   constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private authService: AuthService,
-        private userService: UserService,
-        private snackBarService: MatSnackBar
-    ) {}
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService,
+    private snackBarService: MatSnackBar
+  ) {
+
+  }
 
     public ngOnInit(): void {
       this.id = this.route.snapshot.params.id;

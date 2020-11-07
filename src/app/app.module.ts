@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core'
+import { LOCALE_ID, NgModule } from '@angular/core';
 import localeDECH from '@angular/common/locales/de-CH';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,18 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { ErrorStateMatcher, MatOptionModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
-import { MatDialogModule } from '@angular/material/dialog';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from './shared/shared.module';
@@ -29,12 +21,15 @@ import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
 import { registerLocaleData } from '@angular/common';
+import { PatternService } from './designer/services/patterns.service';
+import { UserService } from './users/services/users.service';
 
 registerLocaleData(localeDECH);
 
 @NgModule({
   imports: [
     BrowserModule,
+    SharedModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -42,20 +37,9 @@ registerLocaleData(localeDECH);
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSnackBarModule,
     PasswordStrengthMeterModule,
-    MatOptionModule,
-    MatToolbarModule,
-    MatMenuModule,
     DesignerModule,
     AmplifyAngularModule,
-    MatDialogModule,
-    SharedModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
   ],
@@ -68,6 +52,8 @@ registerLocaleData(localeDECH);
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     { provide: LOCALE_ID, useValue: "de-CH" },
+    { provide: UserService, useClass: UserService},
+    { provide: PatternService, useClass: PatternService},
     AmplifyService,
   ],
   bootstrap: [AppComponent],

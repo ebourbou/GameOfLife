@@ -1,12 +1,11 @@
-import { Component, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import {Pattern} from '../../shared/model/pattern';
-import { PatternService } from '../services/patterns.service';
+import { Component, OnInit, Output } from '@angular/core';
+import { Pattern } from '../../shared/model/pattern';
 import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
-import { APIService, ListPatternsQuery, OnDeletePatternSubscription } from '../../API.service';
+import { APIService } from '../../API.service';
 import { PatternUtils } from '../util/pattern-util';
-import { PatternDetailComponent } from '../pattern-detail/pattern-detail.component';
-import { map } from 'rxjs/operators';
+import { PatternService } from '../services/patterns.service';
+
 
 @Component({
   selector: 'app-patterns',
@@ -16,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class PatternsComponent implements OnInit {
   patterns: Pattern[];
   selectedPattern: Pattern;
+
   private _patternService: PatternService;
 
   @Output()

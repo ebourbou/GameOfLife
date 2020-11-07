@@ -9,9 +9,9 @@ import { GameModule } from '../game/game.module';
 
 @NgModule({
   imports: [
+    SharedModule,
     DesignerRoutingModule,
     ReactiveFormsModule,
-    SharedModule,
     GameModule
   ],
   declarations: [

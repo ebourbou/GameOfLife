@@ -59,7 +59,6 @@ export class AuthService {
 
   /** get authenticate state */
   public isAuthenticated(): Observable < boolean > {
-    // @ts-ignore
     return fromPromise(Auth.currentAuthenticatedUser())
       .pipe(
         map(result => {
