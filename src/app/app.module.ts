@@ -23,6 +23,9 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
 import { registerLocaleData } from '@angular/common';
 import { PatternService } from './designer/services/patterns.service';
 import { UserService } from './users/services/users.service';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 registerLocaleData(localeDECH);
 
@@ -42,18 +45,18 @@ registerLocaleData(localeDECH);
     AmplifyAngularModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    MatToolbarModule,
+    MatSidenavModule,
   ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ConfirmDeleteDialog],
+  declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    { provide: LOCALE_ID, useValue: "de-CH" },
-    { provide: UserService, useClass: UserService},
-    { provide: PatternService, useClass: PatternService},
+    { provide: LOCALE_ID, useValue: 'de-CH' },
+    { provide: UserService, useClass: UserService },
+    { provide: PatternService, useClass: PatternService },
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },
     AmplifyService,
   ],
   bootstrap: [AppComponent],

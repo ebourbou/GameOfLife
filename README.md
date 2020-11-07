@@ -1,4 +1,12 @@
-# GameOfLife
+## CAS FEE Project 2: GameOfLife
+
+Das Spiel des Lebens (engl. Conway’s Game of Life) ist ein vom Mathematiker John Horton Conway 1970 entworfenes Spiel, basierend auf einem zweidimensionalen zellulären Automaten. Es ist eine einfache und bis heute populäre Umsetzung der Automaten-Theorie von Stanisław 
+
+![Alt-Text](doc/readme/Animated_glider_emblem.gif)
+
+(Quelle: https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens)
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.0.
 

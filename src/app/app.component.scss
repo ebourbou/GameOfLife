@@ -3,15 +3,15 @@
 }
 
 .spacer {
-  flex: 1 1 auto;
+  flex: 1 1 auto ;
 }
 
 .nav {
   border: 0em;
   margin: 0em;
 }
+
 .title {
-  color: black;
   font-size: larger;
 }
 
@@ -22,4 +22,23 @@
 .role {
   display:inline-block;
   margin-left: 0.1em;
+}
+.sidenav-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+.toolbar{
+  position: relative;
+  z-index: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.content{
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  padding: 24px;
 }

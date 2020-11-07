@@ -9,22 +9,38 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { SparklineComponent } from './sparkline/sparkline.component';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { MatOptionModule } from '@angular/material/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
 
-const MATERIAL = [MatBadgeModule, MatIconModule, MatSelectModule, MatButtonModule, MatInputModule,
-                  MatFormFieldModule, MatCardModule, MatListModule, MatTableModule, MatSliderModule,
-                  MatSnackBarModule, MatMenuModule, MatToolbarModule, MatDialogModule];
+const MATERIAL = [
+  MatBadgeModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatCardModule,
+  MatListModule,
+  MatSliderModule,
+  MatIconModule,
+  MatButtonModule,
+  MatSnackBarModule,
+  MatOptionModule,
+  MatToolbarModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatTableModule
+];
 
 @NgModule({
-  declarations: [SparklineComponent],
+  declarations: [SparklineComponent, CarouselComponent],
   imports: [CommonModule, ...MATERIAL],
-  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL],
+  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL, CarouselComponent],
 })
 export class SharedModule {}

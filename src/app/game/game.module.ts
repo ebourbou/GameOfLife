@@ -9,12 +9,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as gameStore from './state/game.reducer';
 import { GameEffects } from './state/game.effects';
-import { CoreModule } from '../../../src/app/core/core.module';
+import { CoreModule } from '../core/core.module';
 import { DesignerModule } from '../designer/designer.module';
 import { MatRippleModule } from '@angular/material/core';
+import { StepperComponent } from './stepper/stepper.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [GameComponent, BoardComponent, ControlsComponent],
+  declarations: [GameComponent, BoardComponent, ControlsComponent, StepperComponent],
   imports: [
     GameRoutingModule,
     SharedModule,
@@ -22,10 +26,11 @@ import { MatRippleModule } from '@angular/material/core';
     CoreModule,
     StoreModule.forFeature(gameStore.gameFeatureKey, gameStore.gameActionReducer),
     EffectsModule.forFeature([GameEffects]),
-    MatRippleModule
+    MatRippleModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
-  exports: [
-    BoardComponent
-  ]
+  exports: [BoardComponent],
 })
 export class GameModule {}

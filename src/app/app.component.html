@@ -1,39 +1,55 @@
-<!-- nav -->
-<mat-toolbar *ngIf="(authService.loggedIn | async) as loggedIn">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <span><a class="title" routerLink="/" routerLinkActive="active">Game of Life</a></span>
-    <span class="spacer"></span>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dashboard</mat-icon>
-        <a mat-button routerLink="/designer" routerLinkActive="active">Design Editor</a>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>rule</mat-icon>
-        <a mat-button routerLink="/rules" routerLinkActive="active">Regel Editor</a>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-        <a mat-button routerLink="/users" routerLinkActive="active">Rollenverwaltung</a>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>login</mat-icon>
-        <a mat-button  (click)="logout()">Logout</a>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>toys</mat-icon>
-        <a mat-button routerLink="/game" routerLinkActive="active">Play</a>
-      </button>
-    </mat-menu>
-    <span class="spacer"></span>
-      <mat-icon>face</mat-icon>
-  <!--<div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>-->
+<mat-sidenav-container >
+  <mat-sidenav mode="push" #sidenav_left position="start">
+    <mat-nav-list role="navigation">
+      <a mat-list-item routerLink="designer" routerLinkActive="active" (click)="sidenav_left.close()">
+        <mat-icon matListIcon>dashboard</mat-icon>
+        Design Editor
+      </a>
+      <a mat-list-item routerLink="rules" routerLinkActive="active" (click)="sidenav_left.close()">
+        <mat-icon matListIcon>rule</mat-icon>
+        Regel Editor
+      </a>
+      <a mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
+        <mat-icon matListIcon>settings</mat-icon>
+        Rollenverwaltung
+      </a>
+      <a mat-list-item routerLink="game" routerLinkActive="active" (click)="sidenav_left.close()">
+        <mat-icon matListIcon>toys</mat-icon>
+        Spiel
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-</mat-toolbar>
+  <mat-sidenav mode="push"  #sidenav_right position="end">
+    <mat-nav-list role="navigation" >
+      <a mat-list-item (click)="logout()" routerLinkActive="active">
+        <mat-icon matListIcon>login</mat-icon>
+        Logout
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-<!-- main app container -->
-<div class="app-container">
-  <router-outlet></router-outlet>
-</div>
+  <mat-sidenav-content class="sidenav-content">
+
+    <mat-toolbar class="mat-elevation-z4 toolbar" color="primary" *ngIf="(authService.loggedIn | async) as loggedIn">
+      <button mat-icon-button matTooltip="Menü" (click)="sidenav_left.toggle()" >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <div mat-card-avatar class="glider-animated"></div>
+      <span><a class="title" routerLink="/" routerLinkActive="active">Game of Life</a></span>
+
+      <span class="spacer"></span>
+      <button mat-icon-button matTooltip="Benutzer" (click)="sidenav_right.toggle()" >
+        <mat-icon>face</mat-icon>
+      </button>
+      <!--<div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>-->
+
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
