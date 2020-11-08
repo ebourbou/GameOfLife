@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
-import {Pattern} from '../../shared/model/pattern';
-import {NgForm} from '@angular/forms';
-import {ConfirmDeleteDialog} from '../confirm-delete-dialog/confirm-delete-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import { Pattern } from '../../shared/model/pattern';
+import { NgForm } from '@angular/forms';
+import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { PatternService } from '../services/patterns.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
@@ -13,7 +13,7 @@ import { PatternUtils } from '../util/pattern-util';
 @Component({
   selector: 'app-pattern-detail',
   templateUrl: './pattern-detail.component.html',
-  styleUrls: ['./pattern-detail.component.scss']
+  styleUrls: ['./pattern-detail.component.scss'],
 })
 export class PatternDetailComponent implements OnChanges {
   @Input() pattern: Pattern;
@@ -29,10 +29,12 @@ export class PatternDetailComponent implements OnChanges {
   private patternService: PatternService;
   private patternsComponent: PatternsComponent;
 
-  constructor(public dialog: MatDialog,
-              patternService: PatternService,
-              patternsComponent: PatternsComponent,
-              private snackBarService: MatSnackBar) {
+  constructor(
+    public dialog: MatDialog,
+    patternService: PatternService,
+    patternsComponent: PatternsComponent,
+    private snackBarService: MatSnackBar
+  ) {
     this.patternService = patternService;
     this.snackBarService = snackBarService;
     this.patternsComponent = patternsComponent;
@@ -42,7 +44,7 @@ export class PatternDetailComponent implements OnChanges {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-      this.editor = GameUtils.build(8,8);//this.pattern.sizeX, this.pattern.sizeY);
+      this.editor = GameUtils.build(this.pattern.sizeX, this.pattern.sizeY);
     }
   }
 
@@ -59,72 +61,76 @@ export class PatternDetailComponent implements OnChanges {
       this.createPattern(pattern);
     } else {
       this.updatePattern(pattern);
-      this.form.reset();
     }
+    this.form.resetForm(pattern);
     this.submitted = true;
     this.loading = false;
   }
 
-  openConfirmDeleteDialog(patternToDelete: Pattern): void{
-      const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
-        width: '25em',
-        data: {patternName: this.pattern.name}
-      });
+  openConfirmDeleteDialog(patternToDelete: Pattern): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+      width: '25em',
+      data: { patternName: this.pattern.name },
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result){
-          this.patternService.deletePattern(patternToDelete.id).then((result) => {
-            this.snackBarService.open('Pattern ' + result.name + ' wurde gelöscht', 'Schliessen', {
-              duration: 2000
-            });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.patternService.deletePattern(patternToDelete.id).then((result) => {
+          this.snackBarService.open('Pattern ' + result.name + ' wurde gelöscht', 'Schliessen', {
+            duration: 2000,
           });
-        }
-      });
+        });
+      }
+    });
   }
 
-  onRevert(): void{
+  onRevert(): void {
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
     this.form.reset(this.pattern);
   }
 
-  initPattern(): void{
+  initPattern(): void {
     this.isAddMode = true;
 
     this.pattern = {
-     id : null,
-     name: '',
-     description: '',
-     author: '',
-     year: null,
-     heat: null,
-     sizeX: 5,
-     sizeY: 5,
-     pattern: null,
-     type: null};
-   }
+      id: null,
+      name: '',
+      description: '',
+      author: '',
+      year: null,
+      heat: null,
+      sizeX: 5,
+      sizeY: 5,
+      pattern: null,
+      type: null,
+    };
+  }
 
   createPattern(patternToCreate: Pattern): Pattern {
     // Todo Temp pattern
     patternToCreate.pattern = 'DummyPatternContent';
 
-    this.patternService.addPattern(patternToCreate).then(data => {
-      this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
-        duration: 2000
-      });
-      return data;
-    }).catch(); // Error
+    this.patternService
+      .addPattern(patternToCreate)
+      .then((data) => {
+        this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
+          duration: 2000,
+        });
+        return data;
+      })
+      .catch(); // Error
     return null;
   }
 
-  updatePattern(patternToUpdate: Pattern): void{
+  updatePattern(patternToUpdate: Pattern): void {
     this.patternService.updatePattern(patternToUpdate).then((result) => {
       this.snackBarService.open('Pattern ' + result.name + ' wurde aktualisiert.', 'Schliessen', {
-        duration: 2000
+        duration: 2000,
       });
-    });;
+    });
   }
 
-  deletePattern(patternToDelete: Pattern): void{
+  deletePattern(patternToDelete: Pattern): void {
     this.openConfirmDeleteDialog(patternToDelete);
   }
 }

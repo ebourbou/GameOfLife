@@ -9,7 +9,7 @@
         <div>
         <mat-form-field >
           <mat-label>Name</mat-label>
-          <input matInput ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
+          <input matNativeControl ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
           <mat-error *ngIf="name.hasError('required')">
             Pattern Name ist erforderlich
           </mat-error>
@@ -35,6 +35,7 @@
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeY"
               ngModel name="sizeY">
+
             </mat-slider>
         </div>
       </div>
@@ -44,7 +45,7 @@
               <mat-label>Pattern Typ</mat-label>
               <mat-select ngModel [(ngModel)]="pattern.type" name="type" required>
                 <mat-option value="static">Statisch</mat-option>
-                <mat-option value="spaceship" >Raumschiff Gleiter</mat-option>
+                <mat-option value="spaceship" >Raumschiff/Gleiter</mat-option>
                 <mat-option value="oscillator">Oszillator</mat-option>
                 <mat-option value="buffer">Puffer</mat-option>
                 <mat-option value="other">Andere</mat-option>
@@ -53,14 +54,14 @@
 
           <mat-form-field appearance="fill">
               <mat-label>Autor</mat-label>
-              <input matInput ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
+              <input matNativeControl ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
               <mat-error *ngIf="author.hasError('required')">
                 Autor ist erforderlich
               </mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
               <mat-label>Jahr</mat-label>
-              <input matInput ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
+              <input matNativeControl ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
           </mat-form-field>
           <div>
             <mat-label>Hitze [{{("0"+pattern.heat).slice(-2)}}]</mat-label>
@@ -76,14 +77,12 @@
           </div>
         </div>
         <div class="editor">
-          <gol-board class="board" [board]="editor"></gol-board>
+          <!--<gol-board class="board" [board]="editor"></gol-board>-->
         </div>
       </div>
-
-
       <mat-form-field appearance="fill" class="description">
         <mat-label>Beschreibung</mat-label>
-        <textarea matInput ngModel
+        <textarea matNativeControl ngModel
                   class
                   [(ngModel)]="pattern.description" #description="ngModel" name="description"
                   cdkTextareaAutosize
@@ -103,7 +102,7 @@
           </button>
         </div>
         <div class="update-button">
-          <button mat-raised-button color="primary" type="submit"
+          <button mat-raised-button color="primary" (click)="onSubmit(pattern)"
                   [disabled]="!form.dirty">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Speichern

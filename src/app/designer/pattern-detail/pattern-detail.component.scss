@@ -55,6 +55,11 @@
   display: flex;
 }
 
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
 .buttons {
   margin: 10px;
   padding: 10px;
@@ -62,10 +67,6 @@
 
 .update-button{
   padding-left: 10px;
-}
-
-.editor{
-  background-color: greenyellow;
 }
 
 

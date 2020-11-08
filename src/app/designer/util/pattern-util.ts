@@ -1,7 +1,6 @@
 import { Pattern } from '../../shared/model/pattern';
 
 export class PatternUtils {
-
   public static fromAwsPattern(awsPattern): Pattern {
     let pat: Pattern;
     pat = {
@@ -11,10 +10,10 @@ export class PatternUtils {
       author: awsPattern.author,
       year: awsPattern.year,
       heat: awsPattern.heat,
-      sizeX: awsPattern.boxX,
-      sizeY: awsPattern.boxY,
+      sizeX: awsPattern.sizeX,
+      sizeY: awsPattern.sizeY,
       pattern: awsPattern.pattern,
-      type: awsPattern.type
+      type: awsPattern.type,
     };
     return pat;
   }
@@ -28,10 +27,10 @@ export class PatternUtils {
       author: pattern.author,
       year: pattern.year,
       heat: pattern.heat,
-      boxX: pattern.sizeX,
-      boxY: pattern.sizeY,
+      sizeX: pattern.sizeX,
+      sizeY: pattern.sizeY,
       pattern: pattern.pattern,
-      type: pattern.type
+      type: pattern.type,
     };
     return pat;
   }
