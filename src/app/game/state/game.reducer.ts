@@ -1,16 +1,18 @@
-import { createReducer, on } from "@ngrx/store";
-import * as GameActions from "./game.actions";
-import { Game } from "../model/Game";
-import { GenerationStatistic } from "../../statistic/game-statistic/GenerationStatistic";
-import { Controls } from "../model/Controls";
-import { GameStatistic } from "../../statistic/game-statistic/GameStatistic";
-import { GameUtils } from "../util/GameUtils";
-import { Board } from "../model/Board";
+import { createReducer, on } from '@ngrx/store';
+import * as GameActions from './game.actions';
+import { Game } from '../model/Game';
+import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
+import { Controls } from '../model/Controls';
+import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
+import { GameUtils } from '../util/GameUtils';
+import { Board } from '../model/Board';
+import { Pattern } from '../../shared/model/pattern';
 
-export const gameFeatureKey = "game";
+export const gameFeatureKey = 'game';
 
 export interface GameState {
   game: Game;
+  allPatterns: Pattern[];
   generationStatistic: GenerationStatistic;
   gameStatistic: GameStatistic;
   loading: boolean;
@@ -20,6 +22,7 @@ export interface GameState {
 
 export const initialState: GameState = {
   game: null,
+  allPatterns: [],
   generationStatistic: null,
   gameStatistic: null,
   loading: false,
@@ -38,6 +41,14 @@ export const gameActionReducer = createReducer(
       loading: false,
     };
   }),
+
+  on(GameActions.loadPatternsSuccess, (state, action) => {
+    return {
+      ...state,
+      allPatterns: action.allPatterns,
+    };
+  }),
+
   on(GameActions.newGameFailure, (state) => state),
   on(GameActions.changeSpeed, (state, action) => {
     const newControls = { ...state.controls };
@@ -63,7 +74,7 @@ export const gameActionReducer = createReducer(
     newState.running = true;
     return newState;
   }),
-  on(GameActions.nextGeneration, (state, action) => {
+  on(GameActions.nextGeneration, (state) => {
     const newRowsAndCells = new Map(state.game.board.rowsAndCells);
     const newBoard = new Board(state.game.board.width, state.game.board.height, newRowsAndCells);
     const newGame = new Game(newBoard, state.game.generations, state.game.ruleSet);
@@ -81,7 +92,7 @@ export const gameActionReducer = createReducer(
     newState.gameStatistic = GameUtils.gameStatisticOf(newState.game, action.gameStartTime, Date.now());
     return newState;
   }),
-  on(GameActions.endGameSuccess, (state, action) => {
+  on(GameActions.endGameSuccess, (state) => {
     return {
       ...state,
       running: false,

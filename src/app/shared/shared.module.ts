@@ -20,6 +20,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SnackbarService } from './service/snackbar.service';
 
 const MATERIAL = [
   MatBadgeModule,

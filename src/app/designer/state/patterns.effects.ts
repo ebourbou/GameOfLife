@@ -1,16 +1,15 @@
-import {Injectable} from '@angular/core';
-import {of} from 'rxjs';
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap} from 'rxjs/operators';
-import {PatternService} from '../services/patterns.service';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { PatternService } from '../../shared/service/patterns.service';
 import * as patternActions from './patterns.actions';
-
 
 @Injectable()
 export class PatternEffects {
   constructor(private actions$: Actions, private patternService: PatternService) {}
 
- /* loadPatterns$ = createEffect(() =>
+  /* loadPatterns$ = createEffect(() =>
     this.actions$.pipe(
       ofType(patternActions.loadAllPatterns),
       switchMap(action =>

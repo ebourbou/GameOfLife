@@ -1,7 +1,6 @@
-import { Pattern } from '../../shared/model/pattern';
+import { Pattern } from '../model/pattern';
 
 export class PatternUtils {
-
   public static fromAwsPattern(awsPattern): Pattern {
     let pat: Pattern;
     pat = {
@@ -14,7 +13,7 @@ export class PatternUtils {
       sizeX: awsPattern.boxX,
       sizeY: awsPattern.boxY,
       pattern: awsPattern.pattern,
-      type: awsPattern.type
+      type: awsPattern.type,
     };
     return pat;
   }
@@ -31,8 +30,22 @@ export class PatternUtils {
       boxX: pattern.sizeX,
       boxY: pattern.sizeY,
       pattern: pattern.pattern,
-      type: pattern.type
+      type: pattern.type,
     };
     return pat;
+  }
+
+  public static toGroupedPatternMap(patterns: Pattern[]): Array<{ key: string; value: Pattern[] }> {
+    const grouped = new Array<{ key; value }>();
+    patterns.forEach((p) => {
+      if (!grouped.find((g) => g.key === p.type)) {
+        const newGroup = new Array<Pattern>();
+        newGroup.push(p);
+        grouped.push({ key: p.type, value: newGroup });
+      } else {
+        grouped.find((g) => g.key === p.type).value.push(p);
+      }
+    });
+    return grouped;
   }
 }

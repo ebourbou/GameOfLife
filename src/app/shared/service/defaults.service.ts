@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GameModule } from '../../game/game.module';
 import { from, Observable, of } from 'rxjs';
 import { Controls } from '../../game/model/Controls';
 
@@ -9,7 +8,7 @@ import { Controls } from '../../game/model/Controls';
 export class DefaultsService {
   constructor() {}
 
-  public defaultControls(): Controls {
-    return new Controls(100, 40, 200, 0);
+  public defaultControls(): Observable<Controls> {
+    return of(new Controls(100, 40, 200, 0));
   }
 }

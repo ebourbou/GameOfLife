@@ -1,7 +1,7 @@
 <router-outlet></router-outlet>
 <div class="game"  >
   <ng-container *ngIf="game$ | async as game" >
-    <app-stepper [controls]="controls$ | async" class="stepper" (doResize)="onResize($event)" (doChangeGenerations)="onChangeGenerations($event)"></app-stepper>
+    <app-stepper [controls]="controls$ | async" [allPatterns]="allPatterns$ | async" class="stepper" (doResize)="onResize($event)" (doChangeGenerations)="onChangeGenerations($event)"></app-stepper>
     <gol-board class="board" [board]="game.board"></gol-board>
     <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
                        (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->

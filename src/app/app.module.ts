@@ -18,7 +18,7 @@ import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
 import { registerLocaleData } from '@angular/common';
-import { PatternService } from './designer/services/patterns.service';
+import { PatternService } from './shared/service/patterns.service';
 import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CoreModule } from './core/core.module';
