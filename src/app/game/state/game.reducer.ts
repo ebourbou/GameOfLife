@@ -77,9 +77,7 @@ export const gameActionReducer = createReducer(
     return newState;
   }),
   on(GameActions.nextGeneration, (state) => {
-    const newRowsAndCells = new Map(state.game.board.rowsAndCells);
-    const newBoard = new Board(state.game.board.width, state.game.board.height, newRowsAndCells);
-    const newGame = new Game(newBoard, state.game.generations, state.game.ruleSet);
+    const newGame = deepCopy(state.game);
     newGame.nextGeneration();
     return { ...state, game: newGame };
   }),
@@ -107,10 +105,31 @@ export const gameActionReducer = createReducer(
     };
   }),
   on(GameActions.applyPattern, (state, action) => {
-    const newRowsAndCells = new Map(state.game.board.rowsAndCells);
-    const newBoard = new Board(state.game.board.width, state.game.board.height, newRowsAndCells);
-    const newGame = new Game(newBoard, state.game.generations, state.game.ruleSet);
-    GameUtils.applyPattern(newBoard, action.row, action.column, state.patternSelected);
-    return { ...state, game: newGame, patternSelected: null };
+    const newGame = deepCopy(state.game);
+    GameUtils.applyPattern(newGame.board, action.row, action.column, state.patternSelected);
+    return { ...state, game: newGame };
+  }),
+  on(GameActions.randomCells, (state) => {
+    const newGame = deepCopy(state.game);
+    GameUtils.randomizeCellStates(newGame.board);
+    return { ...state, game: newGame };
+  }),
+  on(GameActions.resetCells, (state) => {
+    const newGame = deepCopy(state.game);
+    GameUtils.resetCellStates(newGame.board);
+    return { ...state, game: newGame };
+  }),
+  on(GameActions.invertCells, (state) => {
+    const newGame = deepCopy(state.game);
+    GameUtils.invertCellStates(newGame.board);
+    return { ...state, game: newGame };
   })
 );
+
+function deepCopy(oldGame: Game): Game {
+  // fixme: not so deep - is this the right way?
+  const newRowsAndCells = new Map(oldGame.board.rowsAndCells);
+  const newBoard = new Board(oldGame.board.width, oldGame.board.height, newRowsAndCells);
+  const newGame = new Game(newBoard, oldGame.generations, oldGame.ruleSet);
+  return newGame;
+}

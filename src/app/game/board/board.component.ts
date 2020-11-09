@@ -24,7 +24,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onApplyPattern(topLeftCell: Cell): void {
-    this.doApplyPattern.emit(topLeftCell);
+  onApplyPattern(centerCell: Cell): void {
+    this.doApplyPattern.emit(centerCell);
   }
 }

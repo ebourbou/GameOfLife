@@ -19,9 +19,14 @@ export class StepperComponent implements OnInit {
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
   public doChangeGenerations: EventEmitter<number> = new EventEmitter();
-
   @Output()
   public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
+  @Output()
+  private doRandomCells: EventEmitter<void> = new EventEmitter();
+  @Output()
+  private doResetCells: EventEmitter<void> = new EventEmitter();
+  @Output()
+  private doInvertCells: EventEmitter<void> = new EventEmitter();
 
   boardFormGroup: FormGroup;
   cellsFormGroup: FormGroup;
@@ -32,6 +37,9 @@ export class StepperComponent implements OnInit {
   set allPatterns(allPatterns: Pattern[]) {
     this.groupedPatterns = PatternUtils.toGroupedPatternMap(allPatterns);
   }
+
+  @Input()
+  set patternSelected(pattern: Pattern) {}
 
   ngOnInit(): void {
     this.boardFormGroup = this.formBuilder.group({
@@ -60,7 +68,17 @@ export class StepperComponent implements OnInit {
 
   onPatternSelected(pattern: Pattern): void {
     this.doPatternSelected.emit(pattern);
+  }
 
-    // deselect here
+  onRandom(event: Event): void {
+    this.doRandomCells.emit();
+  }
+
+  onReset(event: Event): void {
+    this.doResetCells.emit();
+  }
+
+  onInvert(event: Event): void {
+    this.doInvertCells.emit();
   }
 }

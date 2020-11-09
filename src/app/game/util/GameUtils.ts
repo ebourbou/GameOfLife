@@ -31,15 +31,13 @@ export class GameUtils {
   private static computeTopMostRow(board: Board, row: number, pattern: Pattern): number {
     const topMostRowByChoice = row - Math.floor(pattern.sizeY / 2);
     const fitsTop = topMostRowByChoice >= 0 ? topMostRowByChoice : 0;
-    const fitsTopAndBottom = board.height - pattern.sizeY >= fitsTop ? fitsTop : board.height - pattern.sizeY;
-    return fitsTopAndBottom;
+    return board.height - pattern.sizeY >= fitsTop ? fitsTop : board.height - pattern.sizeY;
   }
 
   private static computeLeftMostColumn(board: Board, column: number, pattern: Pattern): number {
     const leftMostColumnByChoice = column - Math.floor(pattern.sizeX / 2);
     const fitsLeft = leftMostColumnByChoice >= 0 ? leftMostColumnByChoice : 0;
-    const fitsLeftAndRight = board.width - pattern.sizeX >= fitsLeft ? fitsLeft : board.width - pattern.sizeX;
-    return fitsLeftAndRight;
+    return board.width - pattern.sizeX >= fitsLeft ? fitsLeft : board.width - pattern.sizeX;
   }
 
   public static generationStatisticOf(board: Board, currentGeneration: number, start: number, end: number): GenerationStatistic {
@@ -72,7 +70,7 @@ export class GameUtils {
     for (let currentRow = 0; currentRow < board.height; currentRow++) {
       const rowArray = new Array<Cell>();
       for (let currentCol = 0; currentCol < board.width; currentCol++) {
-        rowArray.push(new Cell(currentRow, currentCol, this.randomState()));
+        rowArray.push(new Cell(currentRow, currentCol, CellState.DEAD));
       }
       rowsAndCells.set(currentRow, rowArray);
     }
@@ -100,11 +98,21 @@ export class GameUtils {
     });
   }
 
-  private static randomState(): CellState {
-    if (Math.round(Math.random() * 100) > 10) {
-      return CellState.DEAD;
-    } else {
-      return CellState.ALIVE;
-    }
+  public static randomizeCellStates(board: Board): void {
+    board.cells.forEach((cell) => {
+      if (Math.round(Math.random() * 100) > 10) {
+        cell.state = CellState.DEAD;
+      } else {
+        cell.state = CellState.ALIVE;
+      }
+    });
+  }
+
+  public static resetCellStates(board: Board): void {
+    board.cells.forEach((cell) => (cell.state = CellState.DEAD));
+  }
+
+  public static invertCellStates(board: Board): void {
+    board.cells.forEach((cell) => (cell.state = cell.state === CellState.DEAD ? CellState.ALIVE : CellState.DEAD));
   }
 }

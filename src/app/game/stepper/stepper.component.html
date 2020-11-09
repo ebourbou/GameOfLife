@@ -29,7 +29,7 @@
         formControlName="generations" (valueChange)="onChangeGenerations($event)">
       </mat-slider>
       <div>
-        <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Next</button>
+        <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
       </div>
     </form>
   </mat-step>
@@ -40,18 +40,21 @@
       <mat-form-field>
         <mat-label>Pattern</mat-label>
         <mat-select #pattern (selectionChange)="onPatternSelected($event.value)">
+          <mat-option>Keine Auswahl</mat-option>
           <mat-optgroup *ngFor="let group of groupedPatterns" [label]="group.key">>
             <mat-option *ngFor="let pattern of group.value" [value]="pattern"  >{{pattern.name}}
             </mat-option>
           </mat-optgroup>
         </mat-select>
       </mat-form-field>
-
+      <p></p>
+      <button mat-button mat-stroked-button  (click)="onReset($event)">Zurücksetzen</button>
+      <button mat-button mat-stroked-button  (click)="onRandom($event)" >Zufall</button>
+      <button mat-button mat-stroked-button  (click)="onInvert($event)" >Invertieren</button>
 
       <div>
-        <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-        <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Next</button>
+        <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
+        <button mat-button matStepperPrevious mat-raised-button type="button" style="float: right;">Zurück</button>
       </div>
     </form>
   </mat-step>

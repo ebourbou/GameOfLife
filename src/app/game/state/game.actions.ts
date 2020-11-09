@@ -34,3 +34,7 @@ export const loadPatternsSuccess = createAction('[Game] Load Patterns Success', 
 
 export const endGame = createAction('[Game] End');
 export const endGameSuccess = createAction('[Game] End Success');
+
+export const resetCells = createAction('[Game] Reset Cells');
+export const randomCells = createAction('[Game] Random Cells');
+export const invertCells = createAction('[Game] Invert Cells');

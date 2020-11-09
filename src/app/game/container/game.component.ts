@@ -17,6 +17,9 @@ import {
   loadPatterns,
   patternSelected,
   applyPattern,
+  randomCells,
+  resetCells,
+  invertCells,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
@@ -70,9 +73,8 @@ export class GameComponent implements OnInit {
     this.store.dispatch(patternSelected({ selectedPattern: pattern }));
   }
 
-  onApplyPattern(topLeftCell: Cell): void {
-    // fixme @Michael: Wenn ich hier die Zelle mitgebe, kriege ich einen StackOvervlow. WTF?
-    this.store.dispatch(applyPattern({ row: topLeftCell.row, column: topLeftCell.column }));
+  onApplyPattern(centerCell: Cell): void {
+    this.store.dispatch(applyPattern({ row: centerCell.row, column: centerCell.column }));
   }
 
   // fixme Die Effects sollten selber auf den Store zugreifen. Siehe https://ngrx.io/guide/effects ganz unten.
@@ -104,5 +106,17 @@ export class GameComponent implements OnInit {
 
   onChangeGenerations(generations: number): void {
     this.store.dispatch(changeGenerations({ generations }));
+  }
+
+  onRandomCells(): void {
+    this.store.dispatch(randomCells());
+  }
+
+  onResetCells(): void {
+    this.store.dispatch(resetCells());
+  }
+
+  onInvertCells(): void {
+    this.store.dispatch(invertCells());
   }
 }
