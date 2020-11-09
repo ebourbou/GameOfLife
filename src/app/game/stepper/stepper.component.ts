@@ -20,6 +20,9 @@ export class StepperComponent implements OnInit {
   @Output()
   public doChangeGenerations: EventEmitter<number> = new EventEmitter();
 
+  @Output()
+  public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
+
   boardFormGroup: FormGroup;
   cellsFormGroup: FormGroup;
 
@@ -53,5 +56,11 @@ export class StepperComponent implements OnInit {
 
   onChangeGenerations(generations: number): void {
     this.doChangeGenerations.emit(generations);
+  }
+
+  onPatternSelected(pattern: Pattern): void {
+    this.doPatternSelected.emit(pattern);
+
+    // deselect here
   }
 }

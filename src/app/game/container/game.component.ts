@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
 import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -15,14 +15,24 @@ import {
   endGame,
   endGameSuccess,
   loadPatterns,
+  patternSelected,
+  applyPattern,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
-import { selectAllPatterns, selectControls, selectGame, selectGameStatistic, selectGenerationStatistic } from '../state/game.selectors';
+import {
+  selectAllPatterns,
+  selectControls,
+  selectGame,
+  selectGameStatistic,
+  selectGenerationStatistic,
+  selectPatternSelected,
+} from '../state/game.selectors';
 import { Controls } from '../model/Controls';
 import { take } from 'rxjs/operators';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
+import { Cell } from '../../shared/model/Cell';
 
 @Component({
   selector: 'app-game',
@@ -36,6 +46,7 @@ export class GameComponent implements OnInit {
   public generationStatistic$: Observable<GenerationStatistic>;
   public gameStatistic$: Observable<GameStatistic>;
   public allPatterns$: Observable<Pattern[]>;
+  public patternSelected$: Observable<Pattern>;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.store.dispatch(newDefaultGame());
@@ -45,6 +56,7 @@ export class GameComponent implements OnInit {
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
     this.gameStatistic$ = this.store.select(selectGameStatistic);
     this.allPatterns$ = this.store.select(selectAllPatterns);
+    this.patternSelected$ = this.store.select(selectPatternSelected);
   }
 
   ngOnInit(): void {}
@@ -52,6 +64,15 @@ export class GameComponent implements OnInit {
   async onResize(size: any): Promise<void> {
     const controls = await this.getControls();
     this.store.dispatch(newGame({ controls: { ...controls, xAxisSize: size.x, yAxisSize: size.y } }));
+  }
+
+  onPatternSelected(pattern: Pattern): void {
+    this.store.dispatch(patternSelected({ selectedPattern: pattern }));
+  }
+
+  onApplyPattern(topLeftCell: Cell): void {
+    // fixme @Michael: Wenn ich hier die Zelle mitgebe, kriege ich einen StackOvervlow. WTF?
+    this.store.dispatch(applyPattern({ row: topLeftCell.row, column: topLeftCell.column }));
   }
 
   // fixme Die Effects sollten selber auf den Store zugreifen. Siehe https://ngrx.io/guide/effects ganz unten.
@@ -81,7 +102,7 @@ export class GameComponent implements OnInit {
     this.store.dispatch(changeSpeed({ speed }));
   }
 
-  async onChangeGenerations(generations: number): Promise<void> {
+  onChangeGenerations(generations: number): void {
     this.store.dispatch(changeGenerations({ generations }));
   }
 }

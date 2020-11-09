@@ -26,6 +26,10 @@
   background-color: black;
 }
 
-.isDead {
-  background-color: white;
+.isApplyPattern {
+  cursor: url("../../../assets/img/icon/focus-3-line.svg") 24 24, auto;
+}
+
+.isApplyCellState {
+  cursor: crosshair;
 }

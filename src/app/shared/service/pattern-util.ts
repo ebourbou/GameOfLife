@@ -10,8 +10,8 @@ export class PatternUtils {
       author: awsPattern.author,
       year: awsPattern.year,
       heat: awsPattern.heat,
-      sizeX: awsPattern.boxX,
-      sizeY: awsPattern.boxY,
+      sizeX: awsPattern.sizeX,
+      sizeY: awsPattern.sizeY,
       pattern: awsPattern.pattern,
       type: awsPattern.type,
     };
@@ -27,8 +27,8 @@ export class PatternUtils {
       author: pattern.author,
       year: pattern.year,
       heat: pattern.heat,
-      boxX: pattern.sizeX,
-      boxY: pattern.sizeY,
+      sizeX: pattern.sizeX,
+      sizeY: pattern.sizeY,
       pattern: pattern.pattern,
       type: pattern.type,
     };

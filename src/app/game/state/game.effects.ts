@@ -41,7 +41,7 @@ export class GameEffects {
       concatMap(() =>
         this.patternService.getPatternsObservable().pipe(
           map((allPatterns) => GameActions.loadPatternsSuccess({ allPatterns })),
-          catchError((error) => of(GameActions.error({ errors: error.errors.map((e) => e.message) })))
+          catchError((error) => of(GameActions.errorAction({ errors: error.errors.map((e) => e.message) })))
         )
       )
     );
@@ -50,9 +50,9 @@ export class GameEffects {
   onError$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(GameActions.error),
+        ofType(GameActions.errorAction),
         map((payload) => {
-          this.snackBar.errors(GameActions.error.type, payload.errors);
+          this.snackBar.errors(GameActions.errorAction.type, payload.errors);
         })
       );
     },

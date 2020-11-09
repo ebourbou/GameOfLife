@@ -13,6 +13,7 @@ export const gameFeatureKey = 'game';
 export interface GameState {
   game: Game;
   allPatterns: Pattern[];
+  patternSelected: Pattern;
   generationStatistic: GenerationStatistic;
   gameStatistic: GameStatistic;
   loading: boolean;
@@ -23,6 +24,7 @@ export interface GameState {
 export const initialState: GameState = {
   game: null,
   allPatterns: [],
+  patternSelected: null,
   generationStatistic: null,
   gameStatistic: null,
   loading: false,
@@ -97,5 +99,18 @@ export const gameActionReducer = createReducer(
       ...state,
       running: false,
     };
+  }),
+  on(GameActions.patternSelected, (state, action) => {
+    return {
+      ...state,
+      patternSelected: action.selectedPattern,
+    };
+  }),
+  on(GameActions.applyPattern, (state, action) => {
+    const newRowsAndCells = new Map(state.game.board.rowsAndCells);
+    const newBoard = new Board(state.game.board.width, state.game.board.height, newRowsAndCells);
+    const newGame = new Game(newBoard, state.game.generations, state.game.ruleSet);
+    GameUtils.applyPattern(newBoard, action.row, action.column, state.patternSelected);
+    return { ...state, game: newGame, patternSelected: null };
   })
 );

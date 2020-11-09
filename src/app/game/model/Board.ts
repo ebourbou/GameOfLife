@@ -1,13 +1,10 @@
-import { Cell } from "../../shared/model/Cell";
-import { CellState } from "../../shared/model/CellState";
-import { RuleSet } from "../../designer/rule/RuleSet";
+import { Cell } from '../../shared/model/Cell';
+import { CellState } from '../../shared/model/CellState';
+import { RuleSet } from '../../designer/rule/RuleSet';
+import { Pattern } from '../../shared/model/pattern';
 
 export class Board {
-  constructor(
-    public width: number,
-    public height: number,
-    public rowsAndCells: Map<number, Array<Cell>>
-  ) {}
+  constructor(public width: number, public height: number, public rowsAndCells: Map<number, Array<Cell>>) {}
 
   nextGeneration(ruleSet: RuleSet): void {
     this.cells.forEach((cell) => ruleSet.applyRules(cell));
@@ -21,15 +18,11 @@ export class Board {
   }
 
   diedLastGeneration(): number {
-    return this.cells.filter(
-      (n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE
-    ).length;
+    return this.cells.filter((n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE).length;
   }
 
   bornLastGeneration(): number {
-    return this.cells.filter(
-      (n) => n.state === CellState.ALIVE && n.previousState === CellState.DEAD
-    ).length;
+    return this.cells.filter((n) => n.state === CellState.ALIVE && n.previousState === CellState.DEAD).length;
   }
 
   alive(): number {
@@ -41,8 +34,7 @@ export class Board {
   }
 
   cellStateSwitches(): number {
-    return this.cells.filter((cell) => cell.previousState !== cell.state)
-      .length;
+    return this.cells.filter((cell) => cell.previousState !== cell.state).length;
   }
 
   oldestCellsAsArray(): Cell[] {
@@ -55,9 +47,7 @@ export class Board {
   oldestCellsMap(): Map<number, number> {
     const mapOfOldest: Map<number, number> = new Map();
     this.oldestCellsAsArray().forEach((cell) => {
-      mapOfOldest.has(cell.age)
-        ? mapOfOldest.set(cell.age, mapOfOldest.get(cell.age) + 1)
-        : mapOfOldest.set(cell.age, 1);
+      mapOfOldest.has(cell.age) ? mapOfOldest.set(cell.age, mapOfOldest.get(cell.age) + 1) : mapOfOldest.set(cell.age, 1);
     });
     return mapOfOldest;
   }

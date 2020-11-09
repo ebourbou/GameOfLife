@@ -1,4 +1,4 @@
-import { CellState } from "./CellState";
+import { CellState } from './CellState';
 
 export class Cell {
   neighbours: Cell[];
@@ -35,7 +35,6 @@ export class Cell {
   }
 
   switchState(): void {
-    this.state =
-      this.state === CellState.ALIVE ? CellState.DEAD : CellState.ALIVE;
+    this.state = this.state === CellState.ALIVE ? CellState.DEAD : CellState.ALIVE;
   }
 }
