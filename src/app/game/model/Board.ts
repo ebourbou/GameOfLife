@@ -1,17 +1,32 @@
-import { Cell } from "../../shared/model/Cell";
-import { CellState } from "../../shared/model/CellState";
-import { RuleSet } from "../../designer/rule/RuleSet";
+import { Cell } from '../../shared/model/Cell';
+import { CellState } from '../../shared/model/CellState';
+import { RuleSet } from '../../designer/rule/RuleSet';
 
 export class Board {
-  constructor(
-    public width: number,
-    public height: number,
-    public rowsAndCells: Map<number, Array<Cell>>
-  ) {}
+  boardWidth: number[];
+  boardHeight: number[];
+
+  constructor(public width: number, public height: number, public rowsAndCells: Map<number, Array<Cell>>) {
+    this.boardWidth = Array(width).fill(1);
+    this.boardHeight = Array(height).fill(1);
+  }
 
   nextGeneration(ruleSet: RuleSet): void {
     this.cells.forEach((cell) => ruleSet.applyRules(cell));
     this.cells.forEach((cell) => cell.switchToNextGeneration());
+  }
+
+  getCell(x: number, y: number): Cell {
+    // return new Cell(x, y, (y * x) % 3 ? CellState.ALIVE : CellState.DEAD); //return this.rowsAndCells.get(y)[x];
+    return this.rowsAndCells.get(y)[x];
+  }
+
+  getColumns(): number[] {
+    return this.boardWidth;
+  }
+
+  getRows(): number[] {
+    return this.boardHeight;
   }
 
   get cells(): Array<Cell> {
@@ -21,15 +36,11 @@ export class Board {
   }
 
   diedLastGeneration(): number {
-    return this.cells.filter(
-      (n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE
-    ).length;
+    return this.cells.filter((n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE).length;
   }
 
   bornLastGeneration(): number {
-    return this.cells.filter(
-      (n) => n.state === CellState.ALIVE && n.previousState === CellState.DEAD
-    ).length;
+    return this.cells.filter((n) => n.state === CellState.ALIVE && n.previousState === CellState.DEAD).length;
   }
 
   alive(): number {
@@ -41,8 +52,7 @@ export class Board {
   }
 
   cellStateSwitches(): number {
-    return this.cells.filter((cell) => cell.previousState !== cell.state)
-      .length;
+    return this.cells.filter((cell) => cell.previousState !== cell.state).length;
   }
 
   oldestCellsAsArray(): Cell[] {
@@ -55,9 +65,7 @@ export class Board {
   oldestCellsMap(): Map<number, number> {
     const mapOfOldest: Map<number, number> = new Map();
     this.oldestCellsAsArray().forEach((cell) => {
-      mapOfOldest.has(cell.age)
-        ? mapOfOldest.set(cell.age, mapOfOldest.get(cell.age) + 1)
-        : mapOfOldest.set(cell.age, 1);
+      mapOfOldest.has(cell.age) ? mapOfOldest.set(cell.age, mapOfOldest.get(cell.age) + 1) : mapOfOldest.set(cell.age, 1);
     });
     return mapOfOldest;
   }

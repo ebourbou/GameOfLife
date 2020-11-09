@@ -1,0 +1,5 @@
+ <div class="row" *ngFor="let row of this.board.getRows(); let y = index" [attr.data-index]="y">
+    <div class="column" *ngFor="let cell of this.board.getColumns(); let x = index" [attr.data-index]="x"
+         [ngClass]="(board.getCell(x,y).isAlive() ? 'isAlive' : 'isDead')" (click)="board.getCell(x,y).switchState()">
+    </div>
+ </div>
