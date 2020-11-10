@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Cell } from '../../shared/model/Cell';
 import { CellState } from '../../shared/model/CellState';
 import { Board } from '../../game/model/Board';
@@ -9,16 +9,24 @@ import { GameUtils } from '../../game/util/GameUtils';
   templateUrl: './pattern-editor.component.html',
   styleUrls: ['./pattern-editor.component.scss'],
 })
-export class PatternEditorComponent implements OnChanges {
+export class PatternEditorComponent implements OnChanges, OnDestroy {
   @Input() sizeX: number;
   @Input() sizeY: number;
+  @Input() pattern: string;
+
   board: Board = null;
   constructor() {}
+
+  ngOnDestroy(): void {
+    console.log('Saving pattern');
+    this.save();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.sizeX && this.sizeY) {
       console.log(this.sizeY + ' ' + this.sizeX);
       this.board = new Board(this.sizeX, this.sizeY, this.buildCells(this.sizeX, this.sizeY));
+      this.load();
     }
   }
 
@@ -43,11 +51,11 @@ export class PatternEditorComponent implements OnChanges {
     }
   }
 
-  public save(): string {
-    return GameUtils.save(this.board);
+  public save(): void {
+    this.pattern = GameUtils.save(this.board);
   }
 
-  public load(patternStr: string) {
-    GameUtils.load(this.board, patternStr);
+  public load(): void {
+    GameUtils.load(this.board, this.pattern);
   }
 }

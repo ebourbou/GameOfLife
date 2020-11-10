@@ -29,26 +29,22 @@ export class PatternDetailComponent implements OnChanges {
   patternOriginal: Pattern;
   private patternService: PatternService;
   private patternsComponent: PatternsComponent;
-  private patternEditor: PatternEditorComponent;
 
   constructor(
     public dialog: MatDialog,
     patternService: PatternService,
     patternsComponent: PatternsComponent,
-    private snackBarService: MatSnackBar,
-    patternEditor: PatternEditorComponent
+    private snackBarService: MatSnackBar
   ) {
     this.patternService = patternService;
     this.snackBarService = snackBarService;
     this.patternsComponent = patternsComponent;
-    this.patternEditor = patternEditor;
   }
 
   ngOnChanges(): void {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-      this.patternEditor.load(this.pattern.pattern);
     }
   }
 
