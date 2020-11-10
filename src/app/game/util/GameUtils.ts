@@ -92,9 +92,9 @@ export class GameUtils {
       for (let currentCol = 0; currentCol < board.width; currentCol++) {
         board.getCell(currentCol, currentRow).isAlive() ? (patterStr += 'X') : (patterStr += '.');
       }
-      patterStr += '/n';
+      patterStr += '\n';
     }
-    return patterStr;
+    return patterStr.trim();
   }
 
   public static load(board: Board, pattern: string): void {
