@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Cell } from '../../shared/model/Cell';
 import { CellState } from '../../shared/model/CellState';
 import { Board } from '../../game/model/Board';
+import { GameUtils } from '../../game/util/GameUtils';
 
 @Component({
   selector: 'app-pattern-editor',
@@ -40,5 +41,13 @@ export class PatternEditorComponent implements OnChanges {
     } else {
       return CellState.ALIVE;
     }
+  }
+
+  public save(): string {
+    return GameUtils.save(this.board);
+  }
+
+  public load(patternStr: string) {
+    GameUtils.load(this.board, patternStr);
   }
 }

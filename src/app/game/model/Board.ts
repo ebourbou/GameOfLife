@@ -17,7 +17,6 @@ export class Board {
   }
 
   getCell(x: number, y: number): Cell {
-    // return new Cell(x, y, (y * x) % 3 ? CellState.ALIVE : CellState.DEAD); //return this.rowsAndCells.get(y)[x];
     return this.rowsAndCells.get(y)[x];
   }
 

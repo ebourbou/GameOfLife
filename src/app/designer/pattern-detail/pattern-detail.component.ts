@@ -9,6 +9,7 @@ import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../game/model/Board';
 import { GameUtils } from '../../game/util/GameUtils';
 import { PatternUtils } from '../util/pattern-util';
+import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -28,23 +29,26 @@ export class PatternDetailComponent implements OnChanges {
   patternOriginal: Pattern;
   private patternService: PatternService;
   private patternsComponent: PatternsComponent;
+  private patternEditor: PatternEditorComponent;
 
   constructor(
     public dialog: MatDialog,
     patternService: PatternService,
     patternsComponent: PatternsComponent,
-    private snackBarService: MatSnackBar
+    private snackBarService: MatSnackBar,
+    patternEditor: PatternEditorComponent
   ) {
     this.patternService = patternService;
     this.snackBarService = snackBarService;
     this.patternsComponent = patternsComponent;
+    this.patternEditor = patternEditor;
   }
 
   ngOnChanges(): void {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-      // this.editor = GameUtils.build(this.pattern.sizeX, this.pattern.sizeY);
+      this.patternEditor.load(this.pattern.pattern);
     }
   }
 
