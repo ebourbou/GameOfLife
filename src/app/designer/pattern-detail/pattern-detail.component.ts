@@ -25,6 +25,7 @@ export class PatternDetailComponent implements OnChanges {
   public editor: Board;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
+  @ViewChild('editor') patternEditor: PatternEditorComponent;
 
   patternOriginal: Pattern;
   private patternService: PatternService;
@@ -86,6 +87,7 @@ export class PatternDetailComponent implements OnChanges {
 
   onRevert(): void {
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
+    this.patternEditor.load();
     this.form.reset(this.pattern);
   }
 
@@ -108,8 +110,6 @@ export class PatternDetailComponent implements OnChanges {
 
   createPattern(patternToCreate: Pattern): Pattern {
     // Todo Temp pattern
-    patternToCreate.pattern = 'DummyPatternContent';
-
     this.patternService
       .addPattern(patternToCreate)
       .then((data) => {
@@ -123,6 +123,7 @@ export class PatternDetailComponent implements OnChanges {
   }
 
   updatePattern(patternToUpdate: Pattern): void {
+    patternToUpdate.pattern = this.patternEditor.save();
     this.patternService.updatePattern(patternToUpdate).then((result) => {
       this.snackBarService.open('Pattern ' + result.name + ' wurde aktualisiert.', 'Schliessen', {
         duration: 2000,
