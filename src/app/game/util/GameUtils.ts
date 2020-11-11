@@ -94,13 +94,13 @@ export class GameUtils {
       }
       patterStr += '/n';
     }
-    return patterStr;
+    return patterStr.slice(0, -1);
   }
 
   public static load(board: Board, pattern: string): void {
     board.rowsAndCells.clear();
 
-    pattern.split('\n').forEach((value, y) => {
+    pattern.split('/n').forEach((value, y) => {
       const cells = new Array<Cell>();
       value.split('').forEach((character, x) => {
         cells.push(new Cell(y, x, character === '.' ? CellState.DEAD : CellState.ALIVE));
