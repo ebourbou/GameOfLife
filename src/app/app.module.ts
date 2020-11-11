@@ -26,6 +26,7 @@ import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 registerLocaleData(localeDECH);
 
@@ -47,6 +48,7 @@ registerLocaleData(localeDECH);
     EffectsModule.forRoot([]),
     MatToolbarModule,
     MatSidenavModule,
+    MatTooltipModule,
   ],
   declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [

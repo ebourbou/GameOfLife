@@ -34,4 +34,19 @@ export class PatternUtils {
     };
     return pat;
   }
+
+  public static invert(pattern: string): string {
+    let invertedStr = '';
+
+    [...pattern].forEach((c) => {
+      if (c === '.') {
+        invertedStr += 'X';
+      } else if (c === 'X') {
+        invertedStr += '.';
+      } else {
+        invertedStr += c;
+      }
+    });
+    return invertedStr;
+  }
 }

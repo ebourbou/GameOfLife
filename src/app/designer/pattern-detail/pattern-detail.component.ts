@@ -2,12 +2,12 @@ import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { PatternService } from '../services/patterns.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../game/model/Board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -85,7 +85,7 @@ export class PatternDetailComponent implements OnChanges {
 
   onRevert(): void {
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
-    this.patternEditor.load();
+    this.patternEditor.load(this.pattern.pattern);
     this.form.reset(this.pattern);
   }
 
