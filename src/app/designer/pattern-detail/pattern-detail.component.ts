@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
@@ -7,8 +7,6 @@ import { PatternService } from '../services/patterns.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../game/model/Board';
-import { GameUtils } from '../../game/util/GameUtils';
-import { PatternUtils } from '../util/pattern-util';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 
 @Component({
@@ -133,5 +131,10 @@ export class PatternDetailComponent implements OnChanges {
 
   deletePattern(patternToDelete: Pattern): void {
     this.openConfirmDeleteDialog(patternToDelete);
+  }
+
+  // Reset on size changingØ
+  private updateSize(): void {
+    this.pattern.pattern = null;
   }
 }

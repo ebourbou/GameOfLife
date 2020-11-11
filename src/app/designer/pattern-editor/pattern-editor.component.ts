@@ -29,7 +29,9 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
     if (this.sizeX && this.sizeY) {
       console.log('Pattern changed: ' + this.sizeY + ' ' + this.sizeX + ' ' + this.pattern);
       this.board = new Board(this.sizeX, this.sizeY, this.buildCells(this.sizeX, this.sizeY));
-      this.load();
+      if (this.pattern) {
+        this.load();
+      }
     }
   }
 
