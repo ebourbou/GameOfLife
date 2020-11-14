@@ -1,7 +1,7 @@
 
 <mat-card class="board" [ngClass]="(this.patternSelected? 'isApplyPattern' : 'isApplyCellState')">
   <div class="row" *ngFor="let row of this.board.rowsAndCells.values()">
-    <div class="cell" *ngFor="let cell of row" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" (click)="this.patternSelected? this.onApplyPattern(cell) : cell.switchState()">
+    <div class="cell" matRipple [matRippleRadius]="50" [matRippleCentered]="true" [matRippleUnbounded]="true" *ngFor="let cell of row" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" (click)="this.patternSelected? this.onApplyPattern(cell) : cell.switchState()">
     </div>
   </div>
 </mat-card>

@@ -15,9 +15,11 @@ import { StepperComponent } from './stepper/stepper.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { BoardStepComponent } from './stepper/board-step/board-step.component';
+import { CellStepComponent } from './stepper/cell-step/cell-step.component';
 
 @NgModule({
-  declarations: [GameComponent, BoardComponent, ControlsComponent, StepperComponent],
+  declarations: [GameComponent, BoardComponent, ControlsComponent, StepperComponent, BoardStepComponent, CellStepComponent],
   imports: [
     GameRoutingModule,
     SharedModule,

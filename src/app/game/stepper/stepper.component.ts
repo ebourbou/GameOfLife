@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Controls } from '../model/Controls';
 import { Pattern } from '../../shared/model/pattern';
 import { PatternUtils } from '../../shared/service/pattern-util';
+import { newGame } from '../state/game.actions';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-stepper',
@@ -12,8 +14,8 @@ import { PatternUtils } from '../../shared/service/pattern-util';
 export class StepperComponent implements OnInit {
   @Input()
   controls: Controls;
-
-  groupedPatterns: Array<{ key; value }>;
+  @Input()
+  allPatterns: Pattern[];
 
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
@@ -28,57 +30,39 @@ export class StepperComponent implements OnInit {
   @Output()
   private doInvertCells: EventEmitter<void> = new EventEmitter();
 
-  boardFormGroup: FormGroup;
-  cellsFormGroup: FormGroup;
+  rootGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {}
 
-  @Input()
-  set allPatterns(allPatterns: Pattern[]) {
-    this.groupedPatterns = PatternUtils.toGroupedPatternMap(allPatterns);
-  }
-
-  @Input()
-  set patternSelected(pattern: Pattern) {}
-
   ngOnInit(): void {
-    this.boardFormGroup = this.formBuilder.group({
-      sizeX: [this.controls.xAxisSize],
-      sizeY: [this.controls.yAxisSize],
-      generations: [this.controls.generations],
-    });
-    this.cellsFormGroup = this.formBuilder.group({
-      patterns: [''],
-    });
-  }
-
-  public onResizeX(xValue: number): void {
-    const y = this.boardFormGroup.get('sizeY').value;
-    this.doResize.emit({ x: xValue, y });
-  }
-
-  public onResizeY(yValue: number): void {
-    const x = this.boardFormGroup.get('sizeX').value;
-    this.doResize.emit({ x, y: yValue });
-  }
-
-  onChangeGenerations(generations: number): void {
-    this.doChangeGenerations.emit(generations);
+    this.rootGroup = this.formBuilder.group({});
   }
 
   onPatternSelected(pattern: Pattern): void {
     this.doPatternSelected.emit(pattern);
   }
 
-  onRandom(event: Event): void {
+  onRandom(): void {
     this.doRandomCells.emit();
   }
 
-  onReset(event: Event): void {
+  onReset(): void {
     this.doResetCells.emit();
   }
 
-  onInvert(event: Event): void {
+  onInvert(): void {
     this.doInvertCells.emit();
+  }
+
+  onChangeGenerations(generations: number): void {
+    this.doChangeGenerations.emit(generations);
+  }
+
+  onResize(size: any): void {
+    this.doResize.emit(size);
+  }
+
+  selectionChange(event: StepperSelectionEvent): void {
+    console.log(event.selectedStep.label);
   }
 }
