@@ -19,7 +19,6 @@ export interface GameState {
   loading: boolean;
   controls: Controls;
   running: boolean;
-  readOnly: boolean;
 }
 
 export const initialState: GameState = {
@@ -31,7 +30,6 @@ export const initialState: GameState = {
   loading: false,
   controls: null,
   running: false,
-  readOnly: true,
 };
 
 export const gameActionReducer = createReducer(

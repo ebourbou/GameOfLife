@@ -1,19 +1,7 @@
 .game {
-  display: grid;
-  grid-template-columns: 4fr auto;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "stepper stepper"
-    "board controls";
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-.board {
-  grid-area: board;
-}
-.controls {
-  grid-area: controls;
-}
-
-.stepper {
-  grid-area: stepper;
 }

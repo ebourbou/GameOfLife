@@ -12,6 +12,7 @@
 .row {
   display: flex;
   flex-direction: row;
+  line-height: 0;
 }
 
 .cell {
@@ -32,4 +33,13 @@
 
 .isApplyCellState {
   cursor: crosshair;
+}
+
+.isMasked {
+  background: gray;
+  cursor: not-allowed ;
+}
+
+.isEditable {
+  border-style: solid;
 }

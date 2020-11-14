@@ -4,22 +4,22 @@ import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
 import { Store } from '@ngrx/store';
 import {
-  newGame,
-  newDefaultGame,
-  changeSpeed,
+  applyPattern,
   changeGenerations,
-  startGame,
-  nextGeneration,
-  nextGenerationSuccess,
-  startGameSuccess,
+  changeSpeed,
   endGame,
   endGameSuccess,
+  invertCells,
   loadPatterns,
+  newDefaultGame,
+  newGame,
+  nextGeneration,
+  nextGenerationSuccess,
   patternSelected,
-  applyPattern,
   randomCells,
   resetCells,
-  invertCells,
+  startGame,
+  startGameSuccess,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
@@ -36,6 +36,7 @@ import { take } from 'rxjs/operators';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
+import { StepperStep } from '../stepper/StepperStep';
 
 @Component({
   selector: 'app-game',
@@ -50,6 +51,8 @@ export class GameComponent implements OnInit {
   public gameStatistic$: Observable<GameStatistic>;
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
+  public isMasked: boolean;
+  public isEditable: boolean;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.store.dispatch(newDefaultGame());
@@ -118,5 +121,15 @@ export class GameComponent implements OnInit {
 
   onInvertCells(): void {
     this.store.dispatch(invertCells());
+  }
+
+  onStepChanged(step: StepperStep): void {
+    if (step) {
+      this.isMasked = step === StepperStep.BOARD;
+      this.isEditable = step === StepperStep.CELL;
+    } else {
+      this.isMasked = true;
+      this.isEditable = false;
+    }
   }
 }

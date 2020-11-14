@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Board } from '../model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
-import { GameUtils } from '../util/GameUtils';
-import { patternSelected } from '../state/game.actions';
+import { StepperStep } from '../stepper/StepperStep';
 
 @Component({
   selector: 'gol-board',
@@ -16,6 +15,12 @@ export class BoardComponent implements OnInit {
 
   @Input()
   patternSelected: Pattern;
+
+  @Input()
+  isMasked: boolean;
+
+  @Input()
+  isEditable: boolean;
 
   @Output()
   public doApplyPattern: EventEmitter<Cell> = new EventEmitter();

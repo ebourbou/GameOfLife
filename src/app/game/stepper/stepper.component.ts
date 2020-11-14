@@ -5,6 +5,7 @@ import { Pattern } from '../../shared/model/pattern';
 import { PatternUtils } from '../../shared/service/pattern-util';
 import { newGame } from '../state/game.actions';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { StepperStep } from './StepperStep';
 
 @Component({
   selector: 'app-stepper',
@@ -29,6 +30,8 @@ export class StepperComponent implements OnInit {
   private doResetCells: EventEmitter<void> = new EventEmitter();
   @Output()
   private doInvertCells: EventEmitter<void> = new EventEmitter();
+  @Output()
+  public doStepChanged: EventEmitter<StepperStep> = new EventEmitter();
 
   rootGroup: FormGroup;
 
@@ -36,6 +39,7 @@ export class StepperComponent implements OnInit {
 
   ngOnInit(): void {
     this.rootGroup = this.formBuilder.group({});
+    this.doStepChanged.emit(StepperStep.BOARD); // initial
   }
 
   onPatternSelected(pattern: Pattern): void {
@@ -63,6 +67,7 @@ export class StepperComponent implements OnInit {
   }
 
   selectionChange(event: StepperSelectionEvent): void {
-    console.log(event.selectedStep.label);
+    const nextStep = StepperStep[StepperStep[event.selectedIndex]];
+    this.doStepChanged.emit(nextStep);
   }
 }
