@@ -6,9 +6,11 @@ import { DesignerRoutingModule } from './designer-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { GameModule } from '../game/game.module';
 import { PatternEditorComponent } from './pattern-editor/pattern-editor.component';
+import { PatternPreviewComponent } from './pattern-preview/pattern-preview.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
-  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, GameModule],
-  declarations: [PatternDetailComponent, PatternsComponent, PatternEditorComponent],
+  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, GameModule, MatGridListModule],
+  declarations: [PatternDetailComponent, PatternsComponent, PatternEditorComponent, PatternPreviewComponent],
 })
 export class DesignerModule {}

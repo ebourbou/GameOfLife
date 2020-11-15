@@ -21,6 +21,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RatingComponent } from './rating/rating.component';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -42,8 +43,8 @@ const MATERIAL = [
 ];
 
 @NgModule({
-  declarations: [SparklineComponent, CarouselComponent],
+  declarations: [SparklineComponent, CarouselComponent, RatingComponent],
   imports: [CommonModule, PasswordStrengthMeterModule, ...MATERIAL],
-  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL, CarouselComponent],
+  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL, RatingComponent, CarouselComponent],
 })
 export class SharedModule {}

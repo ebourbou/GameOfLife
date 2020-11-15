@@ -6,13 +6,10 @@
   background-color: transparent;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 50px;
+mat-grid-tile{
+  border: thin solid lightgray;
 }
+
 .toolbar {
   display: flex;
   flex-direction: row;
@@ -29,12 +26,10 @@ a:active {
   color: lightgray;
 }
 
-.column {
-  width: 20px;
-  padding: 2px;
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
-  border: thin solid lightgray;
+.pattern {
+  margin: 0 auto;
+  width:50%;
+  background-color:aliceblue;
 }
+
+

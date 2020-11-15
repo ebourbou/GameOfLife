@@ -33,7 +33,7 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.sizeX && this.sizeY) {
       console.log('Changed');
-      this.board = new Board(this.sizeX, this.sizeY, this.buildCells(this.sizeX, this.sizeY));
+      this.board = GameUtils.buildBoardWithPattern(this.sizeX, this.sizeY, this.pattern);
       if (this.pattern) {
         this.load();
       }
@@ -44,7 +44,7 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
     this.form.form.markAsDirty();
     this.pattern = this.save();
     this.pattern = PatternUtils.invert(this.pattern);
-    this.board = new Board(this.sizeX, this.sizeY, this.buildCells(this.sizeX, this.sizeY));
+    this.board = GameUtils.buildBoardWithPattern(this.sizeX, this.sizeY, this.pattern);
     this.load();
   }
 
@@ -58,20 +58,7 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
       emptyPattern += '\n';
     }
     this.pattern = emptyPattern.slice(0, -1);
-    this.board = new Board(this.sizeX, this.sizeY, this.buildCells(this.sizeX, this.sizeY));
-  }
-
-  private buildCells(x: number, y: number): Map<number, Array<Cell>> {
-    const rowsAndCells = new Map<number, Array<Cell>>();
-
-    for (let currentRow = 0; currentRow < y; currentRow++) {
-      const rowArray = new Array<Cell>();
-      for (let currentCol = 0; currentCol < x; currentCol++) {
-        rowArray.push(new Cell(currentRow, currentCol, CellState.DEAD));
-      }
-      rowsAndCells.set(currentRow, rowArray);
-    }
-    return rowsAndCells;
+    this.board = GameUtils.buildBoardWithPattern(this.sizeX, this.sizeY, this.pattern);
   }
 
   public save(): string {

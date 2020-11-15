@@ -34,6 +34,28 @@ export class GameUtils {
     board.cells.forEach((cell) => this.addNeighboursToCell(cell, rowsAndCells));
   }
 
+  public static buildBoardWithPattern(x: number, y: number, pattern: string): Board {
+    const rowsAndCells = new Map<number, Array<Cell>>();
+
+    for (let currentRow = 0; currentRow < y; currentRow++) {
+      const rowArray = new Array<Cell>();
+      for (let currentCol = 0; currentCol < x; currentCol++) {
+        rowArray.push(
+          new Cell(
+            currentRow,
+            currentCol,
+            pattern.charAt(currentCol + currentRow * x + currentRow) === '.' ? CellState.DEAD : CellState.ALIVE
+          )
+        );
+      }
+      rowsAndCells.set(currentRow, rowArray);
+    }
+    const board = new Board(x, y, rowsAndCells);
+    board.rowsAndCells = rowsAndCells;
+    board.cells.forEach((cell) => this.addNeighboursToCell(cell, rowsAndCells));
+    return board;
+  }
+
   private static addNeighboursToCell(cell: Cell, rowsAndCells: Map<number, Array<Cell>>): void {
     [cell.row - 1, cell.row, cell.row + 1].forEach((current) => {
       const currentRow = rowsAndCells.has(current) ? rowsAndCells.get(current) : new Array<Cell>();

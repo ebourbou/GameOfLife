@@ -68,4 +68,10 @@ export class Board {
     });
     return mapOfOldest;
   }
+
+  debug(): string {
+    let result = '';
+    this.cells.forEach((row) => (result += row.isAlive() ? 'O' : '.'));
+    return result;
+  }
 }

@@ -1,9 +1,11 @@
  <div>
-    <div class="row" *ngFor="let row of this.board.getRows(); let y = index" [attr.data-index]="y">
-      <div class="column" *ngFor="let cell of this.board.getColumns(); let x = index" [attr.data-index]="x"
-           [ngClass]="(board.getCell(x,y).isAlive() ? 'isAlive' : 'isDead')" (click)="toggle(x,y)" (mousemove)="toggle(x,y,$event)">
-      </div>
-    </div>
+   <div class="pattern">
+   <mat-grid-list rowHeight="1:1" cols="{{this.board.getColumns().length}}" >
+     <mat-grid-tile *ngFor="let cell of this.board.cells" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" (click)="toggle(cell.column,cell.row)" (mousemove)="toggle(cell.column,cell.row,$event)">
+     </mat-grid-tile>
+   </mat-grid-list>
+   </div>
+
    <ul class="toolbar">
      <li>
        <a>
