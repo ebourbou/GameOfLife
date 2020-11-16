@@ -3,7 +3,6 @@ import { Game } from '../model/Game';
 import { Controls } from '../model/Controls';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
-import { Cell } from '../../shared/model/Cell';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 export const newDefaultGame = createAction('[Game] New Game Default');

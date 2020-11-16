@@ -32,10 +32,13 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.sizeX && this.sizeY) {
       console.log('Changed');
-      this.board = GameUtils.buildBoardWithPattern(this.sizeX, this.sizeY, this.pattern);
-      if (this.pattern) {
-        this.load();
+
+      const size = PatternUtils.getPatternSize(this.pattern);
+      if (size.w !== this.sizeX && size.h !== this.sizeY) {
+        // init with empty (in new mode)
+        this.pattern = PatternUtils.initPattern(this.sizeX, this.sizeY);
       }
+      this.board = GameUtils.buildBoardWithPattern(this.sizeX, this.sizeY, this.pattern);
     }
   }
 

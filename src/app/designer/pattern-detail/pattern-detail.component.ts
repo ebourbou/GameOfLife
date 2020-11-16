@@ -8,6 +8,7 @@ import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../shared/model/Board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { PatternService } from '../../shared/service/patterns.service';
+import { PatternUtils } from '../util/pattern-util';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -50,6 +51,7 @@ export class PatternDetailComponent implements OnChanges {
   onSubmit(pattern: Pattern): void {
     this.submitted = true;
 
+    this.pattern.pattern = this.patternEditor.save();
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
@@ -62,6 +64,7 @@ export class PatternDetailComponent implements OnChanges {
       this.updatePattern(pattern);
     }
     this.form.resetForm(pattern);
+    this.isAddMode = false;
     this.submitted = true;
     this.loading = false;
   }
@@ -84,6 +87,7 @@ export class PatternDetailComponent implements OnChanges {
   }
 
   onRevert(): void {
+    this.isAddMode = false;
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
     this.patternEditor.load(this.pattern.pattern);
     this.form.reset(this.pattern);
@@ -101,15 +105,12 @@ export class PatternDetailComponent implements OnChanges {
       heat: null,
       sizeX: 5,
       sizeY: 5,
-      pattern: null,
+      pattern: PatternUtils.initPattern(5, 5),
       type: null,
     };
   }
 
   createPattern(patternToCreate: Pattern): Pattern {
-    // Todo Temp pattern
-    patternToCreate.pattern = 'DummyPatternContent';
-
     this.patternService
       .addPattern(patternToCreate)
       .then((data) => {
