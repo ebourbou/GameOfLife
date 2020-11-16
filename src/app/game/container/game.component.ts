@@ -124,12 +124,7 @@ export class GameComponent implements OnInit {
   }
 
   onStepChanged(step: StepperStep): void {
-    if (step) {
-      this.isMasked = step === StepperStep.BOARD;
-      this.isEditable = step === StepperStep.CELL;
-    } else {
-      this.isMasked = true;
-      this.isEditable = false;
-    }
+    this.isMasked = StepperStep.BOARD === step;
+    this.isEditable = step === StepperStep.CELL;
   }
 }
