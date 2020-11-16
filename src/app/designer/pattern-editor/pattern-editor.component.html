@@ -1,0 +1,36 @@
+ <div>
+   <div class="pattern">
+   <mat-grid-list rowHeight="1:1" cols="{{this.board.width}}" >
+     <mat-grid-tile *ngFor="let cell of this.board.cells" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" (click)="toggle(cell.column,cell.row)" (mousemove)="toggle(cell.column,cell.row,$event)">
+     </mat-grid-tile>
+   </mat-grid-list>
+   </div>
+
+   <ul class="toolbar">
+     <li>
+       <a>
+         <button mat-raised-button color="primary" type="button" aria-label="Schreiber" (click)="isErase = !isErase" matTooltip="Einzelne Zellen oder mehrere mit gedrückter Taste">
+           <mat-icon>{{tool}}</mat-icon>
+           <span  class="label">{{isErase ? "Löschen":"Zeichnen"}}</span>
+         </button>
+       </a>
+     </li>
+     <li>
+       <a>
+         <button mat-raised-button  color="primary" type="button" aria-label="Löschen" (click)="clear()" matTooltip="Komplett löschen">
+           <mat-icon>highlight_off</mat-icon>
+           <span  class="label">Alles löschen</span>
+         </button>
+       </a>
+     </li>
+     <li>
+       <a>
+         <button mat-raised-button color="primary" type="button" aria-label="Invertieren" (click)="invert()" matTooltip="Alle Zellen invertieren">
+           <mat-icon>invert_colors</mat-icon>
+           <span  class="label">Invertieren</span>
+         </button>
+       </a>
+     </li>
+   </ul>
+
+ </div>

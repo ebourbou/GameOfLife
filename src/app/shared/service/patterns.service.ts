@@ -10,8 +10,7 @@ import {
 
 import { Pattern } from '../model/pattern';
 import { PatternUtils } from './pattern-util';
-import { from, Observable, of } from 'rxjs';
-import { Controls } from '../../game/model/Controls';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

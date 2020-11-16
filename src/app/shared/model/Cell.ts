@@ -37,4 +37,8 @@ export class Cell {
   switchState(): void {
     this.state = this.state === CellState.ALIVE ? CellState.DEAD : CellState.ALIVE;
   }
+
+  setState(newState: CellState): void {
+    this.state = newState;
+  }
 }

@@ -1,12 +1,15 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import localeDECH from '@angular/common/locales/de-CH';
+
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
@@ -18,16 +21,19 @@ import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
 import { registerLocaleData } from '@angular/common';
-import { PatternService } from './shared/service/patterns.service';
+
 import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { CoreModule } from './core/core.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HomeComponent } from './home/home.component';
+import { PatternService } from './shared/service/patterns.service';
 
 registerLocaleData(localeDECH);
 
 @NgModule({
   imports: [
-    CoreModule,
     BrowserModule,
     SharedModule,
     HttpClientModule,
@@ -35,9 +41,16 @@ registerLocaleData(localeDECH);
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     PasswordStrengthMeterModule,
     DesignerModule,
     AmplifyAngularModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    MatToolbarModule,
+    MatSidenavModule,
+    MatTooltipModule,
   ],
   declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [

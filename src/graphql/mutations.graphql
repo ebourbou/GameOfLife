@@ -30,8 +30,8 @@ mutation CreatePattern($input: CreatePatternInput!) {
   createPattern(input: $input) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name
@@ -44,8 +44,8 @@ mutation UpdatePattern($input: UpdatePatternInput!) {
   updatePattern(input: $input) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name
@@ -58,8 +58,8 @@ mutation DeletePattern($input: DeletePatternInput!) {
   deletePattern(input: $input) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name

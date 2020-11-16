@@ -12,6 +12,7 @@ import { SparklineComponent } from './sparkline/sparkline.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { MatOptionModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -19,8 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { SnackbarService } from './service/snackbar.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RatingComponent } from './rating/rating.component';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -37,14 +38,13 @@ const MATERIAL = [
   MatMenuModule,
   MatDialogModule,
   MatTableModule,
-  MatToolbarModule,
-  MatSidenavModule,
   MatSelectModule,
+  MatTooltipModule,
 ];
 
 @NgModule({
-  declarations: [SparklineComponent, CarouselComponent],
-  imports: [CommonModule, ...MATERIAL],
-  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL, CarouselComponent],
+  declarations: [SparklineComponent, CarouselComponent, RatingComponent],
+  imports: [CommonModule, PasswordStrengthMeterModule, ...MATERIAL],
+  exports: [CommonModule, RouterModule, FormsModule, SparklineComponent, ...MATERIAL, RatingComponent, CarouselComponent],
 })
 export class SharedModule {}

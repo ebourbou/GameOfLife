@@ -8,19 +8,10 @@ import { ListComponent } from './user-list/list.component';
 import { AddEditComponent } from './user-edit/add-edit.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { SharedModule } from '../shared/shared.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    UsersRoutingModule,
-    PasswordStrengthMeterModule,
-    FormsModule
-  ],
-    declarations: [
-        LayoutComponent,
-        ListComponent,
-        AddEditComponent
-    ]
+  imports: [SharedModule, ReactiveFormsModule, UsersRoutingModule, PasswordStrengthMeterModule, FormsModule, MatSelectModule],
+  declarations: [LayoutComponent, ListComponent, AddEditComponent],
 })
 export class UsersModule {}

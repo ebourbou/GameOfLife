@@ -28,8 +28,8 @@ query GetPattern($id: ID!) {
   getPattern(id: $id) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name
@@ -47,8 +47,8 @@ query ListPatterns(
     items {
       id
       author
-      boxX
-      boxY
+      sizeX
+      sizeY
       description
       heat
       name

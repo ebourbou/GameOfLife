@@ -1,4 +1,5 @@
 .designer {
+  width: 100%;
   display: flex;
 }
 .pattern-list {
@@ -6,6 +7,10 @@
   flex-basis: 20%;
 }
 
-.pattern.detail {
+.matrix {
+  width: 100%;
+}
+
+.pattern-detail {
   flex-basis: 80%;
 }

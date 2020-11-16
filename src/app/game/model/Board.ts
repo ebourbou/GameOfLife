@@ -1,7 +1,6 @@
 import { Cell } from '../../shared/model/Cell';
 import { CellState } from '../../shared/model/CellState';
 import { RuleSet } from '../../designer/rule/RuleSet';
-import { Pattern } from '../../shared/model/pattern';
 
 export class Board {
   constructor(public width: number, public height: number, public rowsAndCells: Map<number, Array<Cell>>) {}
@@ -9,6 +8,10 @@ export class Board {
   nextGeneration(ruleSet: RuleSet): void {
     this.cells.forEach((cell) => ruleSet.applyRules(cell));
     this.cells.forEach((cell) => cell.switchToNextGeneration());
+  }
+
+  getCell(x: number, y: number): Cell {
+    return this.rowsAndCells.get(y)[x];
   }
 
   get cells(): Array<Cell> {
@@ -51,4 +54,12 @@ export class Board {
     });
     return mapOfOldest;
   }
+
+  debug(): string {
+    let result = '';
+    this.cells.forEach((row) => (result += row.isAlive() ? 'O' : '.'));
+    return result;
+  }
+
+  getWidth() {}
 }

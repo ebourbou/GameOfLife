@@ -1,0 +1,25 @@
+mat-card {
+  width: 200px;
+  height: 250px;
+  box-sizing: border-box;
+}
+mat-rating {
+
+}
+.pattern {
+  margin: 0 auto;
+  width:80px;
+  background-color:aliceblue;
+}
+
+.isAlive {
+  background-color: black;
+}
+
+.isDead {
+  background-color: transparent;
+}
+
+mat-grid-tile{
+  border: thin solid lightgray;
+}

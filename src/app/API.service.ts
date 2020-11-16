@@ -5,6 +5,10 @@ import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
+export interface SubscriptionResponse<T> {
+  value: GraphQLResult<T>;
+}
+
 export type CreateUserInput = {
   id: string;
   username?: string | null;
@@ -27,8 +31,8 @@ export type DeleteUserInput = {
 
 export type CreatePatternInput = {
   author?: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description?: string | null;
   heat?: number | null;
   name: string;
@@ -40,8 +44,8 @@ export type CreatePatternInput = {
 export type UpdatePatternInput = {
   id: string;
   author?: string | null;
-  boxX?: number | null;
-  boxY?: number | null;
+  sizeX?: number | null;
+  sizeY?: number | null;
   description?: string | null;
   heat?: number | null;
   name?: string | null;
@@ -91,8 +95,8 @@ export type TableStringFilterInput = {
 export type TablePatternFilterInput = {
   id?: TableIDFilterInput | null;
   author?: TableStringFilterInput | null;
-  boxX?: TableIntFilterInput | null;
-  boxY?: TableIntFilterInput | null;
+  sizeX?: TableIntFilterInput | null;
+  sizeY?: TableIntFilterInput | null;
   description?: TableStringFilterInput | null;
   heat?: TableIntFilterInput | null;
   name?: TableStringFilterInput | null;
@@ -144,8 +148,8 @@ export type CreatePatternMutation = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -158,8 +162,8 @@ export type UpdatePatternMutation = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -172,8 +176,8 @@ export type DeletePatternMutation = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -208,8 +212,8 @@ export type GetPatternQuery = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -224,8 +228,8 @@ export type ListPatternsQuery = {
     __typename: "Pattern";
     id: string;
     author: string | null;
-    boxX: number;
-    boxY: number;
+    sizeX: number;
+    sizeY: number;
     description: string | null;
     heat: number | null;
     name: string;
@@ -267,8 +271,8 @@ export type OnCreatePatternSubscription = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -281,8 +285,8 @@ export type OnUpdatePatternSubscription = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -295,8 +299,8 @@ export type OnDeletePatternSubscription = {
   __typename: "Pattern";
   id: string;
   author: string | null;
-  boxX: number;
-  boxY: number;
+  sizeX: number;
+  sizeY: number;
   description: string | null;
   heat: number | null;
   name: string;
@@ -374,8 +378,8 @@ export class APIService {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -400,8 +404,8 @@ export class APIService {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -426,8 +430,8 @@ export class APIService {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -503,8 +507,8 @@ export class APIService {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -533,8 +537,8 @@ export class APIService {
             __typename
             id
             author
-            boxX
-            boxY
+            sizeX
+            sizeY
             description
             heat
             name
@@ -560,7 +564,9 @@ export class APIService {
     )) as any;
     return <ListPatternsQuery>response.data.listPatterns;
   }
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
+  OnCreateUserListener: Observable<
+    SubscriptionResponse<OnCreateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onCreateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -573,9 +579,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
 
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+  OnUpdateUserListener: Observable<
+    SubscriptionResponse<OnUpdateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onUpdateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -588,9 +596,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
 
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+  OnDeleteUserListener: Observable<
+    SubscriptionResponse<OnDeleteUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onDeleteUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -603,19 +613,19 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   OnCreatePatternListener: Observable<
-    OnCreatePatternSubscription
+    SubscriptionResponse<OnCreatePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreatePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
-        onCreatePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
+      `subscription OnCreatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onCreatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -625,19 +635,19 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreatePatternSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreatePatternSubscription>>;
 
   OnUpdatePatternListener: Observable<
-    OnUpdatePatternSubscription
+    SubscriptionResponse<OnUpdatePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
-        onUpdatePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
+      `subscription OnUpdatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onUpdatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -647,19 +657,19 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdatePatternSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdatePatternSubscription>>;
 
   OnDeletePatternListener: Observable<
-    OnDeletePatternSubscription
+    SubscriptionResponse<OnDeletePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeletePattern($id: ID, $author: String, $boxX: Int, $boxY: Int, $description: String) {
-        onDeletePattern(id: $id, author: $author, boxX: $boxX, boxY: $boxY, description: $description) {
+      `subscription OnDeletePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onDeletePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
           id
           author
-          boxX
-          boxY
+          sizeX
+          sizeY
           description
           heat
           name
@@ -669,5 +679,5 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeletePatternSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeletePatternSubscription>>;
 }

@@ -65,21 +65,21 @@ subscription OnDeleteUser(
 subscription OnCreatePattern(
   $id: ID
   $author: String
-  $boxX: Int
-  $boxY: Int
+  $sizeX: Int
+  $sizeY: Int
   $description: String
 ) {
   onCreatePattern(
     id: $id
     author: $author
-    boxX: $boxX
-    boxY: $boxY
+    sizeX: $sizeX
+    sizeY: $sizeY
     description: $description
   ) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name
@@ -91,21 +91,21 @@ subscription OnCreatePattern(
 subscription OnUpdatePattern(
   $id: ID
   $author: String
-  $boxX: Int
-  $boxY: Int
+  $sizeX: Int
+  $sizeY: Int
   $description: String
 ) {
   onUpdatePattern(
     id: $id
     author: $author
-    boxX: $boxX
-    boxY: $boxY
+    sizeX: $sizeX
+    sizeY: $sizeY
     description: $description
   ) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name
@@ -117,21 +117,21 @@ subscription OnUpdatePattern(
 subscription OnDeletePattern(
   $id: ID
   $author: String
-  $boxX: Int
-  $boxY: Int
+  $sizeX: Int
+  $sizeY: Int
   $description: String
 ) {
   onDeletePattern(
     id: $id
     author: $author
-    boxX: $boxX
-    boxY: $boxY
+    sizeX: $sizeX
+    sizeY: $sizeY
     description: $description
   ) {
     id
     author
-    boxX
-    boxY
+    sizeX
+    sizeY
     description
     heat
     name

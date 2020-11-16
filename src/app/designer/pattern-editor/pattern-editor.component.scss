@@ -1,0 +1,35 @@
+.isAlive {
+  background-color: black;
+}
+
+.isDead {
+  background-color: transparent;
+}
+
+mat-grid-tile{
+  border: thin solid lightgray;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+  cursor: pointer;
+}
+a {
+padding-right: 5px;
+}
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+.pattern {
+  margin: 0 auto;
+  width:50%;
+  background-color:aliceblue;
+}
+
+

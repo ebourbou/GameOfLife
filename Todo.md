@@ -64,3 +64,13 @@ const client = new AWSAppSyncClient({
 
 Master Detail pattern mit Routing:
 https://medium.com/@blewpri/angular-8-responsive-master-detail-3b4d591b3294
+
+
+Intro
+
+Game of Life ist ein zellulärer Automat der 1970 von John Conway, einem britischen Mathematiker, entwickelt wurde.
+Das Spielfeld besteht aus einer 2 deimensionalen Matrix mit Zellen, die entweder tot oder lebendig sind.
+Regeln bestimmen wie sich eine Zelle von einem zum nöchsten Zyklus verhält.
+So entstehen neue Zellen wenn sie genügend Nachbar Zellen hat oder stirbt ab wenn es zu viele lebendige Nachgarzellen gibt.
+Wenn man die Simulation startet entsteht neues Leben, Patterns bewegen sich über das Spielfeld, stabilisieren sich oder sterben auch ab.
+ 

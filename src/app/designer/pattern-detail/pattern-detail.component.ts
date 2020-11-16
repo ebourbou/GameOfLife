@@ -1,14 +1,13 @@
-import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PatternService } from '../../shared/service/patterns.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../game/model/Board';
-import { GameUtils } from '../../game/util/GameUtils';
-import { PatternUtils } from '../../shared/service/pattern-util';
+import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
+import { PatternService } from '../../shared/service/patterns.service';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -24,6 +23,7 @@ export class PatternDetailComponent implements OnChanges {
   public editor: Board;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
+  @ViewChild('editor') patternEditor: PatternEditorComponent;
 
   patternOriginal: Pattern;
   private patternService: PatternService;
@@ -44,7 +44,6 @@ export class PatternDetailComponent implements OnChanges {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-      this.editor = GameUtils.build(8, 8); //this.pattern.sizeX, this.pattern.sizeY);
     }
   }
 
@@ -61,8 +60,8 @@ export class PatternDetailComponent implements OnChanges {
       this.createPattern(pattern);
     } else {
       this.updatePattern(pattern);
-      this.form.reset();
     }
+    this.form.resetForm(pattern);
     this.submitted = true;
     this.loading = false;
   }
@@ -75,8 +74,8 @@ export class PatternDetailComponent implements OnChanges {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.patternService.deletePattern(patternToDelete.id).then((result) => {
-          this.snackBarService.open('Pattern ' + result.name + ' wurde gelöscht', 'Schliessen', {
+        this.patternService.deletePattern(patternToDelete.id).then((dlgRes) => {
+          this.snackBarService.open('Pattern ' + dlgRes.name + ' wurde gelöscht', 'Schliessen', {
             duration: 2000,
           });
         });
@@ -86,6 +85,7 @@ export class PatternDetailComponent implements OnChanges {
 
   onRevert(): void {
     this.pattern = JSON.parse(JSON.stringify(this.patternOriginal));
+    this.patternEditor.load(this.pattern.pattern);
     this.form.reset(this.pattern);
   }
 
@@ -132,5 +132,10 @@ export class PatternDetailComponent implements OnChanges {
 
   deletePattern(patternToDelete: Pattern): void {
     this.openConfirmDeleteDialog(patternToDelete);
+  }
+
+  // Reset on size changingØ
+  private updateSize(): void {
+    this.pattern.pattern = null;
   }
 }

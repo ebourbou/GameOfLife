@@ -3,7 +3,7 @@ import { Pattern } from '../../shared/model/pattern';
 import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
 import { APIService } from '../../API.service';
-import { PatternUtils } from '../../shared/service/pattern-util';
+import { PatternUtils } from '../util/pattern-util';
 import { PatternService } from '../../shared/service/patterns.service';
 
 @Component({
@@ -29,16 +29,16 @@ export class PatternsComponent implements OnInit {
   ngOnInit(): void {
     // Subscriptions to GraphQL via websockets on create,delete & update
     this.apiService.OnCreatePatternListener.subscribe((value) => {
-      /*console.log('create (subscription)');
-      const patternCreated: Pattern =  PatternUtils.fromAwsPattern(value);
-      this.patterns.push(patternCreated);
-      this.onSelect(patternCreated);*/
+      console.log('create (subscription)');
+      /* const patternCreated: Pattern =  PatternUtils.fromAwsPattern(value);
+       this.patterns.push(patternCreated);
+       this.onSelect(patternCreated);*/
       this.load(null);
     });
 
     this.apiService.OnDeletePatternListener.subscribe((value) => {
-      /*console.log('delete (subscription)');
-        const patternToDelete: Pattern = PatternUtils.fromAwsPattern(value);
+      console.log('delete (subscription)');
+      /*  const patternToDelete: Pattern = PatternUtils.fromAwsPattern(value);
         const foundIndex = this.patterns.findIndex(x => x.id === patternToDelete.id);
         this.patterns.splice(foundIndex, 1);
         //this.onSelect(null);*/
@@ -47,8 +47,8 @@ export class PatternsComponent implements OnInit {
 
     this.apiService.OnUpdatePatternListener.subscribe((value) => {
       console.log('update (subscription)' + value);
-      /*  const patternToUpdate: Pattern = PatternUtils.fromAwsPattern(value);
-         console.log("updated pattern"+ JSON.stringify(patternToUpdate));
+      const patternToUpdate: Pattern = PatternUtils.fromAwsPattern(value);
+      /*  console.log("updated pattern"+ JSON.stringify(patternToUpdate));
          const foundIndex = this.patterns.findIndex(x => x.id === patternToUpdate.id);
          this.patterns[foundIndex] = patternToUpdate;
          this.selectedPattern = patternToUpdate;*/

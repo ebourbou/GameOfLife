@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gameoflife-dev-221123-authRole",
+      "UnauthRoleArn": "arn:aws:iam::863886183054:role/amplify-gameoflife-dev-221123-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::863886183054:role/amplify-gameoflife-dev-221123-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-gameoflife-dev-221123-deployment",
+      "UnauthRoleName": "amplify-gameoflife-dev-221123-unauthRole",
+      "StackName": "amplify-gameoflife-dev-221123",
+      "StackId": "arn:aws:cloudformation:us-east-2:863886183054:stack/amplify-gameoflife-dev-221123/cda730a0-213d-11eb-a296-02a370451b20",
+      "AmplifyAppId": "dl995wmhc20pn"
+    }
+  }
+}

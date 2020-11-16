@@ -3,17 +3,17 @@
   <mat-card-header>
     <mat-card-title>Pattern {{pattern.name}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="pattern">
+  <mat-card-content>
     <form novalidate #form="ngForm" (ngSubmit)="onSubmit(pattern);" >
       <div class="header">
         <div>
-        <mat-form-field >
-          <mat-label>Name</mat-label>
-          <input matInput ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
-          <mat-error *ngIf="name.hasError('required')">
-            Pattern Name ist erforderlich
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field >
+            <mat-label>Name</mat-label>
+            <input matNativeControl ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
+            <mat-error *ngIf="name.hasError('required')">
+              Pattern Name ist erforderlich
+            </mat-error>
+          </mat-form-field>
         </div>
         <div class="editor-header">
             <mat-label>Breite [{{("0"+pattern.sizeX).slice(-2)}}]</mat-label>
@@ -24,7 +24,8 @@
               [step]="1"
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeX"
-              ngModel name="sizeX">
+              ngModel name="sizeX"
+              (change)="updateSize()">
             </mat-slider>
             <mat-label>Höhe [{{("0"+pattern.sizeY).slice(-2)}}]</mat-label>
             <mat-slider
@@ -34,7 +35,9 @@
               [step]="1"
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeY"
-              ngModel name="sizeY">
+              ngModel name="sizeY"
+              (change)="updateSize()">
+
             </mat-slider>
         </div>
       </div>
@@ -44,7 +47,7 @@
               <mat-label>Pattern Typ</mat-label>
               <mat-select ngModel [(ngModel)]="pattern.type" name="type" required>
                 <mat-option value="static">Statisch</mat-option>
-                <mat-option value="spaceship" >Raumschiff Gleiter</mat-option>
+                <mat-option value="spaceship" >Raumschiff/Gleiter</mat-option>
                 <mat-option value="oscillator">Oszillator</mat-option>
                 <mat-option value="buffer">Puffer</mat-option>
                 <mat-option value="other">Andere</mat-option>
@@ -53,14 +56,14 @@
 
           <mat-form-field appearance="fill">
               <mat-label>Autor</mat-label>
-              <input matInput ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
+              <input matNativeControl ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
               <mat-error *ngIf="author.hasError('required')">
                 Autor ist erforderlich
               </mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
               <mat-label>Jahr</mat-label>
-              <input matInput ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
+              <input matNativeControl ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
           </mat-form-field>
           <div>
             <mat-label>Hitze [{{("0"+pattern.heat).slice(-2)}}]</mat-label>
@@ -76,14 +79,12 @@
           </div>
         </div>
         <div class="editor">
-          <gol-board class="board" [board]="editor"></gol-board>
+          <app-pattern-editor #editor [form]="form" [pattern]="pattern.pattern" [sizeX]="pattern.sizeX" [sizeY]="pattern.sizeY"></app-pattern-editor>
         </div>
       </div>
-
-
       <mat-form-field appearance="fill" class="description">
         <mat-label>Beschreibung</mat-label>
-        <textarea matInput ngModel
+        <textarea matNativeControl ngModel
                   class
                   [(ngModel)]="pattern.description" #description="ngModel" name="description"
                   cdkTextareaAutosize
@@ -103,7 +104,7 @@
           </button>
         </div>
         <div class="update-button">
-          <button mat-raised-button color="primary" type="submit"
+          <button mat-raised-button color="primary" (click)="onSubmit(pattern)"
                   [disabled]="!form.dirty">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Speichern
@@ -114,11 +115,16 @@
       <button [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
         <mat-icon>add</mat-icon>
       </button>
-      <button [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
+      <button [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)" mat->
         <mat-icon>delete</mat-icon>
       </button>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
+
+  <pattern-preview [pattern]="pattern"></pattern-preview>
 </div>
+
+
+

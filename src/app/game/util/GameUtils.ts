@@ -64,6 +64,12 @@ export class GameUtils {
     };
   }
 
+  public static resize(board: Board, width: number, height: number): void {
+    board.width = width;
+    board.height = height;
+    this.buildCells(board);
+  }
+
   private static buildCells(board: Board): void {
     const rowsAndCells = new Map<number, Array<Cell>>();
 
@@ -76,6 +82,28 @@ export class GameUtils {
     }
     board.rowsAndCells = rowsAndCells;
     board.cells.forEach((cell) => this.addNeighboursToCell(cell, rowsAndCells));
+  }
+
+  public static buildBoardWithPattern(x: number, y: number, pattern: string): Board {
+    const rowsAndCells = new Map<number, Array<Cell>>();
+
+    for (let currentRow = 0; currentRow < y; currentRow++) {
+      const rowArray = new Array<Cell>();
+      for (let currentCol = 0; currentCol < x; currentCol++) {
+        rowArray.push(
+          new Cell(
+            currentRow,
+            currentCol,
+            pattern.charAt(currentCol + currentRow * x + currentRow) === '.' ? CellState.DEAD : CellState.ALIVE
+          )
+        );
+      }
+      rowsAndCells.set(currentRow, rowArray);
+    }
+    const board = new Board(x, y, rowsAndCells);
+    board.rowsAndCells = rowsAndCells;
+    board.cells.forEach((cell) => this.addNeighboursToCell(cell, rowsAndCells));
+    return board;
   }
 
   private static addNeighboursToCell(cell: Cell, rowsAndCells: Map<number, Array<Cell>>): void {
@@ -108,6 +136,28 @@ export class GameUtils {
     });
   }
 
+  public static save(board: Board): string {
+    let patterStr = '';
+    for (let currentRow = 0; currentRow < board.height; currentRow++) {
+      for (let currentCol = 0; currentCol < board.width; currentCol++) {
+        board.getCell(currentCol, currentRow).isAlive() ? (patterStr += 'X') : (patterStr += '.');
+      }
+      patterStr += '\n';
+    }
+    return patterStr.trim();
+  }
+
+  public static load(board: Board, pattern: string): void {
+    board.rowsAndCells.clear();
+
+    pattern.split('\n').forEach((value, y) => {
+      const cells = new Array<Cell>();
+      value.split('').forEach((character, x) => {
+        cells.push(new Cell(y, x, character === '.' ? CellState.DEAD : CellState.ALIVE));
+      });
+      board.rowsAndCells.set(y, cells);
+    });
+  }
   public static resetCellStates(board: Board): void {
     board.cells.forEach((cell) => (cell.state = CellState.DEAD));
   }
