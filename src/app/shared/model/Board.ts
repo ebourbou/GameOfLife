@@ -1,5 +1,5 @@
-import { Cell } from '../../shared/model/Cell';
-import { CellState } from '../../shared/model/CellState';
+import { Cell } from './Cell';
+import { CellState } from './CellState';
 import { RuleSet } from '../../designer/rule/RuleSet';
 
 export class Board {

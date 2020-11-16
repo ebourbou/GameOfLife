@@ -4,8 +4,8 @@ import { Game } from '../model/Game';
 import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
 import { Controls } from '../model/Controls';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
-import { GameUtils } from '../util/GameUtils';
-import { Board } from '../model/Board';
+import { GameUtils } from '../../shared/service/GameUtils';
+import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 
 export const gameFeatureKey = 'game';

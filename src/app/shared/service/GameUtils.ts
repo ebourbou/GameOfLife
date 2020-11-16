@@ -1,10 +1,10 @@
-import { Cell } from '../../shared/model/Cell';
+import { Cell } from '../model/Cell';
 import { Board } from '../model/Board';
-import { CellState } from '../../shared/model/CellState';
+import { CellState } from '../model/CellState';
 import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
-import { Game } from '../model/Game';
-import { Pattern } from '../../shared/model/pattern';
+import { Game } from '../../game/model/Game';
+import { Pattern } from '../model/pattern';
 
 export class GameUtils {
   private static DEAD_BORDER_CELL: Cell = new Cell(-99, -99, CellState.DEAD);

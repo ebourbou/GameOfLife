@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Pattern} from '../../../shared/model/pattern';
-import {PatternUtils} from '../../../shared/service/pattern-util';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Pattern } from '../../../shared/model/pattern';
+import { PatternUtils } from '../../../shared/service/pattern-util';
 
 @Component({
   selector: 'app-cell-step',
   templateUrl: './cell-step.component.html',
-  styleUrls: ['./cell-step.component.scss']
+  styleUrls: ['./cell-step.component.scss'],
 })
 export class CellStepComponent implements OnInit {
-
   groupedPatterns: Array<{ key; value }>;
 
+  @Input()
+  patternSelected: Pattern;
 
   @Output()
   public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
@@ -37,9 +38,6 @@ export class CellStepComponent implements OnInit {
     this.groupedPatterns = PatternUtils.toGroupedPatternMap(allPatterns);
   }
 
-  @Input()
-  set patternSelected(pattern: Pattern) {}
-
   onPatternSelected(pattern: Pattern): void {
     this.doPatternSelected.emit(pattern);
   }
@@ -55,5 +53,4 @@ export class CellStepComponent implements OnInit {
   onInvert(event: Event): void {
     this.doInvertCells.emit();
   }
-
 }

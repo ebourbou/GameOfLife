@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
 import { Game } from '../model/Game';
-import { GameUtils } from '../util/GameUtils';
+import { GameUtils } from '../../shared/service/GameUtils';
 import { ConwaysRuleSet } from '../../designer/rule/conway/ConwaysRuleSet';
 import { Controls } from '../model/Controls';
 import { PatternService } from '../../shared/service/patterns.service';

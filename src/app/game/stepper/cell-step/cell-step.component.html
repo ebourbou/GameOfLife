@@ -2,14 +2,15 @@
 <form [formGroup]="cellsFormGroup">
   <mat-form-field>
     <mat-label>Pattern</mat-label>
-    <mat-select (selectionChange)="onPatternSelected($event.value)">
+    <mat-select (selectionChange)="onPatternSelected($event.value)" [(value)]="patternSelected">
       <mat-option>Keine Auswahl</mat-option>
       <mat-optgroup *ngFor="let group of groupedPatterns" [label]="group.key">>
-        <mat-option *ngFor="let pattern of group.value" [value]="pattern"  >{{pattern.name}}
+        <mat-option *ngFor="let pattern of group.value" [value]="pattern" >{{pattern.name}}
         </mat-option>
       </mat-optgroup>
     </mat-select>
   </mat-form-field>
+  <pattern-preview [pattern]="patternSelected"></pattern-preview>
   <p></p>
   <button mat-button mat-stroked-button  (click)="onReset($event)">Alle Löschen</button>
   <button mat-button mat-stroked-button  (click)="onRandom($event)" >Zufall</button>

@@ -5,7 +5,7 @@ import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dia
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
-import { Board } from '../../game/model/Board';
+import { Board } from '../../shared/model/Board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { PatternService } from '../../shared/service/patterns.service';
 

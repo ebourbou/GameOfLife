@@ -1,5 +1,5 @@
-import { Board } from "./Board";
-import { ConwaysRuleSet } from "../../designer/rule/conway/ConwaysRuleSet";
+import { Board } from '../../shared/model/Board';
+import { ConwaysRuleSet } from '../../designer/rule/conway/ConwaysRuleSet';
 
 export class Game {
   constructor(public board: Board, public generations: number, public ruleSet: ConwaysRuleSet) {}

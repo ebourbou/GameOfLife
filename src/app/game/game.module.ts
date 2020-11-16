@@ -30,6 +30,7 @@ import { CellStepComponent } from './stepper/cell-step/cell-step.component';
     MatStepperModule,
     ReactiveFormsModule,
     MatSelectModule,
+    DesignerModule,
   ],
   exports: [BoardComponent],
 })

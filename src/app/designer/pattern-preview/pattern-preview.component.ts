@@ -1,7 +1,7 @@
 import { ApplicationRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
-import { Board } from '../../game/model/Board';
-import { GameUtils } from '../../game/util/GameUtils';
+import { Board } from '../../shared/model/Board';
+import { GameUtils } from '../../shared/service/GameUtils';
 import { Cell } from '../../shared/model/Cell';
 import { CellState } from '../../shared/model/CellState';
 import { ConwaysRuleSet } from '../rule/conway/ConwaysRuleSet';

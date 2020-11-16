@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { CellState } from '../../shared/model/CellState';
-import { Board } from '../../game/model/Board';
-import { GameUtils } from '../../game/util/GameUtils';
+import { Board } from '../../shared/model/Board';
+import { GameUtils } from '../../shared/service/GameUtils';
 import { NgForm } from '@angular/forms';
 import { PatternUtils } from '../util/pattern-util';
 

@@ -10,7 +10,8 @@ import { PatternPreviewComponent } from './pattern-preview/pattern-preview.compo
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
-  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, GameModule, MatGridListModule],
+  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, MatGridListModule],
   declarations: [PatternDetailComponent, PatternsComponent, PatternEditorComponent, PatternPreviewComponent],
+  exports: [PatternPreviewComponent],
 })
 export class DesignerModule {}
