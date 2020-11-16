@@ -29,6 +29,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
 import { PatternService } from './shared/service/patterns.service';
+import { MockRuleService } from './shared/service/rule/mock-rule.service';
+import { RuleService } from './shared/service/rule/rule.service';
+import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 
 registerLocaleData(localeDECH);
 
@@ -60,6 +63,7 @@ registerLocaleData(localeDECH);
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },
+    { provide: AbstractRuleService, useClass: MockRuleService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },
     AmplifyService,
   ],

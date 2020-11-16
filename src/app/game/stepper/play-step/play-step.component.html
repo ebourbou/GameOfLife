@@ -1,0 +1,10 @@
+
+<form [formGroup]="playFormGroup" >
+  <p>Das Spiel kann jetzt gestartet werden:</p>
+  <mat-label>Geschwindigkeit</mat-label>
+  <mat-slider formControlName="speed"  [thumbLabel]= true min="0" max="2000" invert="true" (valueChange)="onChangeSpeed($event)" ></mat-slider>
+  <div>
+    <button  mat-button mat-raised-button color="primary" (click)="onStartGame()" >Los!</button>
+    <mat-button-toggle value="paused" (click)="onTogglePause()">Pause</mat-button-toggle>
+  </div>
+</form>

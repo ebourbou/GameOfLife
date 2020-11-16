@@ -4,7 +4,7 @@ import { Board } from '../../shared/model/Board';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { Cell } from '../../shared/model/Cell';
 import { CellState } from '../../shared/model/CellState';
-import { ConwaysRuleSet } from '../rule/conway/ConwaysRuleSet';
+import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
 
 @Component({
   selector: 'pattern-preview',

@@ -1,6 +1,6 @@
 import { Cell } from './Cell';
 import { CellState } from './CellState';
-import { RuleSet } from '../../designer/rule/RuleSet';
+import { RuleSet } from './rule/RuleSet';
 
 export class Board {
   constructor(public width: number, public height: number, public rowsAndCells: Map<number, Array<Cell>>) {}

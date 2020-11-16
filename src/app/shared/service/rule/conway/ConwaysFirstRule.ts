@@ -1,12 +1,10 @@
-import { Cell } from "../../../shared/model/Cell";
-import { CellState } from "../../../shared/model/CellState";
-import { AbstractRule } from "../AbstractRule";
+import { Cell } from '../../../model/Cell';
+import { CellState } from '../../../model/CellState';
+import { AbstractRule } from '../../../model/rule/AbstractRule';
 
 export class ConwaysFirstRule extends AbstractRule {
   constructor() {
-    super(
-      "Eine tote Zelle mit genau drei lebenden Nachbarn wird in der Folgegeneration neu geboren."
-    );
+    super('Eine tote Zelle mit genau drei lebenden Nachbarn wird in der Folgegeneration neu geboren.');
   }
 
   doesMatch(cell: Cell): boolean {

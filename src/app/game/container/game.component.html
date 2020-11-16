@@ -1,9 +1,21 @@
 <router-outlet></router-outlet>
-  <ng-container *ngIf="game$ | async as game" class="game">
-    <app-stepper [controls]="controls$ | async" [allPatterns]="allPatterns$ | async" class="stepper" (doResize)="onResize($event)" (doChangeGenerations)="onChangeGenerations($event)" (doPatternSelected)="onPatternSelected($event)" (doRandomCells)="onRandomCells()" (doResetCells)="onResetCells()" (doInvertCells)="onInvertCells()" (doStepChanged)="onStepChanged($event)" ></app-stepper>
-    <gol-board class="board" [board]="game.board" [isMasked]="isMasked" [isEditable]="isEditable"
-               [patternSelected]="patternSelected$ | async" (doApplyPattern)="onApplyPattern($event)" ></gol-board>
-    <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
-                       (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->
-    <!--gol-game-statistic class="statistics" [gameStatistic]="gameStatistic$ | async" [generationStatistic]="generationStatistic$ | async" (play)="onPlay()"></gol-game-statistic-->
-  </ng-container>
+<ng-container *ngIf="game$ | async as game" class="game">
+  <app-stepper [controls]="controls$ | async" [allRuleSets]="allRuleSets$ | async" [allPatterns]="allPatterns$ | async"
+               class="stepper"
+               (doResize)="onResize($event)"
+               (doChangeGenerations)="onChangeGenerations($event)"
+               (doPatternSelected)="onPatternSelected($event)"
+               (doRandomCells)="onRandomCells()"
+               (doResetCells)="onResetCells()"
+               (doInvertCells)="onInvertCells()"
+               (doStepChanged)="onStepChanged($event)"
+               (doRuleSetSelected)="onRuleSetSelected($event)"
+               (doStartGame)="onPlay()"
+               (doTogglePause)="onTogglePause()"
+               (doChangeSpeed)="onChangeSpeed($event)" ></app-stepper>
+  <gol-board class="board" [board]="game.board" [isMasked]="isMasked" [isEditable]="isEditable"
+             [patternSelected]="patternSelected$ | async" (doApplyPattern)="onApplyPattern($event)"></gol-board>
+  <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
+                     (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->
+  <!--gol-game-statistic class="statistics" [gameStatistic]="gameStatistic$ | async" [generationStatistic]="generationStatistic$ | async" (play)="onPlay()"></gol-game-statistic-->
+</ng-container>

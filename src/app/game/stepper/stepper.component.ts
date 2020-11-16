@@ -6,6 +6,7 @@ import { PatternUtils } from '../../shared/service/pattern-util';
 import { newGame } from '../state/game.actions';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './StepperStep';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 @Component({
   selector: 'app-stepper',
@@ -17,6 +18,9 @@ export class StepperComponent implements OnInit {
   controls: Controls;
   @Input()
   allPatterns: Pattern[];
+
+  @Input()
+  allRuleSets: RuleSet[];
 
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
@@ -32,6 +36,14 @@ export class StepperComponent implements OnInit {
   private doInvertCells: EventEmitter<void> = new EventEmitter();
   @Output()
   public doStepChanged: EventEmitter<StepperStep> = new EventEmitter();
+  @Output()
+  public doRuleSetSelected: EventEmitter<RuleSet> = new EventEmitter();
+  @Output()
+  private doStartGame: EventEmitter<void> = new EventEmitter();
+  @Output()
+  public doTogglePause: EventEmitter<void> = new EventEmitter();
+  @Output()
+  public doChangeSpeed: EventEmitter<number> = new EventEmitter();
 
   rootGroup: FormGroup;
 
@@ -69,5 +81,21 @@ export class StepperComponent implements OnInit {
   selectionChange(event: StepperSelectionEvent): void {
     const nextStep = StepperStep[StepperStep[event.selectedIndex]];
     this.doStepChanged.emit(nextStep);
+  }
+
+  onRuleSetSelected(ruleSet: RuleSet): void {
+    this.doRuleSetSelected.emit(ruleSet);
+  }
+
+  onStartGame(): void {
+    this.doStartGame.emit();
+  }
+
+  onTogglePause(): void {
+    this.doTogglePause.emit();
+  }
+
+  onChangeSpeed(speed: number): void {
+    this.doChangeSpeed.emit(speed);
   }
 }

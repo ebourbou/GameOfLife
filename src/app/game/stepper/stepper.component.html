@@ -7,12 +7,12 @@
     <app-cell-step [allPatterns]="allPatterns" (doPatternSelected)="onPatternSelected($event)" (doRandomCells)="onRandom()" (doInvertCells)="onInvert()" (doResetCells)="onReset()"></app-cell-step>
   </mat-step>
 
-  <mat-step label="Regeln" state="rules">
-    You are now done.
+  <mat-step label="Regeln" state="rules" >
+    <app-rule-step [allRuleSets]="allRuleSets"  (doRuleSetSelected)="onRuleSetSelected($event)"></app-rule-step>
   </mat-step>
 
-  <mat-step label="Spielen" state="play">
-    You are now done.
+  <mat-step label="Spielen" state="play" >
+    <app-play-step [controls]="controls" (doStartGame)="onStartGame()" (doChangeSpeed)="onChangeSpeed($event)" (doTogglePause)="onTogglePause()"></app-play-step >
   </mat-step>
 
   <mat-step label="Analysieren" state="analyze">

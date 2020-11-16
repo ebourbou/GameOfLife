@@ -1,4 +1,4 @@
-import { Cell } from "../../shared/model/Cell";
+import { Cell } from '../Cell';
 
 export interface Rule {
   readonly description: string;

@@ -1,5 +1,5 @@
-import { Cell } from "../../shared/model/Cell";
-import { Rule } from "./Rule";
+import { Cell } from '../Cell';
+import { Rule } from './Rule';
 
 export abstract class AbstractRule implements Rule {
   readonly description: string;
@@ -10,9 +10,7 @@ export abstract class AbstractRule implements Rule {
 
   protected doesMatchOrThrowError(cell: Cell): void {
     if (!this.doesMatch(cell)) {
-      throw new Error(
-        `This rule should not have been applied. Rule: {description}`
-      );
+      throw new Error(`This rule should not have been applied. Rule: {description}`);
     }
   }
 

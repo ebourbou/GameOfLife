@@ -7,6 +7,7 @@ import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 export const gameFeatureKey = 'game';
 
@@ -14,22 +15,28 @@ export interface GameState {
   game: Game;
   allPatterns: Pattern[];
   patternSelected: Pattern;
+  allRuleSets: RuleSet[];
+  ruleSetSelected: RuleSet;
   generationStatistic: GenerationStatistic;
   gameStatistic: GameStatistic;
   loading: boolean;
   controls: Controls;
   running: boolean;
+  paused: boolean;
 }
 
 export const initialState: GameState = {
   game: null,
   allPatterns: [],
   patternSelected: null,
+  allRuleSets: [],
+  ruleSetSelected: null,
   generationStatistic: null,
   gameStatistic: null,
   loading: false,
   controls: null,
   running: false,
+  paused: false,
 };
 
 export const gameActionReducer = createReducer(
@@ -48,6 +55,13 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       allPatterns: action.allPatterns,
+    };
+  }),
+
+  on(GameActions.loadRuleSetsSuccess, (state, action) => {
+    return {
+      ...state,
+      allRuleSets: action.allRuleSets,
     };
   }),
 
@@ -123,6 +137,17 @@ export const gameActionReducer = createReducer(
     const newGame = deepCopy(state.game);
     GameUtils.invertCellStates(newGame.board);
     return { ...state, game: newGame };
+  }),
+  on(GameActions.applyRuleSet, (state, action) => {
+    const newGame = deepCopy(state.game);
+    newGame.ruleSet = action.ruleSet;
+    return { ...state, game: newGame };
+  }),
+  on(GameActions.togglePause, (state) => {
+    return {
+      ...state,
+      paused: !state.paused,
+    };
   })
 );
 
@@ -130,6 +155,7 @@ function deepCopy(oldGame: Game): Game {
   // fixme: not so deep - is this the right way?
   const newRowsAndCells = new Map(oldGame.board.rowsAndCells);
   const newBoard = new Board(oldGame.board.width, oldGame.board.height, newRowsAndCells);
-  const newGame = new Game(newBoard, oldGame.generations, oldGame.ruleSet);
+  const newGame = new Game(newBoard, oldGame.generations);
+  newGame.ruleSet = oldGame.ruleSet;
   return newGame;
 }

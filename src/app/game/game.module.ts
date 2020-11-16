@@ -17,9 +17,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { BoardStepComponent } from './stepper/board-step/board-step.component';
 import { CellStepComponent } from './stepper/cell-step/cell-step.component';
+import { RuleStepComponent } from './stepper/rule-step/rule-step.component';
+import { PlayStepComponent } from './stepper/play-step/play-step.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
-  declarations: [GameComponent, BoardComponent, ControlsComponent, StepperComponent, BoardStepComponent, CellStepComponent],
+  declarations: [
+    GameComponent,
+    BoardComponent,
+    ControlsComponent,
+    StepperComponent,
+    BoardStepComponent,
+    CellStepComponent,
+    RuleStepComponent,
+    PlayStepComponent,
+  ],
   imports: [
     GameRoutingModule,
     SharedModule,
@@ -31,6 +43,7 @@ import { CellStepComponent } from './stepper/cell-step/cell-step.component';
     ReactiveFormsModule,
     MatSelectModule,
     DesignerModule,
+    MatButtonToggleModule,
   ],
   exports: [BoardComponent],
 })

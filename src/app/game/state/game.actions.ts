@@ -4,6 +4,7 @@ import { Controls } from '../model/Controls';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
@@ -31,6 +32,12 @@ export const applyPattern = createAction('[Game] Pattern Apply', props<{ row: nu
 export const loadPatterns = createAction('[Game] Load Patterns');
 export const errorAction = createAction('[Game] Failure', props<{ errors: string[] }>());
 export const loadPatternsSuccess = createAction('[Game] Load Patterns Success', props<{ allPatterns: Pattern[] }>());
+
+export const loadRuleSets = createAction('[Game] Load RuleSets');
+export const loadRuleSetsSuccess = createAction('[Game] Load RuleSets Success', props<{ allRuleSets: RuleSet[] }>());
+export const applyRuleSet = createAction('[Game] RuleSet Apply', props<{ ruleSet: RuleSet }>());
+
+export const togglePause = createAction('[Game] Pause Toggled');
 
 export const endGame = createAction('[Game] End');
 export const endGameSuccess = createAction('[Game] End Success');

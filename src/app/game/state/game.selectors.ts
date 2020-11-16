@@ -14,4 +14,8 @@ export const selectGameStatistic = createSelector(selectGameState, (state: GameS
 
 export const selectAllPatterns = createSelector(selectGameState, (state: GameState) => state.allPatterns);
 
+export const selectAllRuleSets = createSelector(selectGameState, (state: GameState) => state.allRuleSets);
+
 export const selectPatternSelected = createSelector(selectGameState, (state: GameState) => state.patternSelected);
+
+export const selectIsPaused = createSelector(selectGameState, (state: GameState) => state.paused);

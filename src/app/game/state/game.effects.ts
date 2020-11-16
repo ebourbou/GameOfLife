@@ -6,13 +6,11 @@ import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
 import { Game } from '../model/Game';
 import { GameUtils } from '../../shared/service/GameUtils';
-import { ConwaysRuleSet } from '../../designer/rule/conway/ConwaysRuleSet';
 import { Controls } from '../model/Controls';
-import { PatternService } from '../../shared/service/patterns.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { GameComponent } from '../container/game.component';
 import { SnackbarService } from '../../shared/service/snackbar.service';
 import { PatternMockService } from '../../shared/service/patterns-mock.service';
+import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
+import { PatternService } from '../../shared/service/patterns.service';
 
 @Injectable()
 export class GameEffects {
@@ -47,6 +45,18 @@ export class GameEffects {
     );
   });
 
+  allRuleSets$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.loadRuleSets),
+      concatMap(() =>
+        this.ruleService.getRuleSets().pipe(
+          map((allRuleSets) => GameActions.loadRuleSetsSuccess({ allRuleSets })),
+          catchError((error) => of(GameActions.errorAction({ errors: error.errors.map((e) => e.message) })))
+        )
+      )
+    );
+  });
+
   onError$ = createEffect(
     () => {
       return this.actions$.pipe(
@@ -62,13 +72,13 @@ export class GameEffects {
   constructor(
     private actions$: Actions,
     private defaults: DefaultsService,
-    private patternService: PatternMockService,
-    //private patternService: PatternService,
+    private patternService: PatternService,
+    private ruleService: AbstractRuleService,
     private snackBar: SnackbarService
   ) {}
 
   private newGame(controls: Controls): any {
-    const game = new Game(GameUtils.build(controls.xAxisSize, controls.yAxisSize), controls.generations, new ConwaysRuleSet());
+    const game = new Game(GameUtils.build(controls.xAxisSize, controls.yAxisSize), controls.generations);
     return { game, controls };
   }
 }

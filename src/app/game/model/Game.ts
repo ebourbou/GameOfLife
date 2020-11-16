@@ -1,8 +1,10 @@
 import { Board } from '../../shared/model/Board';
-import { ConwaysRuleSet } from '../../designer/rule/conway/ConwaysRuleSet';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 export class Game {
-  constructor(public board: Board, public generations: number, public ruleSet: ConwaysRuleSet) {}
+  ruleSet: RuleSet;
+
+  constructor(public board: Board, public generations: number) {}
 
   nextGeneration(): void {
     this.board.nextGeneration(this.ruleSet);

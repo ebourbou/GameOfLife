@@ -5,12 +5,14 @@ import { DefaultsService } from '../../shared/service/defaults.service';
 import { Store } from '@ngrx/store';
 import {
   applyPattern,
+  applyRuleSet,
   changeGenerations,
   changeSpeed,
   endGame,
   endGameSuccess,
   invertCells,
   loadPatterns,
+  loadRuleSets,
   newDefaultGame,
   newGame,
   nextGeneration,
@@ -20,15 +22,18 @@ import {
   resetCells,
   startGame,
   startGameSuccess,
+  togglePause,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
   selectAllPatterns,
+  selectAllRuleSets,
   selectControls,
   selectGame,
   selectGameStatistic,
   selectGenerationStatistic,
+  selectIsPaused,
   selectPatternSelected,
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
@@ -37,6 +42,7 @@ import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 @Component({
   selector: 'app-game',
@@ -51,18 +57,23 @@ export class GameComponent implements OnInit {
   public gameStatistic$: Observable<GameStatistic>;
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
+  public allRuleSets$: Observable<RuleSet[]>;
   public isMasked: boolean;
   public isEditable: boolean;
+  private isPaused$: Observable<boolean>;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.store.dispatch(newDefaultGame());
     this.store.dispatch(loadPatterns());
+    this.store.dispatch(loadRuleSets());
     this.game$ = this.store.select(selectGame);
     this.controls$ = this.store.select(selectControls);
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
     this.gameStatistic$ = this.store.select(selectGameStatistic);
     this.allPatterns$ = this.store.select(selectAllPatterns);
     this.patternSelected$ = this.store.select(selectPatternSelected);
+    this.allRuleSets$ = this.store.select(selectAllRuleSets);
+    this.isPaused$ = this.store.select(selectIsPaused);
   }
 
   ngOnInit(): void {}
@@ -86,13 +97,21 @@ export class GameComponent implements OnInit {
     return this.controls$.pipe((controls) => controls, take(1)).toPromise();
   }
 
+  onRuleSetSelected(ruleSet: RuleSet): void {
+    this.store.dispatch(applyRuleSet({ ruleSet }));
+  }
+
+  onTogglePause(): void {
+    this.store.dispatch(togglePause());
+  }
+
   // fixme Das alles sollte ein Effect sein.
   async onPlay(): Promise<void> {
     const gameStartTime = Date.now();
     this.store.dispatch(startGame());
     this.store.dispatch(startGameSuccess({ gameStartTime }));
-    const generationControls = await this.getControls();
-    for (let currentGeneration = 0; currentGeneration < generationControls.generations; currentGeneration++) {
+    const controls = await this.getControls();
+    for (let currentGeneration = 0; currentGeneration < controls.generations; currentGeneration++) {
       const generationStartTime = Date.now();
       this.store.dispatch(nextGeneration({ currentGeneration }));
       const speedControls = await this.getControls();
