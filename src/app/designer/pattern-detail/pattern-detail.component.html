@@ -19,8 +19,8 @@
             <mat-label>Breite [{{("0"+pattern.sizeX).slice(-2)}}]</mat-label>
             <mat-slider
               class="example-margin"
-              [max]="20"
-              [min]="1"
+              [max]="50"
+              [min]="3"
               [step]="1"
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeX"
@@ -30,15 +30,15 @@
             <mat-label>Höhe [{{("0"+pattern.sizeY).slice(-2)}}]</mat-label>
             <mat-slider
               class="example-margin"
-              [max]="20"
-              [min]="1"
+              [max]="50"
+              [min]="3"
               [step]="1"
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeY"
               ngModel name="sizeY"
               (change)="updateSize()">
-
             </mat-slider>
+            <mat-icon class="help-icon" matTooltip="Bei angelegten Pattern löscht eine Grössenänderung das Pattern">help</mat-icon>
         </div>
       </div>
       <div class="fields-editor">
@@ -68,7 +68,6 @@
           <div>
             <mat-label>Hitze [{{("0"+pattern.heat).slice(-2)}}]</mat-label>
             <mat-slider
-              class="example-margin"
               [max]="10"
               [min]="0"
               [step]="1"
@@ -76,6 +75,16 @@
               [(ngModel)]="pattern.heat"
               ngModel name="heat">
             </mat-slider>
+          </div>
+          <div>
+            <mat-slide-toggle
+              [(ngModel)] = "pattern.locked"
+              name="locked"
+              [checked]="pattern.locked">
+              <!--[disabled]="authService.isAdmin()===false ? true : null"-->
+              Gesperrt
+            </mat-slide-toggle>
+            <mat-icon class="help-icon" matTooltip="Gesperrte Patterns können nur von Admin Benutzern gelöscht werden">help</mat-icon>
           </div>
         </div>
         <div class="editor">

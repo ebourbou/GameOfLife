@@ -9,6 +9,7 @@ import { Board } from '../../shared/model/Board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { PatternService } from '../../shared/service/patterns.service';
 import { PatternUtils } from '../util/pattern-util';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -22,6 +23,7 @@ export class PatternDetailComponent implements OnChanges {
   loading = false;
   submitted = false;
   public editor: Board;
+  authService: AuthService;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
   @ViewChild('editor') patternEditor: PatternEditorComponent;
@@ -34,10 +36,12 @@ export class PatternDetailComponent implements OnChanges {
     public dialog: MatDialog,
     patternService: PatternService,
     patternsComponent: PatternsComponent,
-    private snackBarService: MatSnackBar
+    private snackBarService: MatSnackBar,
+    auth: AuthService
   ) {
     this.patternService = patternService;
     this.snackBarService = snackBarService;
+    this.authService = auth;
     this.patternsComponent = patternsComponent;
   }
 
@@ -107,6 +111,7 @@ export class PatternDetailComponent implements OnChanges {
       sizeY: 5,
       pattern: PatternUtils.initPattern(5, 5),
       type: null,
+      locked: false,
     };
   }
 

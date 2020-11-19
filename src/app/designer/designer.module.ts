@@ -8,9 +8,10 @@ import { GameModule } from '../game/game.module';
 import { PatternEditorComponent } from './pattern-editor/pattern-editor.component';
 import { PatternPreviewComponent } from './pattern-preview/pattern-preview.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
-  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, MatGridListModule],
+  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, MatGridListModule, MatSlideToggleModule],
   declarations: [PatternDetailComponent, PatternsComponent, PatternEditorComponent, PatternPreviewComponent],
   exports: [PatternPreviewComponent],
 })

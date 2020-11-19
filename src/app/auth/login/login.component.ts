@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    console.log(form.value);
     this.loginInvalid = false;
     this.submitted = true;
     this.loading = true;

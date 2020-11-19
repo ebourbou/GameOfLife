@@ -4,14 +4,15 @@
                         (selectionChange)="onPatternSelection(patternList.selectedOptions.selected[0])">
       <mat-list-option [selected]="selectedPattern.id === pattern.id"
            *ngFor="let pattern of patterns" [value]="pattern">
-        {{pattern.name}}
+        <div class="list-item">
+          {{pattern.name}} <mat-icon class="lock">{{lockedIcon(pattern)}}</mat-icon>
+        </div>
       </mat-list-option>
     </mat-selection-list>
   </div>
   <div class="pattern-detail">
     <app-pattern-detail class="matrix" [pattern]="selectedPattern"></app-pattern-detail>
   </div>
-
 </div>
 
 

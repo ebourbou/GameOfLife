@@ -14,6 +14,7 @@ export class PatternUtils {
       sizeY: awsPattern.sizeY,
       pattern: awsPattern.pattern,
       type: awsPattern.type,
+      locked: false,
     };
     return pat;
   }

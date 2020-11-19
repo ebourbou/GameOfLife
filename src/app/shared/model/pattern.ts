@@ -1,5 +1,4 @@
-﻿
-export interface Pattern {
+﻿export interface Pattern {
   id: string;
   name: string;
   description: string;
@@ -10,4 +9,5 @@ export interface Pattern {
   sizeY: number;
   pattern: string;
   type: string;
+  locked?: boolean;
 }

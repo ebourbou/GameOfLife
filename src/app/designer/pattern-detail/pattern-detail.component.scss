@@ -16,13 +16,13 @@ mat-card {
 .header {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
 }
 
 .editor-header {
+  width: 100%;
   display: flex;
-  align-content: flex-end;
+  justify-content: center;
   flex-direction: row;
 }
 
@@ -90,6 +90,10 @@ mat-card-content {
 app-pattern-editor {
   width: 100%;
   border: black 2px;
+}
+
+.help-icon {
+  transform: scale(0.5);
 }
 
 

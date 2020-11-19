@@ -42,3 +42,26 @@
   overflow: auto;
   padding: 24px;
 }
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info > div {
+  padding: 0px;
+  margin: 0px;
+  height: 1.5em;
+}
+.username {
+  font-size: small;
+}
+
+.role {
+  font-size: x-small;
+}
+
+.login-date {
+  font-size: x-small;
+}
+

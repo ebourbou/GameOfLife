@@ -14,3 +14,12 @@
 .pattern-detail {
   flex-basis: 80%;
 }
+
+.list-item{
+  display:flex;
+  justify-content: space-between;
+}
+
+.lock {
+  color: lightgray;
+}

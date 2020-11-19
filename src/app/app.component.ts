@@ -1,21 +1,20 @@
-import {Component,  OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {AmplifyService} from 'aws-amplify-angular';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {Auth} from '@aws-amplify/auth';
+import { AmplifyService } from 'aws-amplify-angular';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './shared/model/user';
 import { AuthService } from './core/services/auth.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UserService } from './users/services/users.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'GameOfLife';
   user: User;
   authenticated = false;
@@ -23,6 +22,7 @@ export class AppComponent implements OnInit{
   constructor(
     private amplify: AmplifyService,
     public authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private snackBarService: MatSnackBar,
     private matIconRegistry: MatIconRegistry,
@@ -43,16 +43,18 @@ export class AppComponent implements OnInit{
     this.router.navigate(['/auth/login']).then((navigated: boolean) => {
       if (navigated) {
         this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
-          duration: 2000
+          duration: 2000,
         });
       }
     });
   }
 
   async ngOnInit() {
-
-    await Auth.currentAuthenticatedUser({
-      bypassCache: false
+    this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
+    /*await Auth.currentAuthenticatedUser({
+      bypassCache: false,
     })
       .then((user) => {
         if (user) {
@@ -62,6 +64,6 @@ export class AppComponent implements OnInit{
       .catch(() => {
         this.authenticated = false;
         this.router.navigate(['/auth/login']);
-      });
+      });*/
   }
 }

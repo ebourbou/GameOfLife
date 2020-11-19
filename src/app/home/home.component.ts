@@ -1,9 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Auth } from '@aws-amplify/auth';
 import { APIService } from '../API.service';
-import { Role } from '../shared/model/role';
 import { User } from '../shared/model/user';
 import { AuthService } from '../core/services/auth.service';
+import { UserService } from '../users/services/users.service';
+import { UserUtils } from '../users/utils/user-utils';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
 export class HomeComponent implements OnInit {
@@ -21,37 +22,15 @@ export class HomeComponent implements OnInit {
 
   user: User;
 
-  constructor(private authService: AuthService, private api: APIService) {}
+  constructor(private authService: AuthService, private api: APIService, private userService: UserService) {}
 
   ngOnInit(): void {
-    Auth.currentAuthenticatedUser().then(async (u) => {
-      // First time login create user in DB
-      // User cognito internal id (attributes.sub)
+    Auth.currentAuthenticatedUser().then(async (cognitoUser) => {
+      console.log('Logged in user: ' + cognitoUser.toString());
 
-      // Todo move to DAO handling class
-      const result = await this.api.GetUser(u.attributes.sub);
-      if (!result) {
-        this.user = new User();
-        this.user.id = u.attributes.sub;
-        this.user.username = u.username;
-        this.user.role = Role.User; // default to user
-        this.user.email = u.attributes.email;
-        this.user.lastLogin = new Date().toISOString();
-        await this.api.CreateUser({
-          id: this.user.id,
-          email: this.user.email,
-          username: this.user.username,
-          role: this.user.role,
-          lastLogin: this.user.lastLogin,
-        });
-      } else {
-        this.user = new User();
-        this.user.id = result.id;
-        this.user.username = result.username;
-        this.user.role = Role[result.role];
-        this.user.email = result.email;
-        this.user.lastLogin = new Date().toISOString();
-      }
+      this.userService.getUser(cognitoUser.attributes.sub).then((value) => (this.user = UserUtils.fromAws(value)));
+
+      console.log('User loaded:' + JSON.stringify(this.user));
     });
   }
 }

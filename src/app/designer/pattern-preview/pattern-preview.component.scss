@@ -3,9 +3,29 @@ mat-card {
   height: 250px;
   box-sizing: border-box;
 }
+
+mat-card:hover{
+  z-index:1000;
+  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+}
 mat-rating {
 
 }
+
+mat-card-header {
+width: 100%;
+}
+
+mat-card-actions {
+padding: 2px;
+}
+
+mat-card-content {
+  font-size: x-small;
+}
+
 .pattern {
   margin: 0 auto;
   width:80px;

@@ -43,7 +43,11 @@
       <button mat-icon-button matTooltip="Benutzer" (click)="sidenav_right.toggle()" >
         <mat-icon>face</mat-icon>
       </button>
-      <!--<div class="user">{{user.username}}<div class="role">[{{user.role}}]</div></div>-->
+      <div *ngIf="user" class="user-info">
+        <div class="username"> {{user.username}}</div>
+        <div class="role">[{{user.role}}]</div>
+        <div class="login-date">[{{user.lastLogin | date:'medium'}}]</div>
+      </div>
 
     </mat-toolbar>
 

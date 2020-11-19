@@ -80,4 +80,8 @@ export class PatternsComponent implements OnInit {
       this.onSelect(selectedPattern);
     });
   }
+
+  lockedIcon(pattern: Pattern): 'lock' | 'lock_open' {
+    return pattern.locked ? 'lock' : 'lock_open';
+  }
 }
