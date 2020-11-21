@@ -14,6 +14,7 @@ export class PatternUtils {
       sizeY: awsPattern.sizeY,
       pattern: awsPattern.pattern,
       type: awsPattern.type,
+      locked: awsPattern.locked,
     };
     return pat;
   }
@@ -31,6 +32,7 @@ export class PatternUtils {
       sizeY: pattern.sizeY,
       pattern: pattern.pattern,
       type: pattern.type,
+      locked: pattern.locked,
     };
     return pat;
   }

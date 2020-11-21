@@ -6,7 +6,7 @@
    </mat-grid-list>
    </div>
 
-   <ul class="toolbar">
+   <ul class="toolbar" *ngIf="!disabled">
      <li>
        <a>
          <button mat-raised-button color="primary" type="button" aria-label="Schreiber" (click)="isErase = !isErase" matTooltip="Einzelne Zellen oder mehrere mit gedrückter Taste">

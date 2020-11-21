@@ -9,5 +9,5 @@
   sizeY: number;
   pattern: string;
   type: string;
-  locked?: boolean;
+  locked: boolean;
 }

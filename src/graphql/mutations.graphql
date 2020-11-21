@@ -38,6 +38,7 @@ mutation CreatePattern($input: CreatePatternInput!) {
     pattern
     type
     year
+    locked
   }
 }
 mutation UpdatePattern($input: UpdatePatternInput!) {
@@ -52,6 +53,7 @@ mutation UpdatePattern($input: UpdatePatternInput!) {
     pattern
     type
     year
+    locked
   }
 }
 mutation DeletePattern($input: DeletePatternInput!) {
@@ -66,5 +68,6 @@ mutation DeletePattern($input: DeletePatternInput!) {
     pattern
     type
     year
+    locked
   }
 }

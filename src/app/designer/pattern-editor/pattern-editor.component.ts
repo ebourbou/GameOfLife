@@ -16,6 +16,7 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
   @Input() pattern: string;
   @Input() form: NgForm;
   @Input() isErase: boolean;
+  @Input() disabled: boolean;
 
   board: Board = null;
 
@@ -31,8 +32,6 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.sizeX && this.sizeY) {
-      console.log('Changed');
-
       const size = PatternUtils.getPatternSize(this.pattern);
       if (size.w !== this.sizeX && size.h !== this.sizeY) {
         // init with empty (in new mode)
@@ -77,9 +76,11 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
   }
 
   toggle(x: number, y: number, event: MouseEvent = null): void {
-    if (event == null || event.buttons > 0) {
-      this.form.form.markAsDirty();
-      this.board.getCell(x, y).setState(this.isErase ? CellState.DEAD : CellState.ALIVE);
+    if (!this.disabled) {
+      if (event == null || event.buttons > 0) {
+        this.form.form.markAsDirty();
+        this.board.getCell(x, y).setState(this.isErase ? CellState.DEAD : CellState.ALIVE);
+      }
     }
   }
 

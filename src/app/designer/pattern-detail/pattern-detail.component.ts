@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
@@ -10,15 +10,18 @@ import { PatternEditorComponent } from '../pattern-editor/pattern-editor.compone
 import { PatternService } from '../../shared/service/patterns.service';
 import { PatternUtils } from '../util/pattern-util';
 import { AuthService } from '../../core/services/auth.service';
+import { User } from '../../shared/model/user';
+import { Role } from '../../shared/model/role';
 
 @Component({
   selector: 'app-pattern-detail',
   templateUrl: './pattern-detail.component.html',
   styleUrls: ['./pattern-detail.component.scss'],
 })
-export class PatternDetailComponent implements OnChanges {
+export class PatternDetailComponent implements OnInit, OnChanges {
   @Input() pattern: Pattern;
 
+  user: User;
   isAddMode: boolean;
   loading = false;
   submitted = false;
@@ -45,10 +48,23 @@ export class PatternDetailComponent implements OnChanges {
     this.patternsComponent = patternsComponent;
   }
 
+  ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
   ngOnChanges(): void {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
+
+      if (!this.isAdmin(this.user.role) && this.pattern.locked) {
+        Object.keys(this.form.controls).forEach((key) => {
+          console.log('Dis: ' + key);
+          this.form.controls[key].disable();
+        });
+      }
     }
   }
 
@@ -143,5 +159,13 @@ export class PatternDetailComponent implements OnChanges {
   // Reset on size changingØ
   private updateSize(): void {
     this.pattern.pattern = null;
+  }
+
+  isAdmin(role: Role): boolean {
+    return role === Role.Admin;
+  }
+
+  isDisabled(): boolean {
+    return this.pattern.locked && !this.isAdmin(this.user.role);
   }
 }

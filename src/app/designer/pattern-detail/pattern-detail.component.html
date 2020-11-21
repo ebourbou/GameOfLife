@@ -9,7 +9,7 @@
         <div>
           <mat-form-field >
             <mat-label>Name</mat-label>
-            <input matNativeControl ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required>
+            <input matNativeControl ngModel type="text" name="name" [(ngModel)]="pattern.name" #name="ngModel" required [disabled]="isDisabled()">
             <mat-error *ngIf="name.hasError('required')">
               Pattern Name ist erforderlich
             </mat-error>
@@ -25,7 +25,8 @@
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeX"
               ngModel name="sizeX"
-              (change)="updateSize()">
+              (change)="updateSize()"
+              [disabled]="isDisabled()">
             </mat-slider>
             <mat-label>Höhe [{{("0"+pattern.sizeY).slice(-2)}}]</mat-label>
             <mat-slider
@@ -36,7 +37,8 @@
               [thumbLabel]= true
               [(ngModel)]="pattern.sizeY"
               ngModel name="sizeY"
-              (change)="updateSize()">
+              (change)="updateSize()"
+              [disabled]="isDisabled()">
             </mat-slider>
             <mat-icon class="help-icon" matTooltip="Bei angelegten Pattern löscht eine Grössenänderung das Pattern">help</mat-icon>
         </div>
@@ -45,7 +47,8 @@
         <div class="fields">
           <mat-form-field appearance="fill" >
               <mat-label>Pattern Typ</mat-label>
-              <mat-select ngModel [(ngModel)]="pattern.type" name="type" required>
+              <mat-select ngModel [(ngModel)]="pattern.type" name="type" required
+                          [disabled]="isDisabled()">
                 <mat-option value="static">Statisch</mat-option>
                 <mat-option value="spaceship" >Raumschiff/Gleiter</mat-option>
                 <mat-option value="oscillator">Oszillator</mat-option>
@@ -56,14 +59,14 @@
 
           <mat-form-field appearance="fill">
               <mat-label>Autor</mat-label>
-              <input matNativeControl ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required>
+              <input matNativeControl ngModel type="text" name="author" [(ngModel)]="pattern.author" #author="ngModel" required [disabled]="isDisabled()">
               <mat-error *ngIf="author.hasError('required')">
                 Autor ist erforderlich
               </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" >
               <mat-label>Jahr</mat-label>
-              <input matNativeControl ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel">
+              <input matNativeControl ngModel type="number" name="year" [(ngModel)]="pattern.year" #year="ngModel" [disabled]="isDisabled()">
           </mat-form-field>
           <div>
             <mat-label>Hitze [{{("0"+pattern.heat).slice(-2)}}]</mat-label>
@@ -73,22 +76,23 @@
               [step]="1"
               [thumbLabel]= true
               [(ngModel)]="pattern.heat"
-              ngModel name="heat">
+              ngModel name="heat"
+              [disabled]="isDisabled()">
             </mat-slider>
           </div>
           <div>
             <mat-slide-toggle
               [(ngModel)] = "pattern.locked"
               name="locked"
-              [checked]="pattern.locked">
-              <!--[disabled]="authService.isAdmin()===false ? true : null"-->
+              [checked]="pattern.locked"
+              [disabled]="!isAdmin(user.role)">
               Gesperrt
             </mat-slide-toggle>
             <mat-icon class="help-icon" matTooltip="Gesperrte Patterns können nur von Admin Benutzern gelöscht werden">help</mat-icon>
           </div>
         </div>
         <div class="editor">
-          <app-pattern-editor #editor [form]="form" [pattern]="pattern.pattern" [sizeX]="pattern.sizeX" [sizeY]="pattern.sizeY"></app-pattern-editor>
+          <app-pattern-editor #editor [form]="form" [disabled]="isDisabled()" [pattern]="pattern.pattern" [sizeX]="pattern.sizeX" [sizeY]="pattern.sizeY"></app-pattern-editor>
         </div>
       </div>
       <mat-form-field appearance="fill" class="description">
@@ -98,7 +102,8 @@
                   [(ngModel)]="pattern.description" #description="ngModel" name="description"
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="3"
-                  cdkAutosizeMaxRows="5">{{pattern.description}}</textarea>
+                  cdkAutosizeMaxRows="5"
+                  [disabled]="isDisabled()">{{pattern.description}}</textarea>
         <mat-error *ngIf="description.hasError('required')">
           Beschreibung ist erforderlich
         </mat-error>
@@ -106,14 +111,14 @@
 
       <div class="actions" >
         <div *ngIf="form.dirty"  >
-          <button type="button" mat-raised-button color="primary" (click)="onRevert()"
+          <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" type="button" mat-raised-button color="primary" (click)="onRevert()"
                   [disabled]="!form.dirty">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Abbrechen
           </button>
         </div>
         <div class="update-button">
-          <button mat-raised-button color="primary" (click)="onSubmit(pattern)"
+          <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" mat-raised-button color="primary" (click)="onSubmit(pattern)"
                   [disabled]="!form.dirty">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Speichern
@@ -121,10 +126,10 @@
         </div>
       </div>
       <div class="buttons">
-      <button [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
+      <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
         <mat-icon>add</mat-icon>
       </button>
-      <button [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
+      <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)">
         <mat-icon>delete</mat-icon>
       </button>
       </div>

@@ -8,10 +8,10 @@ const usersModule = () => import('./users/users.module').then((x) => x.UsersModu
 const designerModule = () => import('./designer/designer.module').then((x) => x.DesignerModule);
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent },
   { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
   { path: 'designer', loadChildren: designerModule, canActivate: [AuthGuard] },
-  { path: 'auth', loadChildren: accountModule },
+  { path: 'auth', loadChildren: () => import('./auth/account.module').then((m) => m.AccountModule) },
   { path: 'game', loadChildren: () => import('./game/game.module').then((m) => m.GameModule) },
 
   // otherwise redirect to home

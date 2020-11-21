@@ -5,6 +5,8 @@ import { MatListOption } from '@angular/material/list';
 import { APIService } from '../../API.service';
 import { PatternUtils } from '../util/pattern-util';
 import { PatternService } from '../../shared/service/patterns.service';
+import { User } from '../../shared/model/user';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-patterns',
@@ -14,19 +16,26 @@ import { PatternService } from '../../shared/service/patterns.service';
 export class PatternsComponent implements OnInit {
   patterns: Pattern[];
   selectedPattern: Pattern;
+  user: User;
 
   private _patternService: PatternService;
 
   @Output()
   public select = new EventEmitter();
   private apiService: APIService;
+  private authService: AuthService;
 
-  constructor(patternService: PatternService, apiService: APIService) {
+  constructor(patternService: PatternService, apiService: APIService, authService: AuthService) {
     this.apiService = apiService;
     this._patternService = patternService;
+    this.authService = authService;
   }
 
   ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
+
     // Subscriptions to GraphQL via websockets on create,delete & update
     this.apiService.OnCreatePatternListener.subscribe((value) => {
       console.log('create (subscription)');
@@ -73,7 +82,7 @@ export class PatternsComponent implements OnInit {
 
   load(selectedPattern: Pattern): void {
     this._patternService.getPatterns().then((result) => {
-      this.patterns = result.items.map(function (item) {
+      this.patterns = result.items.map((item) => {
         return PatternUtils.fromAwsPattern(item);
       });
       this.selectedPattern = selectedPattern ? selectedPattern : this.patterns.length > 0 ? this.patterns[0] : null;

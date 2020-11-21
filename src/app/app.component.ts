@@ -8,6 +8,7 @@ import { AuthService } from './core/services/auth.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
+import { Role } from './shared/model/role';
 
 @Component({
   selector: 'app-root',
@@ -36,11 +37,11 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('gol_save', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/save-fill.svg'));
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.authenticated = false;
     this.user = null;
-    this.router.navigate(['/auth/login']).then((navigated: boolean) => {
+    this.router.navigate(['']).then((navigated: boolean) => {
       if (navigated) {
         this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
           duration: 2000,
@@ -49,21 +50,23 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
+  showLogin(): void {
+    this.router.navigate(['/auth']).catch((e) => {
+      console.log(e);
+    });
+  }
+
+  ngOnInit(): void {
     this.authService.user.subscribe((user) => {
       this.user = user;
     });
-    /*await Auth.currentAuthenticatedUser({
-      bypassCache: false,
-    })
-      .then((user) => {
-        if (user) {
-          this.authenticated = true;
-        }
-      })
-      .catch(() => {
-        this.authenticated = false;
-        this.router.navigate(['/auth/login']);
-      });*/
+
+    this.authService.authenticated.subscribe((value) => {
+      this.authenticated = value;
+    });
+  }
+
+  isAdmin(role: Role): boolean {
+    return role === Role.Admin;
   }
 }

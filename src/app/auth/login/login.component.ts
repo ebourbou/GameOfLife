@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.amplifyService.authStateChange$.subscribe((authState) => {
       if (!authState.user) {
         this.user = null;
-      } else {
+      } else if (this.user) {
         this.user.username = authState.user.username;
         this.user.email = authState.user.attributes.email;
       }
