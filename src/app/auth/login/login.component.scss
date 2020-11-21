@@ -1,10 +1,12 @@
-.form-container {
+.login {
   display: flex;
   flex-direction: column;
+  background-color: lightgray;
 }
 
 .login-card {
-  max-width: 300px;
+  max-width: 30em;
+  background-color: goldenrod;
 }
 
 .register-link {

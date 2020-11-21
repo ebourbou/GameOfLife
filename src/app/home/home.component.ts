@@ -25,12 +25,16 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private api: APIService, private userService: UserService) {}
 
   ngOnInit(): void {
-    Auth.currentAuthenticatedUser().then(async (cognitoUser) => {
-      console.log('Logged in user: ' + cognitoUser.toString());
+    /*Auth.currentAuthenticatedUser()
+      .then(async (cognitoUser) => {
+        console.log('Logged in user: ' + cognitoUser.toString());
 
-      this.userService.getUser(cognitoUser.attributes.sub).then((value) => (this.user = UserUtils.fromAws(value)));
+        this.userService.getUser(cognitoUser.attributes.sub).then((value) => (this.user = UserUtils.fromAws(value)));
 
-      console.log('User loaded:' + JSON.stringify(this.user));
-    });
+        console.log('User loaded:' + JSON.stringify(this.user));
+      })
+      .catch((e) => {
+        console.log('Hans');
+      });*/
   }
 }

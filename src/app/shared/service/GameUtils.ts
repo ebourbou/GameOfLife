@@ -140,7 +140,7 @@ export class GameUtils {
     let patterStr = '';
     for (let currentRow = 0; currentRow < board.height; currentRow++) {
       for (let currentCol = 0; currentCol < board.width; currentCol++) {
-        board.getCell(currentCol, currentRow).isAlive() ? (patterStr += 'X') : (patterStr += '.');
+        board.getCell(currentCol, currentRow).isAlive() ? (patterStr += 'O') : (patterStr += '.');
       }
       patterStr += '\n';
     }

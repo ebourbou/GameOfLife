@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
-import { Injectable } from "@angular/core";
-import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
-import { Observable } from "zen-observable-ts";
+import { Injectable } from '@angular/core';
+import API, { graphqlOperation, GraphQLResult } from '@aws-amplify/api-graphql';
+import { Observable } from 'zen-observable-ts';
 
 export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
@@ -39,6 +39,7 @@ export type CreatePatternInput = {
   pattern: string;
   type?: string | null;
   year?: number | null;
+  locked?: boolean | null;
 };
 
 export type UpdatePatternInput = {
@@ -52,6 +53,7 @@ export type UpdatePatternInput = {
   pattern?: string | null;
   type?: string | null;
   year?: number | null;
+  locked?: boolean | null;
 };
 
 export type DeletePatternInput = {
@@ -118,7 +120,7 @@ export type TableIntFilterInput = {
 };
 
 export type CreateUserMutation = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -127,7 +129,7 @@ export type CreateUserMutation = {
 };
 
 export type UpdateUserMutation = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -136,7 +138,7 @@ export type UpdateUserMutation = {
 };
 
 export type DeleteUserMutation = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -145,7 +147,7 @@ export type DeleteUserMutation = {
 };
 
 export type CreatePatternMutation = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -156,10 +158,11 @@ export type CreatePatternMutation = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type UpdatePatternMutation = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -170,10 +173,11 @@ export type UpdatePatternMutation = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type DeletePatternMutation = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -184,10 +188,11 @@ export type DeletePatternMutation = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type GetUserQuery = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -196,9 +201,9 @@ export type GetUserQuery = {
 };
 
 export type ListUsersQuery = {
-  __typename: "UserConnection";
+  __typename: 'UserConnection';
   items: Array<{
-    __typename: "User";
+    __typename: 'User';
     id: string;
     username: string | null;
     role: string | null;
@@ -209,7 +214,7 @@ export type ListUsersQuery = {
 };
 
 export type GetPatternQuery = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -220,12 +225,13 @@ export type GetPatternQuery = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type ListPatternsQuery = {
-  __typename: "PatternConnection";
+  __typename: 'PatternConnection';
   items: Array<{
-    __typename: "Pattern";
+    __typename: 'Pattern';
     id: string;
     author: string | null;
     sizeX: number;
@@ -236,12 +242,13 @@ export type ListPatternsQuery = {
     pattern: string;
     type: string | null;
     year: number | null;
+    locked: boolean;
   } | null> | null;
   nextToken: string | null;
 };
 
 export type OnCreateUserSubscription = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -250,7 +257,7 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscription = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -259,7 +266,7 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscription = {
-  __typename: "User";
+  __typename: 'User';
   id: string;
   username: string | null;
   role: string | null;
@@ -268,7 +275,7 @@ export type OnDeleteUserSubscription = {
 };
 
 export type OnCreatePatternSubscription = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -279,10 +286,11 @@ export type OnCreatePatternSubscription = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type OnUpdatePatternSubscription = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -293,10 +301,11 @@ export type OnUpdatePatternSubscription = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 export type OnDeletePatternSubscription = {
-  __typename: "Pattern";
+  __typename: 'Pattern';
   id: string;
   author: string | null;
   sizeX: number;
@@ -307,10 +316,11 @@ export type OnDeletePatternSubscription = {
   pattern: string;
   type: string | null;
   year: number | null;
+  locked: boolean;
 };
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class APIService {
   async CreateUser(input: CreateUserInput): Promise<CreateUserMutation> {
@@ -325,11 +335,9 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <CreateUserMutation>response.data.createUser;
   }
   async UpdateUser(input: UpdateUserInput): Promise<UpdateUserMutation> {
@@ -344,11 +352,9 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <UpdateUserMutation>response.data.updateUser;
   }
   async DeleteUser(input: DeleteUserInput): Promise<DeleteUserMutation> {
@@ -363,16 +369,12 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <DeleteUserMutation>response.data.deleteUser;
   }
-  async CreatePattern(
-    input: CreatePatternInput
-  ): Promise<CreatePatternMutation> {
+  async CreatePattern(input: CreatePatternInput): Promise<CreatePatternMutation> {
     const statement = `mutation CreatePattern($input: CreatePatternInput!) {
         createPattern(input: $input) {
           __typename
@@ -386,19 +388,16 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <CreatePatternMutation>response.data.createPattern;
   }
-  async UpdatePattern(
-    input: UpdatePatternInput
-  ): Promise<UpdatePatternMutation> {
+  async UpdatePattern(input: UpdatePatternInput): Promise<UpdatePatternMutation> {
     const statement = `mutation UpdatePattern($input: UpdatePatternInput!) {
         updatePattern(input: $input) {
           __typename
@@ -412,19 +411,16 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <UpdatePatternMutation>response.data.updatePattern;
   }
-  async DeletePattern(
-    input: DeletePatternInput
-  ): Promise<DeletePatternMutation> {
+  async DeletePattern(input: DeletePatternInput): Promise<DeletePatternMutation> {
     const statement = `mutation DeletePattern($input: DeletePatternInput!) {
         deletePattern(input: $input) {
           __typename
@@ -438,14 +434,13 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <DeletePatternMutation>response.data.deletePattern;
   }
   async GetUser(id: string): Promise<GetUserQuery> {
@@ -460,18 +455,12 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      id,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <GetUserQuery>response.data.getUser;
   }
-  async ListUsers(
-    filter?: TableUserFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListUsersQuery> {
+  async ListUsers(filter?: TableUserFilterInput, limit?: number, nextToken?: string): Promise<ListUsersQuery> {
     const statement = `query ListUsers($filter: TableUserFilterInput, $limit: Int, $nextToken: String) {
         listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
@@ -496,9 +485,7 @@ export class APIService {
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
     }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <ListUsersQuery>response.data.listUsers;
   }
   async GetPattern(id: string): Promise<GetPatternQuery> {
@@ -515,21 +502,16 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      id,
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <GetPatternQuery>response.data.getPattern;
   }
-  async ListPatterns(
-    filter?: TablePatternFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListPatternsQuery> {
+  async ListPatterns(filter?: TablePatternFilterInput, limit?: number, nextToken?: string): Promise<ListPatternsQuery> {
     const statement = `query ListPatterns($filter: TablePatternFilterInput, $limit: Int, $nextToken: String) {
         listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
@@ -545,6 +527,7 @@ export class APIService {
             pattern
             type
             year
+            locked
           }
           nextToken
         }
@@ -559,14 +542,10 @@ export class APIService {
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
     }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     return <ListPatternsQuery>response.data.listPatterns;
   }
-  OnCreateUserListener: Observable<
-    SubscriptionResponse<OnCreateUserSubscription>
-  > = API.graphql(
+  OnCreateUserListener: Observable<SubscriptionResponse<OnCreateUserSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnCreateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onCreateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -581,9 +560,7 @@ export class APIService {
     )
   ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
 
-  OnUpdateUserListener: Observable<
-    SubscriptionResponse<OnUpdateUserSubscription>
-  > = API.graphql(
+  OnUpdateUserListener: Observable<SubscriptionResponse<OnUpdateUserSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnUpdateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onUpdateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -598,9 +575,7 @@ export class APIService {
     )
   ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
 
-  OnDeleteUserListener: Observable<
-    SubscriptionResponse<OnDeleteUserSubscription>
-  > = API.graphql(
+  OnDeleteUserListener: Observable<SubscriptionResponse<OnDeleteUserSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnDeleteUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
         onDeleteUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
@@ -615,9 +590,7 @@ export class APIService {
     )
   ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
-  OnCreatePatternListener: Observable<
-    SubscriptionResponse<OnCreatePatternSubscription>
-  > = API.graphql(
+  OnCreatePatternListener: Observable<SubscriptionResponse<OnCreatePatternSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnCreatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
         onCreatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
@@ -632,14 +605,13 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`
     )
   ) as Observable<SubscriptionResponse<OnCreatePatternSubscription>>;
 
-  OnUpdatePatternListener: Observable<
-    SubscriptionResponse<OnUpdatePatternSubscription>
-  > = API.graphql(
+  OnUpdatePatternListener: Observable<SubscriptionResponse<OnUpdatePatternSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnUpdatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
         onUpdatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
@@ -654,14 +626,13 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`
     )
   ) as Observable<SubscriptionResponse<OnUpdatePatternSubscription>>;
 
-  OnDeletePatternListener: Observable<
-    SubscriptionResponse<OnDeletePatternSubscription>
-  > = API.graphql(
+  OnDeletePatternListener: Observable<SubscriptionResponse<OnDeletePatternSubscription>> = API.graphql(
     graphqlOperation(
       `subscription OnDeletePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
         onDeletePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
@@ -676,6 +647,7 @@ export class APIService {
           pattern
           type
           year
+          locked
         }
       }`
     )

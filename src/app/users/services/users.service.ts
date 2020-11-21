@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { APIService, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
+import { APIService, CreatePatternMutation, CreateUserMutation, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
 import { User } from '../../shared/model/user';
-
+import { UserUtils } from '../utils/user-utils';
+import { PatternUtils } from '../../shared/service/pattern-util';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  constructor(private api: APIService) {}
 
-  constructor(private api: APIService) {
+  createUser(user: User): Promise<CreateUserMutation> {
+    const input: any = UserUtils.toAwsPattern(user);
+    return this.api.CreateUser(input);
   }
 
   getUsers(): Promise<ListUsersQuery> {
@@ -22,8 +26,15 @@ export class UserService {
   updateUserRole(user: User): Promise<UpdateUserMutation> {
     const update = {
       id: user.id,
-      role: user.role.valueOf()
-    }
+      role: user.role.valueOf(),
+    };
+    return this.api.UpdateUser(update);
+  }
+  updateLastLogin(user: User): Promise<UpdateUserMutation> {
+    const update = {
+      id: user.id,
+      lastLogin: new Date().toISOString(),
+    };
     return this.api.UpdateUser(update);
   }
 }
