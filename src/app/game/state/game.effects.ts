@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, delay, map, switchMap, throttle } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -22,7 +22,7 @@ export class GameEffects {
   loadNewGame$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GameActions.newGame),
-      concatMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))))
+      switchMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))).pipe(delay(2000)))
     );
   });
   endGame$ = createEffect(() => {

@@ -4,6 +4,7 @@ import { Controls } from '../model/Controls';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { StepperStep } from '../stepper/StepperStep';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
@@ -44,3 +45,4 @@ export const endGameSuccess = createAction('[Game] End Success');
 export const resetCells = createAction('[Game] Reset Cells');
 export const randomCells = createAction('[Game] Random Cells');
 export const invertCells = createAction('[Game] Invert Cells');
+export const stepChanged = createAction('[Game] Step Changed', props<{ step: StepperStep }>());

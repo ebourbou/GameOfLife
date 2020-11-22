@@ -22,6 +22,9 @@ export class BoardComponent implements OnInit {
   @Input()
   isEditable: boolean;
 
+  @Input()
+  isLoading: boolean;
+
   @Output()
   public doApplyPattern: EventEmitter<Cell> = new EventEmitter();
 

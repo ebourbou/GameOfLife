@@ -28,9 +28,7 @@ export class CellStepComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.cellsFormGroup = this.formBuilder.group({
-      patterns: [''],
-    });
+    this.cellsFormGroup = this.formBuilder.group({});
   }
 
   @Input()

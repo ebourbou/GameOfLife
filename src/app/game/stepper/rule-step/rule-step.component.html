@@ -2,8 +2,8 @@
 <form [formGroup]="ruleSetFormGroup">
   <mat-form-field>
     <mat-label>RegelSatz</mat-label>
-    <mat-select (selectionChange)="onRuleSetSelected($event.value)" [(value)]="ruleSetSelected">
-        <mat-option required="true" *ngFor="let ruleSet of allRuleSets" [value]="ruleSet" >{{ruleSet.shortName}}
+    <mat-select (selectionChange)="onRuleSetSelected($event.value)" [(value)]="ruleSetSelected" formControlName="ruleSet" >
+        <mat-option required="true"  *ngFor="let current of allRuleSets" [value]="current" >{{current.shortName}}
         </mat-option>
     </mat-select>
     <mat-error *ngIf="ruleSetFormGroup.hasError('required')">

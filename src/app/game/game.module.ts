@@ -20,6 +20,7 @@ import { CellStepComponent } from './stepper/cell-step/cell-step.component';
 import { RuleStepComponent } from './stepper/rule-step/rule-step.component';
 import { PlayStepComponent } from './stepper/play-step/play-step.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSelectModule,
     DesignerModule,
     MatButtonToggleModule,
+    MatProgressSpinnerModule,
   ],
   exports: [BoardComponent],
 })

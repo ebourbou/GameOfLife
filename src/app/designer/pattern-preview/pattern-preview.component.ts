@@ -40,16 +40,16 @@ export class PatternPreviewComponent implements OnChanges {
   }
 
   startAnimation(): void {
-    this.id = setInterval(() => {
-      this.play();
-    }, 500);
+    // this.id = setInterval(() => {
+    //   this.play();
+    // }, 500);
   }
 
   stopAnimation(): void {
-    clearInterval(this.id);
-    // restore original pattern
-    this.pattern.pattern = this.originalPattern;
-    this.ngOnChanges(null);
+    // clearInterval(this.id);
+    // // restore original pattern
+    // this.pattern.pattern = this.originalPattern;
+    // this.ngOnChanges(null);
   }
   play(): void {
     this.board.nextGeneration(new ConwaysRuleSet());
