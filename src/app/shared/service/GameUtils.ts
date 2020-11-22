@@ -22,7 +22,7 @@ export class GameUtils {
     const patternTrimmed = pattern.pattern.replace(/[\n\r]/g, '');
     for (let currentRow = topRow; currentRow < topRow + pattern.sizeY; currentRow++) {
       for (let currentColumn = leftMostColumn; currentColumn < leftMostColumn + pattern.sizeX; currentColumn++) {
-        board.rowsAndCells.get(currentRow)[currentColumn].state = patternTrimmed.charAt(cursor) === 'O' ? CellState.ALIVE : CellState.DEAD;
+        board.rowsAndCells.get(currentRow)[currentColumn].state = patternTrimmed.charAt(cursor) !== '.' ? CellState.ALIVE : CellState.DEAD;
         cursor++;
       }
     }

@@ -20,8 +20,10 @@ import {
   patternSelected,
   randomCells,
   resetCells,
+  saveGame,
   startGame,
   startGameSuccess,
+  stepChanged,
   togglePause,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
@@ -33,7 +35,11 @@ import {
   selectGame,
   selectGameStatistic,
   selectGenerationStatistic,
+  selectIsEditable,
+  selectIsLoading,
+  selectIsMasked,
   selectIsPaused,
+  selectIsRunning,
   selectPatternSelected,
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
@@ -58,9 +64,11 @@ export class GameComponent implements OnInit {
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
   public allRuleSets$: Observable<RuleSet[]>;
-  public isMasked: boolean;
-  public isEditable: boolean;
-  private isPaused$: Observable<boolean>;
+  public isMasked$: Observable<boolean>;
+  public isEditable$: Observable<boolean>;
+  public isPaused$: Observable<boolean>;
+  public isLoading$: Observable<boolean>;
+  public isRunning$: Observable<boolean>;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.store.dispatch(newDefaultGame());
@@ -73,7 +81,11 @@ export class GameComponent implements OnInit {
     this.allPatterns$ = this.store.select(selectAllPatterns);
     this.patternSelected$ = this.store.select(selectPatternSelected);
     this.allRuleSets$ = this.store.select(selectAllRuleSets);
+    this.isMasked$ = this.store.select(selectIsMasked);
+    this.isEditable$ = this.store.select(selectIsEditable);
     this.isPaused$ = this.store.select(selectIsPaused);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isRunning$ = this.store.select(selectIsRunning);
   }
 
   ngOnInit(): void {}
@@ -143,7 +155,10 @@ export class GameComponent implements OnInit {
   }
 
   onStepChanged(step: StepperStep): void {
-    this.isMasked = StepperStep.BOARD === step;
-    this.isEditable = step === StepperStep.CELL;
+    this.store.dispatch(stepChanged({ step }));
+  }
+
+  onSaveGame(game: Game): void {
+    this.store.dispatch(saveGame({ game }));
   }
 }

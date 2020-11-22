@@ -1,4 +1,5 @@
 <mat-card class="board" [ngClass]="(this.isMasked? 'isMasked': this.isEditable && this.patternSelected? 'isApplyPattern' :  this.isEditable ? 'isApplyCellState': null)" >
+  <ng-container *ngIf="this.isLoading"><mat-spinner class="spinner"></mat-spinner></ng-container>
   <div class="row" *ngFor="let row of this.board.rowsAndCells.values()">
     <div class="cell" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" matRipple [matRippleRadius]="50" [matRippleCentered]="true" [matRippleUnbounded]="true" *ngFor="let cell of row"  (click)="this.patternSelected && this.isEditable? this.onApplyPattern(cell) : this.isEditable ? cell.switchState() : null">
     </div>

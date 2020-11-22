@@ -8,6 +8,7 @@ import { GameUtils } from '../../shared/service/GameUtils';
 import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { StepperStep } from '../stepper/StepperStep';
 
 export const gameFeatureKey = 'game';
 
@@ -23,6 +24,8 @@ export interface GameState {
   controls: Controls;
   running: boolean;
   paused: boolean;
+  editable: boolean;
+  masked: boolean;
 }
 
 export const initialState: GameState = {
@@ -37,10 +40,18 @@ export const initialState: GameState = {
   controls: null,
   running: false,
   paused: false,
+  editable: false,
+  masked: false,
 };
 
 export const gameActionReducer = createReducer(
   initialState,
+  on(GameActions.newDefaultGame, GameActions.newGame, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
   on(GameActions.newGameSuccess, (state, action) => {
     return {
       ...state,
@@ -65,7 +76,6 @@ export const gameActionReducer = createReducer(
     };
   }),
 
-  on(GameActions.newGameFailure, (state) => state),
   on(GameActions.changeSpeed, (state, action) => {
     const newControls = { ...state.controls };
     newControls.speed = action.speed;
@@ -80,7 +90,6 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       controls: newControls,
-      loading: false,
     };
   }),
   on(GameActions.startGameSuccess, (state, action) => {
@@ -147,6 +156,35 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       paused: !state.paused,
+    };
+  }),
+  on(GameActions.stepChanged, (state, action) => {
+    const newState = { ...state };
+    switch (action.step) {
+      case StepperStep.BOARD:
+        newState.masked = true;
+        newState.editable = false;
+        break;
+      case StepperStep.CELL:
+        newState.masked = false;
+        newState.editable = true;
+        break;
+      default:
+        newState.masked = false;
+        newState.editable = false;
+    }
+    return newState;
+  }),
+  on(GameActions.saveGame, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(GameActions.saveGameSuccess, (state) => {
+    return {
+      ...state,
+      loading: false,
     };
   })
 );

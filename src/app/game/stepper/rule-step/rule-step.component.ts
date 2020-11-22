@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RuleSet } from '../../../shared/model/rule/RuleSet';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pattern } from '../../../shared/model/pattern';
 
 @Component({
@@ -15,12 +15,17 @@ export class RuleStepComponent implements OnInit {
   @Input()
   allRuleSets: [RuleSet];
   ruleSetFormGroup: FormGroup;
+
+  @Input()
   ruleSetSelected: RuleSet;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.ruleSetFormGroup = this.formBuilder.group({});
+    this.ruleSetFormGroup = this.formBuilder.group({
+      ruleSet: [this.allRuleSets[0], Validators.required],
+    });
+    this.onRuleSetSelected(this.allRuleSets[0]);
   }
 
   onRuleSetSelected(ruleSet: RuleSet): void {

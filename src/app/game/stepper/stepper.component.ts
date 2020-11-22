@@ -41,6 +41,8 @@ export class StepperComponent implements OnInit {
   @Output()
   private doStartGame: EventEmitter<void> = new EventEmitter();
   @Output()
+  private doSaveGame: EventEmitter<void> = new EventEmitter();
+  @Output()
   public doTogglePause: EventEmitter<void> = new EventEmitter();
   @Output()
   public doChangeSpeed: EventEmitter<number> = new EventEmitter();
@@ -89,6 +91,10 @@ export class StepperComponent implements OnInit {
 
   onStartGame(): void {
     this.doStartGame.emit();
+  }
+
+  onSaveGame(): void {
+    this.doSaveGame.emit();
   }
 
   onTogglePause(): void {

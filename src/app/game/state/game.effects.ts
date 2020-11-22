@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, delay, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -10,6 +10,7 @@ import { Controls } from '../model/Controls';
 import { SnackbarService } from '../../shared/service/snackbar.service';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 import { PatternService } from '../../shared/service/patterns.service';
+import { GameService } from '../../shared/service/game.service';
 
 @Injectable()
 export class GameEffects {
@@ -22,7 +23,7 @@ export class GameEffects {
   loadNewGame$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GameActions.newGame),
-      concatMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))))
+      switchMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))).pipe(delay(2000)))
     );
   });
   endGame$ = createEffect(() => {
@@ -56,6 +57,18 @@ export class GameEffects {
     );
   });
 
+  saveGame = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.saveGame),
+      concatMap((payload) =>
+        this.gameService.saveGame(payload.game).pipe(
+          map((id) => GameActions.saveGameSuccess()),
+          catchError((error) => of(GameActions.errorAction({ errors: error.errors.map((e) => e.message) })))
+        )
+      )
+    );
+  });
+
   onError$ = createEffect(
     () => {
       return this.actions$.pipe(
@@ -73,6 +86,7 @@ export class GameEffects {
     private defaults: DefaultsService,
     private patternService: PatternService,
     private ruleService: AbstractRuleService,
+    private gameService: GameService,
     private snackBar: SnackbarService
   ) {}
 

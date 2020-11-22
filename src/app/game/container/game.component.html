@@ -12,9 +12,18 @@
                (doRuleSetSelected)="onRuleSetSelected($event)"
                (doStartGame)="onPlay()"
                (doTogglePause)="onTogglePause()"
-               (doChangeSpeed)="onChangeSpeed($event)" ></app-stepper>
-  <gol-board class="board" [board]="game.board" [isMasked]="isMasked" [isEditable]="isEditable"
-             [patternSelected]="patternSelected$ | async" (doApplyPattern)="onApplyPattern($event)"></gol-board>
+               (doChangeSpeed)="onChangeSpeed($event)"
+               (doSaveGame)="onSaveGame(game)">
+
+  </app-stepper>
+  <gol-board class="board"
+             [board]="game.board"
+             [isMasked]="isMasked$ | async"
+             [isLoading]="isLoading$ | async"
+             [isEditable]="isEditable$ | async"
+             [patternSelected]="patternSelected$ | async"
+             (doApplyPattern)="onApplyPattern($event)">
+  </gol-board>
   <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
                      (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->
   <!--gol-game-statistic class="statistics" [gameStatistic]="gameStatistic$ | async" [generationStatistic]="generationStatistic$ | async" (play)="onPlay()"></gol-game-statistic-->

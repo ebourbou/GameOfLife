@@ -4,10 +4,10 @@ import { Controls } from '../model/Controls';
 import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { StepperStep } from '../stepper/StepperStep';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
-export const newGameFailure = createAction('[Game] New Game Failure', props<{ error: any }>());
 export const newGameSuccess = createAction(
   '[Game] New Game Success',
   props<{ game: Game; gameStatistic: GameStatistic; controls: Controls }>()
@@ -16,7 +16,6 @@ export const newGameSuccess = createAction(
 export const changeSpeed = createAction('[Game] Change Speed', props<{ speed: number }>());
 export const changeGenerations = createAction('[Game] Change Generations', props<{ generations: number }>());
 
-export const playGame = createAction('[Game] Play Game');
 export const startGame = createAction('[Game] Start Game');
 export const startGameSuccess = createAction('[Game] Start Game Success', props<{ gameStartTime: number }>());
 export const nextGeneration = createAction('[Game] Next Generation Start', props<{ currentGeneration: number }>());
@@ -44,3 +43,7 @@ export const endGameSuccess = createAction('[Game] End Success');
 export const resetCells = createAction('[Game] Reset Cells');
 export const randomCells = createAction('[Game] Random Cells');
 export const invertCells = createAction('[Game] Invert Cells');
+export const stepChanged = createAction('[Game] Step Changed', props<{ step: StepperStep }>());
+
+export const saveGame = createAction('[Game] Save Game', props<{ game: Game }>());
+export const saveGameSuccess = createAction('[Game] Save Game Success');

@@ -60,6 +60,4 @@ export class Board {
     this.cells.forEach((row) => (result += row.isAlive() ? 'O' : '.'));
     return result;
   }
-
-  getWidth() {}
 }

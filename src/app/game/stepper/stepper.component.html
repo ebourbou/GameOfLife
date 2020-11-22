@@ -20,7 +20,7 @@
   </mat-step>
 
   <mat-step label="Speichern" state="save">
-    You are now done.
+    <app-save-step (doSaveGame)="onSaveGame()" ></app-save-step >
   </mat-step>
 
   <ng-template matStepperIcon="playfield" >

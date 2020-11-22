@@ -18,4 +18,8 @@ export const selectAllRuleSets = createSelector(selectGameState, (state: GameSta
 
 export const selectPatternSelected = createSelector(selectGameState, (state: GameState) => state.patternSelected);
 
+export const selectIsMasked = createSelector(selectGameState, (state: GameState) => state.masked);
+export const selectIsEditable = createSelector(selectGameState, (state: GameState) => state.editable);
 export const selectIsPaused = createSelector(selectGameState, (state: GameState) => state.paused);
+export const selectIsLoading = createSelector(selectGameState, (state: GameState) => state.loading);
+export const selectIsRunning = createSelector(selectGameState, (state: GameState) => state.running);
