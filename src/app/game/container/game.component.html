@@ -12,7 +12,8 @@
                (doRuleSetSelected)="onRuleSetSelected($event)"
                (doStartGame)="onPlay()"
                (doTogglePause)="onTogglePause()"
-               (doChangeSpeed)="onChangeSpeed($event)" >
+               (doChangeSpeed)="onChangeSpeed($event)"
+               (doSaveGame)="onSaveGame(game)">
 
   </app-stepper>
   <gol-board class="board"

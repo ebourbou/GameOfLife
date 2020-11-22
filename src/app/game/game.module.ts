@@ -21,6 +21,7 @@ import { RuleStepComponent } from './stepper/rule-step/rule-step.component';
 import { PlayStepComponent } from './stepper/play-step/play-step.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SaveStepComponent } from './stepper/save-step/save-step.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CellStepComponent,
     RuleStepComponent,
     PlayStepComponent,
+    SaveStepComponent,
   ],
   imports: [
     GameRoutingModule,

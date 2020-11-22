@@ -76,7 +76,6 @@ export const gameActionReducer = createReducer(
     };
   }),
 
-  on(GameActions.newGameFailure, (state) => state),
   on(GameActions.changeSpeed, (state, action) => {
     const newControls = { ...state.controls };
     newControls.speed = action.speed;
@@ -175,6 +174,18 @@ export const gameActionReducer = createReducer(
         newState.editable = false;
     }
     return newState;
+  }),
+  on(GameActions.saveGame, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(GameActions.saveGameSuccess, (state) => {
+    return {
+      ...state,
+      loading: false,
+    };
   })
 );
 

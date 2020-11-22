@@ -20,6 +20,7 @@ import {
   patternSelected,
   randomCells,
   resetCells,
+  saveGame,
   startGame,
   startGameSuccess,
   stepChanged,
@@ -155,5 +156,9 @@ export class GameComponent implements OnInit {
 
   onStepChanged(step: StepperStep): void {
     this.store.dispatch(stepChanged({ step }));
+  }
+
+  onSaveGame(game: Game): void {
+    this.store.dispatch(saveGame({ game }));
   }
 }
