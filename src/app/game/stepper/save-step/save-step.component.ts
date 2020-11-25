@@ -14,6 +14,9 @@ export class SaveStepComponent implements OnInit {
 
   saveFormGroup: FormGroup;
 
+  @Input()
+  isBusy: boolean;
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {

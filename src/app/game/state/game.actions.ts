@@ -45,5 +45,11 @@ export const randomCells = createAction('[Game] Random Cells');
 export const invertCells = createAction('[Game] Invert Cells');
 export const stepChanged = createAction('[Game] Step Changed', props<{ step: StepperStep }>());
 
-export const saveGame = createAction('[Game] Save Game', props<{ game: Game }>());
-export const saveGameSuccess = createAction('[Game] Save Game Success');
+export const loadGames = createAction('[Game] Load Games');
+export const loadGamesSuccess = createAction('[Game] Load', props<{ games: Game[] }>());
+
+export const addGame = createAction('[Game] Add Game', props<{ game: Game }>());
+export const applyGame = createAction('[Game] Apply Game', props<{ id: string }>());
+export const applyGameSuccess = createAction('[Game] Apply Game Success', props<{ game: Game }>());
+
+export const saveGameSuccess = createAction('[Game] Save Game Success', props<{ id: string }>());

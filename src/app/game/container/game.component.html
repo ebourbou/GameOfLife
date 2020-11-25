@@ -1,7 +1,12 @@
 <router-outlet></router-outlet>
 <ng-container *ngIf="game$ | async as game" class="game">
-  <app-stepper [controls]="controls$ | async" [allRuleSets]="allRuleSets$ | async" [allPatterns]="allPatterns$ | async"
-               class="stepper"
+  <app-stepper class="stepper"
+               [controls]="controls$ | async"
+               [allRuleSets]="allRuleSets$ | async"
+               [allPatterns]="allPatterns$ | async"
+               [allGames]="games$ | async"
+               [isBusy]="isLoading$ | async"
+               [isRunning]="isRunning$ | async"
                (doResize)="onResize($event)"
                (doChangeGenerations)="onChangeGenerations($event)"
                (doPatternSelected)="onPatternSelected($event)"
@@ -13,14 +18,16 @@
                (doStartGame)="onPlay()"
                (doTogglePause)="onTogglePause()"
                (doChangeSpeed)="onChangeSpeed($event)"
-               (doSaveGame)="onSaveGame(game)">
-
+               (doSaveGame)="onSaveGame(game)"
+               (doApplyGame)="onApplyGame($event)"
+               (doLoadGames)="onLoadGames()">
   </app-stepper>
   <gol-board class="board"
              [board]="game.board"
              [isMasked]="isMasked$ | async"
              [isLoading]="isLoading$ | async"
              [isEditable]="isEditable$ | async"
+             [isRunning]="isRunning$ | async"
              [patternSelected]="patternSelected$ | async"
              (doApplyPattern)="onApplyPattern($event)">
   </gol-board>

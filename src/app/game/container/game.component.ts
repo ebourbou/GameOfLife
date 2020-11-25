@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
 import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
-import { Store } from '@ngrx/store';
+import { props, Store } from '@ngrx/store';
 import {
   applyPattern,
   applyRuleSet,
@@ -20,15 +20,18 @@ import {
   patternSelected,
   randomCells,
   resetCells,
-  saveGame,
+  addGame,
   startGame,
   startGameSuccess,
   stepChanged,
   togglePause,
+  applyGame,
+  loadGames,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
+  selectAllGames,
   selectAllPatterns,
   selectAllRuleSets,
   selectControls,
@@ -69,6 +72,9 @@ export class GameComponent implements OnInit {
   public isPaused$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
   public isRunning$: Observable<boolean>;
+  public games$: Observable<Game[]>;
+
+  @Input() game: Game;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.store.dispatch(newDefaultGame());
@@ -86,6 +92,7 @@ export class GameComponent implements OnInit {
     this.isPaused$ = this.store.select(selectIsPaused);
     this.isLoading$ = this.store.select(selectIsLoading);
     this.isRunning$ = this.store.select(selectIsRunning);
+    this.games$ = this.store.select(selectAllGames);
   }
 
   ngOnInit(): void {}
@@ -159,6 +166,14 @@ export class GameComponent implements OnInit {
   }
 
   onSaveGame(game: Game): void {
-    this.store.dispatch(saveGame({ game }));
+    this.store.dispatch(addGame({ game }));
+  }
+
+  onApplyGame(id: string): void {
+    this.store.dispatch(applyGame({ id }));
+  }
+
+  onLoadGames(): void {
+    this.store.dispatch(loadGames());
   }
 }

@@ -1,4 +1,8 @@
 import { Pattern } from '../model/pattern';
+import { Game } from '../../game/model/Game';
+import { GameUtils } from './GameUtils';
+import { ConwaysRuleSet } from './rule/conway/ConwaysRuleSet';
+import { Cell } from '../model/Cell';
 
 export class PatternUtils {
   public static fromAwsPattern(awsPattern): Pattern {

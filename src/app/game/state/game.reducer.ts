@@ -17,6 +17,7 @@ export interface GameState {
   allPatterns: Pattern[];
   patternSelected: Pattern;
   allRuleSets: RuleSet[];
+  games: Game[];
   ruleSetSelected: RuleSet;
   generationStatistic: GenerationStatistic;
   gameStatistic: GameStatistic;
@@ -33,6 +34,7 @@ export const initialState: GameState = {
   allPatterns: [],
   patternSelected: null,
   allRuleSets: [],
+  games: [],
   ruleSetSelected: null,
   generationStatistic: null,
   gameStatistic: null,
@@ -175,7 +177,7 @@ export const gameActionReducer = createReducer(
     }
     return newState;
   }),
-  on(GameActions.saveGame, (state) => {
+  on(GameActions.addGame, (state) => {
     return {
       ...state,
       loading: true,
@@ -185,6 +187,45 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       loading: false,
+    };
+  }),
+
+  on(GameActions.loadGames, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(GameActions.loadGamesSuccess, (state, payload) => {
+    return {
+      ...state,
+      games: payload.games,
+      loading: false,
+    };
+  }),
+
+  on(GameActions.applyGame, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(GameActions.applyGameSuccess, (state, action) => {
+    const newState = {
+      ...state,
+      game: action.game,
+      controls: new Controls(action.game.board.width, action.game.board.height, action.game.generations, state.controls.speed),
+      loading: false,
+    };
+    return newState;
+  }),
+  on(GameActions.errorAction, (state) => {
+    return {
+      ...state,
+      loading: false,
+      running: false,
     };
   })
 );

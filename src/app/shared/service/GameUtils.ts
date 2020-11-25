@@ -16,28 +16,32 @@ export class GameUtils {
   }
 
   public static applyPattern(board: Board, row: number, column: number, pattern: Pattern): void {
+    return this.applyPatternFromString(board, row, column, pattern.pattern, pattern.sizeX, pattern.sizeY);
+  }
+
+  public static applyPatternFromString(board: Board, row: number, column: number, patternString: string, sizeX, sizeY): void {
     let cursor = 0;
-    const topRow = this.computeTopMostRow(board, row, pattern);
-    const leftMostColumn = this.computeLeftMostColumn(board, column, pattern);
-    const patternTrimmed = pattern.pattern.replace(/[\n\r]/g, '');
-    for (let currentRow = topRow; currentRow < topRow + pattern.sizeY; currentRow++) {
-      for (let currentColumn = leftMostColumn; currentColumn < leftMostColumn + pattern.sizeX; currentColumn++) {
+    const topRow = this.computeTopMostRow(board, row, sizeY);
+    const leftMostColumn = this.computeLeftMostColumn(board, column, sizeX);
+    const patternTrimmed = patternString.replace(/[\n\r]/g, '');
+    for (let currentRow = topRow; currentRow < topRow + sizeY; currentRow++) {
+      for (let currentColumn = leftMostColumn; currentColumn < leftMostColumn + sizeX; currentColumn++) {
         board.rowsAndCells.get(currentRow)[currentColumn].state = patternTrimmed.charAt(cursor) !== '.' ? CellState.ALIVE : CellState.DEAD;
         cursor++;
       }
     }
   }
 
-  private static computeTopMostRow(board: Board, row: number, pattern: Pattern): number {
-    const topMostRowByChoice = row - Math.floor(pattern.sizeY / 2);
+  private static computeTopMostRow(board: Board, row: number, sizeY: number): number {
+    const topMostRowByChoice = row - Math.floor(sizeY / 2);
     const fitsTop = topMostRowByChoice >= 0 ? topMostRowByChoice : 0;
-    return board.height - pattern.sizeY >= fitsTop ? fitsTop : board.height - pattern.sizeY;
+    return board.height - sizeY >= fitsTop ? fitsTop : board.height - sizeY;
   }
 
-  private static computeLeftMostColumn(board: Board, column: number, pattern: Pattern): number {
-    const leftMostColumnByChoice = column - Math.floor(pattern.sizeX / 2);
+  private static computeLeftMostColumn(board: Board, column: number, sizeX: number): number {
+    const leftMostColumnByChoice = column - Math.floor(sizeX / 2);
     const fitsLeft = leftMostColumnByChoice >= 0 ? leftMostColumnByChoice : 0;
-    return board.width - pattern.sizeX >= fitsLeft ? fitsLeft : board.width - pattern.sizeX;
+    return board.width - sizeX >= fitsLeft ? fitsLeft : board.width - sizeX;
   }
 
   public static generationStatisticOf(board: Board, currentGeneration: number, start: number, end: number): GenerationStatistic {

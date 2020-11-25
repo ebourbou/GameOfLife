@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Controls } from '../../model/Controls';
+import { Pattern } from '../../../shared/model/pattern';
 
 @Component({
   selector: 'app-play-step',
@@ -17,6 +18,9 @@ export class PlayStepComponent implements OnInit {
 
   @Input()
   controls: Controls;
+
+  @Input()
+  isRunning: boolean;
 
   playFormGroup: FormGroup;
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pattern } from '../../../shared/model/pattern';
 import { PatternUtils } from '../../../shared/service/pattern-util';
+import { selectIsRunning } from '../../state/game.selectors';
 
 @Component({
   selector: 'app-cell-step',

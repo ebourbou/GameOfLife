@@ -25,6 +25,14 @@
       [thumbLabel]= true
       formControlName="generations" (valueChange)="onChangeGenerations($event)">
     </mat-slider>
+  <p></p>
+  <mat-form-field>
+    <mat-label>Meine Spiele</mat-label>
+    <mat-select (selectionChange)="onApplyGame($event.value.id)" >
+      <mat-option *ngFor="let current of allGames" [value]="current" >{{current.id}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
     <div>
       <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
     </div>
