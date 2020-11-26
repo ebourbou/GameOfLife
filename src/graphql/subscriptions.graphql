@@ -86,6 +86,7 @@ subscription OnCreatePattern(
     pattern
     type
     year
+    locked
   }
 }
 subscription OnUpdatePattern(
@@ -112,6 +113,7 @@ subscription OnUpdatePattern(
     pattern
     type
     year
+    locked
   }
 }
 subscription OnDeletePattern(
@@ -138,5 +140,30 @@ subscription OnDeletePattern(
     pattern
     type
     year
+    locked
+  }
+}
+subscription OnCreatePatternRating($id: ID, $comment: String, $rating: Int) {
+  onCreatePatternRating(id: $id, comment: $comment, rating: $rating) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+subscription OnUpdatePatternRating($id: ID, $comment: String, $rating: Int) {
+  onUpdatePatternRating(id: $id, comment: $comment, rating: $rating) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+subscription OnDeletePatternRating($id: ID, $comment: String, $rating: Int) {
+  onDeletePatternRating(id: $id, comment: $comment, rating: $rating) {
+    id
+    userId
+    comment
+    rating
   }
 }

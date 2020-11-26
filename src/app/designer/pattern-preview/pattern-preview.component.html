@@ -13,8 +13,7 @@
       <div matTooltip="{{pattern.description}}"><p>{{pattern.description.slice(0,50)}}...</p></div>
     </mat-card-content>
     <mat-card-actions>
-      <mat-rating [rating]="3"></mat-rating>
-      <mat-icon>share</mat-icon>
+      <mat-rating [rating]="rating" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
     </mat-card-actions>
   </mat-card>
 </div>

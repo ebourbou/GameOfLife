@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="buttons">
-      <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
+      <button [disabled]="form.dirty" mat-fab color="primary" type="button" aria-label="Neues Pattern" (click)="initPattern()">
         <mat-icon>add</mat-icon>
       </button>
       <button *ngIf="!pattern.locked || (isAdmin(user.role) && pattern.locked)" [disabled]="form.dirty" mat-fab color="warn" type="button" aria-label="Pattern löschen" (click)="deletePattern(pattern)">

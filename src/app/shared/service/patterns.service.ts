@@ -4,6 +4,8 @@ import {
   CreatePatternMutation,
   DeletePatternMutation,
   GetPatternQuery,
+  GetPatternRatingQuery,
+  ListPatternRatingsQuery,
   ListPatternsQuery,
   UpdatePatternMutation,
 } from '../../API.service';
@@ -11,6 +13,8 @@ import {
 import { Pattern } from '../model/pattern';
 import { PatternUtils } from './pattern-util';
 import { from, Observable } from 'rxjs';
+import { PatternRating } from '../model/pattern-rating';
+import { PatternRatingUtils } from './pattern-rating-util';
 
 @Injectable({
   providedIn: 'root',
@@ -43,4 +47,13 @@ export class PatternService {
   deletePattern(idToDelete: string): Promise<DeletePatternMutation> {
     return this.api.DeletePattern({ id: idToDelete });
   }
+
+  /* getPatternRating(patternId: string): Promise<ListPatternRatingsQuery> {
+     return this.api.ListPatternRatings(); // { patternId: { eq: patternId } }
+   }
+
+   updatePatternRating(userId: string) {
+     const input: any = PatternRatingUtils.toAwsPattern(patternRating);
+     return this.api.UpdatePatternRating(PatternRatingUtils.toAwsPattern(rating));
+   }*/
 }

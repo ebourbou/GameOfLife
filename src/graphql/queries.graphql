@@ -61,3 +61,26 @@ query ListPatterns(
     nextToken
   }
 }
+query GetPatternRating($id: ID!) {
+  getPatternRating(id: $id) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+query ListPatternRatings(
+  $filter: TablePatternRatingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPatternRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userId
+      comment
+      rating
+    }
+    nextToken
+  }
+}

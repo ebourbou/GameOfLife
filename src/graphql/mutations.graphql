@@ -71,3 +71,27 @@ mutation DeletePattern($input: DeletePatternInput!) {
     locked
   }
 }
+mutation CreatePatternRating($input: CreatePatternRatingInput!) {
+  createPatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+mutation UpdatePatternRating($input: UpdatePatternRatingInput!) {
+  updatePatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+mutation DeletePatternRating($input: DeletePatternRatingInput!) {
+  deletePatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}

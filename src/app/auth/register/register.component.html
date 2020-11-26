@@ -36,11 +36,11 @@
           <div class="form-element">
             <mat-form-field appearance="fill" *ngIf="validationMode">
               <mat-label>Code</mat-label>
-              <input matInput ngModel type="number" name="code" [(ngModel)]="user.code" placeholder="code"
+              <input matInput ngModel type="number" name="code" placeholder="code"
                      required #code="ngModel">
               <mat-hint>Wir haben den Verifizierungscode an deine eMail Adresse verschickt</mat-hint>
               <mat-error *ngIf="code.dirty && code.invalid">
-                Bitte Verifizieungs Code eingeben
+                Bitte Verifizierungs Code eingeben
               </mat-error>
             </mat-form-field>
           </div>

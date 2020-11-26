@@ -44,18 +44,14 @@ export class AuthService {
         attributes: {
           email: mail,
         },
+      }).then((response) => {
+        if (response.userConfirmed) {
+          const userDB = new User();
+          userDB.username = user;
+          userDB.email = mail;
+          this.userService.createUser(userDB).catch((error) => console.log('User create error ' + error));
+        }
       })
-        .then((response) => {
-          if (response.userConfirmed) {
-            const userDB = new User();
-            userDB.username = user;
-            userDB.email = mail;
-            this.userService.createUser(userDB).catch((error) => console.log('User create error ' + error));
-          }
-        })
-        .catch((error) => {
-          console.log('Error' + JSON.stringify(error));
-        })
     );
   }
 

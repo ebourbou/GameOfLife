@@ -1,10 +1,10 @@
-import { ApplicationRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { Board } from '../../shared/model/Board';
 import { GameUtils } from '../../shared/service/GameUtils';
-import { Cell } from '../../shared/model/Cell';
-import { CellState } from '../../shared/model/CellState';
 import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
+import { PatternService } from '../../shared/service/patterns.service';
+import { PatternRating } from '../../shared/model/pattern-rating';
 
 @Component({
   selector: 'pattern-preview',
@@ -15,29 +15,11 @@ export class PatternPreviewComponent implements OnChanges {
   @Input() pattern: Pattern;
   board: Board = null;
   originalPattern: string;
+  rating: number = 3; // TODO from DB
+  disabled: boolean = false;
   id: any;
 
-  constructor() {}
-
-  private buildCells(x: number, y: number, pattern: string): Map<number, Array<Cell>> {
-    const rowsAndCells = new Map<number, Array<Cell>>();
-
-    for (let currentRow = 0; currentRow < y; currentRow++) {
-      const rowArray = new Array<Cell>();
-      for (let currentCol = 0; currentCol < x; currentCol++) {
-        rowArray.push(
-          new Cell(
-            currentRow,
-            currentCol,
-            pattern.charAt(currentCol + currentRow * x + currentRow) === '.' ? CellState.DEAD : CellState.ALIVE
-          )
-        );
-      }
-      rowsAndCells.set(currentRow, rowArray);
-    }
-
-    return rowsAndCells;
-  }
+  constructor(private patternService: PatternService) {}
 
   startAnimation(): void {
     // this.id = setInterval(() => {
@@ -63,5 +45,16 @@ export class PatternPreviewComponent implements OnChanges {
 
       this.board = GameUtils.buildBoardWithPattern(x, y, this.pattern.pattern);
     }
+  }
+
+  onRatingChanged(rating: any): void {
+    console.log(rating);
+    this.rating = rating;
+    this.disabled = true;
+    /*
+    const patternRating: PatternRating = {
+      comment,
+    };
+    this.patternService.updatePatternRating(patternRating);*/
   }
 }

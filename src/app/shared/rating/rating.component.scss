@@ -1,12 +1,14 @@
 mat-icon {
   width: 8px;
-  padding-right: 0;
-  margin-right: 0;
+  margin-right: 0.5em;
 }
 
 button {
   width: 15px;
+  margin-right: 0.5em;
   color: goldenrod;
 }
 
+// disable blue border
+button:focus {outline:0;}
 

@@ -18,18 +18,10 @@ export class PatternsComponent implements OnInit {
   selectedPattern: Pattern;
   user: User;
 
-  private _patternService: PatternService;
-
   @Output()
   public select = new EventEmitter();
-  private apiService: APIService;
-  private authService: AuthService;
 
-  constructor(patternService: PatternService, apiService: APIService, authService: AuthService) {
-    this.apiService = apiService;
-    this._patternService = patternService;
-    this.authService = authService;
-  }
+  constructor(private patternService: PatternService, private apiService: APIService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
@@ -81,7 +73,7 @@ export class PatternsComponent implements OnInit {
   }
 
   load(selectedPattern: Pattern): void {
-    this._patternService.getPatterns().then((result) => {
+    this.patternService.getPatterns().then((result) => {
       this.patterns = result.items.map((item) => {
         return PatternUtils.fromAwsPattern(item);
       });
