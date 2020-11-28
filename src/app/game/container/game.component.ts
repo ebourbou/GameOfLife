@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
-import { props, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   applyPattern,
   applyRuleSet,
@@ -36,7 +36,6 @@ import {
   selectAllRuleSets,
   selectControls,
   selectGame,
-  selectGameStatistic,
   selectGenerationStatistic,
   selectIsEditable,
   selectIsLoading,
@@ -47,7 +46,6 @@ import {
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
 import { take } from 'rxjs/operators';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
@@ -63,7 +61,6 @@ export class GameComponent implements OnInit {
   public game$: Observable<Game>;
   public controls$: Observable<Controls>;
   public generationStatistic$: Observable<GenerationStatistic>;
-  public gameStatistic$: Observable<GameStatistic>;
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
   public allRuleSets$: Observable<RuleSet[]>;
@@ -77,13 +74,10 @@ export class GameComponent implements OnInit {
   @Input() game: Game;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
-    this.store.dispatch(newDefaultGame());
-    this.store.dispatch(loadPatterns());
-    this.store.dispatch(loadRuleSets());
+    this.startFromScratch();
     this.game$ = this.store.select(selectGame);
     this.controls$ = this.store.select(selectControls);
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
-    this.gameStatistic$ = this.store.select(selectGameStatistic);
     this.allPatterns$ = this.store.select(selectAllPatterns);
     this.patternSelected$ = this.store.select(selectPatternSelected);
     this.allRuleSets$ = this.store.select(selectAllRuleSets);
@@ -175,5 +169,11 @@ export class GameComponent implements OnInit {
 
   onLoadGames(): void {
     this.store.dispatch(loadGames());
+  }
+
+  startFromScratch(): void {
+    this.store.dispatch(newDefaultGame());
+    this.store.dispatch(loadPatterns());
+    this.store.dispatch(loadRuleSets());
   }
 }

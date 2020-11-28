@@ -11,7 +11,7 @@
 
 .isRunning {
   height:100vh;
-  width:100%;
+  width:100vw;
   z-index:    10;
   top:        0;
   left:       0;
@@ -22,6 +22,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .row {

@@ -1,8 +1,7 @@
 import { Cell } from '../model/Cell';
 import { Board } from '../model/Board';
 import { CellState } from '../model/CellState';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
+import { GenerationStatistic } from '../model/generation-statistic';
 import { Game } from '../../game/model/Game';
 import { Pattern } from '../model/pattern';
 
@@ -44,34 +43,17 @@ export class GameUtils {
     return board.width - sizeX >= fitsLeft ? fitsLeft : board.width - sizeX;
   }
 
-  public static generationStatisticOf(board: Board, currentGeneration: number, start: number, end: number): GenerationStatistic {
+  public static generationStatisticOf(game: Game, currentGeneration: number): GenerationStatistic {
     return {
-      currentGeneration: currentGeneration + 1,
-      died: board.diedLastGeneration(),
-      born: board.bornLastGeneration(),
-      alive: board.alive(),
-      dead: board.dead(),
-      cellStateSwitches: board.cellStateSwitches(),
-      pioneers: board.oldestCellsMap().get(currentGeneration) ? board.oldestCellsMap().get(currentGeneration) : 0,
-      timePassed: end - start,
-    };
-  }
-
-  public static gameStatisticOf(game: Game, start: number, end: number): GameStatistic {
-    return {
-      timePassed: end - start,
-      totalCells: game.board.cells.length,
       totalGenerations: game.generations,
+      generation: currentGeneration + 1,
+      died: game.board.diedLastGeneration(),
+      born: game.board.bornLastGeneration(),
       alive: game.board.alive(),
       dead: game.board.dead(),
-      immortals: game.board.oldestCellsMap().get(game.generations) ? game.board.oldestCellsMap().get(game.generations) : 0,
+      cellStateSwitches: game.board.cellStateSwitches(),
+      immortals: game.board.ofAge(currentGeneration),
     };
-  }
-
-  public static resize(board: Board, width: number, height: number): void {
-    board.width = width;
-    board.height = height;
-    this.buildCells(board);
   }
 
   private static buildCells(board: Board): void {

@@ -32,32 +32,15 @@ export class Board {
     return this.cells.filter((n) => n.state === CellState.ALIVE).length;
   }
 
+  ofAge(age: number): number {
+    return this.cells.filter((n) => n.age === age).length;
+  }
+
   dead(): number {
     return this.cells.filter((n) => n.state === CellState.DEAD).length;
   }
 
   cellStateSwitches(): number {
     return this.cells.filter((cell) => cell.previousState !== cell.state).length;
-  }
-
-  oldestCellsAsArray(): Cell[] {
-    return this.cells
-      .filter((n) => n.state === CellState.ALIVE)
-      .filter((cell) => cell.age > 1)
-      .sort((a, b) => a.age - b.age);
-  }
-
-  oldestCellsMap(): Map<number, number> {
-    const mapOfOldest: Map<number, number> = new Map();
-    this.oldestCellsAsArray().forEach((cell) => {
-      mapOfOldest.has(cell.age) ? mapOfOldest.set(cell.age, mapOfOldest.get(cell.age) + 1) : mapOfOldest.set(cell.age, 1);
-    });
-    return mapOfOldest;
-  }
-
-  debug(): string {
-    let result = '';
-    this.cells.forEach((row) => (result += row.isAlive() ? 'O' : '.'));
-    return result;
   }
 }

@@ -1,9 +1,9 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { GenerationStatistic } from "./GenerationStatistic";
-import { ChartSeries } from "../../shared/sparkline/ChartSeries";
+import { Pipe, PipeTransform } from '@angular/core';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
+import { ChartSeries } from '../../shared/sparkline/ChartSeries';
 
 @Pipe({
-  name: "toChartSeries",
+  name: 'toChartSeries',
   pure: false,
 })
 export class ToChartSeriesPipe implements PipeTransform {
@@ -24,7 +24,7 @@ export class ToChartSeriesPipe implements PipeTransform {
           break;
         }
         case Metric.PIONEERS: {
-          metric = v.pioneers;
+          // metric = v.pioneers;
           break;
         }
         default: {
@@ -32,7 +32,8 @@ export class ToChartSeriesPipe implements PipeTransform {
           break;
         }
       }
-      return new ChartSeries(v.currentGeneration, metric);
+      // return new ChartSeries(v.currentGeneration, metric);
+      return new ChartSeries(0, metric);
     });
   }
 }

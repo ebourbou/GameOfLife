@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { GenerationStatistic } from "./GenerationStatistic";
-import { GameStatistic } from "./GameStatistic";
-import { ChartSeries } from "../../shared/sparkline/ChartSeries";
+import { Component, Input, OnInit } from '@angular/core';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
+import { GameStatistic } from './GameStatistic';
+import { ChartSeries } from '../../shared/sparkline/ChartSeries';
 
 @Component({
-  selector: "gol-game-statistic",
-  templateUrl: "./game-statistic.component.html",
-  styleUrls: ["./game-statistic.component.scss"],
+  // tslint:disable-next-line:component-selector
+  selector: 'gol-game-statistic',
+  templateUrl: './game-statistic.component.html',
+  styleUrls: ['./game-statistic.component.scss'],
 })
 export class GameStatisticComponent implements OnInit {
   @Input()
@@ -34,20 +35,20 @@ export class GameStatisticComponent implements OnInit {
 
   // todo: by replace works, by push not --> change detection strategy
   private updateChartByReplace(): void {
-    if (this.allGenerations.length % 5 === 0) {
-      // for performance reason just do every fifth
-      this.bornData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.born));
-      this.diedData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.died));
-      this.aliveData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.alive));
-      this.deadData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.dead));
-      this.switchesData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.cellStateSwitches));
-      this.pioneerData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.pioneers));
-      this.timePassedData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.timePassed));
-      const birthsSoFar = this.allGenerations.map((g) => g.born).reduce((a, b) => a + b, 0);
-      this.totalBirths = [...this.totalBirths, new ChartSeries(this.currentGenNo, birthsSoFar)];
-      const deathsSoFar = this.allGenerations.map((g) => g.died).reduce((a, b) => a + b, 0);
-      this.totalDeaths = [...this.totalDeaths, new ChartSeries(this.currentGenNo, deathsSoFar)];
-    }
+    // if (this.allGenerations.length % 5 === 0) {
+    //   // for performance reason just do every fifth
+    //   this.bornData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.born));
+    //   this.diedData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.died));
+    //   this.aliveData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.alive));
+    //   this.deadData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.dead));
+    //   this.switchesData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.cellStateSwitches));
+    //   this.pioneerData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.pioneers));
+    //   this.timePassedData = this.allGenerations.map((g) => new ChartSeries(g.currentGeneration, g.timePassed));
+    //   const birthsSoFar = this.allGenerations.map((g) => g.born).reduce((a, b) => a + b, 0);
+    //   this.totalBirths = [...this.totalBirths, new ChartSeries(this.currentGenNo, birthsSoFar)];
+    //   const deathsSoFar = this.allGenerations.map((g) => g.died).reduce((a, b) => a + b, 0);
+    //   this.totalDeaths = [...this.totalDeaths, new ChartSeries(this.currentGenNo, deathsSoFar)];
+    // }
   }
 
   // private updateChartByPush(): void {

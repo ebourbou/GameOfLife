@@ -1,9 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import * as GameActions from './game.actions';
 import { Game } from '../model/Game';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Controls } from '../model/Controls';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
@@ -20,7 +19,6 @@ export interface GameState {
   games: Game[];
   ruleSetSelected: RuleSet;
   generationStatistic: GenerationStatistic;
-  gameStatistic: GameStatistic;
   loading: boolean;
   controls: Controls;
   running: boolean;
@@ -37,7 +35,6 @@ export const initialState: GameState = {
   games: [],
   ruleSetSelected: null,
   generationStatistic: null,
-  gameStatistic: null,
   loading: false,
   controls: null,
   running: false,
@@ -58,7 +55,6 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       game: action.game,
-      gameStatistic: GameUtils.gameStatisticOf(action.game, 0, 0),
       controls: action.controls,
       loading: false,
     };
@@ -96,7 +92,6 @@ export const gameActionReducer = createReducer(
   }),
   on(GameActions.startGameSuccess, (state, action) => {
     const newState = { ...state };
-    newState.gameStatistic = GameUtils.gameStatisticOf(newState.game, action.gameStartTime, Date.now());
     newState.loading = false;
     newState.running = true;
     return newState;
@@ -108,13 +103,7 @@ export const gameActionReducer = createReducer(
   }),
   on(GameActions.nextGenerationSuccess, (state, action) => {
     const newState = { ...state };
-    newState.generationStatistic = GameUtils.generationStatisticOf(
-      newState.game.board,
-      action.currentGeneration,
-      action.generationStartTime,
-      Date.now()
-    );
-    newState.gameStatistic = GameUtils.gameStatisticOf(newState.game, action.gameStartTime, Date.now());
+    newState.generationStatistic = GameUtils.generationStatisticOf(newState.game, action.currentGeneration);
     return newState;
   }),
   on(GameActions.endGameSuccess, (state) => {

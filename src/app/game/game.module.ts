@@ -22,6 +22,8 @@ import { PlayStepComponent } from './stepper/play-step/play-step.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SaveStepComponent } from './stepper/save-step/save-step.component';
+import { GametimeComponent } from './gametime/gametime.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { SaveStepComponent } from './stepper/save-step/save-step.component';
     RuleStepComponent,
     PlayStepComponent,
     SaveStepComponent,
+    GametimeComponent,
   ],
   imports: [
     GameRoutingModule,
@@ -48,6 +51,7 @@ import { SaveStepComponent } from './stepper/save-step/save-step.component';
     DesignerModule,
     MatButtonToggleModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   exports: [BoardComponent],
 })

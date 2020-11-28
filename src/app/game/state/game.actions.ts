@@ -1,17 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 import { Game } from '../model/Game';
 import { Controls } from '../model/Controls';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { StepperStep } from '../stepper/StepperStep';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
-export const newGameSuccess = createAction(
-  '[Game] New Game Success',
-  props<{ game: Game; gameStatistic: GameStatistic; controls: Controls }>()
-);
+export const newGameSuccess = createAction('[Game] New Game Success', props<{ game: Game; controls: Controls }>());
 
 export const changeSpeed = createAction('[Game] Change Speed', props<{ speed: number }>());
 export const changeGenerations = createAction('[Game] Change Generations', props<{ generations: number }>());
