@@ -9,6 +9,7 @@ import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 import { UserUtils } from '../../users/utils/user-utils';
 import { UserService } from '../../users/services/users.service';
+import { AmplifyService } from 'aws-amplify-angular';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
   private userSource: BehaviorSubject<User> = new BehaviorSubject<User>({} as any);
   user = this.userSource.asObservable();
 
-  constructor(private router: Router, private api: APIService, private userService: UserService) {}
+  constructor(private router: Router, private api: APIService, private userService: UserService, private amplify: AmplifyService) {}
 
   public getUser(): User {
     Auth.currentAuthenticatedUser()
@@ -25,16 +26,22 @@ export class AuthService {
           const user = new User();
           user.username = u.username;
           user.email = u.attributes.email;
+
+          this.authenticated.next(true);
+          this.userSource.next(user);
           return user;
         },
         (reason) => {
           console.log('Error getting user ' + reason);
+          this.authenticated.next(false);
           return null;
         }
       )
       .catch(console.error);
+    this.authenticated.next(false);
     return null;
   }
+
   /** signup */
   public register(user, pwd, mail): Observable<any> {
     return fromPromise(
@@ -73,6 +80,7 @@ export class AuthService {
             if (value) {
               user = UserUtils.fromAws(value);
               if (user) {
+                localStorage.setItem('user', JSON.stringify(user));
                 this.userSource.next(user);
               }
             } else {
@@ -81,7 +89,12 @@ export class AuthService {
               user.id = cognitoUser.attributes.sub;
               user.username = username;
               user.email = cognitoUser.attributes.email;
-              this.userService.createUser(user).catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
+              this.userService
+                .createUser(user)
+                .then((result) => {
+                  localStorage.setItem('user', JSON.stringify(user));
+                })
+                .catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
             }
           })
           .catch((error) => {
@@ -91,6 +104,9 @@ export class AuthService {
     );
   }
 
+  /** get authenticate state
+   * https://github.com/aws-amplify/amplify-js/wiki/FAQ#will-amplify-automatically-refresh-the-aws-credentials?
+   * */
   /** get authenticate state */
   public isAuthenticated(): Observable<boolean> {
     return fromPromise(Auth.currentAuthenticatedUser()).pipe(
@@ -106,7 +122,6 @@ export class AuthService {
       })
     );
   }
-
   /** signout */
   public logout(): boolean {
     this.userService.updateLastLogin(this.userSource.value).catch((err) => console.log(err));
@@ -121,6 +136,7 @@ export class AuthService {
         return false;
       }
     );
+    localStorage.clear();
     return true;
   }
 

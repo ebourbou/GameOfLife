@@ -24,6 +24,7 @@ export class RatingComponent implements OnInit {
   }
   onClick(rating: number): boolean {
     if (!this.disabled) {
+      console.log('Emit ' + rating);
       this.ratingUpdated.emit('' + rating);
       this.disabled = true;
 
@@ -44,5 +45,13 @@ export class RatingComponent implements OnInit {
     } else {
       return 'star_border';
     }
+  }
+
+  setDisabled(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  setRating(rating: number): void {
+    this.rating = rating;
   }
 }

@@ -47,7 +47,7 @@
       <button *ngIf="authenticated" mat-raised-button color="primary" matTooltip="Logout" (click)="logout()">
         Abmelden
       </button>
-      <div *ngIf="authenticated && user" class="user-info">
+      <div *ngIf="user" class="user-info">
       <mat-icon matTooltip="{{user.username}} [{{user.role}}] {{user.lastLogin | date:'medium'}}">face</mat-icon>
       </div>
     </mat-toolbar>

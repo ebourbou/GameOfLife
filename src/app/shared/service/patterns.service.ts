@@ -4,26 +4,25 @@ import {
   CreatePatternMutation,
   DeletePatternMutation,
   GetPatternQuery,
-  GetPatternRatingQuery,
-  ListPatternRatingsQuery,
   ListPatternsQuery,
   UpdatePatternMutation,
+  UpdatePatternRatingMutation,
 } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
 import { PatternUtils } from './pattern-util';
-import { from, Observable } from 'rxjs';
-import { PatternRating } from '../model/pattern-rating';
+import { from, Observable, Observer, of } from 'rxjs';
 import { PatternRatingUtils } from './pattern-rating-util';
+import { PatternRating } from '../model/pattern-rating';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatternService {
-  constructor(private api: APIService) {}
+  constructor(private apiService: APIService) {}
 
   async getPatterns(): Promise<ListPatternsQuery> {
-    return this.api.ListPatterns();
+    return this.apiService.ListPatterns();
   }
 
   getPatternsObservable(): Observable<Pattern[]> {
@@ -31,29 +30,52 @@ export class PatternService {
   }
 
   getPattern(id: string): Promise<GetPatternQuery> {
-    return this.api.GetPattern(id);
+    return this.apiService.GetPattern(id);
   }
 
   addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
     const input: any = PatternUtils.toAwsPattern(pattern);
     delete input.id;
-    return this.api.CreatePattern(input);
+    return this.apiService.CreatePattern(input);
   }
 
   updatePattern(pattern: Pattern): Promise<UpdatePatternMutation> {
-    return this.api.UpdatePattern(PatternUtils.toAwsPattern(pattern));
+    return this.apiService.UpdatePattern(PatternUtils.toAwsPattern(pattern));
   }
 
   deletePattern(idToDelete: string): Promise<DeletePatternMutation> {
-    return this.api.DeletePattern({ id: idToDelete });
+    return this.apiService.DeletePattern({ id: idToDelete });
   }
 
-  /* getPatternRating(patternId: string): Promise<ListPatternRatingsQuery> {
-     return this.api.ListPatternRatings(); // { patternId: { eq: patternId } }
-   }
+  updatePatternRating(patternRating: PatternRating): Promise<UpdatePatternRatingMutation> {
+    const input: any = PatternRatingUtils.toAwsPattern(patternRating);
+    delete input.id;
+    return this.apiService.CreatePatternRating(input);
+  }
 
-   updatePatternRating(userId: string) {
-     const input: any = PatternRatingUtils.toAwsPattern(patternRating);
-     return this.api.UpdatePatternRating(PatternRatingUtils.toAwsPattern(rating));
-   }*/
+  getPatternRating(id: string, userId: string): Observable<{ rating: number; userVoted: boolean }> {
+    let averageRating = 0;
+    let all = 1;
+    let voted = false;
+    return from(
+      this.apiService
+        .ListPatternRatings({ patternId: { eq: id } })
+        .then((value) => {
+          all = value.items.length;
+          value.items.forEach((rating) => {
+            averageRating += rating.rating;
+
+            if (rating.userId === userId) {
+              voted = true;
+              console.log(rating.userId + '===' + userId);
+            }
+          });
+          return { rating: averageRating / all, userVoted: voted };
+        })
+        .catch((reason) => {
+          console.log(reason);
+          return { rating: 0, userVoted: false };
+        })
+    );
+  }
 }
