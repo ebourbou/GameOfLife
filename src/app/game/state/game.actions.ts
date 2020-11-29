@@ -20,6 +20,9 @@ export const nextGenerationSuccess = createAction(
   props<{ gameStartTime: number; generationStartTime: number; currentGeneration: number }>()
 );
 
+export const startAnalysis = createAction('[Game] Start Analysis');
+export const startAnalysisSuccess = createAction('[Game] Start Analysis Success');
+
 export const patternSelected = createAction('[Game] Pattern Selected', props<{ selectedPattern: Pattern }>());
 export const applyPattern = createAction('[Game] Pattern Apply', props<{ row: number; column: number }>());
 
@@ -40,6 +43,7 @@ export const resetCells = createAction('[Game] Reset Cells');
 export const randomCells = createAction('[Game] Random Cells');
 export const invertCells = createAction('[Game] Invert Cells');
 export const stepChanged = createAction('[Game] Step Changed', props<{ step: StepperStep }>());
+export const toggleMaximize = createAction('[Game] Toggle Maximize Board');
 
 export const loadGames = createAction('[Game] Load Games');
 export const loadGamesSuccess = createAction('[Game] Load', props<{ games: Game[] }>());

@@ -27,6 +27,8 @@ import {
   togglePause,
   applyGame,
   loadGames,
+  startAnalysis,
+  toggleMaximize,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
@@ -38,9 +40,13 @@ import {
   selectGame,
   selectGenerationStatistic,
   selectIsEditable,
+  selectIsGameFinished,
   selectIsLoading,
   selectIsMasked,
+  selectIsMaximized,
   selectIsPaused,
+  selectIsReadyForAnalysis,
+  selectIsReadyToRun,
   selectIsRunning,
   selectPatternSelected,
 } from '../state/game.selectors';
@@ -69,6 +75,10 @@ export class GameComponent implements OnInit {
   public isPaused$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
   public isRunning$: Observable<boolean>;
+  public isBoardMaximized$: Observable<boolean>;
+  public isReadyToRun$: Observable<boolean>;
+  public isReadyForAnalysis$: Observable<boolean>;
+  public isGameFinished: Observable<boolean>;
   public games$: Observable<Game[]>;
 
   @Input() game: Game;
@@ -86,6 +96,10 @@ export class GameComponent implements OnInit {
     this.isPaused$ = this.store.select(selectIsPaused);
     this.isLoading$ = this.store.select(selectIsLoading);
     this.isRunning$ = this.store.select(selectIsRunning);
+    this.isBoardMaximized$ = this.store.select(selectIsMaximized);
+    this.isReadyToRun$ = this.store.select(selectIsReadyToRun);
+    this.isReadyForAnalysis$ = this.store.select(selectIsReadyForAnalysis);
+    this.isGameFinished = this.store.select(selectIsGameFinished);
     this.games$ = this.store.select(selectAllGames);
   }
 
@@ -175,5 +189,13 @@ export class GameComponent implements OnInit {
     this.store.dispatch(newDefaultGame());
     this.store.dispatch(loadPatterns());
     this.store.dispatch(loadRuleSets());
+  }
+
+  onStartAnalysis(): void {
+    this.store.dispatch(startAnalysis());
+  }
+
+  onToggleMaximize(): void {
+    this.store.dispatch(toggleMaximize());
   }
 }

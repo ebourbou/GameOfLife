@@ -30,7 +30,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
 import { PatternService } from './shared/service/patterns.service';
 import { MockRuleService } from './shared/service/rule/mock-rule.service';
-import { RuleService } from './shared/service/rule/rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
 

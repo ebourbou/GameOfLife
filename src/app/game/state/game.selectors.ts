@@ -14,4 +14,8 @@ export const selectIsEditable = createSelector(selectGameState, (state: GameStat
 export const selectIsPaused = createSelector(selectGameState, (state: GameState) => state.paused);
 export const selectIsLoading = createSelector(selectGameState, (state: GameState) => state.loading);
 export const selectIsRunning = createSelector(selectGameState, (state: GameState) => state.running);
+export const selectIsMaximized = createSelector(selectGameState, (state: GameState) => state.boardMaximized);
+export const selectIsReadyToRun = createSelector(selectGameState, (state: GameState) => state.readyToRun);
+export const selectIsReadyForAnalysis = createSelector(selectGameState, (state: GameState) => state.readyForAnalysis);
+export const selectIsGameFinished = createSelector(selectGameState, (state: GameState) => state.gameFinished);
 export const selectAllGames = createSelector(selectGameState, (state: GameState) => state.games);

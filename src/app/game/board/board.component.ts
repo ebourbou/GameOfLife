@@ -16,6 +16,15 @@ export class BoardComponent implements OnInit {
   @Output()
   public doAbortAndReset: EventEmitter<void> = new EventEmitter();
 
+  @Output()
+  public doStartGame: EventEmitter<void> = new EventEmitter();
+
+  @Output()
+  public doStartAnalysis: EventEmitter<void> = new EventEmitter();
+
+  @Output()
+  public doToggleMaximize: EventEmitter<void> = new EventEmitter();
+
   @Input()
   public board: Board;
 
@@ -37,6 +46,15 @@ export class BoardComponent implements OnInit {
   @Input()
   isRunning: boolean;
 
+  @Input()
+  isBoardMaximized: boolean;
+
+  @Input()
+  isReadyToRun: boolean;
+
+  @Input()
+  isReadyForAnalysis: boolean;
+
   @Output()
   public doApplyPattern: EventEmitter<Cell> = new EventEmitter();
 
@@ -54,5 +72,17 @@ export class BoardComponent implements OnInit {
 
   onAbortAndReset(): void {
     this.doAbortAndReset.emit();
+  }
+
+  onToggleMaximize(): void {
+    this.doToggleMaximize.emit();
+  }
+
+  onStartGame(): void {
+    this.doStartGame.emit();
+  }
+
+  onStartAnalysis(): void {
+    this.doStartAnalysis.emit();
   }
 }

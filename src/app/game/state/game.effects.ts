@@ -93,6 +93,13 @@ export class GameEffects {
     );
   });
 
+  startAnalysis$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.startAnalysis),
+      concatMap(() => of(GameActions.startAnalysisSuccess()))
+    );
+  });
+
   onError$ = createEffect(
     () => {
       return this.actions$.pipe(

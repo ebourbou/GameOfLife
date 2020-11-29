@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Controls } from '../model/Controls';
 import { Pattern } from '../../shared/model/pattern';
-import { PatternUtils } from '../../shared/service/pattern-util';
-import { newGame } from '../state/game.actions';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { Game } from '../model/Game';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-stepper',
@@ -15,6 +14,8 @@ import { Game } from '../model/Game';
   styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent implements OnInit {
+  @ViewChild('stepper') private stepper: MatStepper;
+
   @Input()
   controls: Controls;
   @Input()
@@ -25,6 +26,9 @@ export class StepperComponent implements OnInit {
 
   @Input()
   isRunning: boolean;
+
+  @Input()
+  isGameFinished: boolean;
 
   @Input()
   allRuleSets: RuleSet[];
@@ -125,5 +129,9 @@ export class StepperComponent implements OnInit {
 
   onLoadGames(): void {
     this.doLoadGames.emit();
+  }
+
+  onNextStepProgrammatically(): void {
+    this.stepper.next();
   }
 }

@@ -25,6 +25,10 @@ export interface GameState {
   paused: boolean;
   editable: boolean;
   masked: boolean;
+  boardMaximized: boolean;
+  readyToRun: boolean;
+  readyForAnalysis: boolean;
+  gameFinished: boolean;
 }
 
 export const initialState: GameState = {
@@ -41,6 +45,10 @@ export const initialState: GameState = {
   paused: false,
   editable: false,
   masked: false,
+  boardMaximized: false,
+  readyToRun: false,
+  readyForAnalysis: false,
+  gameFinished: false,
 };
 
 export const gameActionReducer = createReducer(
@@ -90,10 +98,11 @@ export const gameActionReducer = createReducer(
       controls: newControls,
     };
   }),
-  on(GameActions.startGameSuccess, (state, action) => {
+  on(GameActions.startGameSuccess, (state) => {
     const newState = { ...state };
     newState.loading = false;
     newState.running = true;
+    newState.readyToRun = false;
     return newState;
   }),
   on(GameActions.nextGeneration, (state) => {
@@ -110,8 +119,20 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       running: false,
+      readyToRun: false,
+      readyForAnalysis: true,
     };
   }),
+
+  on(GameActions.startAnalysisSuccess, (state) => {
+    return {
+      ...state,
+      running: false,
+      readyToRun: false,
+      gameFinished: true,
+    };
+  }),
+
   on(GameActions.patternSelected, (state, action) => {
     return {
       ...state,
@@ -149,6 +170,12 @@ export const gameActionReducer = createReducer(
       paused: !state.paused,
     };
   }),
+  on(GameActions.toggleMaximize, (state) => {
+    return {
+      ...state,
+      boardMaximized: !state.boardMaximized,
+    };
+  }),
   on(GameActions.stepChanged, (state, action) => {
     const newState = { ...state };
     switch (action.step) {
@@ -160,9 +187,25 @@ export const gameActionReducer = createReducer(
         newState.masked = false;
         newState.editable = true;
         break;
+      case StepperStep.PLAY:
+        newState.masked = false;
+        newState.editable = false;
+        newState.boardMaximized = true;
+        newState.readyToRun = true;
+        break;
+      case StepperStep.ANALYZE:
+        newState.masked = false;
+        newState.editable = false;
+        newState.boardMaximized = false;
+        newState.readyToRun = false;
+        newState.readyForAnalysis = false;
+        break;
       default:
         newState.masked = false;
         newState.editable = false;
+        newState.boardMaximized = false;
+        newState.readyToRun = false;
+        newState.readyForAnalysis = false;
     }
     return newState;
   }),
@@ -202,13 +245,12 @@ export const gameActionReducer = createReducer(
   }),
 
   on(GameActions.applyGameSuccess, (state, action) => {
-    const newState = {
+    return {
       ...state,
       game: action.game,
       controls: new Controls(action.game.board.width, action.game.board.height, action.game.generations, state.controls.speed),
       loading: false,
     };
-    return newState;
   }),
   on(GameActions.errorAction, (state) => {
     return {
