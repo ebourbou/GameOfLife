@@ -1,0 +1,97 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
+    id
+    username
+    role
+    email
+    lastLogin
+  }
+}
+mutation CreatePattern($input: CreatePatternInput!) {
+  createPattern(input: $input) {
+    id
+    author
+    sizeX
+    sizeY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+    locked
+  }
+}
+mutation UpdatePattern($input: UpdatePatternInput!) {
+  updatePattern(input: $input) {
+    id
+    author
+    sizeX
+    sizeY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+    locked
+  }
+}
+mutation DeletePattern($input: DeletePatternInput!) {
+  deletePattern(input: $input) {
+    id
+    author
+    sizeX
+    sizeY
+    description
+    heat
+    name
+    pattern
+    type
+    year
+    locked
+  }
+}
+mutation CreatePatternRating($input: CreatePatternRatingInput!) {
+  createPatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+mutation UpdatePatternRating($input: UpdatePatternRatingInput!) {
+  updatePatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}
+mutation DeletePatternRating($input: DeletePatternRatingInput!) {
+  deletePatternRating(input: $input) {
+    id
+    userId
+    comment
+    rating
+  }
+}

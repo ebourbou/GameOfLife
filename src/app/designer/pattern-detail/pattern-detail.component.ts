@@ -58,13 +58,6 @@ export class PatternDetailComponent implements OnInit, OnChanges {
     if (this.pattern) {
       this.patternOriginal = this.pattern;
       this.pattern = JSON.parse(JSON.stringify(this.pattern));
-
-      if (!this.isAdmin(this.user.role) && this.pattern.locked) {
-        Object.keys(this.form.controls).forEach((key) => {
-          console.log('Dis: ' + key);
-          this.form.controls[key].disable();
-        });
-      }
     }
   }
 

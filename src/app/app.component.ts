@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     this.authService.logout();
     this.authenticated = false;
     this.user = null;
-    this.router.navigate(['']).then((navigated: boolean) => {
+    this.router.navigate(['/auth/login']).then((navigated: boolean) => {
       if (navigated) {
         this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
           duration: 2000,
@@ -57,9 +57,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((user) => {
-      this.user = user;
-    });
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
 
     this.authService.authenticated.subscribe((value) => {
       this.authenticated = value;

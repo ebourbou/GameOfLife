@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { EventEmitter } from 'events';
+import { EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'mat-rating',
@@ -8,13 +9,13 @@ import { EventEmitter } from 'events';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class RatingComponent implements OnInit {
-  @Input() rating;
+  @Input() rating: number;
   @Input() starCount = 5;
   @Output() ratingUpdated = new EventEmitter();
-
   ratingArr = [];
+  disabled: boolean = false;
 
-  constructor() {}
+  constructor(private snackBarService: MatSnackBar) {}
 
   ngOnInit(): void {
     for (let index = 0; index < this.starCount; index++) {
@@ -22,7 +23,19 @@ export class RatingComponent implements OnInit {
     }
   }
   onClick(rating: number): boolean {
-    this.ratingUpdated.emit('' + rating);
+    if (!this.disabled) {
+      console.log('Emit ' + rating);
+      this.ratingUpdated.emit('' + rating);
+      this.disabled = true;
+
+      this.snackBarService.open('Bewertung wurde gespeichert', '', {
+        duration: 1500,
+      });
+    } else {
+      this.snackBarService.open('Schon abgestimmt', '', {
+        duration: 1500,
+      });
+    }
     return false;
   }
 
@@ -32,5 +45,13 @@ export class RatingComponent implements OnInit {
     } else {
       return 'star_border';
     }
+  }
+
+  setDisabled(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  setRating(rating: number): void {
+    this.rating = rating;
   }
 }

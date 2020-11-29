@@ -1,0 +1,198 @@
+{
+  "Pattern": [
+    {
+      "PutRequest": {
+        "Item": {
+          "author": {
+            "S": "John Conway"
+          },
+          "sizeX": {
+            "N": "3"
+          },
+          "sizeY": {
+            "N": "3"
+          },
+          "description": {
+            "S": "Der Blinker ist das kleinste Oszillator Muster, das nach 2 Zyklen wieder in den Ursprungs Zustand zurückkehrt"
+          },
+          "heat": {
+            "N": "4"
+          },
+          "name": {
+            "S": "Blinker"
+          },
+          "pattern": {
+            "S": "...\nOOO\n..."
+          },
+          "type": {
+            "S": "oscillator"
+          },
+          "year": {
+            "N": "1970"
+          }
+        }
+      }
+    },
+    {"PutRequest": {
+      "Item": {
+        "author": {
+          "S": "Richard K. Guy"
+        },
+        "sizeX": {
+          "N": "3"
+        },
+        "sizeY": {
+          "N": "3"
+        },
+        "description": {
+          "S": "Gleiter bewegen sich auf dem Spielfeld fort. Sogar logische Funktionen wie UND und ODER lassen sich durch bestimmte Anfangsmuster simulieren. Damit können dann sogar komplexe Funktionen der Schaltungslogik und digitalen Rechnertechnik nachgebaut werden."
+        },
+        "heat": {
+          "N": "4"
+        },
+        "name": {
+          "S": "Geiter"
+        },
+        "pattern": {
+          "S": ".O.\n..O\nOOO"
+        },
+        "type": {
+          "S": "spaceship"
+        },
+        "year": {
+          "N": "1969"
+        }
+      }
+    }
+    },
+    {"PutRequest": {
+      "Item": {
+        "author": {
+          "S": "Sol Goodman"
+        },
+        "sizeX": {
+          "N": "8"
+        },
+        "sizeY": {
+          "N": "8"
+        },
+        "description": {
+          "S": "Hierbei handelt es sich um Objekte, die sich nach einem bestimmten Schema periodisch verändern, d. h. nach einer endlichen, festen Anzahl von Generationen wieder den Ausgangszustand erreichen.Die einfachste zyklische Konfiguration ist eine horizontale oder vertikale Reihe von drei lebenden Zellen. Beim horizontalen Fall wird direkt ober- und unterhalb der Zelle in der Mitte eine lebende Zelle geboren, während die äußeren beiden Zellen sterben; so erhält man eine vertikale Dreierreihe."
+        },
+        "heat": {
+          "N": "16"
+        },
+        "name": {
+          "S": "Octagon"
+        },
+        "pattern": {
+          "S": "...OO\n..O..O\n.O....O\nO......O\nO......O\n.O....O\n..O..O\n...OO"
+        },
+        "type": {
+          "S": "oscillator"
+        },
+        "year": {
+          "N": "1971"
+        }
+      }
+    }
+    },
+    {"PutRequest": {
+      "Item": {
+        "author": {
+          "S": "Bill Gosper"
+        },
+        "sizeX": {
+          "N": "36"
+        },
+        "sizeY": {
+          "N": "36"
+        },
+        "description": {
+          "S": "Conway glaubte Anfangs, daß es kein Muster gibt, daß ins Grenzenlose wächst und schrieb einen Bewerb aus: 50 $ für den, der vor 1970 diese Vermutung beweist oder widerlegt. 1970 wurde von einer Guppe des Artificial Intelligence Projectes beim M.I.T. (Robert April, Michael Beeler, R. William Gosper, Jr., Richard Howell, Rich Schroeppel und Michael Speciner) der Gegenbeweis erbracht. Gosper entdeckte mit Hilfe eines Programms von Speciner eine Gleiterkanone. Eine bestimmte Konstellation wächst nach 40. Ticks zu einer Kanone, die einen Gleiter abschießt. Das passiert alle 30. Ticks wieder."
+        },
+        "heat": {
+          "N": "16"
+        },
+        "name": {
+          "S": "Gleiter Kanone"
+        },
+        "pattern": {
+          "S": "....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n........................O...........\n......................O.O...........\n............OO......OO............OO\n...........O...O....OO............OO\nOO........O.....O...OO..............\nOO........O...O.OO....O.O...........\n..........O.....O.......O...........\n...........O...O....................\n............OO......................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n....................................\n...................................."
+        },
+        "type": {
+          "S": "spaceship"
+        },
+        "year": {
+          "N": "1970"
+        }
+      }
+    }
+    },
+    {"PutRequest": {
+      "Item": {
+        "author": {
+          "S": "MIT group"
+        },
+        "sizeX": {
+          "N": "5"
+        },
+        "sizeY": {
+          "N": "5"
+        },
+        "description": {
+          "S": "Der Bipol ist neben dem Blinker, der Uhr, der Kröte oder dem Tripole ein oszillierendes Pattern das nach einer festen Anzahl Zyklen wieder den Ursprungs Zustand erreicht."
+        },
+        "heat": {
+          "N": "4"
+        },
+        "name": {
+          "S": "Bipol"
+        },
+        "pattern": {
+          "S": "OO...\nO.O..\n..O.O\n...OO"
+        },
+        "type": {
+          "S": "oscillator"
+        },
+        "year": {
+          "N": "1970"
+        }
+      }
+    }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "author": {
+            "S": "Hartmut Holzwart"
+          },
+          "sizeX": {
+            "N": "10"
+          },
+          "sizeY": {
+            "N": "10"
+          },
+          "description": {
+            "S": "Der Name X66 leitet sich ab von der Tatsachem dass jede Zelle (to oder lebendig) maximal 6 lebende Nachbarn hat ( Im Gegensatz zu den anderen Raumschiff Pattern)."
+          },
+          "heat": {
+            "N": "4"
+          },
+          "name": {
+            "S": "X66"
+          },
+          "pattern": {
+            "S": "...O......\n.OO.......\n.O..OOO..O\n.O....OOO.\n..OOO..OO.\n..OOO..OO.\n.O....OOO.\n.O..OOO..O\n.OO.......\n...O......"
+          },
+          "type": {
+            "S": "spaceship"
+          },
+          "year": {
+            "N": "1992"
+          }
+        }
+      }
+    }
+  ]
+}
