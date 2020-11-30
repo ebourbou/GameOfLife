@@ -7,8 +7,9 @@
       [value]="progress">
     </mat-progress-spinner>
     <div class="opaque" *ngIf="isReadyToRun || isRunning">
-      <mat-label>Geschwindigkeit</mat-label>
+      <mat-icon class="opaque" svgIcon="tortoise"></mat-icon>
       <mat-slider [thumbLabel]= false min="0" max="2000" invert="true" (valueChange)="onChangeSpeed($event)" ></mat-slider>
+      <mat-icon class="opaque" svgIcon="rabbit"></mat-icon>
     </div>
     <button *ngIf="isReadyToRun && !isRunning" mat-raised-button color="primary" (click)="onStartGame()" >
       <mat-icon svgIcon="gol_play"></mat-icon>
