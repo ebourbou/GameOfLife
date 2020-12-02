@@ -1,17 +1,3 @@
 {
-  "projectName": "GameOfLife",
-  "version": "3.0",
-  "frontend": "javascript",
-  "javascript": {
-    "framework": "angular",
-    "config": {
-      "SourceDir": "src",
-      "DistributionDir": "dist/GameOfLife",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "ng serve"
-    }
-  },
-  "providers": [
-    "awscloudformation"
-  ]
+  "version": "3.0"
 }

@@ -1,42 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Controls } from '../../model/Controls';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-play-step',
-  templateUrl: './play-step.component.html',
-  styleUrls: ['./play-step.component.scss'],
+  template: '',
+  styles: [''],
 })
 export class PlayStepComponent implements OnInit {
+  @ViewChild('stepper') private myStepper: MatStepper;
+
   @Output()
-  public doStartGame: EventEmitter<void> = new EventEmitter();
-  @Output()
-  public doChangeSpeed: EventEmitter<number> = new EventEmitter();
-  @Output()
-  public doTogglePause: EventEmitter<boolean> = new EventEmitter();
+  public doNextStepProgrammatically: EventEmitter<void> = new EventEmitter();
 
   @Input()
-  controls: Controls;
-
-  playFormGroup: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.playFormGroup = this.formBuilder.group({
-      speed: [this.controls.speed],
-    });
+  set isGameFinished(isGameFinished: boolean) {
+    if (isGameFinished) {
+      this.doNextStepProgrammatically.emit();
+    }
   }
 
-  onChangeSpeed(speed: number): void {
-    this.doChangeSpeed.emit(speed);
-  }
+  constructor() {}
 
-  onStartGame(): void {
-    this.doStartGame.emit();
-  }
-
-  onTogglePause(): void {
-    this.doTogglePause.emit();
-  }
+  ngOnInit(): void {}
 }

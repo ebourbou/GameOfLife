@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Board } from '../../shared/model/Board';
-import { Pattern } from '../../shared/model/pattern';
-import { Cell } from '../../shared/model/Cell';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 
 @Component({
-  selector: 'gol-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+  selector: 'app-gametime',
+  templateUrl: './gametime.component.html',
+  styleUrls: ['./gametime.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class GametimeComponent implements OnInit {
   @Output()
   public doChangeSpeed: EventEmitter<number> = new EventEmitter();
 
@@ -26,56 +23,34 @@ export class BoardComponent implements OnInit {
   public doToggleMaximize: EventEmitter<void> = new EventEmitter();
 
   @Input()
-  public board: Board;
-
-  @Input()
-  patternSelected: Pattern;
-
-  @Input()
   generationStatistic: GenerationStatistic;
-
-  @Input()
-  isMasked: boolean;
-
-  @Input()
-  isEditable: boolean;
-
-  @Input()
-  isLoading: boolean;
 
   @Input()
   isRunning: boolean;
 
   @Input()
-  isBoardMaximized: boolean;
-
-  @Input()
   isReadyToRun: boolean;
 
   @Input()
-  isReadyForAnalysis: boolean;
+  isBoardMaximized: boolean;
 
-  @Output()
-  public doApplyPattern: EventEmitter<Cell> = new EventEmitter();
+  @Input()
+  isReadyForAnalysis: boolean;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onApplyPattern(centerCell: Cell): void {
-    this.doApplyPattern.emit(centerCell);
-  }
-
   onChangeSpeed(speed: number): void {
     this.doChangeSpeed.emit(speed);
   }
 
-  onAbortAndReset(): void {
+  abortAndReset(): void {
     this.doAbortAndReset.emit();
   }
 
-  onToggleMaximize(): void {
-    this.doToggleMaximize.emit();
+  get progress(): number {
+    return 1 + (this.generationStatistic ? (100 / this.generationStatistic.totalGenerations) * this.generationStatistic.generation : 0);
   }
 
   onStartGame(): void {
@@ -84,5 +59,9 @@ export class BoardComponent implements OnInit {
 
   onStartAnalysis(): void {
     this.doStartAnalysis.emit();
+  }
+
+  onToggleMaximizeBoard(): void {
+    this.doToggleMaximize.emit();
   }
 }

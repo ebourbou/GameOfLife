@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Controls } from '../model/Controls';
 import { Pattern } from '../../shared/model/pattern';
-import { PatternUtils } from '../../shared/service/pattern-util';
-import { newGame } from '../state/game.actions';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Game } from '../model/Game';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-stepper',
@@ -14,13 +14,27 @@ import { RuleSet } from '../../shared/model/rule/RuleSet';
   styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent implements OnInit {
+  @ViewChild('stepper') private stepper: MatStepper;
+
   @Input()
   controls: Controls;
   @Input()
   allPatterns: Pattern[];
 
   @Input()
+  isBusy: boolean;
+
+  @Input()
+  isRunning: boolean;
+
+  @Input()
+  isGameFinished: boolean;
+
+  @Input()
   allRuleSets: RuleSet[];
+
+  @Input()
+  allGames: Game[];
 
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
@@ -46,6 +60,10 @@ export class StepperComponent implements OnInit {
   public doTogglePause: EventEmitter<void> = new EventEmitter();
   @Output()
   public doChangeSpeed: EventEmitter<number> = new EventEmitter();
+  @Output()
+  private doApplyGame: EventEmitter<string> = new EventEmitter();
+  @Output()
+  private doLoadGames: EventEmitter<void> = new EventEmitter();
 
   rootGroup: FormGroup;
 
@@ -80,6 +98,10 @@ export class StepperComponent implements OnInit {
     this.doResize.emit(size);
   }
 
+  onApplyGame(id: string): void {
+    this.doApplyGame.emit(id);
+  }
+
   selectionChange(event: StepperSelectionEvent): void {
     const nextStep = StepperStep[StepperStep[event.selectedIndex]];
     this.doStepChanged.emit(nextStep);
@@ -103,5 +125,13 @@ export class StepperComponent implements OnInit {
 
   onChangeSpeed(speed: number): void {
     this.doChangeSpeed.emit(speed);
+  }
+
+  onLoadGames(): void {
+    this.doLoadGames.emit();
+  }
+
+  onNextStepProgrammatically(): void {
+    this.stepper.next();
   }
 }

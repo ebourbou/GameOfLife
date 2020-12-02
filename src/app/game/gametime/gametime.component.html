@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="bottom_center">
+    <mat-progress-spinner class="opaque" *ngIf="isRunning"
+      mode="determinate"
+      diameter="50"
+      strokeWidth="5"
+      [value]="progress">
+    </mat-progress-spinner>
+    <div class="opaque" *ngIf="isReadyToRun || isRunning">
+      <mat-label>Geschwindigkeit</mat-label>
+      <mat-slider [thumbLabel]= false min="0" max="2000" invert="true" (valueChange)="onChangeSpeed($event)" ></mat-slider>
+    </div>
+    <button *ngIf="isReadyToRun && !isRunning" mat-raised-button color="primary" (click)="onStartGame()" >
+      <mat-icon svgIcon="gol_play"></mat-icon>
+      <span class="label">Starte das Spiel</span>
+    </button>
+    <button class="opaque" *ngIf="isRunning" mat-stroked-button matTooltip="Verwerfe das Spiel und beginne von vorn" (click)="abortAndReset()">
+      <mat-icon>highlight_off</mat-icon>
+      <span class="label">Verwerfen</span>
+    </button>
+    <button *ngIf="isReadyForAnalysis" mat-raised-button color="primary" matTooltip="Lasse das Spiel analysieren" (click)="onStartAnalysis()">
+      <mat-icon svgIcon="gol_analyze"></mat-icon>
+      <span class="label">Analysiere das Spiel</span>
+    </button>
+  </div>
+  <button class="bottom_right opaque" mat-icon-button aria-label="Maximiere oder minimiere das Spielfeld" (click)="onToggleMaximizeBoard()">
+    <mat-icon *ngIf="isBoardMaximized">fullscreen_exit</mat-icon>
+    <mat-icon *ngIf="!isBoardMaximized">fullscreen</mat-icon>
+  </button>
+</div>

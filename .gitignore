@@ -60,3 +60,6 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
+/amplify/.temp/
+/amplify/#current-cloud-backend/
+/amplify-backup/

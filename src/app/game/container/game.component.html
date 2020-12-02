@@ -1,7 +1,13 @@
 <router-outlet></router-outlet>
 <ng-container *ngIf="game$ | async as game" class="game">
-  <app-stepper [controls]="controls$ | async" [allRuleSets]="allRuleSets$ | async" [allPatterns]="allPatterns$ | async"
-               class="stepper"
+  <app-stepper class="stepper"
+               [controls]="controls$ | async"
+               [allRuleSets]="allRuleSets$ | async"
+               [allPatterns]="allPatterns$ | async"
+               [allGames]="games$ | async"
+               [isBusy]="isLoading$ | async"
+               [isRunning]="isRunning$ | async"
+               [isGameFinished]="isGameFinished | async"
                (doResize)="onResize($event)"
                (doChangeGenerations)="onChangeGenerations($event)"
                (doPatternSelected)="onPatternSelected($event)"
@@ -13,16 +19,28 @@
                (doStartGame)="onPlay()"
                (doTogglePause)="onTogglePause()"
                (doChangeSpeed)="onChangeSpeed($event)"
-               (doSaveGame)="onSaveGame(game)">
-
+               (doSaveGame)="onSaveGame(game)"
+               (doApplyGame)="onApplyGame($event)"
+               (doLoadGames)="onLoadGames()">
   </app-stepper>
   <gol-board class="board"
              [board]="game.board"
              [isMasked]="isMasked$ | async"
              [isLoading]="isLoading$ | async"
              [isEditable]="isEditable$ | async"
+             [isRunning]="isRunning$ | async"
+             [isBoardMaximized]="isBoardMaximized$ | async"
+             [isReadyToRun]="isReadyToRun$ | async"
+             [isReadyForAnalysis]="isReadyForAnalysis$ | async"
+             [generationStatistic]="generationStatistic$ | async"
              [patternSelected]="patternSelected$ | async"
-             (doApplyPattern)="onApplyPattern($event)">
+             (doChangeSpeed)="onChangeSpeed($event)"
+             (doApplyPattern)="onApplyPattern($event)"
+             (doAbortAndReset)="startFromScratch()"
+             (doStartGame)="onPlay()"
+             (doToggleMaximize)="onToggleMaximize()"
+             (doStartAnalysis)="onStartAnalysis()"
+  >
   </gol-board>
   <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
                      (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->

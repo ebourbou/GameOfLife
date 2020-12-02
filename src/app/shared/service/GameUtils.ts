@@ -1,8 +1,7 @@
 import { Cell } from '../model/Cell';
 import { Board } from '../model/Board';
 import { CellState } from '../model/CellState';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
+import { GenerationStatistic } from '../model/generation-statistic';
 import { Game } from '../../game/model/Game';
 import { Pattern } from '../model/pattern';
 
@@ -16,58 +15,45 @@ export class GameUtils {
   }
 
   public static applyPattern(board: Board, row: number, column: number, pattern: Pattern): void {
+    return this.applyPatternFromString(board, row, column, pattern.pattern, pattern.sizeX, pattern.sizeY);
+  }
+
+  public static applyPatternFromString(board: Board, row: number, column: number, patternString: string, sizeX, sizeY): void {
     let cursor = 0;
-    const topRow = this.computeTopMostRow(board, row, pattern);
-    const leftMostColumn = this.computeLeftMostColumn(board, column, pattern);
-    const patternTrimmed = pattern.pattern.replace(/[\n\r]/g, '');
-    for (let currentRow = topRow; currentRow < topRow + pattern.sizeY; currentRow++) {
-      for (let currentColumn = leftMostColumn; currentColumn < leftMostColumn + pattern.sizeX; currentColumn++) {
+    const topRow = this.computeTopMostRow(board, row, sizeY);
+    const leftMostColumn = this.computeLeftMostColumn(board, column, sizeX);
+    const patternTrimmed = patternString.replace(/[\n\r]/g, '');
+    for (let currentRow = topRow; currentRow < topRow + sizeY; currentRow++) {
+      for (let currentColumn = leftMostColumn; currentColumn < leftMostColumn + sizeX; currentColumn++) {
         board.rowsAndCells.get(currentRow)[currentColumn].state = patternTrimmed.charAt(cursor) !== '.' ? CellState.ALIVE : CellState.DEAD;
         cursor++;
       }
     }
   }
 
-  private static computeTopMostRow(board: Board, row: number, pattern: Pattern): number {
-    const topMostRowByChoice = row - Math.floor(pattern.sizeY / 2);
+  private static computeTopMostRow(board: Board, row: number, sizeY: number): number {
+    const topMostRowByChoice = row - Math.floor(sizeY / 2);
     const fitsTop = topMostRowByChoice >= 0 ? topMostRowByChoice : 0;
-    return board.height - pattern.sizeY >= fitsTop ? fitsTop : board.height - pattern.sizeY;
+    return board.height - sizeY >= fitsTop ? fitsTop : board.height - sizeY;
   }
 
-  private static computeLeftMostColumn(board: Board, column: number, pattern: Pattern): number {
-    const leftMostColumnByChoice = column - Math.floor(pattern.sizeX / 2);
+  private static computeLeftMostColumn(board: Board, column: number, sizeX: number): number {
+    const leftMostColumnByChoice = column - Math.floor(sizeX / 2);
     const fitsLeft = leftMostColumnByChoice >= 0 ? leftMostColumnByChoice : 0;
-    return board.width - pattern.sizeX >= fitsLeft ? fitsLeft : board.width - pattern.sizeX;
+    return board.width - sizeX >= fitsLeft ? fitsLeft : board.width - sizeX;
   }
 
-  public static generationStatisticOf(board: Board, currentGeneration: number, start: number, end: number): GenerationStatistic {
+  public static generationStatisticOf(game: Game, currentGeneration: number): GenerationStatistic {
     return {
-      currentGeneration: currentGeneration + 1,
-      died: board.diedLastGeneration(),
-      born: board.bornLastGeneration(),
-      alive: board.alive(),
-      dead: board.dead(),
-      cellStateSwitches: board.cellStateSwitches(),
-      pioneers: board.oldestCellsMap().get(currentGeneration) ? board.oldestCellsMap().get(currentGeneration) : 0,
-      timePassed: end - start,
-    };
-  }
-
-  public static gameStatisticOf(game: Game, start: number, end: number): GameStatistic {
-    return {
-      timePassed: end - start,
-      totalCells: game.board.cells.length,
       totalGenerations: game.generations,
+      generation: currentGeneration + 1,
+      died: game.board.diedLastGeneration(),
+      born: game.board.bornLastGeneration(),
       alive: game.board.alive(),
       dead: game.board.dead(),
-      immortals: game.board.oldestCellsMap().get(game.generations) ? game.board.oldestCellsMap().get(game.generations) : 0,
+      cellStateSwitches: game.board.cellStateSwitches(),
+      immortals: game.board.ofAge(currentGeneration),
     };
-  }
-
-  public static resize(board: Board, width: number, height: number): void {
-    board.width = width;
-    board.height = height;
-    this.buildCells(board);
   }
 
   private static buildCells(board: Board): void {

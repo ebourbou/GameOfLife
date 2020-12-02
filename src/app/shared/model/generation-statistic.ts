@@ -1,10 +1,10 @@
 export interface GenerationStatistic {
-  currentGeneration: number;
+  totalGenerations: number;
+  generation: number;
   died: number;
   born: number;
   alive: number;
   dead: number;
   cellStateSwitches: number;
-  pioneers: number;
-  timePassed: number;
+  immortals: number;
 }

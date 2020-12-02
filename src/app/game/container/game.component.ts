@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
 import { Store } from '@ngrx/store';
@@ -20,31 +20,38 @@ import {
   patternSelected,
   randomCells,
   resetCells,
-  saveGame,
+  addGame,
   startGame,
   startGameSuccess,
   stepChanged,
   togglePause,
+  applyGame,
+  loadGames,
+  startAnalysis,
+  toggleMaximize,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
+  selectAllGames,
   selectAllPatterns,
   selectAllRuleSets,
   selectControls,
   selectGame,
-  selectGameStatistic,
   selectGenerationStatistic,
   selectIsEditable,
+  selectIsGameFinished,
   selectIsLoading,
   selectIsMasked,
+  selectIsMaximized,
   selectIsPaused,
+  selectIsReadyForAnalysis,
+  selectIsReadyToRun,
   selectIsRunning,
   selectPatternSelected,
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
 import { take } from 'rxjs/operators';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
@@ -60,7 +67,6 @@ export class GameComponent implements OnInit {
   public game$: Observable<Game>;
   public controls$: Observable<Controls>;
   public generationStatistic$: Observable<GenerationStatistic>;
-  public gameStatistic$: Observable<GameStatistic>;
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
   public allRuleSets$: Observable<RuleSet[]>;
@@ -69,15 +75,19 @@ export class GameComponent implements OnInit {
   public isPaused$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
   public isRunning$: Observable<boolean>;
+  public isBoardMaximized$: Observable<boolean>;
+  public isReadyToRun$: Observable<boolean>;
+  public isReadyForAnalysis$: Observable<boolean>;
+  public isGameFinished: Observable<boolean>;
+  public games$: Observable<Game[]>;
+
+  @Input() game: Game;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
-    this.store.dispatch(newDefaultGame());
-    this.store.dispatch(loadPatterns());
-    this.store.dispatch(loadRuleSets());
+    this.startFromScratch();
     this.game$ = this.store.select(selectGame);
     this.controls$ = this.store.select(selectControls);
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
-    this.gameStatistic$ = this.store.select(selectGameStatistic);
     this.allPatterns$ = this.store.select(selectAllPatterns);
     this.patternSelected$ = this.store.select(selectPatternSelected);
     this.allRuleSets$ = this.store.select(selectAllRuleSets);
@@ -86,6 +96,11 @@ export class GameComponent implements OnInit {
     this.isPaused$ = this.store.select(selectIsPaused);
     this.isLoading$ = this.store.select(selectIsLoading);
     this.isRunning$ = this.store.select(selectIsRunning);
+    this.isBoardMaximized$ = this.store.select(selectIsMaximized);
+    this.isReadyToRun$ = this.store.select(selectIsReadyToRun);
+    this.isReadyForAnalysis$ = this.store.select(selectIsReadyForAnalysis);
+    this.isGameFinished = this.store.select(selectIsGameFinished);
+    this.games$ = this.store.select(selectAllGames);
   }
 
   ngOnInit(): void {}
@@ -159,6 +174,28 @@ export class GameComponent implements OnInit {
   }
 
   onSaveGame(game: Game): void {
-    this.store.dispatch(saveGame({ game }));
+    this.store.dispatch(addGame({ game }));
+  }
+
+  onApplyGame(id: string): void {
+    this.store.dispatch(applyGame({ id }));
+  }
+
+  onLoadGames(): void {
+    this.store.dispatch(loadGames());
+  }
+
+  startFromScratch(): void {
+    this.store.dispatch(newDefaultGame());
+    this.store.dispatch(loadPatterns());
+    this.store.dispatch(loadRuleSets());
+  }
+
+  onStartAnalysis(): void {
+    this.store.dispatch(startAnalysis());
+  }
+
+  onToggleMaximize(): void {
+    this.store.dispatch(toggleMaximize());
   }
 }

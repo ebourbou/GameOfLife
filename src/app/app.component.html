@@ -9,7 +9,7 @@
         <mat-icon matListIcon>rule</mat-icon>
         Regel Editor
       </a>
-      <a *ngIf="user && isAdmin(user.role)" mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
+      <a *ngIf="user && isAdmin(user.role) " mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
         <mat-icon matListIcon>settings</mat-icon>
         Rollenverwaltung
       </a>

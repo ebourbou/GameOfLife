@@ -1,0 +1,28 @@
+.container {
+  height:100vh;
+  width:100vw;
+  z-index:    20;
+  top:        0;
+  left:       0;
+  position:   fixed;
+}
+
+.bottom_center {
+  position: fixed;
+  bottom: 1vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.opaque {
+  opacity: 0.6;
+}
+
+.bottom_right {
+  position: fixed;
+  bottom: 1vh;
+  right: 1vh;
+}

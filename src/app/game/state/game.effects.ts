@@ -59,13 +59,44 @@ export class GameEffects {
 
   saveGame = createEffect(() => {
     return this.actions$.pipe(
-      ofType(GameActions.saveGame),
+      ofType(GameActions.addGame),
       concatMap((payload) =>
-        this.gameService.saveGame(payload.game).pipe(
-          map((id) => GameActions.saveGameSuccess()),
-          catchError((error) => of(GameActions.errorAction({ errors: error.errors.map((e) => e.message) })))
+        this.gameService.addGame(payload.game).pipe(
+          map((game) => GameActions.saveGameSuccess({ id: game.id })),
+          catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
         )
       )
+    );
+  });
+
+  applyGame = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.applyGame),
+      concatMap((payload) =>
+        this.gameService.getGame(payload.id).pipe(
+          map((game) => GameActions.applyGameSuccess({ game })),
+          catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
+        )
+      )
+    );
+  });
+
+  loadGames = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.loadGames),
+      concatMap((payload) =>
+        this.gameService.getAllGames().pipe(
+          map((games) => GameActions.loadGamesSuccess({ games })),
+          catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
+        )
+      )
+    );
+  });
+
+  startAnalysis$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GameActions.startAnalysis),
+      concatMap(() => of(GameActions.startAnalysisSuccess()))
     );
   });
 

@@ -1,26 +1,42 @@
-<mat-horizontal-stepper linear="true" (selectionChange)="selectionChange($event)" >
+<mat-horizontal-stepper linear="true" (selectionChange)="selectionChange($event)" #stepper >
 
-  <mat-step label="Spielfeld" state="playfield" [stepControl]="rootGroup" >
-      <app-board-step (doResize)="onResize($event)" (doChangeGenerations)="onChangeGenerations($event)" [controls]="controls"></app-board-step>
+  <mat-step label="Spielfeld" state="playfield" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+      <app-board-step [allGames]="allGames"
+                      [controls]="controls"
+                      (doLoadGames)="onLoadGames()"
+                      (doApplyGame)="onApplyGame($event)"
+                      (doResize)="onResize($event)"
+                      (doChangeGenerations)="onChangeGenerations($event)" >
+      </app-board-step>
   </mat-step>
-  <mat-step label="Zellen" state="cellInput" [stepControl]="rootGroup" >
-    <app-cell-step [allPatterns]="allPatterns" (doPatternSelected)="onPatternSelected($event)" (doRandomCells)="onRandom()" (doInvertCells)="onInvert()" (doResetCells)="onReset()"></app-cell-step>
+  <mat-step label="Zellen" state="cellInput" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+    <app-cell-step [allPatterns]="allPatterns"
+                   (doPatternSelected)="onPatternSelected($event)"
+                   (doRandomCells)="onRandom()"
+                   (doInvertCells)="onInvert()"
+                   (doResetCells)="onReset()">
+    </app-cell-step>
   </mat-step>
 
-  <mat-step label="Regeln" state="rules" >
-    <app-rule-step [allRuleSets]="allRuleSets"  (doRuleSetSelected)="onRuleSetSelected($event)"></app-rule-step>
+  <mat-step label="Regeln" state="rules" [editable]="!isGameFinished" >
+    <app-rule-step [allRuleSets]="allRuleSets"
+                   (doRuleSetSelected)="onRuleSetSelected($event)">
+    </app-rule-step>
   </mat-step>
 
-  <mat-step label="Spielen" state="play" >
-    <app-play-step [controls]="controls" (doStartGame)="onStartGame()" (doChangeSpeed)="onChangeSpeed($event)" (doTogglePause)="onTogglePause()"></app-play-step >
+  <mat-step label="Spielen" state="play" [editable]="!isGameFinished" >
+    <app-play-step [isGameFinished]="isGameFinished" (doNextStepProgrammatically)="onNextStepProgrammatically()"></app-play-step >
   </mat-step>
 
   <mat-step label="Analysieren" state="analyze">
-    You are now done.
+    <app-analysis-step>
+    </app-analysis-step>
   </mat-step>
 
-  <mat-step label="Speichern" state="save">
-    <app-save-step (doSaveGame)="onSaveGame()" ></app-save-step >
+  <mat-step label="Speichern" state="save" >
+    <app-save-step [isBusy]="isBusy"
+                   (doSaveGame)="onSaveGame()" >
+    </app-save-step >
   </mat-step>
 
   <ng-template matStepperIcon="playfield" >
@@ -41,6 +57,5 @@
   <ng-template matStepperIcon="save">
     <mat-icon svgIcon="gol_save"></mat-icon>
   </ng-template>
-
 
 </mat-horizontal-stepper>

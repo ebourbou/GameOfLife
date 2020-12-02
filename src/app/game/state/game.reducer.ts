@@ -1,9 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import * as GameActions from './game.actions';
 import { Game } from '../model/Game';
-import { GenerationStatistic } from '../../statistic/game-statistic/GenerationStatistic';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Controls } from '../model/Controls';
-import { GameStatistic } from '../../statistic/game-statistic/GameStatistic';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
@@ -17,15 +16,19 @@ export interface GameState {
   allPatterns: Pattern[];
   patternSelected: Pattern;
   allRuleSets: RuleSet[];
+  games: Game[];
   ruleSetSelected: RuleSet;
   generationStatistic: GenerationStatistic;
-  gameStatistic: GameStatistic;
   loading: boolean;
   controls: Controls;
   running: boolean;
   paused: boolean;
   editable: boolean;
   masked: boolean;
+  boardMaximized: boolean;
+  readyToRun: boolean;
+  readyForAnalysis: boolean;
+  gameFinished: boolean;
 }
 
 export const initialState: GameState = {
@@ -33,15 +36,19 @@ export const initialState: GameState = {
   allPatterns: [],
   patternSelected: null,
   allRuleSets: [],
+  games: [],
   ruleSetSelected: null,
   generationStatistic: null,
-  gameStatistic: null,
   loading: false,
   controls: null,
   running: false,
   paused: false,
   editable: false,
   masked: false,
+  boardMaximized: false,
+  readyToRun: false,
+  readyForAnalysis: false,
+  gameFinished: false,
 };
 
 export const gameActionReducer = createReducer(
@@ -56,7 +63,6 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       game: action.game,
-      gameStatistic: GameUtils.gameStatisticOf(action.game, 0, 0),
       controls: action.controls,
       loading: false,
     };
@@ -92,11 +98,11 @@ export const gameActionReducer = createReducer(
       controls: newControls,
     };
   }),
-  on(GameActions.startGameSuccess, (state, action) => {
+  on(GameActions.startGameSuccess, (state) => {
     const newState = { ...state };
-    newState.gameStatistic = GameUtils.gameStatisticOf(newState.game, action.gameStartTime, Date.now());
     newState.loading = false;
     newState.running = true;
+    newState.readyToRun = false;
     return newState;
   }),
   on(GameActions.nextGeneration, (state) => {
@@ -106,21 +112,27 @@ export const gameActionReducer = createReducer(
   }),
   on(GameActions.nextGenerationSuccess, (state, action) => {
     const newState = { ...state };
-    newState.generationStatistic = GameUtils.generationStatisticOf(
-      newState.game.board,
-      action.currentGeneration,
-      action.generationStartTime,
-      Date.now()
-    );
-    newState.gameStatistic = GameUtils.gameStatisticOf(newState.game, action.gameStartTime, Date.now());
+    newState.generationStatistic = GameUtils.generationStatisticOf(newState.game, action.currentGeneration);
     return newState;
   }),
   on(GameActions.endGameSuccess, (state) => {
     return {
       ...state,
       running: false,
+      readyToRun: false,
+      readyForAnalysis: true,
     };
   }),
+
+  on(GameActions.startAnalysisSuccess, (state) => {
+    return {
+      ...state,
+      running: false,
+      readyToRun: false,
+      gameFinished: true,
+    };
+  }),
+
   on(GameActions.patternSelected, (state, action) => {
     return {
       ...state,
@@ -158,6 +170,12 @@ export const gameActionReducer = createReducer(
       paused: !state.paused,
     };
   }),
+  on(GameActions.toggleMaximize, (state) => {
+    return {
+      ...state,
+      boardMaximized: !state.boardMaximized,
+    };
+  }),
   on(GameActions.stepChanged, (state, action) => {
     const newState = { ...state };
     switch (action.step) {
@@ -169,13 +187,29 @@ export const gameActionReducer = createReducer(
         newState.masked = false;
         newState.editable = true;
         break;
+      case StepperStep.PLAY:
+        newState.masked = false;
+        newState.editable = false;
+        newState.boardMaximized = true;
+        newState.readyToRun = true;
+        break;
+      case StepperStep.ANALYZE:
+        newState.masked = false;
+        newState.editable = false;
+        newState.boardMaximized = false;
+        newState.readyToRun = false;
+        newState.readyForAnalysis = false;
+        break;
       default:
         newState.masked = false;
         newState.editable = false;
+        newState.boardMaximized = false;
+        newState.readyToRun = false;
+        newState.readyForAnalysis = false;
     }
     return newState;
   }),
-  on(GameActions.saveGame, (state) => {
+  on(GameActions.addGame, (state) => {
     return {
       ...state,
       loading: true,
@@ -185,6 +219,44 @@ export const gameActionReducer = createReducer(
     return {
       ...state,
       loading: false,
+    };
+  }),
+
+  on(GameActions.loadGames, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(GameActions.loadGamesSuccess, (state, payload) => {
+    return {
+      ...state,
+      games: payload.games,
+      loading: false,
+    };
+  }),
+
+  on(GameActions.applyGame, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(GameActions.applyGameSuccess, (state, action) => {
+    return {
+      ...state,
+      game: action.game,
+      controls: new Controls(action.game.board.width, action.game.board.height, action.game.generations, state.controls.speed),
+      loading: false,
+    };
+  }),
+  on(GameActions.errorAction, (state) => {
+    return {
+      ...state,
+      loading: false,
+      running: false,
     };
   })
 );
