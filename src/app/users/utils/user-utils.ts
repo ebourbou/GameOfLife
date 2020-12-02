@@ -30,4 +30,13 @@ export class UserUtils {
     };
     return u;
   }
+
+  static loadUserFromLocal(): User {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      return JSON.parse(localStorage.getItem('user'));
+    } else {
+      return null;
+    }
+  }
 }

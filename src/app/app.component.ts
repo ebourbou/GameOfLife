@@ -9,6 +9,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
+import { UserUtils } from './users/utils/user-utils';
 
 @Component({
   selector: 'app-root',
@@ -57,13 +58,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      this.user = JSON.parse(localStorage.getItem('user'));
-    }
-
     this.authService.authenticated.subscribe((value) => {
       this.authenticated = value;
+      if (value) {
+        this.user = UserUtils.loadUserFromLocal();
+      }
     });
   }
 

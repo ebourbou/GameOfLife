@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RatingComponent } from './rating/rating.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -40,6 +41,7 @@ const MATERIAL = [
   MatTableModule,
   MatSelectModule,
   MatTooltipModule,
+  MatGridListModule,
 ];
 
 @NgModule({
