@@ -29,7 +29,7 @@
   <div class="game">
     <mat-label>Meine Spiele</mat-label>
   <div class="scroll-container">
-    <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0.1em" class="game-list">
+    <mat-grid-list cols="1" rowHeight="1:1" gutterSize="1em" class="game-list">
       <mat-grid-tile *ngFor="let current of allGames" (click)="onApplyGame(current.id)" >
         <game-preview [game]="current"></game-preview>
       </mat-grid-tile>

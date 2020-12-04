@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit } from '@angular/core';
 import { Game } from '../model/Game';
 
 @Component({
@@ -16,20 +16,6 @@ export class GamePreviewComponent implements AfterViewInit {
     this.draw();
   }
 
-  onResize() {
-    // Not a good thing to do but will get you going.
-    // I need to look into the Renderer service instead.
-    const canvasElement = this.gamePreviewCanvas.nativeElement;
-
-    // These don't change (canvas intrinsic dimensions)
-    const canvasWidth = canvasElement.width;
-    const canvasHeight = canvasElement.height;
-
-    // These will change (scaling applied by the style)
-    const computedStyles = getComputedStyle(canvasElement);
-    const computedWidth = computedStyles.width;
-    const computedHeight = computedStyles.height;
-  }
   /**
    * Draws something using the context we obtained earlier on
    */
@@ -39,7 +25,14 @@ export class GamePreviewComponent implements AfterViewInit {
       const gameHeight = this.game.board.height;
       const canvasWidth = (this.gamePreviewCanvas.nativeElement as HTMLCanvasElement).width;
       const canvasHeight = (this.gamePreviewCanvas.nativeElement as HTMLCanvasElement).height;
-      this.context.fillStyle = 'azure';
+
+      const computedStyles = getComputedStyle(this.gamePreviewCanvas.nativeElement);
+      const wi = parseInt(computedStyles.width, 10);
+      const hi = parseInt(computedStyles.height, 10);
+
+      this.context.scale(1, 1);
+
+      this.context.fillStyle = 'ghostwhite';
       this.context.fillRect(0, 0, canvasWidth, canvasHeight);
       this.context.fillStyle = 'black';
 
