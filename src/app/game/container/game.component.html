@@ -43,6 +43,7 @@
   </gol-board>
   <gol-game-statistic
     *ngIf="isGameFinished$ | async"
-    [allGenerationStatistics]="allGenerationStatistics$ | async" >
+    [allGenerationStatistics]="allGenerationStatistics$ | async"
+    [currentGame]="game">
   </gol-game-statistic>
 </ng-container>

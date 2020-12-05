@@ -15,13 +15,13 @@
     </ngx-charts-line-chart>
   </mat-grid-tile>
   <mat-grid-tile colspan="1" rowspan="1">
-    test
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1">
     <ngx-charts-number-card
       [customColors]="customColors"
       [results]="allGenerationStatistics | lastGenerationToMeasure: [2,3,5,7]">
     </ngx-charts-number-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <game-preview [game]="currentGame"></game-preview>
   </mat-grid-tile>
   <mat-grid-tile colspan="1" rowspan="1">
     <ngx-charts-pie-chart
