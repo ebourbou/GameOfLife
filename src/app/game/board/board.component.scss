@@ -43,6 +43,14 @@
   background-color: black;
 }
 
+.isDead {
+}
+
+.wasNeverAlive {
+  background-color: black;
+  opacity: 0.05;
+}
+
 .isApplyPattern {
   cursor: url("../../../assets/img/icon/focus-line.svg") 24 24, auto;
 }
@@ -52,7 +60,6 @@
 }
 
 .isMasked {
-  background: lightgrey;
   cursor: not-allowed ;
 }
 

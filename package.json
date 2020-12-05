@@ -30,6 +30,7 @@
     "@ngrx/schematics": "^10.0.1",
     "@ngrx/store": "^10.0.1",
     "@ngrx/store-devtools": "^10.0.1",
+    "@swimlane/ngx-charts": "^16.0.0",
     "angular-password-strength-meter": "^2.0.0",
     "aws-amplify": "^3.3.4",
     "aws-amplify-angular": "^5.0.33",

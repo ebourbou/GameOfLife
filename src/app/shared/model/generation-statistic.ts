@@ -5,6 +5,7 @@ export interface GenerationStatistic {
   born: number;
   alive: number;
   dead: number;
-  cellStateSwitches: number;
+  averageAgeOfDeath: number;
   immortals: number;
+  pristine: number;
 }

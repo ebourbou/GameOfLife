@@ -7,7 +7,7 @@ export class Board {
 
   nextGeneration(ruleSet: RuleSet): void {
     this.cells.forEach((cell) => ruleSet.applyRules(cell));
-    this.cells.forEach((cell) => cell.switchToNextGeneration());
+    this.cells.forEach((cell) => cell.shiftToNextGeneration());
   }
 
   getCell(x: number, y: number): Cell {
@@ -21,7 +21,22 @@ export class Board {
   }
 
   diedLastGeneration(): number {
-    return this.cells.filter((n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE).length;
+    return this.newlyDeads().length;
+  }
+
+  private newlyDeads(): Cell[] {
+    return this.cells.filter((n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE);
+  }
+
+  averageAgeOfDeathLastGeneration(): number {
+    const withoutInfants = this.newlyDeads()
+      .map((c) => c.generationsSinceLastSwitch)
+      .filter((c) => c > 1); // remove infancy deaths
+    return withoutInfants.length > 1 ? Math.floor(withoutInfants.reduce((a, b) => a + b) / withoutInfants.length) : 1;
+  }
+
+  oldestDead(): number {
+    return Math.max(...this.newlyDeads().map((c) => c.generationsSinceLastSwitch));
   }
 
   bornLastGeneration(): number {
@@ -29,18 +44,22 @@ export class Board {
   }
 
   alive(): number {
-    return this.cells.filter((n) => n.state === CellState.ALIVE).length;
+    return this.livingOnes().length;
+  }
+
+  private livingOnes(): Cell[] {
+    return this.cells.filter((n) => n.state === CellState.ALIVE);
   }
 
   ofAge(age: number): number {
-    return this.cells.filter((n) => n.age === age).length;
+    return this.livingOnes().filter((n) => n.generationsSinceLastSwitch === age).length;
   }
 
   dead(): number {
     return this.cells.filter((n) => n.state === CellState.DEAD).length;
   }
 
-  cellStateSwitches(): number {
-    return this.cells.filter((cell) => cell.previousState !== cell.state).length;
+  neverTouched(): number {
+    return this.cells.filter((n) => n.pristine === true).length;
   }
 }

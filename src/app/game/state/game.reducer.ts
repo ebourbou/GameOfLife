@@ -18,6 +18,7 @@ export interface GameState {
   allRuleSets: RuleSet[];
   games: Game[];
   ruleSetSelected: RuleSet;
+  allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
   loading: boolean;
   controls: Controls;
@@ -38,6 +39,7 @@ export const initialState: GameState = {
   allRuleSets: [],
   games: [],
   ruleSetSelected: null,
+  allGenerationStatistics: [],
   generationStatistic: null,
   loading: false,
   controls: null,
@@ -112,7 +114,10 @@ export const gameActionReducer = createReducer(
   }),
   on(GameActions.nextGenerationSuccess, (state, action) => {
     const newState = { ...state };
-    newState.generationStatistic = GameUtils.generationStatisticOf(newState.game, action.currentGeneration);
+    newState.allGenerationStatistics = state.allGenerationStatistics.concat(
+      GameUtils.generationStatisticOf(state.game, action.currentGeneration)
+    );
+    newState.generationStatistic = newState.allGenerationStatistics[newState.allGenerationStatistics.length - 1];
     return newState;
   }),
   on(GameActions.endGameSuccess, (state) => {

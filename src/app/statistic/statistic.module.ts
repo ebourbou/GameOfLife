@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { GameStatisticComponent } from './game-statistic/game-statistic.component';
 import { SharedModule } from '../shared/shared.module';
-import { ToChartSeriesPipe } from './game-statistic/to-chart-series.pipe';
+import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-grouped';
+import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
+import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { LastGenerationToPercentagePipe } from './game-statistic/last-generation-to-percentage.pipe';
 
 @NgModule({
-  declarations: [GameStatisticComponent, ToChartSeriesPipe],
-  imports: [SharedModule],
-  exports: [GameStatisticComponent],
+  declarations: [GameStatisticComponent, ToMeasureSeriesGroupedPipe, LastGenerationToMeasurePipe, LastGenerationToPercentagePipe],
+  imports: [SharedModule, LineChartModule, NgxChartsModule, MatGridListModule],
+  exports: [GameStatisticComponent, ToMeasureSeriesGroupedPipe, LastGenerationToMeasurePipe, LastGenerationToPercentagePipe],
 })
 export class StatisticModule {}

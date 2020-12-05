@@ -13,12 +13,9 @@ export const changeSpeed = createAction('[Game] Change Speed', props<{ speed: nu
 export const changeGenerations = createAction('[Game] Change Generations', props<{ generations: number }>());
 
 export const startGame = createAction('[Game] Start Game');
-export const startGameSuccess = createAction('[Game] Start Game Success', props<{ gameStartTime: number }>());
+export const startGameSuccess = createAction('[Game] Start Game Success');
 export const nextGeneration = createAction('[Game] Next Generation Start', props<{ currentGeneration: number }>());
-export const nextGenerationSuccess = createAction(
-  '[Game] Next Generation Success',
-  props<{ gameStartTime: number; generationStartTime: number; currentGeneration: number }>()
-);
+export const nextGenerationSuccess = createAction('[Game] Next Generation Success', props<{ currentGeneration: number }>());
 
 export const startAnalysis = createAction('[Game] Start Analysis');
 export const startAnalysisSuccess = createAction('[Game] Start Analysis Success');

@@ -85,4 +85,21 @@ export class BoardComponent implements OnInit {
   onStartAnalysis(): void {
     this.doStartAnalysis.emit();
   }
+
+  getBoardClasses(): string[] {
+    const classes = [];
+    if (this.isBoardMaximized) {
+      classes.push('isMaximized');
+    }
+    if (this.isMasked) {
+      classes.push('isMasked');
+    } else if (this.isEditable) {
+      if (this.patternSelected) {
+        classes.push('isApplyPattern');
+      } else {
+        classes.push('isApplyCellState');
+      }
+    }
+    return classes;
+  }
 }

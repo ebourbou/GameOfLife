@@ -1,18 +1,34 @@
-  <mat-card>
-    <h3>Generation {{bornData.length}}</h3>
-    <!-- TODO use below pipe instead of bound arrays. but fix lifecycle-problems first -->
-    <!--gol-spark title="Geburten" [metric]="currentGen.born" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells / 50"
-               [data]="allGenerations | toChartSeries: 0"></gol-spark -->
-      <gol-spark title="Geburten" [metric]="bornData[bornData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells / 50" [data]="bornData"></gol-spark>
-      <gol-spark title="Tode" [metric]="diedData[diedData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells / 20" [data]="diedData"></gol-spark>
-      <gol-spark title="Lebende" [metric]="aliveData[aliveData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells" [data]="aliveData"></gol-spark>
-      <!--gol-spark title="Tote" [metric]="deadData[deadData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells" [data]="deadData"></gol-spark-->
-      <!--gol-spark title="Pioniere" [metric]="pioneerData[pioneerData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells /100" [data]="pioneerData"></gol-spark>
-      <gol-spark-- title="Laufzeit" [metric]="timePassedData[timePassedData.length - 1].yAxis" [maxX]="gameStatistic.totalGenerations" [maxY]="gameStatistic.totalCells / 100" [data]="timePassedData"></gol-spark-->
-  </mat-card>
-  <mat-card>
-      <mat-list-item>Total Generationen: {{gameStatistic.totalGenerations}}</mat-list-item>
-      <mat-list-item>Total Laufzeit: {{gameStatistic.timePassed | date:'hh:mm:ss'}}</mat-list-item>
-  </mat-card>
-
-
+<mat-grid-list cols="3" rowHeight="2:1" >
+  <mat-grid-tile colspan="3" rowspan="1">
+    <ngx-charts-line-chart
+      [customColors]="customColors"
+      showLabels = true;
+      animations = true;
+      showXAxisLabel="true"
+      showYAxisLabel="true"
+      xAxis="true"
+      yAxis="true"
+      xAxisLabel="Generationen"
+      yAxisLabel="Zellen"
+      autoScale="true"
+      [results]="allGenerationStatistics | toMeasureSeriesGrouped: [0,1,2,5]">
+    </ngx-charts-line-chart>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    test
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <ngx-charts-number-card
+      [customColors]="customColors"
+      [results]="allGenerationStatistics | lastGenerationToMeasure: [2,3,5,7]">
+    </ngx-charts-number-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <ngx-charts-pie-chart
+      [customColors]="customColors"
+      explodeSlices="true"
+      doughnut="true"
+      [results]="allGenerationStatistics | lastGenerationToPercentage: [2,3,5,7]">
+    </ngx-charts-pie-chart>
+  </mat-grid-tile>
+</mat-grid-list>

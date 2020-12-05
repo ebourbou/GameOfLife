@@ -34,6 +34,7 @@ import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
   selectAllGames,
+  selectAllGenerationStatistics,
   selectAllPatterns,
   selectAllRuleSets,
   selectControls,
@@ -78,8 +79,9 @@ export class GameComponent implements OnInit {
   public isBoardMaximized$: Observable<boolean>;
   public isReadyToRun$: Observable<boolean>;
   public isReadyForAnalysis$: Observable<boolean>;
-  public isGameFinished: Observable<boolean>;
+  public isGameFinished$: Observable<boolean>;
   public games$: Observable<Game[]>;
+  public allGenerationStatistics$: Observable<GenerationStatistic[]>;
 
   @Input() game: Game;
 
@@ -99,8 +101,9 @@ export class GameComponent implements OnInit {
     this.isBoardMaximized$ = this.store.select(selectIsMaximized);
     this.isReadyToRun$ = this.store.select(selectIsReadyToRun);
     this.isReadyForAnalysis$ = this.store.select(selectIsReadyForAnalysis);
-    this.isGameFinished = this.store.select(selectIsGameFinished);
+    this.isGameFinished$ = this.store.select(selectIsGameFinished);
     this.games$ = this.store.select(selectAllGames);
+    this.allGenerationStatistics$ = this.store.select(selectAllGenerationStatistics);
   }
 
   ngOnInit(): void {}
@@ -136,14 +139,14 @@ export class GameComponent implements OnInit {
   async onPlay(): Promise<void> {
     const gameStartTime = Date.now();
     this.store.dispatch(startGame());
-    this.store.dispatch(startGameSuccess({ gameStartTime }));
+    this.store.dispatch(startGameSuccess());
     const controls = await this.getControls();
     for (let currentGeneration = 0; currentGeneration < controls.generations; currentGeneration++) {
       const generationStartTime = Date.now();
       this.store.dispatch(nextGeneration({ currentGeneration }));
       const speedControls = await this.getControls();
       await new Promise((r) => setTimeout(r, speedControls.speed));
-      this.store.dispatch(nextGenerationSuccess({ gameStartTime, generationStartTime, currentGeneration }));
+      this.store.dispatch(nextGenerationSuccess({ currentGeneration }));
     }
     this.store.dispatch(endGame());
     this.store.dispatch(endGameSuccess());

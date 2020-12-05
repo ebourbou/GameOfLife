@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.linechart {
+  flex: 0 1 auto
+}
+.piechart {
+  flex: 0 1 auto
+}

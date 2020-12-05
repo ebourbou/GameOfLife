@@ -51,8 +51,9 @@ export class GameUtils {
       born: game.board.bornLastGeneration(),
       alive: game.board.alive(),
       dead: game.board.dead(),
-      cellStateSwitches: game.board.cellStateSwitches(),
+      averageAgeOfDeath: game.board.oldestDead(),
       immortals: game.board.ofAge(currentGeneration),
+      pristine: game.board.neverTouched(),
     };
   }
 

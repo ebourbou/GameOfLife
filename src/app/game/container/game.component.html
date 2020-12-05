@@ -7,7 +7,7 @@
                [allGames]="games$ | async"
                [isBusy]="isLoading$ | async"
                [isRunning]="isRunning$ | async"
-               [isGameFinished]="isGameFinished | async"
+               [isGameFinished]="isGameFinished$ | async"
                (doResize)="onResize($event)"
                (doChangeGenerations)="onChangeGenerations($event)"
                (doPatternSelected)="onPatternSelected($event)"
@@ -23,7 +23,7 @@
                (doApplyGame)="onApplyGame($event)"
                (doLoadGames)="onLoadGames()">
   </app-stepper>
-  <gol-board class="board"
+  <gol-board *ngIf="!(isGameFinished$ | async)"
              [board]="game.board"
              [isMasked]="isMasked$ | async"
              [isLoading]="isLoading$ | async"
@@ -39,10 +39,10 @@
              (doAbortAndReset)="startFromScratch()"
              (doStartGame)="onPlay()"
              (doToggleMaximize)="onToggleMaximize()"
-             (doStartAnalysis)="onStartAnalysis()"
-  >
+             (doStartAnalysis)="onStartAnalysis()">
   </gol-board>
-  <!--gol-game-controls [controls]="controls$ | async" class="controls" (doPlay)="onPlay()" (doResize)="onResize($event)" (doChangeSpeed)="onChangeSpeed($event)"
-                     (doChangeGenerations)="onChangeGenerations($event)"></gol-game-controls-->
-  <!--gol-game-statistic class="statistics" [gameStatistic]="gameStatistic$ | async" [generationStatistic]="generationStatistic$ | async" (play)="onPlay()"></gol-game-statistic-->
+  <gol-game-statistic
+    *ngIf="isGameFinished$ | async"
+    [allGenerationStatistics]="allGenerationStatistics$ | async" >
+  </gol-game-statistic>
 </ng-container>

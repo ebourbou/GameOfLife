@@ -1,8 +1,12 @@
-<mat-card  [ngClass]="{isMaximized: isBoardMaximized}" [ngClass]="(this.isMasked? 'isMasked': this.isEditable && this.patternSelected? 'isApplyPattern' :  this.isEditable ? 'isApplyCellState': null)" >
+<mat-card  [ngClass]="getBoardClasses()">
   <mat-card-content class="board"  >
     <ng-container *ngIf="this.isLoading"><mat-spinner class="spinner"></mat-spinner></ng-container>
     <div class="row" *ngFor="let row of this.board.rowsAndCells.values()">
-      <div class="cell" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')" matRipple [matRippleRadius]="50" [matRippleCentered]="true" [matRippleUnbounded]="true" *ngFor="let cell of row"  (click)="this.patternSelected && this.isEditable? this.onApplyPattern(cell) : this.isEditable ? cell.switchState() : null">
+      <div class="cell"
+           [ngClass]="(cell.isAlive() ? 'isAlive' : cell.pristine ? 'wasNeverAlive': 'isDead')"
+           matRipple matRippleRadius="30" matRippleCentered="true" matRippleUnbounded="true"
+           *ngFor="let cell of row"
+           (click)="this.patternSelected && this.isEditable? this.onApplyPattern(cell) : this.isEditable ? cell.switchState() : null">
       </div>
     </div>
     <app-gametime *ngIf="isRunning || isReadyToRun || isReadyForAnalysis"

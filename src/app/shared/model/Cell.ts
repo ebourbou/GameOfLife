@@ -7,25 +7,29 @@ export class Cell {
   public previousState: CellState;
   public state: CellState;
   public nextState: CellState;
-  age = 0;
+  public pristine: boolean;
+  public generationsSinceLastSwitch = 0;
 
   constructor(row: number, column: number, state: CellState) {
     this.row = row;
     this.column = column;
     this.state = state;
     this.neighbours = new Array<Cell>();
+    this.pristine = true;
   }
 
   isAlive(): boolean {
     return this.state === CellState.ALIVE;
   }
 
-  switchToNextGeneration(): void {
+  shiftToNextGeneration(): void {
     this.previousState = this.state;
     if (this.nextState === this.state) {
-      this.age++;
+      this.generationsSinceLastSwitch++;
     } else {
       this.state = this.nextState;
+      this.generationsSinceLastSwitch = 0;
+      this.pristine = false;
     }
     this.nextState = null;
   }
