@@ -11,7 +11,7 @@ export class ConwaysRuleSet extends AbstractRuleSet {
   private rules: Rule[] = [];
 
   constructor() {
-    super('conway', "Conway's original rules", 'Die von Conway ursprünglich verwendeten Regeln.');
+    super('conway', "Conway's original rules", 'Die von Conway ursprünglich verwendeten Regeln.', 3);
     this.rules.push(new ConwaysFirstRule(), new ConwaysSecondRule(), new ConwaysThirdRule(), new ConwaysFourthRule(), new DoNothingRule());
   }
 

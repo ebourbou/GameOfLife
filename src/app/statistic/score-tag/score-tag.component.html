@@ -1,0 +1,10 @@
+<mat-chip-list>
+  <mat-chip *ngFor="let chip of tags"  matTooltip="{{toolTipFor(chip)}}" [class]="chip.level > 1 ? 'good' : 'lousy' " >
+    <mat-icon>{{chip.level >0 ? 'thumb_up' : 'thumb_down'}}</mat-icon>
+    {{nameFor(chip)}}
+    </mat-chip>
+</mat-chip-list>
+
+
+
+

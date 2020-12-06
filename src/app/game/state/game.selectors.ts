@@ -20,4 +20,4 @@ export const selectIsReadyForAnalysis = createSelector(selectGameState, (state: 
 export const selectIsGameFinished = createSelector(selectGameState, (state: GameState) => state.gameFinished);
 export const selectAllGames = createSelector(selectGameState, (state: GameState) => state.games);
 export const selectAllGenerationStatistics = createSelector(selectGameState, (state: GameState) => state.allGenerationStatistics);
-
+export const selectScore = createSelector(selectGameState, (state: GameState) => state.score);

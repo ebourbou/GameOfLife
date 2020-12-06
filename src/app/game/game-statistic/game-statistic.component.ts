@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { GameStatisticUtils } from './game-statistic-utils';
 import { Game } from '../model/Game';
+import { Score } from '../../statistic/service/score';
 
 @Component({
   selector: 'gol-game-statistic',
@@ -14,10 +15,16 @@ export class GameStatisticComponent implements OnInit {
   customColors: [];
   @Input()
   currentGame: Game;
+  @Input()
+  score: Score;
 
   constructor() {
     this.customColors = GameStatisticUtils.getColors();
   }
 
   ngOnInit(): void {}
+
+  scoreAsString(): string {
+    return JSON.stringify(this.score);
+  }
 }

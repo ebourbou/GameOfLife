@@ -17,12 +17,12 @@ import { PlayStepComponent } from './stepper/play-step/play-step.component';
 import { SaveStepComponent } from './stepper/save-step/save-step.component';
 import { GametimeComponent } from './gametime/gametime.component';
 import { AnalysisStepComponent } from './stepper/analysis-step/analysis-step.component';
-import { GamePreviewComponent } from './preview/game.preview.component';
 import { GameStatisticComponent } from './game-statistic/game-statistic.component';
 import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-grouped-pipe';
 import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
 import { LastGenerationToPercentagePipe } from './game-statistic/last-generation-to-percentage.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { GamePreviewComponent } from './preview/game-preview/game-preview.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ToMeasureSeriesGroupedPipe,
     LastGenerationToMeasurePipe,
     LastGenerationToPercentagePipe,
+    GamePreviewComponent,
   ],
   imports: [
     GameRoutingModule,

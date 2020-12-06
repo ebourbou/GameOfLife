@@ -50,6 +50,7 @@ import {
   selectIsReadyToRun,
   selectIsRunning,
   selectPatternSelected,
+  selectScore,
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
 import { take } from 'rxjs/operators';
@@ -57,6 +58,7 @@ import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Score } from '../../statistic/service/score';
 
 @Component({
   selector: 'app-game',
@@ -82,8 +84,7 @@ export class GameComponent implements OnInit {
   public isGameFinished$: Observable<boolean>;
   public games$: Observable<Game[]>;
   public allGenerationStatistics$: Observable<GenerationStatistic[]>;
-
-  @Input() game: Game;
+  public score$: Observable<Score>;
 
   constructor(private defaults: DefaultsService, private store: Store<GameState>) {
     this.startFromScratch();
@@ -104,6 +105,7 @@ export class GameComponent implements OnInit {
     this.isGameFinished$ = this.store.select(selectIsGameFinished);
     this.games$ = this.store.select(selectAllGames);
     this.allGenerationStatistics$ = this.store.select(selectAllGenerationStatistics);
+    this.score$ = this.store.select(selectScore);
   }
 
   ngOnInit(): void {}
@@ -142,7 +144,6 @@ export class GameComponent implements OnInit {
     this.store.dispatch(startGameSuccess());
     const controls = await this.getControls();
     for (let currentGeneration = 0; currentGeneration < controls.generations; currentGeneration++) {
-      const generationStartTime = Date.now();
       this.store.dispatch(nextGeneration({ currentGeneration }));
       const speedControls = await this.getControls();
       await new Promise((r) => setTimeout(r, speedControls.speed));
@@ -194,8 +195,8 @@ export class GameComponent implements OnInit {
     this.store.dispatch(loadRuleSets());
   }
 
-  onStartAnalysis(): void {
-    this.store.dispatch(startAnalysis());
+  onStartAnalysis($event): void {
+    this.store.dispatch(startAnalysis({ game: $event.game, generationStatistics: $event.generationStatistics }));
   }
 
   onToggleMaximize(): void {

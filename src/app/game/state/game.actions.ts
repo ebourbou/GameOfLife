@@ -4,6 +4,8 @@ import { Controls } from '../model/Controls';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { StepperStep } from '../stepper/StepperStep';
+import { GenerationStatistic } from '../../shared/model/generation-statistic';
+import { Score } from '../../statistic/service/score';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
@@ -17,8 +19,8 @@ export const startGameSuccess = createAction('[Game] Start Game Success');
 export const nextGeneration = createAction('[Game] Next Generation Start', props<{ currentGeneration: number }>());
 export const nextGenerationSuccess = createAction('[Game] Next Generation Success', props<{ currentGeneration: number }>());
 
-export const startAnalysis = createAction('[Game] Start Analysis');
-export const startAnalysisSuccess = createAction('[Game] Start Analysis Success');
+export const startAnalysis = createAction('[Game] Start Analysis', props<{ game: Game; generationStatistics: GenerationStatistic[] }>());
+export const startAnalysisSuccess = createAction('[Game] Start Analysis Success', props<{ score: Score }>());
 
 export const patternSelected = createAction('[Game] Pattern Selected', props<{ selectedPattern: Pattern }>());
 export const applyPattern = createAction('[Game] Pattern Apply', props<{ row: number; column: number }>());

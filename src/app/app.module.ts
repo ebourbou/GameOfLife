@@ -32,6 +32,8 @@ import { PatternService } from './shared/service/patterns.service';
 import { MockRuleService } from './shared/service/rule/mock-rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
+import { ScoreService } from './statistic/service/score.service';
+import { StatisticModule } from './statistic/statistic.module';
 
 registerLocaleData(localeDECH);
 
@@ -51,9 +53,7 @@ registerLocaleData(localeDECH);
     AmplifyAngularModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    MatToolbarModule,
-    MatSidenavModule,
-    MatTooltipModule,
+    StatisticModule,
   ],
   declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [
@@ -65,6 +65,7 @@ registerLocaleData(localeDECH);
     { provide: PatternService, useClass: PatternService },
     { provide: AbstractRuleService, useClass: MockRuleService },
     { provide: GameService, useClass: GameService },
+    { provide: ScoreService, useClass: ScoreService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },
     AmplifyService,
   ],

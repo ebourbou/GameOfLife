@@ -5,6 +5,7 @@ export interface RuleSet {
   id: string;
   shortName: string;
   description: string;
+  difficulty: number;
 
   applyRules(cell: Cell): void;
 }

@@ -32,42 +32,9 @@ export class GameService {
     };
   }
 
-  // private static chunksOfMax16CellStatesAsString(cells: Array<Cell>): Array<string> {
-  //   const chunks = Array<string>();
-  //   const counter = cells.length / 16;
-  //   for (let i = 0; i <= counter; i++) {
-  //     chunks.push(this.cellStatesAsString(cells.slice(i, i + 16))); // or shorter if less than 16 left
-  //   }
-  //   return chunks;
-  // }
-
-  // private static cellStatesAsString(cells: Array<Cell>): string {
-  //   return cells.map((cell) => cell.state.toString()).join('');
-  // }
-
   private static cellStatesAsDotOString(cells: Array<Cell>): string {
     return cells.map((cell) => (cell.state ? 'O' : '.')).join('');
   }
-
-  // Looks good ... doesn't work
-  // if you try again, remember, packs cell states in oneZero format, not DotO
-  // TODO remove that eventually: https://www.smashingmagazine.com/2011/10/optimizing-long-lists-of-yesno-values-with-javascript/
-  // private static pack(cells: Array<Cell>): string {
-  //   let packed = '';
-  //   for (const chunk of this.chunksOfMax16CellStatesAsString(cells)) {
-  //     packed += parseInt(chunk, 2).toString(36); // first binary string to number than to string base 36
-  //   }
-  //   return packed;
-  // }
-
-  // TODO remove
-  // private static unpack(packed: string): string {
-  //   let unpacked = '';
-  //   for (let i = 0; i < packed.length; i++) {
-  //     unpacked += parseInt(packed.charAt(i), 36).toString(2);
-  //   }
-  //   return unpacked;
-  // }
 
   constructor(private api: APIService) {}
 
