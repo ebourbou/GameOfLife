@@ -1,9 +1,5 @@
 <div *ngIf="game" class="container" >
   <mat-card class="card mat-elevation-z2">
-    <mat-card-header>
-      <mat-card-title>{{game.id.slice(-5)}}</mat-card-title>
-      <mat-card-subtitle>Ueli Hotz</mat-card-subtitle>
-    </mat-card-header>
     <canvas class="preview" #gamePreview></canvas>
     <mat-card-content class="content">
       <p>{{game.description}}</p>

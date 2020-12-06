@@ -6,14 +6,11 @@ import {
   GetPatternQuery,
   ListPatternsQuery,
   UpdatePatternMutation,
-  UpdatePatternRatingMutation,
 } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
 import { PatternUtils } from './pattern-util';
-import { from, Observable, Observer, of } from 'rxjs';
-import { PatternRatingUtils } from './pattern-rating-util';
-import { PatternRating } from '../model/pattern-rating';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,37 +42,5 @@ export class PatternService {
 
   deletePattern(idToDelete: string): Promise<DeletePatternMutation> {
     return this.apiService.DeletePattern({ id: idToDelete });
-  }
-
-  updatePatternRating(patternRating: PatternRating): Promise<UpdatePatternRatingMutation> {
-    const input: any = PatternRatingUtils.toAwsPattern(patternRating);
-    delete input.id;
-    return this.apiService.CreatePatternRating(input);
-  }
-
-  getPatternRating(id: string, userId: string): Observable<{ rating: number; userVoted: boolean }> {
-    let averageRating = 0;
-    let all = 1;
-    let voted = false;
-    return from(
-      this.apiService
-        .ListPatternRatings({ patternId: { eq: id } })
-        .then((value) => {
-          all = value.items.length;
-          value.items.forEach((rating) => {
-            averageRating += rating.rating;
-
-            if (rating.userId === userId) {
-              voted = true;
-              console.log(rating.userId + '===' + userId);
-            }
-          });
-          return { rating: averageRating / all, userVoted: voted };
-        })
-        .catch((reason) => {
-          console.log(reason);
-          return { rating: 0, userVoted: false };
-        })
-    );
   }
 }

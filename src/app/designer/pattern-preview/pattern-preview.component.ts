@@ -10,6 +10,8 @@ import { User } from '../../shared/model/user';
 import { PatternUtils } from '../util/pattern-util';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { RatingComponent } from '../../shared/rating/rating.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RatingService } from '../../shared/service/rating.service';
 
 @Component({
   selector: 'pattern-preview',
@@ -27,7 +29,12 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
 
   @ViewChild('rating') ratingComponent: RatingComponent;
 
-  constructor(private patternService: PatternService, private authService: AuthService) {}
+  constructor(
+    private snackBarService: MatSnackBar,
+    private ratingService: RatingService,
+    private patternService: PatternService,
+    private authService: AuthService
+  ) {}
 
   startAnimation(): void {
     this.id = setInterval(() => {
@@ -58,7 +65,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
 
     if (this.pattern) {
       this.disabled = false;
-      this.patternService.getPatternRating(this.pattern.id, this.user.id).subscribe((value) => {
+      this.ratingService.getRating(this.pattern.id, this.user.id).subscribe((value) => {
         this.rating = value.rating;
         this.disabled = value.userVoted;
 
@@ -75,25 +82,24 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   }
 
   onRatingChanged(rating: any): void {
-    console.log(rating);
     this.rating = rating;
 
     if (!this.disabled) {
-      const patternRating: PatternRating = {
+      const ratingUpdate: PatternRating = {
         id: '',
         rating: this.rating,
         userId: this.user.id,
         patternId: this.pattern.id,
         comment: 'n/a',
       };
-      console.log('Call save rating' + JSON.stringify(patternRating) + ' ' + new Date());
-      this.patternService
-        .updatePatternRating(patternRating)
+      this.ratingService
+        .updateRating(ratingUpdate)
         .then((value) => console.log(value))
         .catch((reason) => {
           console.log(reason);
         });
       this.disabled = true;
     }
+    this.snackBarService.open('Bewertung gespeichert', 'Schiessen', { duration: 2000 });
   }
 }
