@@ -24,16 +24,13 @@ import { registerLocaleData } from '@angular/common';
 
 import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
 import { PatternService } from './shared/service/patterns.service';
-import { MockRuleService } from './shared/service/rule/mock-rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
 import { ScoreService } from './statistic/service/score.service';
 import { StatisticModule } from './statistic/statistic.module';
+import { LocalRuleService } from './shared/service/rule/local-rule.service';
 
 registerLocaleData(localeDECH);
 
@@ -63,7 +60,7 @@ registerLocaleData(localeDECH);
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },
-    { provide: AbstractRuleService, useClass: MockRuleService },
+    { provide: AbstractRuleService, useClass: LocalRuleService },
     { provide: GameService, useClass: GameService },
     { provide: ScoreService, useClass: ScoreService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },

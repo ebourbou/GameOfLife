@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Game } from '../../game/model/Game';
 import { GameUtils } from './GameUtils';
 import { Cell } from '../model/Cell';
-import { ConwaysRuleSet } from './rule/conway/ConwaysRuleSet';
 import { APIService } from '../../API.service';
 
 @Injectable({
@@ -13,7 +12,6 @@ export class GameService {
   private static fromAwsGame(awsGame): Game {
     const game = new Game(GameUtils.build(awsGame.sizeX, awsGame.sizeY), awsGame.generations);
     GameUtils.applyPatternFromString(game.board, 0, 0, awsGame.pattern, awsGame.sizeX, awsGame.sizeY);
-    game.ruleSet = new ConwaysRuleSet(); // todo use RuleService
     game.author = awsGame.author;
     game.description = awsGame.description;
     game.id = awsGame.id;

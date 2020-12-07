@@ -12,9 +12,7 @@ import { Score } from './score';
 })
 export class ScoreService {
   private static computeOverallScore(game: Game): number {
-    const score = Math.floor(
-      (game.board.height * game.board.width * game.ruleSet.difficulty * game.generations * game.board.alive()) / 100000000
-    );
+    const score = Math.floor((game.board.height * game.board.width * game.generations * game.board.alive()) / 100000000);
     return score > 0 ? score : 0;
   }
 

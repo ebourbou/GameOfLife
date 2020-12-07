@@ -12,6 +12,7 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
+import { RuleService } from '../../shared/service/rule/rule.service';
 
 @Injectable()
 export class GameEffects {

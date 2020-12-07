@@ -52,6 +52,8 @@ export class AppComponent implements OnInit {
         this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
           duration: 2000,
         });
+        //TODO: logout sollte jeglichen state wegwerfen. etwa so:
+        // location.reload();
       }
     });
   }

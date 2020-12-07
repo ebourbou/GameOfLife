@@ -6,11 +6,13 @@ export abstract class AbstractRuleSet implements RuleSet {
   shortName: string;
   description: string;
   difficulty: number;
+  ruleStringBSnotation: string;
 
-  constructor(id: string, shortName: string, description: string, difficulty: number) {
+  constructor(id: string, shortName: string, description: string, difficulty: number, ruleStringBSnotation: string) {
     this.shortName = shortName;
     this.description = description;
     this.difficulty = difficulty;
+    this.ruleStringBSnotation = ruleStringBSnotation;
   }
 
   abstract applyRules(cell: Cell): void;
