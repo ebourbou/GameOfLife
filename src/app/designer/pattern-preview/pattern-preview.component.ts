@@ -7,11 +7,10 @@ import { PatternService } from '../../shared/service/patterns.service';
 import { PatternRating } from '../../shared/model/pattern-rating';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
-import { PatternUtils } from '../util/pattern-util';
-import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RatingService } from '../../shared/service/rating.service';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 @Component({
   selector: 'pattern-preview',
@@ -19,6 +18,8 @@ import { RatingService } from '../../shared/service/rating.service';
   styleUrls: ['./pattern-preview.component.scss'],
 })
 export class PatternPreviewComponent implements OnInit, OnChanges {
+  @Input() ruleSet: RuleSet;
+
   @Input() pattern: Pattern;
   user: User;
   board: Board;
@@ -34,7 +35,9 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     private ratingService: RatingService,
     private patternService: PatternService,
     private authService: AuthService
-  ) {}
+  ) {
+    this.ruleSet = new ConwaysRuleSet();
+  }
 
   startAnimation(): void {
     this.id = setInterval(() => {
@@ -50,7 +53,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     this.ngOnChanges(null);
   }
   play(): void {
-    this.board.nextGeneration(new ConwaysRuleSet());
+    this.board.nextGeneration(this.ruleSet);
   }
 
   async ngOnInit() {

@@ -9,7 +9,7 @@ export class AntiLifeRuleSet extends AbstractRuleSet {
   private rules: Rule[] = [];
 
   constructor() {
-    super('antiLife', 'Anti Life', 'The black/white reversal of Conways Game of Life.', 3, 'B0123478/S01234678');
+    super('antiLife', 'Anti Life', 'Die Schwarz-Weiss-Umkehrung von Conways Spiel des Lebens.', 3, 'B0123478/S01234678', '3');
     this.rules.push(new GenericBirthRule([0, 1, 2, 3, 4, 7, 8]), new GenericSurviveRule([0, 1, 2, 3, 4, 6, 7, 8]), new DieAlwaysRule());
   }
 

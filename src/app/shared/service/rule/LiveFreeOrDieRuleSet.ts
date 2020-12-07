@@ -12,9 +12,10 @@ export class LiveFreeOrDieRuleSet extends AbstractRuleSet {
     super(
       'liveFreeOrDieRuleSet',
       'Live Free Or Die',
-      'An exploding rule in which only cells with no neighbors survive. It has many spaceships, puffers, and oscillators, some of infinitely extensible size and period.',
+      'Eine explodierende Regel, bei der nur Zellen ohne Nachbarn überleben. Sie hat viele Raumschiffe, Puffer und Oszillatoren, einige von unendlich erweiterbarer Grösse und Periode.',
       6,
-      'B2/S0'
+      'B2/S0',
+      '3'
     );
     this.rules.push(new GenericBirthRule([2]), new GenericSurviveRule([0]), new DieAlwaysRule());
   }

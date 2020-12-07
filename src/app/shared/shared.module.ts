@@ -27,6 +27,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -55,6 +56,7 @@ const MATERIAL = [
   MatProgressBarModule,
   MatToolbarModule,
   MatSidenavModule,
+  MatSlideToggleModule,
 ];
 
 @NgModule({

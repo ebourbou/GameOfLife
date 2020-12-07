@@ -1,0 +1,12 @@
+<div class="designer">
+  <div class="rule-set-list">
+    <mat-selection-list [multiple]="false" [(ngModel)]="selected">
+      <mat-list-option *ngFor="let ruleSet of ruleSets" [value]="ruleSet" >
+        <div class="list-item">{{ruleSet.shortName}}<mat-icon class="lock">locked</mat-icon></div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div class="rule-set-detail">
+    <app-rule-detail class="matrix" [ruleSet]="selected[0]"></app-rule-detail>
+  </div>
+</div>

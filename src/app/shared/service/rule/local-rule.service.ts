@@ -8,7 +8,11 @@ import { LifeWithoutDeathRuleSet } from './LifeWithoutDeathRuleSet';
 import { MazeRuleSet } from './MazeRuleSet';
 import { PedestrianLifeRuleSet } from './PedestrianLifeRuleSet';
 import { AntiLifeRuleSet } from './AntiLifeRuleSet';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class LocalRuleService extends AbstractRuleService {
   getRuleSets(): Observable<RuleSet[]> {
     const ruleSets = [

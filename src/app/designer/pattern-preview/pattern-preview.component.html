@@ -3,6 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{pattern.name}}</mat-card-title>
       <mat-card-subtitle>{{pattern.author}} {{pattern.year}}</mat-card-subtitle>
+      <mat-card-subtitle>Mit Regelsatz {{ruleSet.shortName}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="pattern" (mouseover)="startAnimation()" (mouseout)="stopAnimation()" >

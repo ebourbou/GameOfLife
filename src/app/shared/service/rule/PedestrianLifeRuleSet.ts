@@ -12,9 +12,10 @@ export class PedestrianLifeRuleSet extends AbstractRuleSet {
     super(
       'pedestrianLifeRuleSet',
       'Pedestrian Life',
-      'A chaotic rule that strongly resembles regular Life, with many exciting natural technologies.',
+      'Eine chaotische Regel, die stark dem normalen Leben ähnelt, mit vielen aufregenden natürlichen Technologien.',
       6,
-      'B37/S23'
+      'B37/S23',
+      '3'
     );
     this.rules.push(new GenericBirthRule([3, 7]), new GenericSurviveRule([2, 3]), new DieAlwaysRule());
   }

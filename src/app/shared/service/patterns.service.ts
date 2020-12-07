@@ -30,6 +30,10 @@ export class PatternService {
     return this.apiService.GetPattern(id);
   }
 
+  getPatternObservable(id: string): Observable<Pattern> {
+    return from(this.apiService.GetPattern(id).then((result) => PatternUtils.fromAwsPattern(result)));
+  }
+
   addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
     const input: any = PatternUtils.toAwsPattern(pattern);
     delete input.id;

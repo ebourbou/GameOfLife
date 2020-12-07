@@ -7,6 +7,7 @@ export interface RuleSet {
   description: string;
   difficulty: number;
   ruleStringBSnotation: string;
+  demoPatternId: string;
 
   applyRules(cell: Cell): void;
 }
