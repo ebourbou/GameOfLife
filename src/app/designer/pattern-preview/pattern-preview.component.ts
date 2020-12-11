@@ -10,6 +10,9 @@ import { User } from '../../shared/model/user';
 import { PatternUtils } from '../util/pattern-util';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { RatingComponent } from '../../shared/rating/rating.component';
+import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RatingService } from '../../shared/service/rating.service';
 
 @Component({
   selector: 'pattern-preview',
@@ -22,13 +25,17 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   board: Board;
   originalPattern: string;
   rating: number;
-  disabled: boolean = false;
+  disabled = false;
   id: any;
 
   @ViewChild('rating') ratingComponent: RatingComponent;
 
-  constructor(private patternService: PatternService, private authService: AuthService) {}
-
+  constructor(
+    private snackBarService: MatSnackBar,
+    private ratingService: RatingService,
+    private patternService: PatternService,
+    private authService: AuthService
+  ) {}
   startAnimation(): void {
     this.id = setInterval(() => {
       this.play();
@@ -39,26 +46,23 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     clearInterval(this.id);
     // restore original pattern
     this.pattern.pattern = this.originalPattern;
-    console.log('on change');
     this.ngOnChanges(null);
   }
   play(): void {
     this.board.nextGeneration(new ConwaysRuleSet());
   }
 
-  async ngOnInit() {
+  ngOnInit(): void {
     this.authService.user.subscribe((user) => {
       this.user = user;
     });
   }
   async ngOnChanges(changes: SimpleChanges) {
-    await this.user;
     await this.pattern;
     await this.board;
-
     if (this.pattern) {
       this.disabled = false;
-      this.patternService.getPatternRating(this.pattern.id, this.user.id).subscribe((value) => {
+      this.ratingService.getRating(this.pattern.id, this.user.id).subscribe((value) => {
         this.rating = value.rating;
         this.disabled = value.userVoted;
 
@@ -86,9 +90,8 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
         patternId: this.pattern.id,
         comment: 'n/a',
       };
-      console.log('Call save rating' + JSON.stringify(patternRating) + ' ' + new Date());
-      this.patternService
-        .updatePatternRating(patternRating)
+      this.ratingService
+        .updateRating(patternRating)
         .then((value) => console.log(value))
         .catch((reason) => {
           console.log(reason);

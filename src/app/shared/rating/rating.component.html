@@ -1,5 +1,5 @@
 <button mat-icon-button  *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i" (click)="onClick(i+1)" [attr.disabled]="disabled? true:null" [ngClass]="disabled?'button-disabled':null">
-  <mat-icon [attr.disabled]="disabled? true:null" matTooltip="{{disabled? 'Bereits abgestimmt':'Abstimmen für das Pattern'}}">
-    {{showIcon(i)}}
+  <mat-icon [attr.disabled]="disabled? true:null" matTooltip="{{disabled? 'Bereits abgestimmt':'Abstimmen'}}">
+  {{showIcon(i)}}
   </mat-icon>
 </button>

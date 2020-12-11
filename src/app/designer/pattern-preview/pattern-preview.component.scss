@@ -1,6 +1,6 @@
 mat-card {
   width: 200px;
-  height: 250px;
+  height: 300px;
   box-sizing: border-box;
 }
 
@@ -19,7 +19,12 @@ width: 100%;
 }
 
 mat-card-actions {
-padding: 2px;
+  padding: 2px;
+  display:flex;
+}
+
+.info {
+  margin-left: auto;
 }
 
 mat-card-content {
@@ -28,7 +33,6 @@ mat-card-content {
 
 .pattern {
   margin: 0 auto;
-  width:80px;
   background-color:aliceblue;
 }
 

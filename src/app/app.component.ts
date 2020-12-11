@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AmplifyService } from 'aws-amplify-angular';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './shared/model/user';
 import { AuthService } from './core/services/auth.service';
@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
 import { UserUtils } from './users/utils/user-utils';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   title = 'GameOfLife';
   user: User;
   authenticated = false;
+  subscription: Subscription;
 
   constructor(
     private amplify: AmplifyService,
@@ -30,6 +32,13 @@ export class AppComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
+    this.subscription = router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (!router.navigated) {
+          // browser refresh
+        }
+      }
+    });
     this.matIconRegistry.addSvgIcon('gol_board', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/ruler-2-line.svg'));
     this.matIconRegistry.addSvgIcon('gol_cell', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/leaf-fill.svg'));
     this.matIconRegistry.addSvgIcon('gol_rule', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/scales-fill.svg'));

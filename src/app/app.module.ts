@@ -32,6 +32,7 @@ import { PatternService } from './shared/service/patterns.service';
 import { MockRuleService } from './shared/service/rule/mock-rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
+import { RatingService } from './shared/service/rating.service';
 
 registerLocaleData(localeDECH);
 
@@ -63,6 +64,8 @@ registerLocaleData(localeDECH);
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },
+    { provide: RatingService, useClass: RatingService },
+
     { provide: AbstractRuleService, useClass: MockRuleService },
     { provide: GameService, useClass: GameService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },

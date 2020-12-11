@@ -4,6 +4,7 @@ import { CellState } from '../model/CellState';
 import { GenerationStatistic } from '../model/generation-statistic';
 import { Game } from '../../game/model/Game';
 import { Pattern } from '../model/pattern';
+import { Observable, of } from 'rxjs';
 
 export class GameUtils {
   private static DEAD_BORDER_CELL: Cell = new Cell(-99, -99, CellState.DEAD);
@@ -90,6 +91,7 @@ export class GameUtils {
     const board = new Board(x, y, rowsAndCells);
     board.rowsAndCells = rowsAndCells;
     board.cells.forEach((cell) => this.addNeighboursToCell(cell, rowsAndCells));
+
     return board;
   }
 
