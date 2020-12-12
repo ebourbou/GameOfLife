@@ -149,9 +149,13 @@ export const gameActionReducer = createReducer(
     };
   }),
   on(GameActions.applyPattern, (state, action) => {
-    const newGame = deepCopy(state.game);
-    GameUtils.applyPattern(newGame.board, action.row, action.column, state.patternSelected);
-    return { ...state, game: newGame };
+    const newState = { ...state };
+    if (state.patternSelected) {
+      const newGame = deepCopy(state.game);
+      GameUtils.applyPattern(newGame.board, action.row, action.column, state.patternSelected);
+      newState.game = newGame;
+    }
+    return newState;
   }),
   on(GameActions.randomCells, (state) => {
     const newGame = deepCopy(state.game);

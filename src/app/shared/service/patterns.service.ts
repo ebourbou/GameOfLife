@@ -9,7 +9,6 @@ import {
 } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
-import { PatternUtils } from './pattern-util';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -23,7 +22,7 @@ export class PatternService {
   }
 
   getPatternsObservable(): Observable<Pattern[]> {
-    return from(this.getPatterns().then((result) => result.items.map((item) => PatternUtils.fromAwsPattern(item))));
+    return from(this.getPatterns().then((result) => result.items.map((item) => this.fromAwsPattern(item))));
   }
 
   getPattern(id: string): Promise<GetPatternQuery> {
@@ -31,20 +30,56 @@ export class PatternService {
   }
 
   getPatternObservable(id: string): Observable<Pattern> {
-    return from(this.apiService.GetPattern(id).then((result) => PatternUtils.fromAwsPattern(result)));
+    return from(this.apiService.GetPattern(id).then((result) => this.fromAwsPattern(result)));
   }
 
   addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
-    const input: any = PatternUtils.toAwsPattern(pattern);
+    const input: any = this.toAwsPattern(pattern);
     delete input.id;
     return this.apiService.CreatePattern(input);
   }
 
   updatePattern(pattern: Pattern): Promise<UpdatePatternMutation> {
-    return this.apiService.UpdatePattern(PatternUtils.toAwsPattern(pattern));
+    return this.apiService.UpdatePattern(this.toAwsPattern(pattern));
   }
 
   deletePattern(idToDelete: string): Promise<DeletePatternMutation> {
     return this.apiService.DeletePattern({ id: idToDelete });
+  }
+
+  private fromAwsPattern(awsPattern): Pattern {
+    let pat: Pattern;
+    pat = {
+      id: awsPattern.id,
+      name: awsPattern.name,
+      description: awsPattern.description,
+      author: awsPattern.author,
+      year: awsPattern.year,
+      heat: awsPattern.heat,
+      sizeX: awsPattern.sizeX,
+      sizeY: awsPattern.sizeY,
+      pattern: awsPattern.pattern,
+      type: awsPattern.type,
+      locked: awsPattern.locked,
+    };
+    return pat;
+  }
+
+  private toAwsPattern(pattern): Pattern {
+    let pat: any;
+    pat = {
+      id: pattern.id,
+      name: pattern.name,
+      description: pattern.description,
+      author: pattern.author,
+      year: pattern.year,
+      heat: pattern.heat,
+      sizeX: pattern.sizeX,
+      sizeY: pattern.sizeY,
+      pattern: pattern.pattern,
+      type: pattern.type,
+      locked: pattern.locked,
+    };
+    return pat;
   }
 }

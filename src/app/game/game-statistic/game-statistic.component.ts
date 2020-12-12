@@ -23,8 +23,4 @@ export class GameStatisticComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  scoreAsString(): string {
-    return JSON.stringify(this.score);
-  }
 }

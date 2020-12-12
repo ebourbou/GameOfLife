@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pattern } from '../../../shared/model/pattern';
-import { PatternUtils } from '../../../shared/service/pattern-util';
-import { selectIsRunning } from '../../state/game.selectors';
 
 @Component({
   selector: 'app-cell-step',
@@ -10,10 +8,13 @@ import { selectIsRunning } from '../../state/game.selectors';
   styleUrls: ['./cell-step.component.scss'],
 })
 export class CellStepComponent implements OnInit {
-  groupedPatterns: Array<{ key; value }>;
-
   @Input()
   patternSelected: Pattern;
+
+  drawMode: DrawMode;
+
+  @Input()
+  allPatterns: Pattern[];
 
   @Output()
   public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
@@ -30,14 +31,11 @@ export class CellStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.cellsFormGroup = this.formBuilder.group({});
-  }
-
-  @Input()
-  set allPatterns(allPatterns: Pattern[]) {
-    this.groupedPatterns = PatternUtils.toGroupedPatternMap(allPatterns);
+    this.drawMode = DrawMode.CELL;
   }
 
   onPatternSelected(pattern: Pattern): void {
+    this.drawMode = DrawMode.PATTERN;
     this.doPatternSelected.emit(pattern);
   }
 
@@ -52,4 +50,23 @@ export class CellStepComponent implements OnInit {
   onInvert(event: Event): void {
     this.doInvertCells.emit();
   }
+
+  onDeselectPattern(): void {
+    this.drawMode = DrawMode.CELL;
+    this.doPatternSelected.emit(null);
+    this.patternSelected = null;
+  }
+
+  toggleDrawMode(): void {
+    if (this.drawMode === DrawMode.CELL) {
+      this.drawMode = DrawMode.PATTERN;
+    } else {
+      this.drawMode = DrawMode.CELL;
+    }
+  }
+}
+
+enum DrawMode {
+  CELL,
+  PATTERN,
 }
