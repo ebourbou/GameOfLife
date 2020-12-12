@@ -1,33 +1,19 @@
-﻿<h1>Benutzerrolle editieren</h1>
-<div *ngIf="user">
+﻿<div *ngIf="user">
 <form novalidate #form="ngForm" (ngSubmit)="onSubmit(user)">
-    <div class="form-row">
-        <div class="form-group col">
-          <mat-form-field appearance="fill">
-          <mat-label>Benutzer</mat-label>
-            <input matInput type="text" name="username" [ngModel]="user.username" placeholder="Benutzer" disabled>
-          </mat-form-field>
-        </div>
-     <div class="form-group col">
-       <mat-form-field appearance="fill">
-       <mat-label>Benutzer Rolle</mat-label>
-        <mat-select placeholder="Rolle" [(ngModel)]="user.role" name="role" required #role="ngModel">
+
+  <h1>Rolle anpassen für Benutzer: {{user.username}}</h1>
+  <mat-select class="role" placeholder="Rolle" [(ngModel)]="user.role" name="role" required #role="ngModel">
           <mat-option *ngFor="let item of roles" [value]="item.title" >{{item.value}}</mat-option>
-        </mat-select>
-       <mat-error *ngIf="role.required">
-         Rolle muss gewählt sein
-       </mat-error>
-       </mat-form-field>
-     </div>
-
-    <div class="form-group">
-      <a mat-raised-button routerLink="/users">Abbrechen</a>
-
+  </mat-select>
+   <mat-error *ngIf="role.required">
+     Rolle muss gewählt sein
+   </mat-error>
+    <div class="action">
+      <button color="secondary" class="cancel" mat-raised-button type="button" routerLink="/users">Abbrechen</button>
       <button color="primary" [disabled]="loading || !form.form.valid" mat-raised-button type="submit">
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         Speichern
       </button>
-    </div>
     </div>
 </form>
 </div>

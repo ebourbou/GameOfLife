@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../service/notification.service';
 
 @Component({
   selector: 'mat-rating',
@@ -15,7 +16,7 @@ export class RatingComponent implements OnInit {
   ratingArr = [];
   disabled: boolean = false;
 
-  constructor(private snackBarService: MatSnackBar) {}
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     for (let index = 0; index < this.starCount; index++) {
@@ -28,13 +29,9 @@ export class RatingComponent implements OnInit {
       this.ratingUpdated.emit('' + rating);
       this.disabled = true;
 
-      this.snackBarService.open('Bewertung wurde gespeichert', '', {
-        duration: 1500,
-      });
+      this.notificationService.info('Bewertung wurde gespeichert');
     } else {
-      this.snackBarService.open('Schon abgestimmt', '', {
-        duration: 1500,
-      });
+      this.notificationService.info('Schon abgestimmt');
     }
     return false;
   }

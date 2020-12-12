@@ -10,6 +10,7 @@ import { Role } from '../../shared/model/role';
 import { UserUtils } from '../../users/utils/user-utils';
 import { UserService } from '../../users/services/users.service';
 import { AmplifyService } from 'aws-amplify-angular';
+import { NotificationService } from '../../shared/service/notification.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,7 +18,13 @@ export class AuthService {
   private userSource: BehaviorSubject<User> = new BehaviorSubject<User>({} as any);
   user = this.userSource.asObservable();
 
-  constructor(private router: Router, private api: APIService, private userService: UserService, private amplify: AmplifyService) {}
+  constructor(
+    private router: Router,
+    private api: APIService,
+    private userService: UserService,
+    private amplify: AmplifyService,
+    private notificationService: NotificationService
+  ) {}
 
   public getUser(): User {
     Auth.currentAuthenticatedUser()
@@ -37,7 +44,7 @@ export class AuthService {
           return null;
         }
       )
-      .catch(console.error);
+      .catch((reason) => this.notificationService.error('Fehler beim Benuter laden: ' + reason));
     this.authenticated.next(false);
     return null;
   }
@@ -56,7 +63,7 @@ export class AuthService {
           const userDB = new User();
           userDB.username = user;
           userDB.email = mail;
-          this.userService.createUser(userDB).catch((error) => console.log('User create error ' + error));
+          this.userService.createUser(userDB).catch((error) => this.notificationService.error('Fehler beim Benutzer anlegen: ' + error));
         }
       })
     );
@@ -69,7 +76,9 @@ export class AuthService {
 
   /** signin */
   public login(username, password): Observable<any> {
-    return fromPromise(Auth.signIn(username, password)).pipe(
+    return fromPromise(
+      Auth.signIn(username, password).catch((reason) => this.notificationService.error('Login nicht erfolgreich: ' + reason))
+    ).pipe(
       tap((cognitoUser) => {
         this.authenticated.next(true);
 
@@ -124,19 +133,25 @@ export class AuthService {
   }
   /** signout */
   public logout(): boolean {
-    this.userService.updateLastLogin(this.userSource.value).catch((err) => console.log(err));
-    fromPromise(Auth.signOut()).subscribe(
-      () => {
-        this.authenticated.next(false);
-        this.userSource.next(null);
-        return true;
-      },
-      (error) => {
-        console.log(error);
-        return false;
-      }
-    );
-    localStorage.clear();
+    const user = UserUtils.loadUserFromLocal();
+    this.userService
+      .updateLastLogin(user)
+      .then((value) => {
+        Auth.signOut()
+          .then(
+            () => {
+              this.authenticated.next(false);
+              this.userSource.next(null);
+              return true;
+            },
+            (error) => {
+              return false;
+            }
+          )
+          .finally(() => localStorage.clear());
+      })
+      .catch((err) => this.notificationService.error('Fehler beim Benutzer speichern: letztes login:' + err));
+
     return true;
   }
 

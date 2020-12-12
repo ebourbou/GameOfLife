@@ -1,17 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  APIService,
-  CreatePatternMutation,
-  DeletePatternMutation,
-  GetPatternQuery,
-  ListPatternsQuery,
-  UpdatePatternMutation,
-  UpdatePatternRatingMutation,
-} from '../../API.service';
+import { APIService, UpdatePatternRatingMutation } from '../../API.service';
 
-import { Pattern } from '../model/pattern';
-import { PatternUtils } from './pattern-util';
-import { from, Observable, Observer, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { PatternRatingUtils } from './pattern-rating-util';
 import { PatternRating } from '../model/pattern-rating';
 

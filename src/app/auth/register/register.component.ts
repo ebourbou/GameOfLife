@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AmplifyService } from 'aws-amplify-angular';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../shared/service/notification.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class FormErrorStateMatcher implements ErrorStateMatcher {
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private snackBarService: MatSnackBar,
+    private notificationService: NotificationService,
     private amplifyService: AmplifyService,
     public dialog: MatDialog
   ) {}
@@ -57,9 +57,7 @@ export class RegisterComponent implements OnInit {
             this.authService.verify(this.user.username, verificationCode.toString()).then(() => {
               this.router.navigate(['/login']).then((navigated: boolean) => {
                 if (navigated) {
-                  this.snackBarService.open('Benutzer Registrierung abgeschlossen', 'Schliessen', {
-                    duration: 3000,
-                  });
+                  this.notificationService.info('Benutzer Registrierung abgeschlossen');
                 }
               });
             });
@@ -81,10 +79,7 @@ export class RegisterComponent implements OnInit {
                 break;
             }
 
-            this.snackBarService.open('Fehler beim Registrieren: ' + errMsg, 'Schliessen', {
-              duration: 3000,
-              panelClass: ['snackbar-error'],
-            });
+            this.notificationService.error('Fehler beim Registrieren: ' + errMsg);
           }
         );
     }

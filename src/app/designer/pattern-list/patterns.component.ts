@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit, Output } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
@@ -7,21 +7,33 @@ import { PatternUtils } from '../util/pattern-util';
 import { PatternService } from '../../shared/service/patterns.service';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
+import { Observable, Subscription } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root', // **** ADD THIS LINE ****
+})
 @Component({
   selector: 'app-patterns',
   templateUrl: './patterns.component.html',
   styleUrls: ['./patterns.component.scss'],
 })
-export class PatternsComponent implements OnInit {
+export class PatternsComponent implements OnInit, OnDestroy {
   patterns: Pattern[];
   selectedPattern: Pattern;
   user: User;
+
+  public routeChangeSub$: Subscription;
+  public pattern: Observable<Pattern>;
+  //public patterns: Observable<Pattern[]>;
 
   @Output()
   public select = new EventEmitter();
 
   constructor(private patternService: PatternService, private apiService: APIService, private authService: AuthService) {}
+
+  ngOnDestroy(): void {
+    // this.routeChangeSub$.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {

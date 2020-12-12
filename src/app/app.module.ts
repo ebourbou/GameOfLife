@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import localeDECH from '@angular/common/locales/de-CH';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,6 +33,8 @@ import { MockRuleService } from './shared/service/rule/mock-rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
 import { RatingService } from './shared/service/rating.service';
+import { NotificationService } from './shared/service/notification.service';
+import { CustomErrorHandler } from './auth/error-handler';
 
 registerLocaleData(localeDECH);
 
@@ -61,11 +63,12 @@ registerLocaleData(localeDECH);
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },
     { provide: RatingService, useClass: RatingService },
-
+    { provide: NotificationService, useClass: NotificationService },
     { provide: AbstractRuleService, useClass: MockRuleService },
     { provide: GameService, useClass: GameService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },

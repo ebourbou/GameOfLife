@@ -11,6 +11,7 @@ import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
 import { UserUtils } from './users/utils/user-utils';
 import { Subscription } from 'rxjs';
+import { NotificationService } from './shared/service/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private snackBarService: MatSnackBar,
+    private notificationService: NotificationService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         if (!router.navigated) {
           // browser refresh
+          this.user = UserUtils.loadUserFromLocal();
         }
       }
     });
@@ -47,6 +49,12 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('gol_save', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/save-fill.svg'));
     this.matIconRegistry.addSvgIcon('tortoise', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/tortoise.svg'));
     this.matIconRegistry.addSvgIcon('rabbit', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/rabbit.svg'));
+
+    this.matIconRegistry.addSvgIcon('spaceship', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/spaceship.svg'));
+    this.matIconRegistry.addSvgIcon('static', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/static.svg'));
+    this.matIconRegistry.addSvgIcon('oscillator', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/oscillator.svg'));
+    this.matIconRegistry.addSvgIcon('buffer', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/buffer.svg'));
+    this.matIconRegistry.addSvgIcon('pattern', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/pattern.svg'));
   }
 
   logout(): void {
@@ -55,16 +63,14 @@ export class AppComponent implements OnInit {
     this.user = null;
     this.router.navigate(['/auth/login']).then((navigated: boolean) => {
       if (navigated) {
-        this.snackBarService.open('Benutzer abgemeldet ', 'Schliessen', {
-          duration: 2000,
-        });
+        this.notificationService.info('Benutzer abgemeldet ');
       }
     });
   }
 
   showLogin(): void {
     this.router.navigate(['/auth']).catch((e) => {
-      console.log(e);
+      this.notificationService.error('Fehler beim Anmelden: ' + e);
     });
   }
 
@@ -74,6 +80,10 @@ export class AppComponent implements OnInit {
       if (value) {
         this.user = UserUtils.loadUserFromLocal();
       }
+    });
+
+    this.authService.user.subscribe((value) => {
+      this.user = value;
     });
   }
 

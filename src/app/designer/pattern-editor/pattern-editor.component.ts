@@ -27,7 +27,7 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('Saving pattern');
-    this.save();
+    //  this.save();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

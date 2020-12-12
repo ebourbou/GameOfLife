@@ -7,7 +7,7 @@ import { DefaultsService } from '../../shared/service/defaults.service';
 import { Game } from '../model/Game';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { Controls } from '../model/Controls';
-import { SnackbarService } from '../../shared/service/snackbar.service';
+import { NotificationService } from '../../shared/service/notification.service';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
@@ -118,7 +118,7 @@ export class GameEffects {
     private patternService: PatternService,
     private ruleService: AbstractRuleService,
     private gameService: GameService,
-    private snackBar: SnackbarService
+    private snackBar: NotificationService
   ) {}
 
   private newGame(controls: Controls): any {

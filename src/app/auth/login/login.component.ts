@@ -1,11 +1,11 @@
 ﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { NgForm } from '@angular/forms';
 import { AmplifyService } from 'aws-amplify-angular';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../shared/service/notification.service';
 
 /*
  TODO:  password confirm field
@@ -15,24 +15,20 @@ import { AuthService } from '../../core/services/auth.service';
 export class LoginComponent implements OnInit {
   user = new User();
   public loginInvalid: boolean;
-  //  public authState: AuthState;
-
-  loading = false;
-  hidePwd = true;
-  submitted = false;
+  public loading = false;
+  public hidePwd = true;
+  private submitted = false;
   returnUrl: string;
 
   @ViewChild('form', { static: true }) form: NgForm;
 
   constructor(
-    public amplifyService: AmplifyService,
+    private amplifyService: AmplifyService,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private snackBarService: MatSnackBar
-  ) {
-    this.amplifyService = amplifyService;
-  }
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
@@ -55,14 +51,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form.controls.username.value, this.form.controls.password.value).subscribe(
       (data) => {
-        // console.log('data ' + JSON.stringify(data));
         this.loading = false;
         this.router.navigate([this.returnUrl]).then((navigated: boolean) => {
           if (navigated) {
             this.loginInvalid = false;
-            this.snackBarService.open('Willkommen zurück ' + data.username, 'Schliessen', {
-              duration: 2000,
-            });
+            this.notificationService.info('Willkommen zurück ' + data.username);
           }
         });
       },
@@ -70,7 +63,6 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.loginInvalid = true;
 
-        console.log('errSignIn: ' + JSON.stringify(error));
         let errMsg = 'unbekannt';
         switch (error.code) {
           case 'NetworkError':
@@ -83,10 +75,7 @@ export class LoginComponent implements OnInit {
             errMsg = 'Benutzer oder Passwort falsch';
             break;
         }
-        this.snackBarService.open('Fehler beim Anmelden: ' + errMsg, 'Schliessen', {
-          duration: 3000,
-          panelClass: ['snackbar-error'],
-        });
+        this.notificationService.error('Fehler beim Anmelden: ' + errMsg);
       }
     );
   }

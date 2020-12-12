@@ -1,0 +1,20 @@
+<section class="master"
+  [class.--is-desktop]="breakpoints.isDesktop">
+
+  <ng-content>
+  </ng-content>
+
+</section>
+
+<section class="detail"
+  *ngIf="breakpoints.isDesktop">
+
+  <!-- On desktop, we're going to have a side-by-side
+       master-detail view, but we still want to keep
+       routing. Hence, the router-outlet below -->
+  <router-outlet #detailOutlet
+    (activate)="onOutletActivated($event)"
+    (deactivate)="onOutletDeactivated($event)">
+  </router-outlet>
+
+</section>

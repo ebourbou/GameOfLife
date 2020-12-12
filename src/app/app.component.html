@@ -32,7 +32,7 @@
   <mat-sidenav-content class="sidenav-content">
 
     <mat-toolbar class="mat-elevation-z4 toolbar" color="primary" >
-      <button mat-icon-button matTooltip="Menü" (click)="sidenav_left.toggle()" *ngIf="authenticated">
+      <button mat-icon-button matTooltip="Menü" (click)="sidenav_left.toggle()" *ngIf="user">
         <mat-icon>menu</mat-icon>
       </button>
       <span class="spacer"></span>
@@ -41,10 +41,10 @@
 
       <span class="spacer"></span>
 
-      <button *ngIf="!authenticated" mat-raised-button color="primary" matTooltip="Login" (click)="showLogin()">
+      <button *ngIf="!user" mat-raised-button color="primary" matTooltip="Login" (click)="showLogin()">
         Anmelden
       </button>
-      <button *ngIf="authenticated" mat-raised-button color="primary" matTooltip="Logout" (click)="logout()">
+      <button *ngIf="user" mat-raised-button color="primary" matTooltip="Logout" (click)="logout()">
         Abmelden
       </button>
       <div *ngIf="user" class="user-info">

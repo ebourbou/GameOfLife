@@ -7,12 +7,9 @@ import { PatternService } from '../../shared/service/patterns.service';
 import { PatternRating } from '../../shared/model/pattern-rating';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
-import { PatternUtils } from '../util/pattern-util';
-import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { RatingComponent } from '../../shared/rating/rating.component';
-import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RatingService } from '../../shared/service/rating.service';
+import { NotificationService } from '../../shared/service/notification.service';
 
 @Component({
   selector: 'pattern-preview',
@@ -31,7 +28,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   @ViewChild('rating') ratingComponent: RatingComponent;
 
   constructor(
-    private snackBarService: MatSnackBar,
+    private notificationService: NotificationService,
     private ratingService: RatingService,
     private patternService: PatternService,
     private authService: AuthService
@@ -92,9 +89,9 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
       };
       this.ratingService
         .updateRating(patternRating)
-        .then((value) => console.log(value))
+        .then((value) => this.notificationService.info('Rating wurde gespeichert'))
         .catch((reason) => {
-          console.log(reason);
+          this.notificationService.error('Fehler beim Rating speichern: ' + reason);
         });
       this.disabled = true;
     }

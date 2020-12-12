@@ -1,9 +1,8 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../shared/model/Board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
@@ -12,6 +11,9 @@ import { PatternUtils } from '../util/pattern-util';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
+import { NotificationService } from '../../shared/service/notification.service';
+import { UserService } from '../../users/services/users.service';
+import { UserUtils } from '../../users/utils/user-utils';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -26,27 +28,19 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   loading = false;
   submitted = false;
   public editor: Board;
-  authService: AuthService;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
   @ViewChild('editor') patternEditor: PatternEditorComponent;
 
   patternOriginal: Pattern;
-  private patternService: PatternService;
-  private patternsComponent: PatternsComponent;
 
   constructor(
     public dialog: MatDialog,
-    patternService: PatternService,
-    patternsComponent: PatternsComponent,
-    private snackBarService: MatSnackBar,
-    auth: AuthService
-  ) {
-    this.patternService = patternService;
-    this.snackBarService = snackBarService;
-    this.authService = auth;
-    this.patternsComponent = patternsComponent;
-  }
+    private patternService: PatternService,
+    private patternsComponent: PatternsComponent,
+    private notificationService: NotificationService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
@@ -91,9 +85,7 @@ export class PatternDetailComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.patternService.deletePattern(patternToDelete.id).then((dlgRes) => {
-          this.snackBarService.open('Pattern ' + dlgRes.name + ' wurde gelöscht', 'Schliessen', {
-            duration: 2000,
-          });
+          this.notificationService.info('Pattern ' + dlgRes.name + ' wurde gelöscht');
         });
       }
     });
@@ -128,20 +120,16 @@ export class PatternDetailComponent implements OnInit, OnChanges {
     this.patternService
       .addPattern(patternToCreate)
       .then((data) => {
-        this.snackBarService.open('Pattern ' + patternToCreate.name + ' wurde angelegt', 'Schliessen', {
-          duration: 2000,
-        });
+        this.notificationService.info('Pattern ' + patternToCreate.name + ' wurde angelegt');
         return data;
       })
-      .catch(); // Error
+      .catch((reason) => this.notificationService.error('Fehler: ' + reason)); // Error
     return null;
   }
 
   updatePattern(patternToUpdate: Pattern): void {
     this.patternService.updatePattern(patternToUpdate).then((result) => {
-      this.snackBarService.open('Pattern ' + result.name + ' wurde aktualisiert.', 'Schliessen', {
-        duration: 2000,
-      });
+      this.notificationService.info('Pattern ' + result.name + ' wurde aktualisiert.');
     });
   }
 
@@ -155,10 +143,13 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   }
 
   isAdmin(role: Role): boolean {
-    return role === Role.Admin;
+    return role && role === Role.Admin ? true : false;
   }
 
   isDisabled(): boolean {
+    if (!this.user) {
+      this.user = UserUtils.loadUserFromLocal();
+    }
     return this.pattern.locked && !this.isAdmin(this.user.role);
   }
 }

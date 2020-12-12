@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Auth } from '@aws-amplify/auth';
 
-
 /**
  * This is used to logout the user, when the server responds with an unathorized status code.
  * Especially when the session token expires.
@@ -14,9 +13,7 @@ import { Auth } from '@aws-amplify/auth';
  */
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-  constructor() { }
-
+  constructor() {}
 
   /**
    * Intercepter intercepts the responses, and then process based on the recieved status code
@@ -26,23 +23,20 @@ export class ErrorInterceptor implements HttpInterceptor {
    * @memberof ErrorInterceptor
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      catchError((err) => {
+        if (err.status === 401) {
+          // auto logout if 401 response returned from api
+          Auth.signOut({ global: true })
+            .then((data) => console.log(data))
+            .catch((errInner) => console.log(errInner));
+        }
 
-    return next.handle(request).pipe(catchError(err => {
-
-      if (err.status === 401) {
-
-        // auto logout if 401 response returned from api
-        Auth.signOut({ global: true })
-          .then(data => console.log(data))
-          .catch(errInner => console.log(errInner));
-
-      }
-
-      // err.error is not null, if the ResponsenEntity contains an Exception
-      // err.error.message will give the custom message send from the server
-      const error = err.error.message || err.statusText;
-      return throwError(error);
-
-    }));
+        // err.error is not null, if the ResponsenEntity contains an Exception
+        // err.error.message will give the custom message send from the server
+        const error = err.error.message || err.statusText;
+        return throwError(error);
+      })
+    );
   }
 }
