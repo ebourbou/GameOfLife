@@ -61,23 +61,64 @@ query ListPatterns(
     nextToken
   }
 }
-query GetPatternRating($id: ID!) {
-  getPatternRating(id: $id) {
+query GetGame($id: ID!, $creationDate: AWSDateTime!) {
+  getGame(id: $id, creationDate: $creationDate) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+query ListGames(
+  $filter: TableGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      pattern
+      generations
+      sizeX
+      sizeY
+      description
+      ruleSetId
+      userId
+      creationDate
+      score
+      scoreTags
+    }
+    nextToken
+  }
+}
+query GetRating($id: ID!, $userId: String!) {
+  getRating(id: $id, userId: $userId) {
     id
     userId
+    rateId
     comment
     rating
   }
 }
-query ListPatternRatings(
-  $filter: TablePatternRatingFilterInput
+query ListRatings(
+  $filter: TableRatingFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listPatternRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       userId
+      rateId
       comment
       rating
     }

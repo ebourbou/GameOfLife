@@ -143,26 +143,149 @@ subscription OnDeletePattern(
     locked
   }
 }
-subscription OnCreatePatternRating($id: ID, $comment: String, $rating: Int) {
-  onCreatePatternRating(id: $id, comment: $comment, rating: $rating) {
+subscription OnCreateGame(
+  $id: ID
+  $name: String
+  $pattern: String
+  $generations: Int
+  $sizeX: Int
+) {
+  onCreateGame(
+    id: $id
+    name: $name
+    pattern: $pattern
+    generations: $generations
+    sizeX: $sizeX
+  ) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+subscription OnUpdateGame(
+  $id: ID
+  $name: String
+  $pattern: String
+  $generations: Int
+  $sizeX: Int
+) {
+  onUpdateGame(
+    id: $id
+    name: $name
+    pattern: $pattern
+    generations: $generations
+    sizeX: $sizeX
+  ) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+subscription OnDeleteGame(
+  $id: ID
+  $name: String
+  $pattern: String
+  $generations: Int
+  $sizeX: Int
+) {
+  onDeleteGame(
+    id: $id
+    name: $name
+    pattern: $pattern
+    generations: $generations
+    sizeX: $sizeX
+  ) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+subscription OnCreateRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onCreateRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
     id
     userId
+    rateId
     comment
     rating
   }
 }
-subscription OnUpdatePatternRating($id: ID, $comment: String, $rating: Int) {
-  onUpdatePatternRating(id: $id, comment: $comment, rating: $rating) {
+subscription OnUpdateRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onUpdateRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
     id
     userId
+    rateId
     comment
     rating
   }
 }
-subscription OnDeletePatternRating($id: ID, $comment: String, $rating: Int) {
-  onDeletePatternRating(id: $id, comment: $comment, rating: $rating) {
+subscription OnDeleteRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onDeleteRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
     id
     userId
+    rateId
     comment
     rating
   }
