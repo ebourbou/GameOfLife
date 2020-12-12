@@ -4,7 +4,7 @@ import { Board } from '../../shared/model/Board';
 import { GameUtils } from '../../shared/service/GameUtils';
 import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
 import { PatternService } from '../../shared/service/patterns.service';
-import { PatternRating } from '../../shared/model/pattern-rating';
+import { Rating } from '../../shared/model/pattern-rating';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { RatingComponent } from '../../shared/rating/rating.component';
@@ -80,11 +80,11 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     this.rating = rating;
 
     if (!this.disabled) {
-      const patternRating: PatternRating = {
+      const patternRating: Rating = {
         id: '',
         rating: this.rating,
         userId: this.user.id,
-        patternId: this.pattern.id,
+        rateId: this.id,
         comment: 'n/a',
       };
       this.ratingService

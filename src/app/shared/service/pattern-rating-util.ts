@@ -1,27 +1,26 @@
-import { Pattern } from '../model/pattern';
-import { PatternRating } from '../model/pattern-rating';
+import { Rating } from '../model/pattern-rating';
 
-export class PatternRatingUtils {
-  public static fromAwsPattern(awsRating): PatternRating {
-    let pat: PatternRating;
+export class RatingUtils {
+  public static fromAwsPattern(awsRating): Rating {
+    let pat: Rating;
     pat = {
       id: awsRating.id,
       userId: awsRating.userId,
-      patternId: awsRating.patternId,
+      rateId: awsRating.rateId,
       rating: awsRating.rating,
       comment: awsRating.comment,
     };
     return pat;
   }
 
-  public static toAwsPattern(patternRating): PatternRating {
+  public static toAwsPattern(rating): Rating {
     let patRate: any;
     patRate = {
-      id: patternRating.id,
-      userId: patternRating.userId,
-      patternId: patternRating.patternId,
-      comment: patternRating.comment,
-      rating: patternRating.rating,
+      id: rating.id,
+      userId: rating.userId,
+      patternId: rating.patternId,
+      comment: rating.comment,
+      rating: rating.rating,
     };
     return patRate;
   }

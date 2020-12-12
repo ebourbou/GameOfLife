@@ -5,602 +5,615 @@ import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
-export type CreateGameInput = {
-  description?: string | null;
-  generations: number;
-  pattern?: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type CreatePatternInput = {
-  author?: string | null;
-  description?: string | null;
-  heat?: number | null;
-  locked?: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type?: string | null;
-  year?: number | null;
-};
-
-export type CreatePatternRatingInput = {
-  comment?: string | null;
-  rating?: number | null;
-  userId?: string | null;
-};
+export interface SubscriptionResponse<T> {
+  value: GraphQLResult<T>;
+}
 
 export type CreateUserInput = {
-  email?: string | null;
-  id: string;
-  lastLogin?: string | null;
-  role?: string | null;
   username?: string | null;
+  role?: string | null;
+  email?: string | null;
+  lastLogin?: string | null;
 };
 
-export type DeleteGameInput = {
+export type UpdateUserInput = {
   id: string;
-};
-
-export type DeletePatternInput = {
-  id: string;
-};
-
-export type DeletePatternRatingInput = {
-  id: string;
+  username?: string | null;
+  role?: string | null;
+  email?: string | null;
+  lastLogin?: string | null;
 };
 
 export type DeleteUserInput = {
   id: string;
 };
 
-export type UpdateGameInput = {
+export type CreatePatternInput = {
+  author?: string | null;
+  sizeX: number;
+  sizeY: number;
   description?: string | null;
-  generations?: number | null;
-  id: string;
-  pattern?: string | null;
-  sizeX?: number | null;
-  sizeY?: number | null;
+  heat?: number | null;
+  name: string;
+  pattern: string;
+  type?: string | null;
+  year?: number | null;
+  locked?: boolean | null;
 };
 
 export type UpdatePatternInput = {
-  author?: string | null;
-  description?: string | null;
-  heat?: number | null;
   id: string;
-  locked?: boolean | null;
-  name?: string | null;
-  pattern?: string | null;
+  author?: string | null;
   sizeX?: number | null;
   sizeY?: number | null;
+  description?: string | null;
+  heat?: number | null;
+  name?: string | null;
+  pattern?: string | null;
   type?: string | null;
   year?: number | null;
+  locked?: boolean | null;
 };
 
-export type UpdatePatternRatingInput = {
-  comment?: string | null;
+export type DeletePatternInput = {
   id: string;
+};
+
+export type CreateGameInput = {
+  id: string;
+  name?: string | null;
+  pattern?: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description?: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags?: string | null;
+};
+
+export type UpdateGameInput = {
+  id: string;
+  name?: string | null;
+  pattern?: string | null;
+  generations?: number | null;
+  sizeX?: number | null;
+  sizeY?: number | null;
+  description?: string | null;
+  ruleSetId?: string | null;
+  userId?: string | null;
+  creationDate: string;
+};
+
+export type DeleteGameInput = {
+  id: string;
+  creationDate: string;
+};
+
+export type CreateRatingInput = {
+  id: string;
+  userId: string;
+  rateId?: string | null;
+  comment?: string | null;
   rating?: number | null;
 };
 
-export type UpdateUserInput = {
-  email?: string | null;
+export type UpdateRatingInput = {
   id: string;
-  lastLogin?: string | null;
-  role?: string | null;
-  username?: string | null;
+  userId: string;
+  rateId?: string | null;
+  comment?: string | null;
+  rating?: number | null;
 };
 
-export type TableGameFilterInput = {
-  description?: TableStringFilterInput | null;
-  generations?: TableIntFilterInput | null;
+export type DeleteRatingInput = {
+  id: string;
+  userId: string;
+};
+
+export type TableUserFilterInput = {
   id?: TableIDFilterInput | null;
-  pattern?: TableStringFilterInput | null;
-  sizeX?: TableIntFilterInput | null;
-  sizeY?: TableIntFilterInput | null;
-};
-
-export type TableStringFilterInput = {
-  beginsWith?: string | null;
-  between?: Array<string | null> | null;
-  contains?: string | null;
-  eq?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ne?: string | null;
-  notContains?: string | null;
-};
-
-export type TableIntFilterInput = {
-  between?: Array<number | null> | null;
-  contains?: number | null;
-  eq?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ne?: number | null;
-  notContains?: number | null;
+  username?: TableStringFilterInput | null;
+  role?: TableStringFilterInput | null;
+  email?: TableStringFilterInput | null;
+  lastLogin?: TableStringFilterInput | null;
 };
 
 export type TableIDFilterInput = {
-  beginsWith?: string | null;
-  between?: Array<string | null> | null;
-  contains?: string | null;
+  ne?: string | null;
   eq?: string | null;
-  ge?: string | null;
-  gt?: string | null;
   le?: string | null;
   lt?: string | null;
-  ne?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
   notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
-export type TablePatternRatingFilterInput = {
-  comment?: TableStringFilterInput | null;
-  id?: TableIDFilterInput | null;
-  patternId?: TableStringFilterInput | null;
-  rating?: TableIntFilterInput | null;
-  userId?: TableStringFilterInput | null;
+export type TableStringFilterInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export type TablePatternFilterInput = {
-  author?: TableStringFilterInput | null;
-  description?: TableStringFilterInput | null;
-  heat?: TableIntFilterInput | null;
   id?: TableIDFilterInput | null;
-  name?: TableStringFilterInput | null;
-  pattern?: TableStringFilterInput | null;
+  author?: TableStringFilterInput | null;
   sizeX?: TableIntFilterInput | null;
   sizeY?: TableIntFilterInput | null;
+  description?: TableStringFilterInput | null;
+  heat?: TableIntFilterInput | null;
+  name?: TableStringFilterInput | null;
+  pattern?: TableStringFilterInput | null;
   type?: TableStringFilterInput | null;
   year?: TableIntFilterInput | null;
 };
 
-export type TableUserFilterInput = {
-  email?: TableStringFilterInput | null;
+export type TableIntFilterInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  contains?: number | null;
+  notContains?: number | null;
+  between?: Array<number | null> | null;
+};
+
+export type TableGameFilterInput = {
   id?: TableIDFilterInput | null;
-  lastLogin?: TableStringFilterInput | null;
-  role?: TableStringFilterInput | null;
-  username?: TableStringFilterInput | null;
+  name?: TableStringFilterInput | null;
+  pattern?: TableStringFilterInput | null;
+  generations?: TableIntFilterInput | null;
+  sizeX?: TableIntFilterInput | null;
+  sizeY?: TableIntFilterInput | null;
+  description?: TableStringFilterInput | null;
+  ruleSetId?: TableStringFilterInput | null;
+  userId?: TableStringFilterInput | null;
+  creationDate?: TableStringFilterInput | null;
 };
 
-export type CreateGameMutation = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
-  id: string;
-  pattern: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type CreatePatternMutation = {
-  __typename: "Pattern";
-  author: string | null;
-  description: string | null;
-  heat: number | null;
-  id: string;
-  locked: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type: string | null;
-  year: number | null;
-};
-
-export type CreatePatternRatingMutation = {
-  __typename: "PatternRating";
-  comment: string | null;
-  id: string;
-  rating: number | null;
-  userId: string | null;
+export type TableRatingFilterInput = {
+  id?: TableIDFilterInput | null;
+  userId?: TableStringFilterInput | null;
+  rateId?: TableStringFilterInput | null;
+  comment?: TableStringFilterInput | null;
+  rating?: TableIntFilterInput | null;
 };
 
 export type CreateUserMutation = {
   __typename: "User";
-  email: string | null;
   id: string;
-  lastLogin: string | null;
-  role: string | null;
   username: string | null;
-};
-
-export type DeleteGameMutation = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
-  id: string;
-  pattern: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type DeletePatternMutation = {
-  __typename: "Pattern";
-  author: string | null;
-  description: string | null;
-  heat: number | null;
-  id: string;
-  locked: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type: string | null;
-  year: number | null;
-};
-
-export type DeletePatternRatingMutation = {
-  __typename: "PatternRating";
-  comment: string | null;
-  id: string;
-  rating: number | null;
-  userId: string | null;
-};
-
-export type DeleteUserMutation = {
-  __typename: "User";
-  email: string | null;
-  id: string;
-  lastLogin: string | null;
   role: string | null;
-  username: string | null;
-};
-
-export type UpdateGameMutation = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
-  id: string;
-  pattern: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type UpdatePatternMutation = {
-  __typename: "Pattern";
-  author: string | null;
-  description: string | null;
-  heat: number | null;
-  id: string;
-  locked: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type: string | null;
-  year: number | null;
-};
-
-export type UpdatePatternRatingMutation = {
-  __typename: "PatternRating";
-  comment: string | null;
-  id: string;
-  rating: number | null;
-  userId: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type UpdateUserMutation = {
   __typename: "User";
-  email: string | null;
   id: string;
-  lastLogin: string | null;
-  role: string | null;
   username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
-export type GetGameQuery = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
+export type DeleteUserMutation = {
+  __typename: "User";
   id: string;
-  pattern: string | null;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
+};
+
+export type CreatePatternMutation = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
   sizeX: number;
   sizeY: number;
-};
-
-export type GetPatternQuery = {
-  __typename: "Pattern";
-  author: string | null;
   description: string | null;
   heat: number | null;
-  id: string;
-  locked: boolean | null;
   name: string;
   pattern: string;
-  sizeX: number;
-  sizeY: number;
   type: string | null;
   year: number | null;
+  locked: boolean | null;
 };
 
-export type GetPatternRatingQuery = {
-  __typename: "PatternRating";
-  comment: string | null;
+export type UpdatePatternMutation = {
+  __typename: "Pattern";
   id: string;
-  rating: number | null;
+  author: string | null;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+  locked: boolean | null;
+};
+
+export type DeletePatternMutation = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+  locked: boolean | null;
+};
+
+export type CreateGameMutation = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type UpdateGameMutation = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type DeleteGameMutation = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type CreateRatingMutation = {
+  __typename: "Rating";
+  id: string;
   userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
+};
+
+export type UpdateRatingMutation = {
+  __typename: "Rating";
+  id: string;
+  userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
+};
+
+export type DeleteRatingMutation = {
+  __typename: "Rating";
+  id: string;
+  userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
 };
 
 export type GetUserQuery = {
   __typename: "User";
-  email: string | null;
   id: string;
-  lastLogin: string | null;
-  role: string | null;
   username: string | null;
-};
-
-export type ListGamesQuery = {
-  __typename: "GameConnection";
-  items: Array<{
-    __typename: "Game";
-    description: string | null;
-    generations: number;
-    id: string;
-    pattern: string | null;
-    sizeX: number;
-    sizeY: number;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type ListPatternRatingsQuery = {
-  __typename: "PatternRatingConnection";
-  items: Array<{
-    __typename: "PatternRating";
-    comment: string | null;
-    id: string;
-    rating: number | null;
-    userId: string | null;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type ListPatternsQuery = {
-  __typename: "PatternConnection";
-  items: Array<{
-    __typename: "Pattern";
-    author: string | null;
-    description: string | null;
-    heat: number | null;
-    id: string;
-    locked: boolean | null;
-    name: string;
-    pattern: string;
-    sizeX: number;
-    sizeY: number;
-    type: string | null;
-    year: number | null;
-  } | null> | null;
-  nextToken: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type ListUsersQuery = {
   __typename: "UserConnection";
   items: Array<{
     __typename: "User";
-    email: string | null;
     id: string;
-    lastLogin: string | null;
-    role: string | null;
     username: string | null;
+    role: string | null;
+    email: string | null;
+    lastLogin: string | null;
   } | null> | null;
   nextToken: string | null;
 };
 
-export type OnCreateGameSubscription = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
+export type GetPatternQuery = {
+  __typename: "Pattern";
   id: string;
-  pattern: string | null;
+  author: string | null;
   sizeX: number;
   sizeY: number;
-};
-
-export type OnCreatePatternSubscription = {
-  __typename: "Pattern";
-  author: string | null;
   description: string | null;
   heat: number | null;
-  id: string;
-  locked: boolean | null;
   name: string;
   pattern: string;
-  sizeX: number;
-  sizeY: number;
   type: string | null;
   year: number | null;
+  locked: boolean | null;
 };
 
-export type OnCreatePatternRatingSubscription = {
-  __typename: "PatternRating";
-  comment: string | null;
+export type ListPatternsQuery = {
+  __typename: "PatternConnection";
+  items: Array<{
+    __typename: "Pattern";
+    id: string;
+    author: string | null;
+    sizeX: number;
+    sizeY: number;
+    description: string | null;
+    heat: number | null;
+    name: string;
+    pattern: string;
+    type: string | null;
+    year: number | null;
+    locked: boolean | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetGameQuery = {
+  __typename: "Game";
   id: string;
-  rating: number | null;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type ListGamesQuery = {
+  __typename: "GameConnection";
+  items: Array<{
+    __typename: "Game";
+    id: string;
+    name: string | null;
+    pattern: string | null;
+    generations: number;
+    sizeX: number;
+    sizeY: number;
+    description: string | null;
+    ruleSetId: string;
+    userId: string;
+    creationDate: string;
+    score: number;
+    scoreTags: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetRatingQuery = {
+  __typename: "Rating";
+  id: string;
   userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
+};
+
+export type ListRatingsQuery = {
+  __typename: "RatingConnection";
+  items: Array<{
+    __typename: "Rating";
+    id: string;
+    userId: string | null;
+    rateId: string | null;
+    comment: string | null;
+    rating: number | null;
+  } | null> | null;
+  nextToken: string | null;
 };
 
 export type OnCreateUserSubscription = {
   __typename: "User";
-  email: string | null;
   id: string;
-  lastLogin: string | null;
-  role: string | null;
   username: string | null;
-};
-
-export type OnDeleteGameSubscription = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
-  id: string;
-  pattern: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type OnDeletePatternSubscription = {
-  __typename: "Pattern";
-  author: string | null;
-  description: string | null;
-  heat: number | null;
-  id: string;
-  locked: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type: string | null;
-  year: number | null;
-};
-
-export type OnDeletePatternRatingSubscription = {
-  __typename: "PatternRating";
-  comment: string | null;
-  id: string;
-  rating: number | null;
-  userId: string | null;
-};
-
-export type OnDeleteUserSubscription = {
-  __typename: "User";
-  email: string | null;
-  id: string;
-  lastLogin: string | null;
   role: string | null;
-  username: string | null;
-};
-
-export type OnUpdateGameSubscription = {
-  __typename: "Game";
-  description: string | null;
-  generations: number;
-  id: string;
-  pattern: string | null;
-  sizeX: number;
-  sizeY: number;
-};
-
-export type OnUpdatePatternSubscription = {
-  __typename: "Pattern";
-  author: string | null;
-  description: string | null;
-  heat: number | null;
-  id: string;
-  locked: boolean | null;
-  name: string;
-  pattern: string;
-  sizeX: number;
-  sizeY: number;
-  type: string | null;
-  year: number | null;
-};
-
-export type OnUpdatePatternRatingSubscription = {
-  __typename: "PatternRating";
-  comment: string | null;
-  id: string;
-  rating: number | null;
-  userId: string | null;
+  email: string | null;
+  lastLogin: string | null;
 };
 
 export type OnUpdateUserSubscription = {
   __typename: "User";
-  email: string | null;
   id: string;
-  lastLogin: string | null;
-  role: string | null;
   username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
+};
+
+export type OnDeleteUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string | null;
+  role: string | null;
+  email: string | null;
+  lastLogin: string | null;
+};
+
+export type OnCreatePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+  locked: boolean | null;
+};
+
+export type OnUpdatePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+  locked: boolean | null;
+};
+
+export type OnDeletePatternSubscription = {
+  __typename: "Pattern";
+  id: string;
+  author: string | null;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  heat: number | null;
+  name: string;
+  pattern: string;
+  type: string | null;
+  year: number | null;
+  locked: boolean | null;
+};
+
+export type OnCreateGameSubscription = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type OnUpdateGameSubscription = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type OnDeleteGameSubscription = {
+  __typename: "Game";
+  id: string;
+  name: string | null;
+  pattern: string | null;
+  generations: number;
+  sizeX: number;
+  sizeY: number;
+  description: string | null;
+  ruleSetId: string;
+  userId: string;
+  creationDate: string;
+  score: number;
+  scoreTags: string | null;
+};
+
+export type OnCreateRatingSubscription = {
+  __typename: "Rating";
+  id: string;
+  userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
+};
+
+export type OnUpdateRatingSubscription = {
+  __typename: "Rating";
+  id: string;
+  userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
+};
+
+export type OnDeleteRatingSubscription = {
+  __typename: "Rating";
+  id: string;
+  userId: string | null;
+  rateId: string | null;
+  comment: string | null;
+  rating: number | null;
 };
 
 @Injectable({
   providedIn: "root"
 })
 export class APIService {
-  async CreateGame(input: CreateGameInput): Promise<CreateGameMutation> {
-    const statement = `mutation CreateGame($input: CreateGameInput!) {
-        createGame(input: $input) {
-          __typename
-          description
-          generations
-          id
-          pattern
-          sizeX
-          sizeY
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateGameMutation>response.data.createGame;
-  }
-  async CreatePattern(
-    input: CreatePatternInput
-  ): Promise<CreatePatternMutation> {
-    const statement = `mutation CreatePattern($input: CreatePatternInput!) {
-        createPattern(input: $input) {
-          __typename
-          author
-          description
-          heat
-          id
-          locked
-          name
-          pattern
-          sizeX
-          sizeY
-          type
-          year
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreatePatternMutation>response.data.createPattern;
-  }
-  async CreatePatternRating(
-    input: CreatePatternRatingInput
-  ): Promise<CreatePatternRatingMutation> {
-    const statement = `mutation CreatePatternRating($input: CreatePatternRatingInput!) {
-        createPatternRating(input: $input) {
-          __typename
-          comment
-          id
-          rating
-          userId
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreatePatternRatingMutation>response.data.createPatternRating;
-  }
   async CreateUser(input: CreateUserInput): Promise<CreateUserMutation> {
     const statement = `mutation CreateUser($input: CreateUserInput!) {
         createUser(input: $input) {
           __typename
-          email
           id
-          lastLogin
-          role
           username
+          role
+          email
+          lastLogin
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -611,168 +624,15 @@ export class APIService {
     )) as any;
     return <CreateUserMutation>response.data.createUser;
   }
-  async DeleteGame(input: DeleteGameInput): Promise<DeleteGameMutation> {
-    const statement = `mutation DeleteGame($input: DeleteGameInput!) {
-        deleteGame(input: $input) {
-          __typename
-          description
-          generations
-          id
-          pattern
-          sizeX
-          sizeY
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteGameMutation>response.data.deleteGame;
-  }
-  async DeletePattern(
-    input: DeletePatternInput
-  ): Promise<DeletePatternMutation> {
-    const statement = `mutation DeletePattern($input: DeletePatternInput!) {
-        deletePattern(input: $input) {
-          __typename
-          author
-          description
-          heat
-          id
-          locked
-          name
-          pattern
-          sizeX
-          sizeY
-          type
-          year
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeletePatternMutation>response.data.deletePattern;
-  }
-  async DeletePatternRating(
-    input: DeletePatternRatingInput
-  ): Promise<DeletePatternRatingMutation> {
-    const statement = `mutation DeletePatternRating($input: DeletePatternRatingInput!) {
-        deletePatternRating(input: $input) {
-          __typename
-          comment
-          id
-          rating
-          userId
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeletePatternRatingMutation>response.data.deletePatternRating;
-  }
-  async DeleteUser(input: DeleteUserInput): Promise<DeleteUserMutation> {
-    const statement = `mutation DeleteUser($input: DeleteUserInput!) {
-        deleteUser(input: $input) {
-          __typename
-          email
-          id
-          lastLogin
-          role
-          username
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteUserMutation>response.data.deleteUser;
-  }
-  async UpdateGame(input: UpdateGameInput): Promise<UpdateGameMutation> {
-    const statement = `mutation UpdateGame($input: UpdateGameInput!) {
-        updateGame(input: $input) {
-          __typename
-          description
-          generations
-          id
-          pattern
-          sizeX
-          sizeY
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateGameMutation>response.data.updateGame;
-  }
-  async UpdatePattern(
-    input: UpdatePatternInput
-  ): Promise<UpdatePatternMutation> {
-    const statement = `mutation UpdatePattern($input: UpdatePatternInput!) {
-        updatePattern(input: $input) {
-          __typename
-          author
-          description
-          heat
-          id
-          locked
-          name
-          pattern
-          sizeX
-          sizeY
-          type
-          year
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdatePatternMutation>response.data.updatePattern;
-  }
-  async UpdatePatternRating(
-    input: UpdatePatternRatingInput
-  ): Promise<UpdatePatternRatingMutation> {
-    const statement = `mutation UpdatePatternRating($input: UpdatePatternRatingInput!) {
-        updatePatternRating(input: $input) {
-          __typename
-          comment
-          id
-          rating
-          userId
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdatePatternRatingMutation>response.data.updatePatternRating;
-  }
   async UpdateUser(input: UpdateUserInput): Promise<UpdateUserMutation> {
     const statement = `mutation UpdateUser($input: UpdateUserInput!) {
         updateUser(input: $input) {
           __typename
-          email
           id
-          lastLogin
-          role
           username
+          role
+          email
+          lastLogin
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -783,78 +643,250 @@ export class APIService {
     )) as any;
     return <UpdateUserMutation>response.data.updateUser;
   }
-  async GetGame(id: string): Promise<GetGameQuery> {
-    const statement = `query GetGame($id: ID!) {
-        getGame(id: $id) {
+  async DeleteUser(input: DeleteUserInput): Promise<DeleteUserMutation> {
+    const statement = `mutation DeleteUser($input: DeleteUserInput!) {
+        deleteUser(input: $input) {
           __typename
-          description
-          generations
           id
-          pattern
-          sizeX
-          sizeY
+          username
+          role
+          email
+          lastLogin
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      input
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetGameQuery>response.data.getGame;
+    return <DeleteUserMutation>response.data.deleteUser;
   }
-  async GetPattern(id: string): Promise<GetPatternQuery> {
-    const statement = `query GetPattern($id: ID!) {
-        getPattern(id: $id) {
+  async CreatePattern(
+    input: CreatePatternInput
+  ): Promise<CreatePatternMutation> {
+    const statement = `mutation CreatePattern($input: CreatePatternInput!) {
+        createPattern(input: $input) {
           __typename
+          id
           author
+          sizeX
+          sizeY
           description
           heat
-          id
-          locked
           name
           pattern
-          sizeX
-          sizeY
           type
           year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      input
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetPatternQuery>response.data.getPattern;
+    return <CreatePatternMutation>response.data.createPattern;
   }
-  async GetPatternRating(id: string): Promise<GetPatternRatingQuery> {
-    const statement = `query GetPatternRating($id: ID!) {
-        getPatternRating(id: $id) {
+  async UpdatePattern(
+    input: UpdatePatternInput
+  ): Promise<UpdatePatternMutation> {
+    const statement = `mutation UpdatePattern($input: UpdatePatternInput!) {
+        updatePattern(input: $input) {
           __typename
-          comment
           id
-          rating
-          userId
+          author
+          sizeX
+          sizeY
+          description
+          heat
+          name
+          pattern
+          type
+          year
+          locked
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      input
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetPatternRatingQuery>response.data.getPatternRating;
+    return <UpdatePatternMutation>response.data.updatePattern;
+  }
+  async DeletePattern(
+    input: DeletePatternInput
+  ): Promise<DeletePatternMutation> {
+    const statement = `mutation DeletePattern($input: DeletePatternInput!) {
+        deletePattern(input: $input) {
+          __typename
+          id
+          author
+          sizeX
+          sizeY
+          description
+          heat
+          name
+          pattern
+          type
+          year
+          locked
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeletePatternMutation>response.data.deletePattern;
+  }
+  async CreateGame(input: CreateGameInput): Promise<CreateGameMutation> {
+    const statement = `mutation CreateGame($input: CreateGameInput!) {
+        createGame(input: $input) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateGameMutation>response.data.createGame;
+  }
+  async UpdateGame(input: UpdateGameInput): Promise<UpdateGameMutation> {
+    const statement = `mutation UpdateGame($input: UpdateGameInput!) {
+        updateGame(input: $input) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateGameMutation>response.data.updateGame;
+  }
+  async DeleteGame(input: DeleteGameInput): Promise<DeleteGameMutation> {
+    const statement = `mutation DeleteGame($input: DeleteGameInput!) {
+        deleteGame(input: $input) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteGameMutation>response.data.deleteGame;
+  }
+  async CreateRating(input: CreateRatingInput): Promise<CreateRatingMutation> {
+    const statement = `mutation CreateRating($input: CreateRatingInput!) {
+        createRating(input: $input) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateRatingMutation>response.data.createRating;
+  }
+  async UpdateRating(input: UpdateRatingInput): Promise<UpdateRatingMutation> {
+    const statement = `mutation UpdateRating($input: UpdateRatingInput!) {
+        updateRating(input: $input) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateRatingMutation>response.data.updateRating;
+  }
+  async DeleteRating(input: DeleteRatingInput): Promise<DeleteRatingMutation> {
+    const statement = `mutation DeleteRating($input: DeleteRatingInput!) {
+        deleteRating(input: $input) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteRatingMutation>response.data.deleteRating;
   }
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
         getUser(id: $id) {
           __typename
-          email
           id
-          lastLogin
-          role
           username
+          role
+          email
+          lastLogin
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -864,114 +896,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <GetUserQuery>response.data.getUser;
-  }
-  async ListGames(
-    filter?: TableGameFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListGamesQuery> {
-    const statement = `query ListGames($filter: TableGameFilterInput, $limit: Int, $nextToken: String) {
-        listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            description
-            generations
-            id
-            pattern
-            sizeX
-            sizeY
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListGamesQuery>response.data.listGames;
-  }
-  async ListPatternRatings(
-    filter?: TablePatternRatingFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListPatternRatingsQuery> {
-    const statement = `query ListPatternRatings($filter: TablePatternRatingFilterInput, $limit: Int, $nextToken: String) {
-        listPatternRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            comment
-            id
-            rating
-            userId
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListPatternRatingsQuery>response.data.listPatternRatings;
-  }
-  async ListPatterns(
-    filter?: TablePatternFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListPatternsQuery> {
-    const statement = `query ListPatterns($filter: TablePatternFilterInput, $limit: Int, $nextToken: String) {
-        listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            author
-            description
-            heat
-            id
-            locked
-            name
-            pattern
-            sizeX
-            sizeY
-            type
-            year
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListPatternsQuery>response.data.listPatterns;
   }
   async ListUsers(
     filter?: TableUserFilterInput,
@@ -983,11 +907,11 @@ export class APIService {
           __typename
           items {
             __typename
-            email
             id
-            lastLogin
-            role
             username
+            role
+            email
+            lastLogin
           }
           nextToken
         }
@@ -1007,213 +931,433 @@ export class APIService {
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
   }
-  OnCreateGameListener: Observable<OnCreateGameSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateGame($generations: Int, $id: ID, $pattern: String, $sizeX: Int, $sizeY: Int) {
-        onCreateGame(generations: $generations, id: $id, pattern: $pattern, sizeX: $sizeX, sizeY: $sizeY) {
+  async GetPattern(id: string): Promise<GetPatternQuery> {
+    const statement = `query GetPattern($id: ID!) {
+        getPattern(id: $id) {
           __typename
-          description
-          generations
           id
-          pattern
+          author
           sizeX
           sizeY
+          description
+          heat
+          name
+          pattern
+          type
+          year
+          locked
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetPatternQuery>response.data.getPattern;
+  }
+  async ListPatterns(
+    filter?: TablePatternFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListPatternsQuery> {
+    const statement = `query ListPatterns($filter: TablePatternFilterInput, $limit: Int, $nextToken: String) {
+        listPatterns(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            author
+            sizeX
+            sizeY
+            description
+            heat
+            name
+            pattern
+            type
+            year
+            locked
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListPatternsQuery>response.data.listPatterns;
+  }
+  async GetGame(id: string, creationDate: string): Promise<GetGameQuery> {
+    const statement = `query GetGame($id: ID!, $creationDate: AWSDateTime!) {
+        getGame(id: $id, creationDate: $creationDate) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id,
+      creationDate
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetGameQuery>response.data.getGame;
+  }
+  async ListGames(
+    filter?: TableGameFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListGamesQuery> {
+    const statement = `query ListGames($filter: TableGameFilterInput, $limit: Int, $nextToken: String) {
+        listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            pattern
+            generations
+            sizeX
+            sizeY
+            description
+            ruleSetId
+            userId
+            creationDate
+            score
+            scoreTags
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListGamesQuery>response.data.listGames;
+  }
+  async GetRating(id: string, userId: string): Promise<GetRatingQuery> {
+    const statement = `query GetRating($id: ID!, $userId: String!) {
+        getRating(id: $id, userId: $userId) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id,
+      userId
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetRatingQuery>response.data.getRating;
+  }
+  async ListRatings(
+    filter?: TableRatingFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListRatingsQuery> {
+    const statement = `query ListRatings($filter: TableRatingFilterInput, $limit: Int, $nextToken: String) {
+        listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            userId
+            rateId
+            comment
+            rating
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListRatingsQuery>response.data.listRatings;
+  }
+  OnCreateUserListener: Observable<
+    SubscriptionResponse<OnCreateUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onCreateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
         }
       }`
     )
-  ) as Observable<OnCreateGameSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
+
+  OnUpdateUserListener: Observable<
+    SubscriptionResponse<OnUpdateUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onUpdateUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
+
+  OnDeleteUserListener: Observable<
+    SubscriptionResponse<OnDeleteUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteUser($id: ID, $username: String, $role: String, $email: AWSEmail, $lastLogin: AWSDateTime) {
+        onDeleteUser(id: $id, username: $username, role: $role, email: $email, lastLogin: $lastLogin) {
+          __typename
+          id
+          username
+          role
+          email
+          lastLogin
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   OnCreatePatternListener: Observable<
-    OnCreatePatternSubscription
+    SubscriptionResponse<OnCreatePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreatePattern($author: String, $description: String, $id: ID, $sizeX: Int, $sizeY: Int) {
-        onCreatePattern(author: $author, description: $description, id: $id, sizeX: $sizeX, sizeY: $sizeY) {
+      `subscription OnCreatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onCreatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
+          id
           author
+          sizeX
+          sizeY
           description
           heat
-          id
-          locked
           name
           pattern
-          sizeX
-          sizeY
           type
           year
-        }
-      }`
-    )
-  ) as Observable<OnCreatePatternSubscription>;
-
-  OnCreatePatternRatingListener: Observable<
-    OnCreatePatternRatingSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreatePatternRating($comment: String, $id: ID, $rating: Int) {
-        onCreatePatternRating(comment: $comment, id: $id, rating: $rating) {
-          __typename
-          comment
-          id
-          rating
-          userId
-        }
-      }`
-    )
-  ) as Observable<OnCreatePatternRatingSubscription>;
-
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateUser($email: AWSEmail, $id: ID, $lastLogin: AWSDateTime, $role: String, $username: String) {
-        onCreateUser(email: $email, id: $id, lastLogin: $lastLogin, role: $role, username: $username) {
-          __typename
-          email
-          id
-          lastLogin
-          role
-          username
-        }
-      }`
-    )
-  ) as Observable<OnCreateUserSubscription>;
-
-  OnDeleteGameListener: Observable<OnDeleteGameSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteGame($generations: Int, $id: ID, $pattern: String, $sizeX: Int, $sizeY: Int) {
-        onDeleteGame(generations: $generations, id: $id, pattern: $pattern, sizeX: $sizeX, sizeY: $sizeY) {
-          __typename
-          description
-          generations
-          id
-          pattern
-          sizeX
-          sizeY
-        }
-      }`
-    )
-  ) as Observable<OnDeleteGameSubscription>;
-
-  OnDeletePatternListener: Observable<
-    OnDeletePatternSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeletePattern($author: String, $description: String, $id: ID, $sizeX: Int, $sizeY: Int) {
-        onDeletePattern(author: $author, description: $description, id: $id, sizeX: $sizeX, sizeY: $sizeY) {
-          __typename
-          author
-          description
-          heat
-          id
           locked
-          name
-          pattern
-          sizeX
-          sizeY
-          type
-          year
         }
       }`
     )
-  ) as Observable<OnDeletePatternSubscription>;
-
-  OnDeletePatternRatingListener: Observable<
-    OnDeletePatternRatingSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeletePatternRating($comment: String, $id: ID, $rating: Int) {
-        onDeletePatternRating(comment: $comment, id: $id, rating: $rating) {
-          __typename
-          comment
-          id
-          rating
-          userId
-        }
-      }`
-    )
-  ) as Observable<OnDeletePatternRatingSubscription>;
-
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteUser($email: AWSEmail, $id: ID, $lastLogin: AWSDateTime, $role: String, $username: String) {
-        onDeleteUser(email: $email, id: $id, lastLogin: $lastLogin, role: $role, username: $username) {
-          __typename
-          email
-          id
-          lastLogin
-          role
-          username
-        }
-      }`
-    )
-  ) as Observable<OnDeleteUserSubscription>;
-
-  OnUpdateGameListener: Observable<OnUpdateGameSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateGame($generations: Int, $id: ID, $pattern: String, $sizeX: Int, $sizeY: Int) {
-        onUpdateGame(generations: $generations, id: $id, pattern: $pattern, sizeX: $sizeX, sizeY: $sizeY) {
-          __typename
-          description
-          generations
-          id
-          pattern
-          sizeX
-          sizeY
-        }
-      }`
-    )
-  ) as Observable<OnUpdateGameSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreatePatternSubscription>>;
 
   OnUpdatePatternListener: Observable<
-    OnUpdatePatternSubscription
+    SubscriptionResponse<OnUpdatePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePattern($author: String, $description: String, $id: ID, $sizeX: Int, $sizeY: Int) {
-        onUpdatePattern(author: $author, description: $description, id: $id, sizeX: $sizeX, sizeY: $sizeY) {
+      `subscription OnUpdatePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onUpdatePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
-          author
-          description
-          heat
           id
-          locked
-          name
-          pattern
+          author
           sizeX
           sizeY
+          description
+          heat
+          name
+          pattern
           type
           year
+          locked
         }
       }`
     )
-  ) as Observable<OnUpdatePatternSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdatePatternSubscription>>;
 
-  OnUpdatePatternRatingListener: Observable<
-    OnUpdatePatternRatingSubscription
+  OnDeletePatternListener: Observable<
+    SubscriptionResponse<OnDeletePatternSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePatternRating($comment: String, $id: ID, $rating: Int) {
-        onUpdatePatternRating(comment: $comment, id: $id, rating: $rating) {
+      `subscription OnDeletePattern($id: ID, $author: String, $sizeX: Int, $sizeY: Int, $description: String) {
+        onDeletePattern(id: $id, author: $author, sizeX: $sizeX, sizeY: $sizeY, description: $description) {
           __typename
-          comment
           id
-          rating
-          userId
+          author
+          sizeX
+          sizeY
+          description
+          heat
+          name
+          pattern
+          type
+          year
+          locked
         }
       }`
     )
-  ) as Observable<OnUpdatePatternRatingSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeletePatternSubscription>>;
 
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+  OnCreateGameListener: Observable<
+    SubscriptionResponse<OnCreateGameSubscription>
+  > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateUser($email: AWSEmail, $id: ID, $lastLogin: AWSDateTime, $role: String, $username: String) {
-        onUpdateUser(email: $email, id: $id, lastLogin: $lastLogin, role: $role, username: $username) {
+      `subscription OnCreateGame($id: ID, $name: String, $pattern: String, $generations: Int, $sizeX: Int) {
+        onCreateGame(id: $id, name: $name, pattern: $pattern, generations: $generations, sizeX: $sizeX) {
           __typename
-          email
           id
-          lastLogin
-          role
-          username
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
         }
       }`
     )
-  ) as Observable<OnUpdateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateGameSubscription>>;
+
+  OnUpdateGameListener: Observable<
+    SubscriptionResponse<OnUpdateGameSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateGame($id: ID, $name: String, $pattern: String, $generations: Int, $sizeX: Int) {
+        onUpdateGame(id: $id, name: $name, pattern: $pattern, generations: $generations, sizeX: $sizeX) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateGameSubscription>>;
+
+  OnDeleteGameListener: Observable<
+    SubscriptionResponse<OnDeleteGameSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteGame($id: ID, $name: String, $pattern: String, $generations: Int, $sizeX: Int) {
+        onDeleteGame(id: $id, name: $name, pattern: $pattern, generations: $generations, sizeX: $sizeX) {
+          __typename
+          id
+          name
+          pattern
+          generations
+          sizeX
+          sizeY
+          description
+          ruleSetId
+          userId
+          creationDate
+          score
+          scoreTags
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteGameSubscription>>;
+
+  OnCreateRatingListener: Observable<
+    SubscriptionResponse<OnCreateRatingSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateRating($id: ID, $userId: String, $rateId: String, $comment: String, $rating: Int) {
+        onCreateRating(id: $id, userId: $userId, rateId: $rateId, comment: $comment, rating: $rating) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateRatingSubscription>>;
+
+  OnUpdateRatingListener: Observable<
+    SubscriptionResponse<OnUpdateRatingSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateRating($id: ID, $userId: String, $rateId: String, $comment: String, $rating: Int) {
+        onUpdateRating(id: $id, userId: $userId, rateId: $rateId, comment: $comment, rating: $rating) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateRatingSubscription>>;
+
+  OnDeleteRatingListener: Observable<
+    SubscriptionResponse<OnDeleteRatingSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteRating($id: ID, $userId: String, $rateId: String, $comment: String, $rating: Int) {
+        onDeleteRating(id: $id, userId: $userId, rateId: $rateId, comment: $comment, rating: $rating) {
+          __typename
+          id
+          userId
+          rateId
+          comment
+          rating
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteRatingSubscription>>;
 }

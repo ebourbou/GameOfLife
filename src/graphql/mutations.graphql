@@ -71,26 +71,77 @@ mutation DeletePattern($input: DeletePatternInput!) {
     locked
   }
 }
-mutation CreatePatternRating($input: CreatePatternRatingInput!) {
-  createPatternRating(input: $input) {
+mutation CreateGame($input: CreateGameInput!) {
+  createGame(input: $input) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+mutation UpdateGame($input: UpdateGameInput!) {
+  updateGame(input: $input) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+mutation DeleteGame($input: DeleteGameInput!) {
+  deleteGame(input: $input) {
+    id
+    name
+    pattern
+    generations
+    sizeX
+    sizeY
+    description
+    ruleSetId
+    userId
+    creationDate
+    score
+    scoreTags
+  }
+}
+mutation CreateRating($input: CreateRatingInput!) {
+  createRating(input: $input) {
     id
     userId
+    rateId
     comment
     rating
   }
 }
-mutation UpdatePatternRating($input: UpdatePatternRatingInput!) {
-  updatePatternRating(input: $input) {
+mutation UpdateRating($input: UpdateRatingInput!) {
+  updateRating(input: $input) {
     id
     userId
+    rateId
     comment
     rating
   }
 }
-mutation DeletePatternRating($input: DeletePatternRatingInput!) {
-  deletePatternRating(input: $input) {
+mutation DeleteRating($input: DeleteRatingInput!) {
+  deleteRating(input: $input) {
     id
     userId
+    rateId
     comment
     rating
   }

@@ -1,7 +1,7 @@
-﻿export interface PatternRating {
+﻿export interface Rating {
   id: string;
   userId: string;
-  patternId: string;
+  rateId: string;
   rating: number;
   comment: string;
 }

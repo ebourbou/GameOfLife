@@ -76,7 +76,7 @@ export class GameService {
   }
 
   getGame(id: string): Observable<Game> {
-    return from(this.api.GetGame(id).then((result) => GameService.fromAwsGame(result)));
+    return from(this.api.GetGame(id, null).then((result) => GameService.fromAwsGame(result)));
   }
 
   addGame(game: Game): Observable<Game> {

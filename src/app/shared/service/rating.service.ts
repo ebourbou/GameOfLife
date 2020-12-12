@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { APIService, UpdatePatternRatingMutation } from '../../API.service';
+import { APIService, UpdateRatingMutation } from '../../API.service';
 
 import { from, Observable } from 'rxjs';
-import { PatternRatingUtils } from './pattern-rating-util';
-import { PatternRating } from '../model/pattern-rating';
+import { RatingUtils } from './pattern-rating-util';
+import { Rating } from '../model/pattern-rating';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +11,10 @@ import { PatternRating } from '../model/pattern-rating';
 export class RatingService {
   constructor(private apiService: APIService) {}
 
-  updateRating(patternRating: PatternRating): Promise<UpdatePatternRatingMutation> {
-    const input: any = PatternRatingUtils.toAwsPattern(patternRating);
+  updateRating(patternRating: Rating): Promise<UpdateRatingMutation> {
+    const input: any = RatingUtils.toAwsPattern(patternRating);
     delete input.id;
-    return this.apiService.CreatePatternRating(input);
+    return this.apiService.CreateRating(input);
   }
 
   getRating(id: string, userId: string): Observable<{ rating: number; userVoted: boolean }> {
@@ -23,7 +23,7 @@ export class RatingService {
     let voted = false;
     return from(
       this.apiService
-        .ListPatternRatings({ patternId: { eq: id } })
+        .ListRatings({ rateId: { eq: id } })
         .then((value) => {
           all = value.items.length;
           value.items.forEach((rating) => {
