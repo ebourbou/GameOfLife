@@ -17,7 +17,7 @@ export class CustomErrorHandler implements ErrorHandler {
       console.error('Response body:', error.message);
     } else {
       //Client seitig
-      this.notificationService.error('Fehler: ' + error.message);
+      //  this.notificationService.error('Fehler: ' + error.message);
     }
   }
 }

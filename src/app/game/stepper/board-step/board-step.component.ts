@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Controls } from '../../model/Controls';
 import { Game } from '../../model/Game';
+import { DefaultsService } from '../../../shared/service/defaults.service';
+import { MatSlider } from '@angular/material/slider';
 
 @Component({
   selector: 'app-board-step',
   templateUrl: './board-step.component.html',
   styleUrls: ['./board-step.component.scss'],
 })
-export class BoardStepComponent implements OnInit {
+export class BoardStepComponent implements OnInit, AfterViewInit {
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
@@ -27,27 +28,19 @@ export class BoardStepComponent implements OnInit {
   @Input()
   controls: Controls;
 
-  boardFormGroup: FormGroup;
+  @ViewChild('generations') generationsComponent: MatSlider;
 
-  constructor(private formBuilder: FormBuilder) {}
+  private sizes: Map<string, { x: number; y: number }>;
+
+  constructor(private defaults: DefaultsService) {}
 
   ngOnInit(): void {
+    this.loadSizes();
     this.doLoadGames.emit();
-    this.boardFormGroup = this.formBuilder.group({
-      sizeX: [this.controls.xAxisSize],
-      sizeY: [this.controls.yAxisSize],
-      generations: [this.controls.generations],
-    });
   }
 
-  public onResizeX(xValue: number): void {
-    const y = this.boardFormGroup.get('sizeY').value;
-    this.doResize.emit({ x: xValue, y });
-  }
-
-  public onResizeY(yValue: number): void {
-    const x = this.boardFormGroup.get('sizeX').value;
-    this.doResize.emit({ x, y: yValue });
+  ngAfterViewInit(): void {
+    this.generationsComponent.value = this.controls.generations;
   }
 
   onChangeGenerations(generations: number): void {
@@ -56,5 +49,16 @@ export class BoardStepComponent implements OnInit {
 
   onApplyGame(id: string): void {
     this.doApplyGame.emit(id);
+  }
+
+  onChangeSize($event: any): void {
+    this.doResize.emit(this.sizes.get($event));
+  }
+
+  private loadSizes(): void {
+    this.defaults.defaultSizes().subscribe((sizes) => {
+      this.sizes = sizes;
+    });
+    // TODO Wie war das mit unsubscribe und memory leaks? besser async pipe im html und binding property?
   }
 }

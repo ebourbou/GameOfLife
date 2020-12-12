@@ -25,7 +25,9 @@
   </mat-step>
 
   <mat-step label="Spielen" state="play" [editable]="!isGameFinished" >
-    <app-play-step [isGameFinished]="isGameFinished" (doNextStepProgrammatically)="onNextStepProgrammatically()"></app-play-step >
+    <app-play-step [isGameFinished]="isGameFinished"
+                   (doNextStepProgrammatically)="onNextStepProgrammatically()">
+    </app-play-step >
   </mat-step>
 
   <mat-step label="Analysieren" state="analyze">

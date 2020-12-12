@@ -1,12 +1,11 @@
-<div *ngIf="game" class="container" (window:resize)="onResize()">
-  <mat-card class="game-preview">
-    <mat-card-header>
-      <mat-card-title>{{game.id.slice(-5)}}</mat-card-title>
-      <mat-card-subtitle>{{game.author}}</mat-card-subtitle>
-    </mat-card-header>
+<div *ngIf="game" class="container" >
+  <mat-card class="card mat-elevation-z2">
     <canvas class="preview" #gamePreview></canvas>
     <mat-card-content class="content">
-      <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <p>{{game.description}}</p>
     </mat-card-content>
+    <mat-card-actions class="actions">
+      <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+    </mat-card-actions>
   </mat-card>
 </div>

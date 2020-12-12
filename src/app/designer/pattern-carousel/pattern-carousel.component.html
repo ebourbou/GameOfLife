@@ -1,0 +1,13 @@
+<div *ngIf="patterns" [ngClass]="(isSelected && highLightSelection ? 'carousel highlighted' : 'carousel')">
+  <div>
+    <pattern-preview class="slide" [pattern]="patterns[currentPatternIndex]"></pattern-preview>
+    <button class="control prev" (click)="onPreviousClick()">
+      <span class="arrow left"></span>
+    </button>
+    <button class="control action" (click)="onSelect()">
+    </button>
+    <button class="control next" (click)="onNextClick()">
+      <span class="arrow right"></span>
+    </button>
+  </div>
+</div>

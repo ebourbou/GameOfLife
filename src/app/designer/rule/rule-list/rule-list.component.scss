@@ -1,0 +1,25 @@
+.designer {
+  width: 100%;
+  display: flex;
+}
+.rule-set-list {
+  margin: 0 0 2em 0;
+  flex-basis: 20%;
+}
+
+.list-item{
+  display:flex;
+  justify-content: space-between;
+}
+
+.lock {
+  color: lightgray;
+}
+
+.rule-set-detail {
+  flex-basis: 80%;
+}
+
+.matrix {
+  width: 100%;
+}

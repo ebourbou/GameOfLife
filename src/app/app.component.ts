@@ -49,7 +49,12 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('gol_save', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/save-fill.svg'));
     this.matIconRegistry.addSvgIcon('tortoise', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/tortoise.svg'));
     this.matIconRegistry.addSvgIcon('rabbit', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/rabbit.svg'));
-
+    this.matIconRegistry.addSvgIcon('medal_fill', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medal-fill.svg'));
+    this.matIconRegistry.addSvgIcon('medal_line', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medal-line.svg'));
+    this.matIconRegistry.addSvgIcon('mushroom_cloud', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/mushroom2.svg'));
+    this.matIconRegistry.addSvgIcon('small', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/small.svg'));
+    this.matIconRegistry.addSvgIcon('medium', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medium.svg'));
+    this.matIconRegistry.addSvgIcon('large', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/large.svg'));
     this.matIconRegistry.addSvgIcon('spaceship', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/spaceship.svg'));
     this.matIconRegistry.addSvgIcon('static', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/static.svg'));
     this.matIconRegistry.addSvgIcon('oscillator', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/oscillator.svg'));
@@ -65,6 +70,8 @@ export class AppComponent implements OnInit {
       if (navigated) {
         this.notificationService.info('Benutzer abgemeldet ');
       }
+      //TODO: logout sollte jeglichen state wegwerfen. etwa so:
+      // location.reload();
     });
   }
 

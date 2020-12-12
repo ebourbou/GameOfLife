@@ -33,16 +33,19 @@
              [isReadyToRun]="isReadyToRun$ | async"
              [isReadyForAnalysis]="isReadyForAnalysis$ | async"
              [generationStatistic]="generationStatistic$ | async"
+             [allGenerationStatistics]="allGenerationStatistics$ | async"
              [patternSelected]="patternSelected$ | async"
              (doChangeSpeed)="onChangeSpeed($event)"
              (doApplyPattern)="onApplyPattern($event)"
              (doAbortAndReset)="startFromScratch()"
              (doStartGame)="onPlay()"
              (doToggleMaximize)="onToggleMaximize()"
-             (doStartAnalysis)="onStartAnalysis()">
+             (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })">
   </gol-board>
   <gol-game-statistic
     *ngIf="isGameFinished$ | async"
-    [allGenerationStatistics]="allGenerationStatistics$ | async" >
+    [allGenerationStatistics]="allGenerationStatistics$ | async"
+    [score]="score$ | async"
+    [currentGame]="game">
   </gol-game-statistic>
 </ng-container>

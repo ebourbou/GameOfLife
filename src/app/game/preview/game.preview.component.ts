@@ -1,35 +1,54 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit } from '@angular/core';
 import { Game } from '../model/Game';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatternRating } from '../../shared/model/pattern-rating';
+import { RatingComponent } from '../../shared/rating/rating.component';
+import { User } from '../../shared/model/user';
+import { PatternService } from '../../shared/service/patterns.service';
+import { AuthService } from '../../core/services/auth.service';
+import { RatingService } from '../../shared/service/rating.service';
 
 @Component({
   selector: 'game-preview',
   templateUrl: './game.preview.component.html',
   styleUrls: ['./game.preview.component.scss'],
 })
-export class GamePreviewComponent implements AfterViewInit {
+export class GamePreviewComponent implements OnInit, AfterViewInit {
   @Input() game: Game;
   @ViewChild('gamePreview') gamePreviewCanvas: ElementRef;
+  @ViewChild('rating') ratingComponent: RatingComponent;
+
   private context: CanvasRenderingContext2D;
+  rating: number;
+  user: User;
+  disabled: boolean = false;
+
+  constructor(
+    private snackBarService: MatSnackBar,
+    private ratingService: RatingService,
+    private patternService: PatternService,
+    private authService: AuthService
+  ) {}
+
+  async ngOnInit() {
+    this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
+
+    this.ratingService.getRating(this.game.id, this.user.id).subscribe((value) => {
+      this.rating = value.rating;
+      this.disabled = value.userVoted;
+
+      this.ratingComponent.setRating(this.rating);
+      this.ratingComponent.setDisabled(this.disabled);
+    });
+  }
 
   ngAfterViewInit(): void {
     this.context = this.gamePreviewCanvas.nativeElement.getContext('2d');
     this.draw();
   }
 
-  onResize() {
-    // Not a good thing to do but will get you going.
-    // I need to look into the Renderer service instead.
-    const canvasElement = this.gamePreviewCanvas.nativeElement;
-
-    // These don't change (canvas intrinsic dimensions)
-    const canvasWidth = canvasElement.width;
-    const canvasHeight = canvasElement.height;
-
-    // These will change (scaling applied by the style)
-    const computedStyles = getComputedStyle(canvasElement);
-    const computedWidth = computedStyles.width;
-    const computedHeight = computedStyles.height;
-  }
   /**
    * Draws something using the context we obtained earlier on
    */
@@ -39,7 +58,14 @@ export class GamePreviewComponent implements AfterViewInit {
       const gameHeight = this.game.board.height;
       const canvasWidth = (this.gamePreviewCanvas.nativeElement as HTMLCanvasElement).width;
       const canvasHeight = (this.gamePreviewCanvas.nativeElement as HTMLCanvasElement).height;
-      this.context.fillStyle = 'azure';
+
+      const computedStyles = getComputedStyle(this.gamePreviewCanvas.nativeElement);
+      const wi = parseInt(computedStyles.width, 10);
+      const hi = parseInt(computedStyles.height, 10);
+
+      this.context.scale(1, 1);
+
+      this.context.fillStyle = 'ghostwhite';
       this.context.fillRect(0, 0, canvasWidth, canvasHeight);
       this.context.fillStyle = 'black';
 
@@ -56,7 +82,26 @@ export class GamePreviewComponent implements AfterViewInit {
     }
   }
 
-  onRatingChanged($event: any) {
-    // todo
+  onRatingChanged(rating: number): void {
+    console.log(rating);
+    this.rating = rating;
+
+    if (!this.disabled) {
+      const ratingUpdate: PatternRating = {
+        id: '',
+        rating: this.rating,
+        userId: this.user.id,
+        patternId: this.game.id,
+        comment: 'n/a',
+      };
+      this.ratingService
+        .updateRating(ratingUpdate)
+        .then((value) => console.log(value))
+        .catch((reason) => {
+          console.log(reason);
+        });
+      this.disabled = true;
+    }
+    this.snackBarService.open('Bewertung gespeichert', 'Schiessen', { duration: 2000 });
   }
 }

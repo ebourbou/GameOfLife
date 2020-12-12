@@ -20,7 +20,7 @@ export class BoardComponent implements OnInit {
   public doStartGame: EventEmitter<void> = new EventEmitter();
 
   @Output()
-  public doStartAnalysis: EventEmitter<void> = new EventEmitter();
+  public doStartAnalysis: EventEmitter<GenerationStatistic[]> = new EventEmitter();
 
   @Output()
   public doToggleMaximize: EventEmitter<void> = new EventEmitter();
@@ -33,6 +33,9 @@ export class BoardComponent implements OnInit {
 
   @Input()
   generationStatistic: GenerationStatistic;
+
+  @Input()
+  allGenerationStatistics: GenerationStatistic[];
 
   @Input()
   isMasked: boolean;
@@ -83,11 +86,11 @@ export class BoardComponent implements OnInit {
   }
 
   onStartAnalysis(): void {
-    this.doStartAnalysis.emit();
+    this.doStartAnalysis.emit(this.allGenerationStatistics);
   }
 
   getBoardClasses(): string[] {
-    const classes = [];
+    const classes = ['board'];
     if (this.isBoardMaximized) {
       classes.push('isMaximized');
     }

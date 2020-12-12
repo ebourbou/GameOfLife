@@ -4,6 +4,7 @@ import { PatternsComponent } from './pattern-list/patterns.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { MasterRouterLinkDirective } from './directives/master-router-link.directive';
 import { PatternDetailComponent } from './pattern-detail/pattern-detail.component';
+import { RuleListComponent } from './rule/rule-list/rule-list.component';
 
 //const routes: Routes = [{ path: '', component: PatternsComponent, canActivate: [AuthGuard] }];
 const directives = [MasterRouterLinkDirective];
@@ -18,6 +19,7 @@ const detailRoutes = [
   },
 ];
 
+/*
 const routes: Routes = [
   {
     path: '',
@@ -45,6 +47,12 @@ const routes: Routes = [
   // Desktop 'Detail' Routes
   // are siblings of the master...
   ...detailRoutes,
+];
+*/
+
+const routes: Routes = [
+  { path: 'rules', pathMatch: 'full', component: RuleListComponent, canActivate: [AuthGuard] },
+  { path: 'patterns', pathMatch: 'full', component: PatternsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

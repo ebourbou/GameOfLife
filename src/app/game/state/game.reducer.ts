@@ -8,6 +8,7 @@ import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { StepperStep } from '../stepper/StepperStep';
+import { Score } from '../../statistic/service/score';
 
 export const gameFeatureKey = 'game';
 
@@ -20,6 +21,7 @@ export interface GameState {
   ruleSetSelected: RuleSet;
   allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
+  score: Score;
   loading: boolean;
   controls: Controls;
   running: boolean;
@@ -41,6 +43,7 @@ export const initialState: GameState = {
   ruleSetSelected: null,
   allGenerationStatistics: [],
   generationStatistic: null,
+  score: null,
   loading: false,
   controls: null,
   running: false,
@@ -129,12 +132,13 @@ export const gameActionReducer = createReducer(
     };
   }),
 
-  on(GameActions.startAnalysisSuccess, (state) => {
+  on(GameActions.startAnalysisSuccess, (state, action) => {
     return {
       ...state,
       running: false,
       readyToRun: false,
       gameFinished: true,
+      score: action.score,
     };
   }),
 
@@ -145,9 +149,13 @@ export const gameActionReducer = createReducer(
     };
   }),
   on(GameActions.applyPattern, (state, action) => {
-    const newGame = deepCopy(state.game);
-    GameUtils.applyPattern(newGame.board, action.row, action.column, state.patternSelected);
-    return { ...state, game: newGame };
+    const newState = { ...state };
+    if (state.patternSelected) {
+      const newGame = deepCopy(state.game);
+      GameUtils.applyPattern(newGame.board, action.row, action.column, state.patternSelected);
+      newState.game = newGame;
+    }
+    return newState;
   }),
   on(GameActions.randomCells, (state) => {
     const newGame = deepCopy(state.game);

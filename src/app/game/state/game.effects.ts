@@ -11,6 +11,8 @@ import { NotificationService } from '../../shared/service/notification.service';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
+import { ScoreService } from '../../statistic/service/score.service';
+import { RuleService } from '../../shared/service/rule/rule.service';
 
 @Injectable()
 export class GameEffects {
@@ -96,7 +98,12 @@ export class GameEffects {
   startAnalysis$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GameActions.startAnalysis),
-      concatMap(() => of(GameActions.startAnalysisSuccess()))
+      concatMap((payload) =>
+        this.scoreService.computeScore(payload.game, payload.generationStatistics).pipe(
+          map((score) => GameActions.startAnalysisSuccess({ score })),
+          catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
+        )
+      )
     );
   });
 
@@ -105,7 +112,7 @@ export class GameEffects {
       return this.actions$.pipe(
         ofType(GameActions.errorAction),
         map((payload) => {
-          this.snackBar.errors(GameActions.errorAction.type, payload.errors);
+          this.notificationService.error(GameActions.errorAction.type + ' ' + payload.errors);
         })
       );
     },
@@ -118,7 +125,8 @@ export class GameEffects {
     private patternService: PatternService,
     private ruleService: AbstractRuleService,
     private gameService: GameService,
-    private snackBar: NotificationService
+    private notificationService: NotificationService,
+    private scoreService: ScoreService
   ) {}
 
   private newGame(controls: Controls): any {

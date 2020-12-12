@@ -1,42 +1,38 @@
-<form [formGroup]="boardFormGroup">
+<div>
 <p>Bestimme die Grösse des Spielfeldes und die Dauer des Spieles:</p>
-    <mat-label>Breite</mat-label>
-    <mat-slider
-      [max]="200"
-      [min]="10"
-      [step]="10"
-      [thumbLabel]= true
-      formControlName="sizeX" (valueChange)="onResizeX($event)">
-    </mat-slider>
-    <mat-label>Höhe</mat-label>
-    <mat-slider
-      [max]="200"
-      [min]="10"
-      [step]="10"
-      [thumbLabel]= true
-      formControlName="sizeY" (valueChange)="onResizeY($event)">
-    </mat-slider>
-    <p></p>
+  <mat-button-toggle-group multiple="false" (change)="onChangeSize($event.value)" >
+    <mat-button-toggle value="small" aria-label="Klein">
+      <mat-icon svgIcon="small"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="medium" aria-label="Mittel" checked="true">
+      <mat-icon svgIcon="medium"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="large" aria-label="Gross">
+      <mat-icon svgIcon="large"></mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <p></p>
     <mat-label>Generationen</mat-label>
     <mat-slider
+      #generations
       [max]="500"
       [min]="10"
       [step]="10"
       [thumbLabel]= true
-      formControlName="generations" (valueChange)="onChangeGenerations($event)">
+      (valueChange)="onChangeGenerations($event)">
     </mat-slider>
   <p></p>
   <div class="game">
     <mat-label>Meine Spiele</mat-label>
-  <div class="scroll-container">
-    <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0.1em" class="game-list">
-      <mat-grid-tile *ngFor="let current of allGames" (click)="onApplyGame(current.id)" >
-        <game-preview [game]="current"></game-preview>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
+    <div class="scroll-container">
+      <mat-grid-list cols="1" rowHeight="1:1" gutterSize="10" class="game-list">
+        <mat-grid-tile *ngFor="let current of allGames" (click)="onApplyGame(current.id)" >
+          <game-preview [game]="current"></game-preview>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
     <div>
       <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
     </div>
-</form>
+</div>

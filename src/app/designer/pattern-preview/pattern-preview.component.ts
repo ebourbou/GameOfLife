@@ -9,6 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { RatingService } from '../../shared/service/rating.service';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { NotificationService } from '../../shared/service/notification.service';
 
 @Component({
@@ -17,6 +18,8 @@ import { NotificationService } from '../../shared/service/notification.service';
   styleUrls: ['./pattern-preview.component.scss'],
 })
 export class PatternPreviewComponent implements OnInit, OnChanges {
+  @Input() ruleSet: RuleSet;
+
   @Input() pattern: Pattern;
   user: User;
   board: Board;
@@ -32,7 +35,10 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     private ratingService: RatingService,
     private patternService: PatternService,
     private authService: AuthService
-  ) {}
+  ) {
+    this.ruleSet = new ConwaysRuleSet();
+  }
+
   startAnimation(): void {
     this.id = setInterval(() => {
       this.play();
@@ -46,7 +52,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     this.ngOnChanges(null);
   }
   play(): void {
-    this.board.nextGeneration(new ConwaysRuleSet());
+    this.board.nextGeneration(this.ruleSet);
   }
 
   ngOnInit(): void {
@@ -76,19 +82,18 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   }
 
   onRatingChanged(rating: any): void {
-    console.log(rating);
     this.rating = rating;
 
     if (!this.disabled) {
-      const patternRating: Rating = {
+      const ratingUpdate: Rating = {
         id: '',
         rating: this.rating,
         userId: this.user.id,
-        rateId: this.id,
+        rateId: this.pattern.id,
         comment: 'n/a',
       };
       this.ratingService
-        .updateRating(patternRating)
+        .updateRating(ratingUpdate)
         .then((value) => this.notificationService.info('Rating wurde gespeichert'))
         .catch((reason) => {
           this.notificationService.error('Fehler beim Rating speichern: ' + reason);

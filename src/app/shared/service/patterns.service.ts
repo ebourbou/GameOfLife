@@ -6,14 +6,11 @@ import {
   GetPatternQuery,
   ListPatternsQuery,
   UpdatePatternMutation,
-  UpdateRatingMutation,
 } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
-import { PatternUtils } from './pattern-util';
-import { from, Observable, Observer, of } from 'rxjs';
-import { RatingUtils } from './pattern-rating-util';
-import { Rating } from '../model/pattern-rating';
+import { from, Observable } from 'rxjs';
+import { PatternUtils } from '../../designer/util/pattern-util';
 
 @Injectable({
   providedIn: 'root',

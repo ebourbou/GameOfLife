@@ -14,7 +14,7 @@ export class RatingComponent implements OnInit {
   @Input() starCount = 5;
   @Output() ratingUpdated = new EventEmitter();
   ratingArr = [];
-  disabled: boolean = false;
+  disabled = false;
 
   constructor(private notificationService: NotificationService) {}
 

@@ -1,4 +1,4 @@
-import { Component, Injectable, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
@@ -7,11 +7,8 @@ import { PatternUtils } from '../util/pattern-util';
 import { PatternService } from '../../shared/service/patterns.service';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root', // **** ADD THIS LINE ****
-})
 @Component({
   selector: 'app-patterns',
   templateUrl: './patterns.component.html',
@@ -22,18 +19,14 @@ export class PatternsComponent implements OnInit, OnDestroy {
   selectedPattern: Pattern;
   user: User;
 
-  public routeChangeSub$: Subscription;
   public pattern: Observable<Pattern>;
-  //public patterns: Observable<Pattern[]>;
 
   @Output()
   public select = new EventEmitter();
 
   constructor(private patternService: PatternService, private apiService: APIService, private authService: AuthService) {}
 
-  ngOnDestroy(): void {
-    // this.routeChangeSub$.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
@@ -50,7 +43,6 @@ export class PatternsComponent implements OnInit, OnDestroy {
     });
 
     this.apiService.OnDeletePatternListener.subscribe((value) => {
-      console.log('delete (subscription)');
       /*  const patternToDelete: Pattern = PatternUtils.fromAwsPattern(value);
         const foundIndex = this.patterns.findIndex(x => x.id === patternToDelete.id);
         this.patterns.splice(foundIndex, 1);
@@ -59,7 +51,6 @@ export class PatternsComponent implements OnInit, OnDestroy {
     });
 
     this.apiService.OnUpdatePatternListener.subscribe((value) => {
-      console.log('update (subscription)' + value);
       const patternToUpdate: Pattern = PatternUtils.fromAwsPattern(value);
       /*  console.log("updated pattern"+ JSON.stringify(patternToUpdate));
          const foundIndex = this.patterns.findIndex(x => x.id === patternToUpdate.id);
@@ -85,16 +76,29 @@ export class PatternsComponent implements OnInit, OnDestroy {
   }
 
   load(selectedPattern: Pattern): void {
-    this.patternService.getPatterns().then((result) => {
-      this.patterns = result.items.map((item) => {
-        return PatternUtils.fromAwsPattern(item);
-      });
-      this.selectedPattern = selectedPattern ? selectedPattern : this.patterns.length > 0 ? this.patterns[0] : null;
+    this.patternService.getPatternsObservable().subscribe((result) => {
+      this.patterns = result;
+      this.selectedPattern = this.patterns.length > 0 ? this.patterns[0] : null;
       this.onSelect(selectedPattern);
     });
   }
 
-  lockedIcon(pattern: Pattern): 'lock' | 'lock_open' {
-    return pattern.locked ? 'lock' : 'lock_open';
+  lockedIcon(locked: boolean): string {
+    return locked ? 'lock' : 'lock_open';
+  }
+
+  typeIcon(type: string): string {
+    switch (type) {
+      case 'oscillator':
+        return 'oscillator';
+      case 'buffer':
+        return 'buffer';
+      case 'static':
+        return 'static';
+      case 'spaceship':
+        return 'spaceship';
+      default:
+        return 'pattern';
+    }
   }
 }

@@ -1,6 +1,0 @@
-This component is based on the tutorial at
-https://levelup.gitconnected.com/sparklines-with-angular-and-d3-d279dbac0c38
-as there is no sparkline chart readily available in any open source library of reputation.
-
-Other example:
-https://github.com/swimlane/ngx-charts/tree/master/src/app/custom-charts/sparkline

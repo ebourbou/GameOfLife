@@ -1,23 +1,36 @@
-<p>Bevölkere das Spielfeld, indem du auf Zellen klickst oder Patterns auswählst und einfügst:</p>
-<form [formGroup]="cellsFormGroup">
-  <mat-form-field>
-    <mat-label>Pattern</mat-label>
-    <mat-select (selectionChange)="onPatternSelected($event.value)" [(value)]="patternSelected">
-      <mat-option>Keine Auswahl</mat-option>
-      <mat-optgroup *ngFor="let group of groupedPatterns" [label]="group.key">>
-        <mat-option *ngFor="let pattern of group.value" [value]="pattern" >{{pattern.name}}
-        </mat-option>
-      </mat-optgroup>
-    </mat-select>
-  </mat-form-field>
-  <pattern-preview [pattern]="patternSelected"></pattern-preview>
-  <p></p>
-  <button mat-button mat-stroked-button  (click)="onReset($event)">Alle Löschen</button>
-  <button mat-button mat-stroked-button  (click)="onRandom($event)" >Zufall</button>
-  <button mat-button mat-stroked-button  (click)="onInvert($event)" >Invertieren</button>
-
+<p>Bevölkere das Spielfeld:</p>
+<div>
+  <mat-button-toggle-group>
+    <mat-button-toggle [checked]="drawMode == 0" (change)="toggleDrawMode()" matTooltip="Einzelne Zellen zeichnen">
+      <mat-icon>brush</mat-icon>
+      <span>Freihandzeichnen</span>
+    </mat-button-toggle>
+    <mat-button-toggle [checked]="drawMode != 0" (change)="toggleDrawMode()" matTooltip="Pattern einfügen">
+      <mat-icon>brush</mat-icon>
+      <span >Pattern einfügen</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <app-pattern-carousel [autoLoadPatterns]="false"
+                        [highLightSelection]="true"
+                        [patterns]="allPatterns"
+                        [isSelected]="drawMode != 0"
+                        (doPatternSelected)="onPatternSelected($event)"
+                        (doDeSelect)="onDeselectPattern()">
+  </app-pattern-carousel>
   <div>
+    <button mat-button mat-stroked-button  (click)="onRandom($event)" matTooltip="Zufällig Zellen zeichnen">
+      <mat-icon>grain</mat-icon>
+      <span >Zufall</span>
+    </button>
+    <button mat-button mat-stroked-button  (click)="onInvert($event)" matTooltip="Alle Zellen invertieren" >
+      <mat-icon>invert_colors</mat-icon>
+      <span >Invertieren</span>
+    </button>
+    <button mat-button mat-stroked-button  (click)="onReset($event)">
+      <mat-icon>format_color_reset</mat-icon>
+      <span >Alles löschen</span></button>
     <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
     <button mat-button matStepperPrevious mat-raised-button type="button" style="float: right;">Zurück</button>
   </div>
-</form>
+
+</div>

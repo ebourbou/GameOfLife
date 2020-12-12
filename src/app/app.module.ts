@@ -35,6 +35,9 @@ import { GameService } from './shared/service/game.service';
 import { RatingService } from './shared/service/rating.service';
 import { NotificationService } from './shared/service/notification.service';
 import { CustomErrorHandler } from './auth/error-handler';
+import { ScoreService } from './statistic/service/score.service';
+import { StatisticModule } from './statistic/statistic.module';
+import { LocalRuleService } from './shared/service/rule/local-rule.service';
 
 registerLocaleData(localeDECH);
 
@@ -57,20 +60,20 @@ registerLocaleData(localeDECH);
     MatToolbarModule,
     MatSidenavModule,
     MatTooltipModule,
+    StatisticModule,
   ],
   declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    { provide: ErrorHandler, useClass: CustomErrorHandler },
+    // { provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },
-    { provide: RatingService, useClass: RatingService },
-    { provide: NotificationService, useClass: NotificationService },
-    { provide: AbstractRuleService, useClass: MockRuleService },
+    { provide: AbstractRuleService, useClass: LocalRuleService },
     { provide: GameService, useClass: GameService },
+    { provide: ScoreService, useClass: ScoreService },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } },
     AmplifyService,
   ],

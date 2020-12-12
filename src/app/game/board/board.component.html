@@ -1,5 +1,4 @@
-<mat-card  [ngClass]="getBoardClasses()">
-  <mat-card-content class="board"  >
+<div [ngClass]="getBoardClasses()">
     <ng-container *ngIf="this.isLoading"><mat-spinner class="spinner"></mat-spinner></ng-container>
     <div class="row" *ngFor="let row of this.board.rowsAndCells.values()">
       <div class="cell"
@@ -21,6 +20,5 @@
                   (doAbortAndReset)="onAbortAndReset()"
                   (doToggleMaximize)="onToggleMaximize()">
     </app-gametime>
-  </mat-card-content>
-</mat-card>
+</div>
 

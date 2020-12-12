@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
-import { GameStatisticComponent } from './game-statistic/game-statistic.component';
 import { SharedModule } from '../shared/shared.module';
-import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-grouped';
-import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
-import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { LastGenerationToPercentagePipe } from './game-statistic/last-generation-to-percentage.pipe';
+import { ScoreTagComponent } from './score-tag/score-tag.component';
+import { ScoreMedalComponent } from './score-medal/score-medal.component';
+import { ScoreComponent } from './score/score.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  declarations: [GameStatisticComponent, ToMeasureSeriesGroupedPipe, LastGenerationToMeasurePipe, LastGenerationToPercentagePipe],
-  imports: [SharedModule, LineChartModule, NgxChartsModule, MatGridListModule],
-  exports: [GameStatisticComponent, ToMeasureSeriesGroupedPipe, LastGenerationToMeasurePipe, LastGenerationToPercentagePipe],
+  declarations: [ScoreTagComponent, ScoreMedalComponent, ScoreComponent],
+  imports: [SharedModule, MatChipsModule],
+  exports: [ScoreMedalComponent, ScoreTagComponent, ScoreComponent],
 })
 export class StatisticModule {}

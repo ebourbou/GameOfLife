@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { APIService, CreatePatternMutation, CreateUserMutation, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
 import { User } from '../../shared/model/user';
 import { UserUtils } from '../utils/user-utils';
-import { PatternUtils } from '../../shared/service/pattern-util';
 
 @Injectable({
   providedIn: 'root',

@@ -1,0 +1,11 @@
+<div *ngIf="ruleSets" class="carousel highlighted">
+  <div>
+    <div class="slide">Ruleset Preview of {{this.ruleSets[this.currentIndex].shortName}} here </div>
+    <button class="control prev" (click)="onPreviousClick()">
+      <span class="arrow left"></span>
+    </button>
+    <button class="control next" (click)="onNextClick()">
+      <span class="arrow right"></span>
+    </button>
+  </div>
+</div>
