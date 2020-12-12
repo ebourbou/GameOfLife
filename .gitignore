@@ -63,3 +63,6 @@ amplifytools.xcconfig
 /amplify/.temp/
 /amplify/#current-cloud-backend/
 /amplify-backup/
+/.graphqlconfig.yml
+/amplify/backend/backend-config.json
+/team-provider-info.json
