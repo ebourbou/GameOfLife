@@ -9,6 +9,7 @@ import { PatternPreviewComponent } from './pattern-preview/pattern-preview.compo
 import { RuleListComponent } from './rule/rule-list/rule-list.component';
 import { RuleDetailComponent } from './rule/rule-detail/rule-detail.component';
 import { PatternCarouselComponent } from './pattern-carousel/pattern-carousel.component';
+import { RuleCarouselComponent } from './rule-carousel/rule-carousel.component';
 
 @NgModule({
   imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule],
@@ -20,7 +21,8 @@ import { PatternCarouselComponent } from './pattern-carousel/pattern-carousel.co
     RuleListComponent,
     RuleDetailComponent,
     PatternCarouselComponent,
+    RuleCarouselComponent,
   ],
-  exports: [PatternPreviewComponent, PatternCarouselComponent],
+  exports: [PatternPreviewComponent, PatternCarouselComponent, RuleCarouselComponent],
 })
 export class DesignerModule {}

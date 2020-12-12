@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-play-step',
@@ -7,8 +6,6 @@ import { MatStepper } from '@angular/material/stepper';
   styles: [''],
 })
 export class PlayStepComponent implements OnInit {
-  @ViewChild('stepper') private myStepper: MatStepper;
-
   @Output()
   public doNextStepProgrammatically: EventEmitter<void> = new EventEmitter();
 

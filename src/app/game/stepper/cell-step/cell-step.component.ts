@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pattern } from '../../../shared/model/pattern';
 
 @Component({
@@ -25,12 +24,9 @@ export class CellStepComponent implements OnInit {
   @Output()
   private doInvertCells: EventEmitter<void> = new EventEmitter();
 
-  cellsFormGroup: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.cellsFormGroup = this.formBuilder.group({});
     this.drawMode = DrawMode.CELL;
   }
 

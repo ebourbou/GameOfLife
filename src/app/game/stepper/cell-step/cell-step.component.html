@@ -1,9 +1,15 @@
 <p>Bevölkere das Spielfeld:</p>
-<form [formGroup]="cellsFormGroup">
-  <mat-button-toggle [checked]="drawMode == 0" (change)="toggleDrawMode()">Zeichnen</mat-button-toggle>
-  <button mat-button mat-stroked-button  (click)="onRandom($event)" >Zufall</button>
-  <button mat-button mat-stroked-button  (click)="onInvert($event)" >Invertieren</button>
-  <span>Füge ein Pattern ein:</span>
+<div>
+  <mat-button-toggle-group>
+    <mat-button-toggle [checked]="drawMode == 0" (change)="toggleDrawMode()" matTooltip="Einzelne Zellen zeichnen">
+      <mat-icon>brush</mat-icon>
+      <span>Freihandzeichnen</span>
+    </mat-button-toggle>
+    <mat-button-toggle [checked]="drawMode != 0" (change)="toggleDrawMode()" matTooltip="Pattern einfügen">
+      <mat-icon>brush</mat-icon>
+      <span >Pattern einfügen</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <app-pattern-carousel [autoLoadPatterns]="false"
                         [highLightSelection]="true"
                         [patterns]="allPatterns"
@@ -12,9 +18,19 @@
                         (doDeSelect)="onDeselectPattern()">
   </app-pattern-carousel>
   <div>
-    <button mat-button mat-stroked-button  (click)="onReset($event)">Alle Löschen</button>
+    <button mat-button mat-stroked-button  (click)="onRandom($event)" matTooltip="Zufällig Zellen zeichnen">
+      <mat-icon>grain</mat-icon>
+      <span >Zufall</span>
+    </button>
+    <button mat-button mat-stroked-button  (click)="onInvert($event)" matTooltip="Alle Zellen invertieren" >
+      <mat-icon>invert_colors</mat-icon>
+      <span >Invertieren</span>
+    </button>
+    <button mat-button mat-stroked-button  (click)="onReset($event)">
+      <mat-icon>format_color_reset</mat-icon>
+      <span >Alles löschen</span></button>
     <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
     <button mat-button matStepperPrevious mat-raised-button type="button" style="float: right;">Zurück</button>
   </div>
 
-</form>
+</div>

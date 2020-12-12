@@ -41,6 +41,9 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('medal_fill', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medal-fill.svg'));
     this.matIconRegistry.addSvgIcon('medal_line', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medal-line.svg'));
     this.matIconRegistry.addSvgIcon('mushroom_cloud', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/mushroom2.svg'));
+    this.matIconRegistry.addSvgIcon('small', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/small.svg'));
+    this.matIconRegistry.addSvgIcon('medium', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/medium.svg'));
+    this.matIconRegistry.addSvgIcon('large', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/large.svg'));
   }
 
   logout(): void {

@@ -1,17 +1,10 @@
-<p>Wähle aus, nach welchem Regelsatz gespielt wird:</p>
-<form [formGroup]="ruleSetFormGroup">
-  <mat-form-field>
-    <mat-label>RegelSatz</mat-label>
-    <mat-select (selectionChange)="onRuleSetSelected($event.value)" [(value)]="ruleSetSelected" formControlName="ruleSet" >
-        <mat-option required="true"  *ngFor="let current of allRuleSets" [value]="current" >{{current.shortName}}
-        </mat-option>
-    </mat-select>
-    <mat-error *ngIf="ruleSetFormGroup.hasError('required')">
-      Eingabe obligatorisch
-    </mat-error>
-  </mat-form-field>
   <div>
-    <button mat-button matStepperNext mat-raised-button color="primary" [disabled]="!ruleSetFormGroup.valid" style="float: right;">Weiter</button>
+    <p>Wähle aus, nach welchem Regelsatz gespielt wird:</p>
+    <app-rule-carousel
+      autoLoadRules="false"
+      [ruleSets]="allRuleSets"
+      (doSelected)="onRuleSetSelected($event)">
+    </app-rule-carousel>
+    <button mat-button matStepperNext mat-raised-button color="primary" style="float: right;">Weiter</button>
     <button mat-button matStepperPrevious mat-raised-button type="button" style="float: right;">Zurück</button>
   </div>
-</form>
