@@ -38,6 +38,7 @@ import { CustomErrorHandler } from './auth/error-handler';
 import { ScoreService } from './statistic/service/score.service';
 import { StatisticModule } from './statistic/statistic.module';
 import { LocalRuleService } from './shared/service/rule/local-rule.service';
+import { GamerModule } from './gamer/gamer.module';
 
 registerLocaleData(localeDECH);
 
@@ -61,6 +62,7 @@ registerLocaleData(localeDECH);
     MatSidenavModule,
     MatTooltipModule,
     StatisticModule,
+    GamerModule,
   ],
   declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
   providers: [

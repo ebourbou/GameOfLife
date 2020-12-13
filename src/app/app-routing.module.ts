@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'designer', loadChildren: designerModule, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/account.module').then((m) => m.AccountModule) },
   { path: 'game', loadChildren: () => import('./game/game.module').then((m) => m.GameModule) },
+  { path: 'gamer', loadChildren: () => import('./gamer/gamer.module').then((m) => m.GamerModule) },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
