@@ -3,6 +3,7 @@ import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
+import { CellState } from '../../shared/model/CellState';
 
 @Component({
   selector: 'gol-board',
@@ -104,5 +105,12 @@ export class BoardComponent implements OnInit {
       }
     }
     return classes;
+  }
+
+  /* Freehand drawing mode*/
+  toggle(mouseEvent: MouseEvent, cell: Cell): void {
+    if (mouseEvent.buttons > 0 && !this.patternSelected) {
+      cell.setState(CellState.ALIVE);
+    }
   }
 }

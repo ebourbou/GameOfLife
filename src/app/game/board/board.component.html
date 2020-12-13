@@ -5,7 +5,8 @@
            [ngClass]="(cell.isAlive() ? 'isAlive' : cell.pristine ? 'wasNeverAlive': 'isDead')"
            matRipple matRippleRadius="30" matRippleCentered="true" matRippleUnbounded="true"
            *ngFor="let cell of row"
-           (click)="this.patternSelected && this.isEditable? this.onApplyPattern(cell) : this.isEditable ? cell.switchState() : null">
+           (click)="this.patternSelected && this.isEditable? this.onApplyPattern(cell) : this.isEditable ? cell.switchState() : null"
+           (mousemove)="toggle($event,cell)">
       </div>
     </div>
     <app-gametime *ngIf="isRunning || isReadyToRun || isReadyForAnalysis"
