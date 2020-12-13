@@ -53,7 +53,9 @@
       </form>
     </mat-card-content>
   </mat-card>
-  <div>
+  <div class="preview">
+    <rule-preview *ngIf="(demoPattern$ | async)" [ruleSet]="ruleSet" ></rule-preview>
+
     <ng-container *ngIf="!(demoPattern$ | async)"><mat-spinner class="spinner"></mat-spinner></ng-container>
     <pattern-preview *ngIf="demoPattern$ | async" [pattern]="demoPattern$ | async" [ruleSet]="ruleSet"></pattern-preview>
   </div>

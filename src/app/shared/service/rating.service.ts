@@ -11,8 +11,8 @@ import { Rating } from '../model/pattern-rating';
 export class RatingService {
   constructor(private apiService: APIService) {}
 
-  updateRating(patternRating: Rating): Promise<UpdateRatingMutation> {
-    const input: any = RatingUtils.toAwsPattern(patternRating);
+  updateRating(rating: Rating): Promise<UpdateRatingMutation> {
+    const input: any = RatingUtils.toAwsPattern(rating);
     delete input.id;
     return this.apiService.CreateRating(input);
   }

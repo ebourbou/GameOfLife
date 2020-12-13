@@ -18,7 +18,7 @@ export class RatingUtils {
     patRate = {
       id: rating.id,
       userId: rating.userId,
-      patternId: rating.patternId,
+      rateId: rating.patternId,
       comment: rating.comment,
       rating: rating.rating,
     };

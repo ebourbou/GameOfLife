@@ -7,6 +7,7 @@ import { User } from '../../shared/model/user';
 import { PatternService } from '../../shared/service/patterns.service';
 import { AuthService } from '../../core/services/auth.service';
 import { RatingService } from '../../shared/service/rating.service';
+import { NotificationService } from '../../shared/service/notification.service';
 
 @Component({
   selector: 'game-preview',
@@ -24,7 +25,7 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
   disabled: boolean = false;
 
   constructor(
-    private snackBarService: MatSnackBar,
+    private notificationService: NotificationService,
     private ratingService: RatingService,
     private patternService: PatternService,
     private authService: AuthService
@@ -98,10 +99,10 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
         .updateRating(ratingUpdate)
         .then((value) => console.log(value))
         .catch((reason) => {
-          console.log(reason);
+          this.notificationService.error('Fehler beim Rating speichern: ' + reason);
         });
       this.disabled = true;
     }
-    this.snackBarService.open('Bewertung gespeichert', 'Schiessen', { duration: 2000 });
+    this.notificationService.info('Bewertung gespeichert');
   }
 }
