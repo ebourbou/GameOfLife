@@ -1,28 +1,29 @@
 <router-outlet></router-outlet>
-
 <ng-container *ngIf="!($games | async)"><mat-spinner class="spinner"></mat-spinner></ng-container>
 
-<table mat-table [dataSource]="($games | async)" multiTemplateDataRows class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of columns">
+<table mat-table  [dataSource]="$games | async" multiTemplateDataRows
+       class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToShow">
     <th mat-header-cell *matHeaderCellDef> {{column}} </th>
     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToShow.length">
       <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div>{{element.description}}</div>
+           [@detailExpand]="element == expandedGame ? 'expanded' : 'collapsed'">
+        <app-game-preview [game]="element"></app-game-preview>
       </div>
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columns"></tr>
-  <tr mat-row *matRowDef="let element; columns: columns;"
+  <tr mat-header-row *matHeaderRowDef="columnsToShow"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToShow;"
       class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = expandedElement === element ? null : element">
+      [class.example-expanded-row]="expandedGame === element"
+      (click)="expandedGame = expandedGame === element ? null : element">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+

@@ -14,16 +14,21 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalRuleService extends AbstractRuleService {
+  private static ruleSets = [
+    new ConwaysRuleSet(),
+    new ReplicatorRuleSet(),
+    new LiveFreeOrDieRuleSet(),
+    new LifeWithoutDeathRuleSet(),
+    new MazeRuleSet(),
+    new PedestrianLifeRuleSet(),
+    new AntiLifeRuleSet(),
+  ];
+
   getRuleSets(): Observable<RuleSet[]> {
-    const ruleSets = [
-      new ConwaysRuleSet(),
-      new ReplicatorRuleSet(),
-      new LiveFreeOrDieRuleSet(),
-      new LifeWithoutDeathRuleSet(),
-      new MazeRuleSet(),
-      new PedestrianLifeRuleSet(),
-      new AntiLifeRuleSet(),
-    ];
-    return of(ruleSets);
+    return of(LocalRuleService.ruleSets);
+  }
+
+  getRuleSet(id: string): Observable<RuleSet> {
+    return of(LocalRuleService.ruleSets.find((r) => r.id === id));
   }
 }

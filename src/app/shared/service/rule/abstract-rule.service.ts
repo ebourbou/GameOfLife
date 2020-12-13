@@ -8,4 +8,5 @@ import { Injectable } from '@angular/core';
 })
 export abstract class AbstractRuleService implements RuleService {
   abstract getRuleSets(): Observable<RuleSet[]>;
+  abstract getRuleSet(id: string): Observable<RuleSet>;
 }

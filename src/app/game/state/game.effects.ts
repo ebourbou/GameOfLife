@@ -12,7 +12,6 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
-import { RuleService } from '../../shared/service/rule/rule.service';
 
 @Injectable()
 export class GameEffects {
@@ -112,7 +111,7 @@ export class GameEffects {
       return this.actions$.pipe(
         ofType(GameActions.errorAction),
         map((payload) => {
-          this.notificationService.error(GameActions.errorAction.type + ' ' + payload.errors);
+          this.notificationService.error(GameActions.errorAction.type + ' ' + JSON.stringify(payload.errors));
         })
       );
     },

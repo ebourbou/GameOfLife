@@ -8,7 +8,6 @@ import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { StepperStep } from '../stepper/StepperStep';
-import { Score } from '../../statistic/service/score';
 
 export const gameFeatureKey = 'game';
 
@@ -21,7 +20,6 @@ export interface GameState {
   ruleSetSelected: RuleSet;
   allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
-  score: Score;
   loading: boolean;
   controls: Controls;
   running: boolean;
@@ -43,7 +41,6 @@ export const initialState: GameState = {
   ruleSetSelected: null,
   allGenerationStatistics: [],
   generationStatistic: null,
-  score: null,
   loading: false,
   controls: null,
   running: false,
@@ -133,13 +130,9 @@ export const gameActionReducer = createReducer(
   }),
 
   on(GameActions.startAnalysisSuccess, (state, action) => {
-    return {
-      ...state,
-      running: false,
-      readyToRun: false,
-      gameFinished: true,
-      score: action.score,
-    };
+    const newGame = deepCopy(state.game);
+    newGame.score = action.score;
+    return { ...state, running: false, readyToRun: false, gameFinished: true, game: newGame };
   }),
 
   on(GameActions.patternSelected, (state, action) => {

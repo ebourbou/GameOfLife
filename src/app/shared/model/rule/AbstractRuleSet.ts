@@ -17,6 +17,7 @@ export abstract class AbstractRuleSet implements RuleSet {
     ruleStringBSnotation: string,
     demoPatternId: string
   ) {
+    this.id = id;
     this.shortName = shortName;
     this.description = description;
     this.difficulty = difficulty;

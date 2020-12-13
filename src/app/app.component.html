@@ -2,24 +2,24 @@
   <mat-sidenav mode="over" #sidenav_left position="start">
     <mat-nav-list role="navigation">
       <a mat-list-item routerLink="designer/patterns" routerLinkActive="active" (click)="sidenav_left.close()">
-        <mat-icon matListIcon>dashboard</mat-icon>
+        <mat-icon class="icon"  matListIcon>dashboard</mat-icon>
         Design Editor
       </a>
       <a mat-list-item routerLink="designer/rules" routerLinkActive="active" (click)="sidenav_left.close()">
-        <mat-icon matListIcon>rule</mat-icon>
+        <mat-icon class="icon"  matListIcon>rule</mat-icon>
         Regel Editor
       </a>
       <a *ngIf="user && isAdmin(user.role) " mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
-        <mat-icon matListIcon>settings</mat-icon>
+        <mat-icon class="icon"  matListIcon>settings</mat-icon>
         Rollenverwaltung
       </a>
-      <a mat-list-item routerLink="game" routerLinkActive="active" (click)="sidenav_left.close()">
-        <mat-icon matListIcon>games</mat-icon>
-        Neues Spiel
-      </a>
       <a mat-list-item routerLink="gamer" routerLinkActive="active" (click)="sidenav_left.close()">
-        <mat-icon matListIcon>videogame_asset</mat-icon>
+        <mat-icon class="icon"  matListIcon>videogame_asset</mat-icon>
         Meine Spiele
+      </a>
+      <a mat-list-item routerLink="game" routerLinkActive="active" (click)="sidenav_left.close()">
+        <mat-icon class="icon" matListIcon>games</mat-icon>
+        Neues Spiel
       </a>
     </mat-nav-list>
   </mat-sidenav>

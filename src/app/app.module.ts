@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,42 +24,34 @@ import { registerLocaleData } from '@angular/common';
 import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
 import { PatternService } from './shared/service/patterns.service';
-import { MockRuleService } from './shared/service/rule/mock-rule.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
-import { RatingService } from './shared/service/rating.service';
-import { NotificationService } from './shared/service/notification.service';
-import { CustomErrorHandler } from './auth/error-handler';
 import { ScoreService } from './statistic/service/score.service';
 import { StatisticModule } from './statistic/statistic.module';
 import { LocalRuleService } from './shared/service/rule/local-rule.service';
 import { GamerModule } from './gamer/gamer.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeDECH);
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     PasswordStrengthMeterModule,
     DesignerModule,
     AmplifyAngularModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     MatToolbarModule,
-    MatSidenavModule,
-    MatTooltipModule,
     StatisticModule,
     GamerModule,
   ],
