@@ -1,7 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit } from '@angular/core';
 import { Game } from '../model/Game';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { PatternRating } from '../../shared/model/pattern-rating';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { User } from '../../shared/model/user';
 import { PatternService } from '../../shared/service/patterns.service';
@@ -22,7 +20,7 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
   private context: CanvasRenderingContext2D;
   rating: number;
   user: User;
-  disabled: boolean = false;
+  disabled = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -34,14 +32,6 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.authService.user.subscribe((user) => {
       this.user = user;
-    });
-
-    this.ratingService.getRating(this.game.id, this.user.id).subscribe((value) => {
-      this.rating = value.rating;
-      this.disabled = value.userVoted;
-
-      this.ratingComponent.setRating(this.rating);
-      this.ratingComponent.setDisabled(this.disabled);
     });
   }
 
@@ -85,24 +75,5 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
 
   onRatingChanged(rating: number): void {
     console.log(rating);
-    this.rating = rating;
-
-    if (!this.disabled) {
-      const ratingUpdate: PatternRating = {
-        id: '',
-        rating: this.rating,
-        userId: this.user.id,
-        patternId: this.game.id,
-        comment: 'n/a',
-      };
-      this.ratingService
-        .updateRating(ratingUpdate)
-        .then((value) => console.log(value))
-        .catch((reason) => {
-          this.notificationService.error('Fehler beim Rating speichern: ' + reason);
-        });
-      this.disabled = true;
-    }
-    this.notificationService.info('Bewertung gespeichert');
   }
 }

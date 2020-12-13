@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService, UpdateRatingMutation } from '../../API.service';
 
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { RatingUtils } from './pattern-rating-util';
 import { Rating } from '../model/pattern-rating';
 
@@ -11,27 +11,27 @@ import { Rating } from '../model/pattern-rating';
 export class RatingService {
   constructor(private apiService: APIService) {}
 
-  updateRating(rating: Rating): Promise<UpdateRatingMutation> {
+  createRating(rating: Rating): Promise<UpdateRatingMutation> {
     const input: any = RatingUtils.toAwsPattern(rating);
     delete input.id;
     return this.apiService.CreateRating(input);
   }
 
-  getRating(id: string, userId: string): Observable<{ rating: number; userVoted: boolean }> {
+  getRating(rateId: string, userId: string): Observable<{ rating: number; userVoted: boolean }> {
     let averageRating = 0;
     let all = 1;
     let voted = false;
     return from(
       this.apiService
-        .ListRatings({ rateId: { eq: id } })
+        .ListRatings({ rateId: { eq: rateId } })
         .then((value) => {
-          all = value.items.length;
+          console.log(JSON.stringify(value));
+          all = Math.max(1, value.items.length);
           value.items.forEach((rating) => {
             averageRating += rating.rating;
 
             if (rating.userId === userId) {
               voted = true;
-              console.log(rating.userId + '===' + userId);
             }
           });
           return { rating: averageRating / all, userVoted: voted };

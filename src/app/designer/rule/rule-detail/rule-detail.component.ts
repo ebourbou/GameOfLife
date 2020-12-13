@@ -11,8 +11,7 @@ import { from, Observable, of } from 'rxjs';
 })
 export class RuleDetailComponent implements OnInit {
   public demoPattern$: Observable<Pattern>;
-
-  private innerRuleSet: RuleSet;
+  public innerRuleSet: RuleSet;
 
   @Input()
   set ruleSet(ruleSet: RuleSet) {
