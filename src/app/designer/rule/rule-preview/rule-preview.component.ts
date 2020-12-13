@@ -32,16 +32,16 @@ export class RulePreviewComponent implements OnChanges, OnInit {
   async ngOnChanges(changes: SimpleChanges) {
     await this.ruleSet;
 
-    if (this.ruleSet) {
-      this.disabled = false;
-      this.ratingService.getRating(this.ruleSet.demoPatternId, this.user.id).subscribe((value) => {
-        this.rating = value.rating;
-        this.disabled = value.userVoted;
+    this.disabled = false;
+    this.ratingService.getRating(this.ruleSet.demoPatternId, this.user.id).subscribe((value) => {
+      this.rating = value.rating;
+      this.disabled = value.userVoted;
 
+      if (this.ratingComponent) {
         this.ratingComponent.setRating(this.rating);
         this.ratingComponent.setDisabled(this.disabled);
-      });
-    }
+      }
+    });
   }
 
   onRatingChanged(rating: any): void {

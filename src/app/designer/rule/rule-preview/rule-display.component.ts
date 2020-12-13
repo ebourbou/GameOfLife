@@ -1,12 +1,4 @@
-import { RuleSet } from '../../../shared/model/rule/RuleSet';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { User } from '../../../shared/model/user';
-import { Rating } from '../../../shared/model/pattern-rating';
-import { NotificationService } from '../../../shared/service/notification.service';
-import { ConwaysRuleSet } from '../../../shared/service/rule/conway/ConwaysRuleSet';
-import { RatingService } from '../../../shared/service/rating.service';
-import { RatingComponent } from '../../../shared/rating/rating.component';
-import { UserUtils } from '../../../users/utils/user-utils';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'rule-display',

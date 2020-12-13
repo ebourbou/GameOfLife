@@ -1,19 +1,38 @@
 .rule-control {
  width:200px;
+
 }
 
 .label {
   font-size: x-small;
 }
-.die {
-  background-color: crimson;
+.death {
   border: 1px lightgray;
+  background: repeating-linear-gradient(
+      45deg,
+      #e56b6f,
+      #f5cac3 5px
+  );
 }
-.born {
-  background-color: darkgreen;
+.alive {
   border: 1px lightgray;
+  background: repeating-linear-gradient(
+      45deg,
+      #b7e4c7,
+      #d8f3dc 5px
+  );
 }
 
 .cell {
   border: solid 1px lightgray;
+}
+.legend {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+}
+.box {
+  width: 10px;
+  height:15px;
+  margin-right: 5px;
 }

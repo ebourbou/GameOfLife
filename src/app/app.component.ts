@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('oscillator', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/oscillator.svg'));
     this.matIconRegistry.addSvgIcon('buffer', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/buffer.svg'));
     this.matIconRegistry.addSvgIcon('pattern', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/pattern.svg'));
+    this.matIconRegistry.addSvgIcon('rule', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/rule.svg'));
   }
 
   logout(): void {
