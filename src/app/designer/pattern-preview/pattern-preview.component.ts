@@ -19,8 +19,9 @@ import { NotificationService } from '../../shared/service/notification.service';
 })
 export class PatternPreviewComponent implements OnInit, OnChanges {
   @Input() ruleSet: RuleSet;
-
   @Input() pattern: Pattern;
+  @Input() showRating = true;
+
   user: User;
   board: Board;
   originalPattern: string;

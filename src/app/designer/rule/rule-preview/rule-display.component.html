@@ -1,0 +1,7 @@
+<div *ngIf="rule" class="rule-control">
+  <mat-grid-list rowHeight="1:1" cols="11" gutterSize="1">
+    <mat-grid-tile class="label" [colspan]="3">Nachbarn</mat-grid-tile><mat-grid-tile class="label" *ngFor="let status of this.birth;  index as i">{{i+1}}</mat-grid-tile>
+    <mat-grid-tile class="label" [colspan]="3">Geboren</mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.birth" [ngClass]="(status ? 'born' : null)"></mat-grid-tile>
+    <mat-grid-tile class="label" [colspan]="3">Sterben</mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.death" [ngClass]="(status ? 'die' : null)"></mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{pattern.name}}</mat-card-title>
       <mat-card-subtitle>{{pattern.author}} {{pattern.year}}</mat-card-subtitle>
-      <mat-card-subtitle>Regel: {{ruleSet.shortName}}</mat-card-subtitle>
+      <mat-card-subtitle><span class="rule-name">{{ruleSet.shortName}}</span></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content >
       <div class="pattern" (mouseover)="startAnimation()" (mouseout)="stopAnimation()" >
@@ -12,7 +12,7 @@
         </mat-grid-list>
       </div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="showRating">
       <mat-rating #rating [rating]="rating" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
       <mat-icon class="info" color="primary" aria-label="{{pattern.description}}" matTooltip="{{pattern.description}}">info</mat-icon>
     </mat-card-actions>
