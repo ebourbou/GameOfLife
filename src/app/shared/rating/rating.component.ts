@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../service/notification.service';
@@ -16,19 +16,23 @@ import { RatingService } from '../service/rating.service';
   styleUrls: ['rating.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
 })
-export class RatingComponent implements OnInit {
+export class RatingComponent implements OnInit, OnChanges {
   @Input() userId: string;
   @Input() ratingId: string;
 
   @Output() ratingUpdated = new EventEmitter();
   ratingArr = [];
+  private starCount = 5;
   disabled = false;
   voteCount = 0;
   loading = true;
-  rating: number;
-  private starCount = 5;
+  rating = 0;
 
   constructor(private notificationService: NotificationService, private apiService: APIService, private ratingService: RatingService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadRating();
+  }
 
   ngOnInit(): void {
     this.apiService.OnCreateRatingListener.subscribe((value) => {

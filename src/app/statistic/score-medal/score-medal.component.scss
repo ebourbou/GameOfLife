@@ -2,14 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-bottom: 1em;
 }
 
-.icon {
+.icon_large {
   transform: scale(2);
+}
+
+.icon_tiny {
+  transform: scale(1);
+}
+
+.golden {
   color: goldenrod;
 }
 
 .opaque {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 

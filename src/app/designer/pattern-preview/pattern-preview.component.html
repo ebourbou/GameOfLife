@@ -2,8 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>{{pattern.name}}</mat-card-title>
-      <mat-card-subtitle>{{pattern.author}} {{pattern.year}}</mat-card-subtitle>
-      <mat-card-subtitle><span class="rule-name">{{ruleSet.shortName}}</span></mat-card-subtitle>
+      <mat-card-subtitle matTooltip="Regel für Preview: {{ruleSet.shortName}}">{{pattern.author}} {{pattern.year}} {{ruleSet.ruleStringBSnotation}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content >
       <div class="pattern" (mouseover)="startAnimation()" (mouseout)="stopAnimation()" >

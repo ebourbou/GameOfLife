@@ -21,18 +21,7 @@
       [thumbLabel]= true
       (valueChange)="onChangeGenerations($event)">
     </mat-slider>
-  <p></p>
-  <div class="game">
-    <mat-label>Meine Spiele</mat-label>
-    <div class="scroll-container">
-      <mat-grid-list cols="1" rowHeight="1:1" gutterSize="10" class="game-list">
-        <mat-grid-tile *ngFor="let current of allGames" (click)="onApplyGame(current.id)" >
-          <game-preview [game]="current"></game-preview>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
+  <div>
+    <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
   </div>
-    <div>
-      <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
-    </div>
 </div>

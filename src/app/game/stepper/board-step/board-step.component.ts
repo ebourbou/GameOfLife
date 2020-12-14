@@ -14,16 +14,6 @@ export class BoardStepComponent implements OnInit, AfterViewInit {
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
   public doChangeGenerations: EventEmitter<number> = new EventEmitter();
-  @Output()
-  public doLoadGames: EventEmitter<void> = new EventEmitter();
-  @Output()
-  public doApplyGame: EventEmitter<string> = new EventEmitter();
-
-  @Input()
-  allGames: Game[];
-
-  @Input()
-  gameSelected: Game;
 
   @Input()
   controls: Controls;
@@ -36,7 +26,6 @@ export class BoardStepComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadSizes();
-    this.doLoadGames.emit();
   }
 
   ngAfterViewInit(): void {
@@ -45,10 +34,6 @@ export class BoardStepComponent implements OnInit, AfterViewInit {
 
   onChangeGenerations(generations: number): void {
     this.doChangeGenerations.emit(generations);
-  }
-
-  onApplyGame(id: string): void {
-    this.doApplyGame.emit(id);
   }
 
   onChangeSize($event: any): void {

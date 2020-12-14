@@ -26,14 +26,12 @@ import {
   stepChanged,
   togglePause,
   applyGame,
-  loadGames,
   startAnalysis,
   toggleMaximize,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
-  selectAllGames,
   selectAllGenerationStatistics,
   selectAllPatterns,
   selectAllRuleSets,
@@ -103,7 +101,6 @@ export class GameComponent implements OnInit {
     this.isReadyToRun$ = this.store.select(selectIsReadyToRun);
     this.isReadyForAnalysis$ = this.store.select(selectIsReadyForAnalysis);
     this.isGameFinished$ = this.store.select(selectIsGameFinished);
-    this.games$ = this.store.select(selectAllGames);
     this.allGenerationStatistics$ = this.store.select(selectAllGenerationStatistics);
     this.score$ = this.store.select(selectScore);
   }
@@ -183,10 +180,6 @@ export class GameComponent implements OnInit {
 
   onApplyGame(id: string): void {
     this.store.dispatch(applyGame({ id }));
-  }
-
-  onLoadGames(): void {
-    this.store.dispatch(loadGames());
   }
 
   startFromScratch(): void {

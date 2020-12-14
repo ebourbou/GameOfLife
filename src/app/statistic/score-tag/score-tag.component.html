@@ -1,9 +1,13 @@
-<mat-chip-list>
-  <mat-chip *ngFor="let chip of tags"  matTooltip="{{toolTipFor(chip)}}" [class]="chip.level > 1 ? 'good' : 'lousy' " >
-    <mat-icon>{{chip.level >0 ? 'thumb_up' : 'thumb_down'}}</mat-icon>
+<mat-chip-list *ngIf="size == 0">
+  <mat-chip *ngFor="let chip of tags"  matTooltip="{{toolTipFor(chip)}}" [class]="getClasses(chip.level)" >
+    <mat-icon svgIcon="{{iconFor(chip)}}" ></mat-icon>
     {{nameFor(chip)}}
-    </mat-chip>
+    <mat-icon class="thumb">{{chip.level >0 ? 'thumb_up' : 'thumb_down'}}</mat-icon>
+  </mat-chip>
 </mat-chip-list>
+<div *ngIf="size == 1">
+  <mat-icon *ngFor="let chip of tags" svgIcon="{{iconFor(chip)}}" matTooltip="{{tinyToolTipFor(chip)}}" [class]="getClasses(chip.level)"></mat-icon>
+</div>
 
 
 

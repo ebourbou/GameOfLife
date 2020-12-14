@@ -1,0 +1,47 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.button_block {
+  float: right;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.slider {
+  padding-right: 1em;
+}
+
+.help-icon {
+  transform: scale(0.5);
+}
+
+.expanded_cell {
+  padding-bottom: 1em;
+}

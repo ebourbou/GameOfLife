@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService, UpdateRatingMutation } from '../../API.service';
 
-import { from, Observable, of } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { RatingUtils } from './pattern-rating-util';
 import { Rating } from '../model/pattern-rating';
 
@@ -18,6 +18,9 @@ export class RatingService {
   }
 
   getRating(userId: string, ratingId: string): Observable<{ rating: number; userVoted: boolean; voteCount: number }> {
+    if (!userId || !ratingId) {
+      throwError('Benutzer oder rating id nicht gesetzt');
+    }
     let averageRating = 0;
     let all = 1;
     let voted = false;

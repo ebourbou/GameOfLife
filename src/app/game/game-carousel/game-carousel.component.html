@@ -1,8 +1,10 @@
-<div *ngIf="ruleSets" class="carousel highlighted">
+<div *ngIf="games && games.length > 0" class="carousel">
   <div>
-    <rule-preview class="slide" [ruleSet]="this.ruleSets[this.currentIndex]"></rule-preview>
+    <app-game-preview class="slide" [game]="games[currentGameIndex]"></app-game-preview>
     <button class="control prev" (click)="onPreviousClick()">
       <span class="arrow left"></span>
+    </button>
+    <button class="control action" (click)="onSelect()">
     </button>
     <button class="control next" (click)="onNextClick()">
       <span class="arrow right"></span>

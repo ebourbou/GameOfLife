@@ -12,6 +12,9 @@ export class ScoreTagComponent implements OnInit {
   @Input()
   tags: ScoreTag[];
 
+  @Input()
+  size: Size = Size.BIG;
+
   textsAndIcons = new Map<
     string,
     {
@@ -24,128 +27,128 @@ export class ScoreTagComponent implements OnInit {
 
   constructor() {
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.ACTIVITY, ScoreLevel.LOUSY), {
-      icon: 'folder',
+      icon: 'activity',
       name: 'Aktivität',
       label: 'Langweilig',
       toolTip: 'Da war keine Action im Spiel. Zum gähnen.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.ACTIVITY, ScoreLevel.GOOD), {
-      icon: 'folder',
+      icon: 'activity',
       name: 'Aktivität',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.ACTIVITY, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
+      icon: 'activity',
       name: 'Aktivität',
       label: 'Top Action!',
       toolTip: 'Knallhart! Da fehlten bloss noch die coolen Sprüche.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.VIOLENCE, ScoreLevel.LOUSY), {
-      icon: 'folder',
+      icon: 'brutality',
       name: 'Brutalität',
       label: 'Zahm',
       toolTip: 'Da ist kaum Blut geflossen. Ist Weihnachten?',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.VIOLENCE, ScoreLevel.GOOD), {
-      icon: 'folder',
+      icon: 'brutality',
       name: 'Brutalität',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.VIOLENCE, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
+      icon: 'brutality',
       name: 'Brutalität',
       label: 'Brutal!',
       toolTip: 'Ein wahres Blutbad.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.BABY_BOOM, ScoreLevel.LOUSY), {
-      icon: 'folder',
+      icon: 'reproduction',
       name: 'Reproduktion',
       label: 'Rentnerschwemme',
       toolTip: 'Zum Aussterben verurteilt. Bei diesen Reproduktionsraten...',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.BABY_BOOM, ScoreLevel.GOOD), {
-      icon: 'folder',
+      icon: 'reproduction',
       name: 'Reproduktion',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.BABY_BOOM, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
+      icon: 'reproduction',
       name: 'Reproduktion',
       label: 'Babyboom!!',
       toolTip: 'Der Frühling ist da!',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.PANDEMIC, ScoreLevel.LOUSY), {
-      icon: 'folder',
+      icon: 'population',
       name: 'Bevölkerungszahl',
       label: 'Pure Harmonie',
       toolTip: 'Friede Freude Eierkuchen.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.PANDEMIC, ScoreLevel.GOOD), {
-      icon: 'folder',
+      icon: 'population',
       name: 'Bevölkerungszahl',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.PANDEMIC, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
+      icon: 'population',
       name: 'Bevölkerungszahl',
       label: 'Pandemie!',
       toolTip: 'Plötzlich waren alle tot. LOL.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.FURIOUS_FINISH, ScoreLevel.LOUSY), {
-      icon: 'folder',
-      name: 'Laufzeitverhalten',
+      icon: 'joker',
+      name: 'Unterhaltung',
       label: 'Lahmes Ende',
       toolTip: 'Irgendwann sind einfach alle nach Hause gegangen.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.FURIOUS_FINISH, ScoreLevel.GOOD), {
-      icon: 'folder',
-      name: 'Laufzeitverhalten',
+      icon: 'joker',
+      name: 'Unterhaltung',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.FURIOUS_FINISH, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
-      name: 'Laufzeitverhalten',
+      icon: 'joker',
+      name: 'Unterhaltung',
       label: 'Furioses Ende!',
       toolTip: 'Die haben sich nichts geschenkt. Bis zum Schluss.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.DIFFICULTY, ScoreLevel.LOUSY), {
-      icon: 'folder',
-      name: 'Schwierigkeitsgrad',
+      icon: 'difficulty',
+      name: 'Schwierigkeit',
       label: 'Ein Kinderspiel',
       toolTip: 'Bei diesen Einstellungen kann ja nichts los sein.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.DIFFICULTY, ScoreLevel.GOOD), {
-      icon: 'folder',
-      name: 'Schwierigkeitsgrad',
+      icon: 'difficulty',
+      name: 'Schwierigkeit',
       label: 'Ok',
       toolTip: '',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.DIFFICULTY, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
-      name: 'Schwierigkeitsgrad',
+      icon: 'difficulty',
+      name: 'Schwierigkeit',
       label: 'Boss-Level!',
       toolTip: `Schwieriger geht's nicht!`,
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.EXCITEMENT, ScoreLevel.LOUSY), {
-      icon: 'folder',
-      name: 'Spannung',
+      icon: 'excitement',
+      name: 'Harmonie',
       label: 'Eintönig',
       toolTip: 'Da verpasst man nichts. Schade um den Strom.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.EXCITEMENT, ScoreLevel.GOOD), {
-      icon: 'folder',
-      name: 'Spannung',
+      icon: 'excitement',
+      name: 'Harmonie',
       label: 'Ok',
-      toolTip: '',
+      toolTip: 'Voll im Gleichgewicht.',
     });
     this.textsAndIcons.set(this.entryKeyFrom(ScoreTagEnum.EXCITEMENT, ScoreLevel.OVERACHIEVER), {
-      icon: 'folder',
-      name: 'Spannung',
+      icon: 'excitement',
+      name: 'Harmonie',
       label: 'Aufregend!',
       toolTip: 'Packend bis zum Ende!',
     });
@@ -161,6 +164,10 @@ export class ScoreTagComponent implements OnInit {
     return this.textsAndIcons.get(this.entryKeyFrom(tag.tag, tag.level)).name;
   }
 
+  tinyToolTipFor(tag: ScoreTag): string {
+    return this.textsAndIcons.get(this.entryKeyFrom(tag.tag, tag.level)).name + ' ' + this.translate(tag.level);
+  }
+
   iconFor(tag: ScoreTag): string {
     return this.textsAndIcons.get(this.entryKeyFrom(tag.tag, tag.level)).icon;
   }
@@ -172,4 +179,40 @@ export class ScoreTagComponent implements OnInit {
   labelFor(tag: ScoreTag): string {
     return this.textsAndIcons.get(this.entryKeyFrom(tag.tag, tag.level)).label;
   }
+
+  getClasses(level: ScoreLevel): string[] {
+    const classes = [];
+    const sizePrefix = this.size === Size.BIG ? 'big_' : 'tiny_';
+    switch (level) {
+      case ScoreLevel.LOUSY:
+        classes.push(sizePrefix + 'lousy');
+        break;
+      case ScoreLevel.GOOD:
+        classes.push(sizePrefix + 'good');
+        break;
+      case ScoreLevel.OVERACHIEVER:
+        classes.push(sizePrefix + 'top');
+    }
+    return classes;
+  }
+
+  translate(level: ScoreLevel): string {
+    let german;
+    switch (level) {
+      case ScoreLevel.LOUSY:
+        german = 'schlecht';
+        break;
+      case ScoreLevel.GOOD:
+        german = 'gut';
+        break;
+      case ScoreLevel.OVERACHIEVER:
+        german = 'tiptop';
+    }
+    return german;
+  }
+}
+
+enum Size {
+  BIG,
+  TINY,
 }

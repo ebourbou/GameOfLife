@@ -22,7 +22,9 @@ import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-g
 import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
 import { LastGenerationToPercentagePipe } from './game-statistic/last-generation-to-percentage.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { GamePreviewComponent } from './preview/game-preview/game-preview.component';
+import { DivGamePreviewComponent } from './preview/game-preview/div-game-preview.component';
+import { GamePreviewComponent } from './preview/game.preview.component';
+import { GameCarouselComponent } from './game-carousel/game-carousel.component';
 
 @NgModule({
   declarations: [
@@ -36,12 +38,13 @@ import { GamePreviewComponent } from './preview/game-preview/game-preview.compon
     SaveStepComponent,
     GametimeComponent,
     AnalysisStepComponent,
-    GamePreviewComponent,
     GameStatisticComponent,
     ToMeasureSeriesGroupedPipe,
     LastGenerationToMeasurePipe,
     LastGenerationToPercentagePipe,
+    DivGamePreviewComponent,
     GamePreviewComponent,
+    GameCarouselComponent,
   ],
   imports: [
     GameRoutingModule,
@@ -52,6 +55,6 @@ import { GamePreviewComponent } from './preview/game-preview/game-preview.compon
     DesignerModule,
     NgxChartsModule,
   ],
-  exports: [BoardComponent, GamePreviewComponent],
+  exports: [BoardComponent, DivGamePreviewComponent, GamePreviewComponent, GameCarouselComponent],
 })
 export class GameModule {}

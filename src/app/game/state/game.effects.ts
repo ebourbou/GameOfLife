@@ -12,7 +12,7 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
-import { RuleService } from '../../shared/service/rule/rule.service';
+import { UserUtils } from '../../users/utils/user-utils';
 
 @Injectable()
 export class GameEffects {
@@ -83,18 +83,6 @@ export class GameEffects {
     );
   });
 
-  loadGames = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(GameActions.loadGames),
-      concatMap((payload) =>
-        this.gameService.getAllGames().pipe(
-          map((games) => GameActions.loadGamesSuccess({ games })),
-          catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
-        )
-      )
-    );
-  });
-
   startAnalysis$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GameActions.startAnalysis),
@@ -112,7 +100,7 @@ export class GameEffects {
       return this.actions$.pipe(
         ofType(GameActions.errorAction),
         map((payload) => {
-          this.notificationService.error(GameActions.errorAction.type + ' ' + payload.errors);
+          this.notificationService.error(GameActions.errorAction.type + ' ' + JSON.stringify(payload.errors));
         })
       );
     },
@@ -130,7 +118,7 @@ export class GameEffects {
   ) {}
 
   private newGame(controls: Controls): any {
-    const game = new Game(GameUtils.build(controls.xAxisSize, controls.yAxisSize), controls.generations);
+    const game = new Game(GameUtils.build(controls.xAxisSize, controls.yAxisSize), controls.generations, UserUtils.loadUserFromLocal().id);
     return { game, controls };
   }
 }
