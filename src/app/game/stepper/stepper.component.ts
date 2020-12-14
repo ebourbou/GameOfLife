@@ -33,9 +33,6 @@ export class StepperComponent implements OnInit {
   @Input()
   allRuleSets: RuleSet[];
 
-  @Input()
-  allGames: Game[];
-
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
@@ -56,8 +53,6 @@ export class StepperComponent implements OnInit {
   private doSaveGame: EventEmitter<void> = new EventEmitter();
   @Output()
   private doApplyGame: EventEmitter<string> = new EventEmitter();
-  @Output()
-  private doLoadGames: EventEmitter<void> = new EventEmitter();
 
   rootGroup: FormGroup;
 
@@ -107,10 +102,6 @@ export class StepperComponent implements OnInit {
 
   onSaveGame(): void {
     this.doSaveGame.emit();
-  }
-
-  onLoadGames(): void {
-    this.doLoadGames.emit();
   }
 
   onNextStepProgrammatically(): void {

@@ -4,7 +4,6 @@
                [controls]="controls$ | async"
                [allRuleSets]="allRuleSets$ | async"
                [allPatterns]="allPatterns$ | async"
-               [allGames]="games$ | async"
                [isBusy]="isLoading$ | async"
                [isRunning]="isRunning$ | async"
                [isGameFinished]="isGameFinished$ | async"
@@ -17,8 +16,7 @@
                (doStepChanged)="onStepChanged($event)"
                (doRuleSetSelected)="onRuleSetSelected($event)"
                (doSaveGame)="onSaveGame(game)"
-               (doApplyGame)="onApplyGame($event)"
-               (doLoadGames)="onLoadGames()">
+               (doApplyGame)="onApplyGame($event)">
   </app-stepper>
   <gol-board *ngIf="!(isGameFinished$ | async)"
              [board]="game.board"

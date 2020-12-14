@@ -6,19 +6,23 @@ export class Game {
   public name: string;
   public id = '' + Date.now();
   public description: string;
-  public author = 'ANONYMOUS';
+  public author;
   public date = new Date();
   public ruleSet: RuleSet;
   public score: Score;
 
-  constructor(public board: Board, public generations: number) {
+  constructor(public board: Board, public generations: number, user: string) {
     this.name = this.id;
-    this.description = `Spiel ${this.name} ${this.board.width} x ${this.board.height} x ${this.generations} von ${
-      this.author
-    } am ${this.date.toLocaleDateString('de-CH')} um ${this.date.toLocaleTimeString('de-CH')}`;
+    this.author = user;
+    this.description =
+      `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} von ${this.author} am ` + this.dateAsString();
   }
 
   nextGeneration(): void {
     this.board.nextGeneration(this.ruleSet);
+  }
+
+  dateAsString(): string {
+    return this.date.toLocaleDateString('de-CH') + ' um ' + this.date.toLocaleTimeString('de-CH');
   }
 }

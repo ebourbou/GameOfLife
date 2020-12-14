@@ -1,10 +1,8 @@
 <mat-horizontal-stepper linear="true" (selectionChange)="selectionChange($event)" #stepper >
 
   <mat-step label="Spielfeld" state="playfield" [stepControl]="rootGroup" [editable]="!isGameFinished" >
-      <app-board-step [allGames]="allGames"
+      <app-board-step
                       [controls]="controls"
-                      (doLoadGames)="onLoadGames()"
-                      (doApplyGame)="onApplyGame($event)"
                       (doResize)="onResize($event)"
                       (doChangeGenerations)="onChangeGenerations($event)" >
       </app-board-step>

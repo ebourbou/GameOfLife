@@ -27,13 +27,12 @@ export class GameService {
   }
 
   private fromAwsGame(awsGame): Game {
-    const game = new Game(GameUtils.build(awsGame.sizeX, awsGame.sizeY), awsGame.generations);
+    const game = new Game(GameUtils.build(awsGame.sizeX, awsGame.sizeY), awsGame.generations, awsGame.userId);
     GameUtils.applyPatternFromString(game.board, 0, 0, awsGame.pattern, awsGame.sizeX, awsGame.sizeY);
-    game.author = awsGame.userId;
     game.description = awsGame.description;
     game.id = awsGame.id;
     this.ruleService.getRuleSet(awsGame.ruleSetId).subscribe((r) => (game.ruleSet = r));
-    game.date = awsGame.creationDate;
+    game.date = new Date(awsGame.creationDate);
     game.score = { overallScore: awsGame.score, tags: JSON.parse(awsGame.scoreTags) };
     return game;
   }

@@ -1,13 +1,13 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit } from '@angular/core';
 import { Game } from '../model/Game';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PatternRating } from '../../shared/model/pattern-rating';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { User } from '../../shared/model/user';
 import { PatternService } from '../../shared/service/patterns.service';
 import { AuthService } from '../../core/services/auth.service';
 import { RatingService } from '../../shared/service/rating.service';
 import { NotificationService } from '../../shared/service/notification.service';
+import { Rating } from '../../shared/model/pattern-rating';
 
 @Component({
   selector: 'game-preview',
@@ -88,11 +88,11 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
     this.rating = rating;
 
     if (!this.disabled) {
-      const ratingUpdate: PatternRating = {
+      const ratingUpdate: Rating = {
         id: '',
         rating: this.rating,
         userId: this.user.id,
-        patternId: this.game.id,
+        rateId: this.game.id,
         comment: 'n/a',
       };
       this.ratingService

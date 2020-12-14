@@ -3,10 +3,10 @@ import { Game } from '../../model/Game';
 
 @Component({
   selector: 'app-game-preview',
-  templateUrl: './game-preview.component.html',
-  styleUrls: ['./game-preview.component.scss'],
+  templateUrl: './div-game-preview.component.html',
+  styleUrls: ['./div-game-preview.component.scss'],
 })
-export class GamePreviewComponent implements OnInit {
+export class DivGamePreviewComponent implements OnInit {
   @Input() game: Game;
 
   constructor() {}

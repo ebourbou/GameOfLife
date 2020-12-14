@@ -1,0 +1,13 @@
+<div *ngIf="games && games.length > 0" class="carousel">
+  <div>
+    <app-game-preview class="slide" [game]="games[currentGameIndex]"></app-game-preview>
+    <button class="control prev" (click)="onPreviousClick()">
+      <span class="arrow left"></span>
+    </button>
+    <button class="control action" (click)="onSelect()">
+    </button>
+    <button class="control next" (click)="onNextClick()">
+      <span class="arrow right"></span>
+    </button>
+  </div>
+</div>

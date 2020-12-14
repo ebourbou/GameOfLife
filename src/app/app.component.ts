@@ -61,6 +61,17 @@ export class AppComponent implements OnInit {
     this.matIconRegistry.addSvgIcon('buffer', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/buffer.svg'));
     this.matIconRegistry.addSvgIcon('pattern', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/pattern.svg'));
     this.matIconRegistry.addSvgIcon('rule', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/rule.svg'));
+    this.matIconRegistry.addSvgIcon('activity', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/activity.svg'));
+    this.matIconRegistry.addSvgIcon('brutality', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/brutality.svg'));
+    this.matIconRegistry.addSvgIcon('difficulty', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/difficulty.svg'));
+    this.matIconRegistry.addSvgIcon('excitement', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/excitement.svg'));
+    this.matIconRegistry.addSvgIcon('population', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/population.svg'));
+    this.matIconRegistry.addSvgIcon('joker', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/joker.svg'));
+    this.matIconRegistry.addSvgIcon(
+      'reproduction',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/reproduction.svg')
+    );
+    this.matIconRegistry.addSvgIcon('runtime', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/runtime.svg'));
   }
 
   logout(): void {

@@ -9,7 +9,15 @@ export class ScoreMedalComponent implements OnInit {
   @Input()
   overallScore: number;
 
+  @Input()
+  size: Size = Size.LARGE;
+
   constructor() {}
 
   ngOnInit(): void {}
+}
+
+enum Size {
+  LARGE,
+  SMALL,
 }

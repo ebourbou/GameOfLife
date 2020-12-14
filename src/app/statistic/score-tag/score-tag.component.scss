@@ -1,9 +1,28 @@
 
 
-.good {
+.big_top {
   background-color: goldenrod;
 }
 
-.lousy {
-  background-color: lightgrey;
+.big_good {
+  background-color: silver;
+}
+
+.big_lousy {
+  opacity: 0.3;
+}
+
+.tiny_top {
+  color: goldenrod;
+}
+
+.tiny_good {
+}
+
+.tiny_lousy {
+  opacity: 0.3;
+}
+
+.thumb {
+  transform: scale(0.8);
 }
