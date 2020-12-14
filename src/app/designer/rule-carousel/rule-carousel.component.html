@@ -1,6 +1,6 @@
 <div *ngIf="ruleSets" class="carousel highlighted">
   <div>
-    <div class="slide">Ruleset Preview of {{this.ruleSets[this.currentIndex].shortName}} here </div>
+    <rule-preview class="slide" [ruleSet]="this.ruleSets[this.currentIndex]"></rule-preview>
     <button class="control prev" (click)="onPreviousClick()">
       <span class="arrow left"></span>
     </button>
