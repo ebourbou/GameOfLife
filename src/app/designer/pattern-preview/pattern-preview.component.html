@@ -13,7 +13,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions *ngIf="showRating">
-      <mat-rating #rating [rating]="rating" [userId]="user.id" [ratingId]="pattern.id"  (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <gol-rating [userId]="user.id" [ratingId]="pattern.id"  (ratingUpdated)="onRatingChanged($event)"></gol-rating>
       <mat-icon class="info" color="primary" aria-label="{{pattern.description}}" matTooltip="{{pattern.description}}">info</mat-icon>
     </mat-card-actions>
   </mat-card>

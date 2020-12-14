@@ -73,7 +73,5 @@ export class GamePreviewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onRatingChanged(rating: number): void {
-    console.log(rating);
-  }
+  onRatingChanged(rating: number): void {}
 }

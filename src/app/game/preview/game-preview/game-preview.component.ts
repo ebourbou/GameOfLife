@@ -13,7 +13,5 @@ export class GamePreviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onRatingChanged($event: any): void {
-    // todo
-  }
+  onRatingChanged($event: any): void {}
 }

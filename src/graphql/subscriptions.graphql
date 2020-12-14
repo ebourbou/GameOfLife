@@ -143,6 +143,69 @@ subscription OnDeletePattern(
     locked
   }
 }
+subscription OnCreateRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onCreateRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
+    id
+    userId
+    rateId
+    comment
+    rating
+  }
+}
+subscription OnUpdateRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onUpdateRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
+    id
+    userId
+    rateId
+    comment
+    rating
+  }
+}
+subscription OnDeleteRating(
+  $id: ID
+  $userId: String
+  $rateId: String
+  $comment: String
+  $rating: Int
+) {
+  onDeleteRating(
+    id: $id
+    userId: $userId
+    rateId: $rateId
+    comment: $comment
+    rating: $rating
+  ) {
+    id
+    userId
+    rateId
+    comment
+    rating
+  }
+}
 subscription OnCreateGame(
   $id: ID
   $name: String
@@ -225,68 +288,5 @@ subscription OnDeleteGame(
     creationDate
     score
     scoreTags
-  }
-}
-subscription OnCreateRating(
-  $id: ID
-  $userId: String
-  $rateId: String
-  $comment: String
-  $rating: Int
-) {
-  onCreateRating(
-    id: $id
-    userId: $userId
-    rateId: $rateId
-    comment: $comment
-    rating: $rating
-  ) {
-    id
-    userId
-    rateId
-    comment
-    rating
-  }
-}
-subscription OnUpdateRating(
-  $id: ID
-  $userId: String
-  $rateId: String
-  $comment: String
-  $rating: Int
-) {
-  onUpdateRating(
-    id: $id
-    userId: $userId
-    rateId: $rateId
-    comment: $comment
-    rating: $rating
-  ) {
-    id
-    userId
-    rateId
-    comment
-    rating
-  }
-}
-subscription OnDeleteRating(
-  $id: ID
-  $userId: String
-  $rateId: String
-  $comment: String
-  $rating: Int
-) {
-  onDeleteRating(
-    id: $id
-    userId: $userId
-    rateId: $rateId
-    comment: $comment
-    rating: $rating
-  ) {
-    id
-    userId
-    rateId
-    comment
-    rating
   }
 }

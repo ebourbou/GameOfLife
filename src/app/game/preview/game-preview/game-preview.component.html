@@ -8,7 +8,7 @@
       <gol-board  class="preview" [board]="game.board" isMasked="true"></gol-board>
     </mat-card-content>
     <mat-card-footer  class="footer">
-      <mat-rating #rating [rating]="3"  [userId]="game.id" [ratingId]="game.id" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <gol-rating [userId]="game.id" [ratingId]="game.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>
     </mat-card-footer>
   </mat-card>
 </div>

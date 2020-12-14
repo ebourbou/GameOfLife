@@ -5,7 +5,7 @@
       <p>{{game.description}}</p>
     </mat-card-content>
     <mat-card-actions class="actions">
-      <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <gol-rating [userId]="user.id" [ratingId]="game.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>
     </mat-card-actions>
   </mat-card>
 </div>

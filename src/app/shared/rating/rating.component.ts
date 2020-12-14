@@ -11,20 +11,22 @@ import { Observable } from 'rxjs';
 import { RatingService } from '../service/rating.service';
 
 @Component({
-  selector: 'mat-rating',
+  selector: 'gol-rating',
   templateUrl: 'rating.component.html',
   styleUrls: ['rating.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class RatingComponent implements OnInit {
-  @Input() rating: number;
-  @Input() starCount = 5;
   @Input() userId: string;
   @Input() ratingId: string;
 
   @Output() ratingUpdated = new EventEmitter();
   ratingArr = [];
   disabled = false;
+  voteCount = 0;
+  loading = true;
+  rating: number;
+  private starCount = 5;
 
   constructor(private notificationService: NotificationService, private apiService: APIService, private ratingService: RatingService) {}
 
@@ -41,21 +43,21 @@ export class RatingComponent implements OnInit {
   }
 
   private loadRating(): void {
+    this.loading = true;
     this.ratingService.getRating(this.userId, this.ratingId).subscribe((value) => {
-      const rating = value.rating;
-      const disabled = value.userVoted;
-      this.setRating(rating);
-      this.disabled = disabled;
+      this.disabled = value.userVoted;
+      this.rating = value.rating;
+      this.voteCount = value.voteCount;
+      this.loading = false;
     });
   }
 
-  onClick(rating: number): boolean {
+  onClick(ratingSelected: number): boolean {
     if (!this.disabled) {
-      console.log('Emit ' + rating);
-
+      this.loading = true;
       const ratingUpdate: Rating = {
         id: '',
-        rating: this.rating,
+        rating: ratingSelected,
         userId: this.userId,
         rateId: this.ratingId,
         comment: 'n/a',
@@ -66,12 +68,13 @@ export class RatingComponent implements OnInit {
         .catch((reason) => {
           this.notificationService.error('Fehler beim Rating speichern: ' + reason);
         });
-      this.ratingUpdated.emit('' + rating);
+      this.ratingUpdated.emit('' + ratingSelected);
       this.disabled = true;
       this.notificationService.info('Bewertung wurde gespeichert');
     } else {
       this.notificationService.info('Schon abgestimmt');
     }
+    this.loading = false;
     return false;
   }
 
@@ -89,5 +92,9 @@ export class RatingComponent implements OnInit {
 
   setRating(rating: number): void {
     this.rating = rating;
+  }
+
+  tooltip(): string {
+    return `Bereits abgestimmt. Insgesamt ${this.voteCount} Stimme` + (this.voteCount > 1 ? 'n' : '');
   }
 }

@@ -14,7 +14,7 @@
       <p class="description">{{ruleSet.description}}</p>
     </mat-card-content>
     <mat-card-actions>
-      <mat-rating [rating]="rating" [userId]="user.id" [ratingId]="ruleSet.id" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <gol-rating [userId]="user.id" [ratingId]="ruleSet.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>
     </mat-card-actions>
   </mat-card>
 </div>

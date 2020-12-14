@@ -14,6 +14,7 @@ import { NotificationService } from '../../shared/service/notification.service';
 import { PatternUtils } from '../util/pattern-util';
 import { APIService } from '../../API.service';
 import { RatingUtils } from '../../shared/service/pattern-rating-util';
+import { UserUtils } from '../../users/utils/user-utils';
 
 @Component({
   selector: 'pattern-preview',
@@ -39,18 +40,11 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     private notificationService: NotificationService,
     private ratingService: RatingService,
     private patternService: PatternService,
-    private authService: AuthService,
-    private apiService: APIService
+    private authService: AuthService
   ) {
-    this.ruleSet = new ConwaysRuleSet();
-    this.apiService.OnUpdateRatingListener.subscribe((value) => {
-      const ratingToUpdate: Rating = RatingUtils.fromAwsPattern(value);
-      /*  console.log("updated pattern"+ JSON.stringify(patternToUpdate));
-         const foundIndex = this.patterns.findIndex(x => x.id === patternToUpdate.id);
-         this.patterns[foundIndex] = patternToUpdate;
-         this.selectedPattern = patternToUpdate;*/
-      this.ngOnChanges(null);
-    });
+    if (!this.ruleSet) {
+      this.ruleSet = new ConwaysRuleSet();
+    }
   }
 
   startAnimation(): void {
@@ -70,25 +64,12 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((user) => {
-      this.user = user;
-    });
+    this.user = UserUtils.loadUserFromLocal();
   }
   async ngOnChanges(changes: SimpleChanges) {
     await this.pattern;
     await this.board;
     if (this.pattern) {
-      /* this.disabled = false;
-      this.ratingService.getRating(this.pattern.id, this.user.id).subscribe((value) => {
-        this.rating = value.rating;
-        this.disabled = value.userVoted;
-
-        if (this.ratingComponent) {
-          this.ratingComponent.setRating(this.rating);
-          this.ratingComponent.setDisabled(this.disabled);
-        }
-      });
-*/
       this.originalPattern = JSON.parse(JSON.stringify(this.pattern.pattern));
       const x = this.pattern.sizeX;
       const y = this.pattern.sizeY;
@@ -97,24 +78,5 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     }
   }
 
-  onRatingChanged(rating: any): void {
-    this.rating = rating;
-
-    /* if (!this.disabled) {
-      const ratingUpdate: Rating = {
-        id: '',
-        rating: this.rating,
-        userId: this.user.id,
-        rateId: this.pattern.id,
-        comment: 'n/a',
-      };
-      this.ratingService
-        .updateRating(ratingUpdate)
-        .then((value) => this.notificationService.info('Rating wurde gespeichert'))
-        .catch((reason) => {
-          this.notificationService.error('Fehler beim Rating speichern: ' + reason);
-        });
-      this.disabled = true;
-    }*/
-  }
+  onRatingChanged(rating: any): void {}
 }
