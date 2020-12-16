@@ -1,2 +1,15 @@
-﻿<app-carousel [slides]="slides"></app-carousel>
+﻿<div class="container">
+  <ng-template #dynamicComponent class="slide"></ng-template>
+  <div class="action">
 
+    <button mat-icon-button class="prev" aria-label="Zurück" (click)="onPreviousClick()">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <button mat-icon-button class="pause" aria-label="Pause" (click)="onTooglePauseClick()">
+      <mat-icon>{{pause ? 'play_arrow':'pause'}}</mat-icon>
+    </button>
+    <button mat-icon-button class="next" aria-label="Weiter" (click)="onNextClick()">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+  </div>
+</div>

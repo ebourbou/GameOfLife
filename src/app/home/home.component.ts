@@ -1,40 +1,69 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Auth } from '@aws-amplify/auth';
+﻿import { AfterViewInit, Component, ComponentFactoryResolver, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { APIService } from '../API.service';
-import { User } from '../shared/model/user';
 import { AuthService } from '../core/services/auth.service';
 import { UserService } from '../users/services/users.service';
-import { UserUtils } from '../users/utils/user-utils';
+import { SlideExplanation } from './slides/explanation-slide.component';
+import { SlideVideo } from './slides/video-slide.component';
+import { SlideItem } from './slides/slide.item';
+import { SlideStart } from './slides/start-slide.component';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
-export class HomeComponent implements OnInit {
-  public slides = [
-    { src: '../../../assets/img/weltbild.jpg', text: 'Entwerfe Welten' },
-    { src: '../../../assets/img/michelangelo_1.jpg', text: 'Erschaffe Leben' },
-    { src: '../../../assets/img/commandments.jpg', text: 'Bestimme die Regeln' },
-    {
-      src: '../../../assets/img/breeder-animation.gif',
-      text: 'Spiel das Spiel des Lebens',
-      link: 'game',
-      linkLabel: 'Zum Spiel',
-    },
-  ];
+export class HomeComponent implements AfterViewInit, OnDestroy {
+  public homeSlides = new Array<SlideItem>();
+  currentSlideIndex = 0;
 
-  user: User;
+  @ViewChild('dynamicComponent', { read: ViewContainerRef }) container: ViewContainerRef;
+  interval: any;
+  pause = false;
 
-  constructor(private authService: AuthService, private api: APIService, private userService: UserService) {}
+  constructor(
+    private authService: AuthService,
+    private api: APIService,
+    private userService: UserService,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {
+    this.homeSlides.push(new SlideItem(SlideStart, {}));
+    this.homeSlides.push(new SlideItem(SlideExplanation, {}));
+    this.homeSlides.push(new SlideItem(SlideVideo, {}));
+  }
 
-  ngOnInit(): void {
-    /*Auth.currentAuthenticatedUser()
-      .then(async (cognitoUser) => {
-        console.log('Logged in user: ' + cognitoUser.toString());
+  ngAfterViewInit(): void {
+    this.loadComponent();
+    this.getSlides();
+  }
 
-        this.userService.getUser(cognitoUser.attributes.sub).then((value) => (this.user = UserUtils.fromAws(value)));
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
 
-        console.log('User loaded:' + JSON.stringify(this.user));
-      })
-      .catch((e) => {
-        console.log('Hans');
-      });*/
+  onPreviousClick(): void {
+    this.currentSlideIndex = this.currentSlideIndex >= 0 ? this.currentSlideIndex - 1 : this.homeSlides.length - 1;
+    this.loadComponent();
+  }
+
+  onNextClick(): void {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.homeSlides.length;
+    this.loadComponent();
+  }
+
+  loadComponent(): void {
+    const slideItem = this.homeSlides[this.currentSlideIndex];
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(slideItem.component);
+    this.container.clear();
+    const componentRef = this.container.createComponent(componentFactory);
+    componentRef.instance.data = slideItem.data;
+  }
+
+  getSlides(): void {
+    this.interval = setInterval(() => {
+      if (!this.pause) {
+        this.loadComponent();
+      }
+    }, 10000);
+  }
+
+  onTooglePauseClick(): void {
+    this.pause = !this.pause;
   }
 }
