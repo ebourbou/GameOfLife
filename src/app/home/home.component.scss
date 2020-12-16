@@ -6,11 +6,18 @@
 }
 
 .slide {
-  flex-grow: 1;
+
+  width: 100%;
+  background-color: #e56b6f;
 }
 
 .action {
+  margin-top: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.control {
+  color: gray;
 }

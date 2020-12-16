@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
-import { Game } from '../../game/model/Game';
 import { GameUtils } from '../../shared/service/GameUtils';
-import { Board } from '../../shared/model/Board';
+import { Game } from '../../game/model/Game';
+import { UserUtils } from '../../users/utils/user-utils';
+import { BoardComponent } from '../../game/board/board.component';
 
 @Component({
   styleUrls: ['start-slide.component.scss'],
@@ -10,10 +11,10 @@ import { Board } from '../../shared/model/Board';
 })
 export class SlideStart implements SlideComponent, OnInit {
   @Input() data: any;
-  gameBoard: Board;
+  @Input() game: Game;
 
   ngOnInit(): void {
-    this.gameBoard = GameUtils.build(100, 50);
-    GameUtils.randomizeCellStates(this.gameBoard);
+    /*   this.game = new Game(GameUtils.build(100, 50));
+    GameUtils.randomizeCellStates(this.game.board);*/
   }
 }

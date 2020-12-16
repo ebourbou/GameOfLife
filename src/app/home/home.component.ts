@@ -3,9 +3,10 @@ import { APIService } from '../API.service';
 import { AuthService } from '../core/services/auth.service';
 import { UserService } from '../users/services/users.service';
 import { SlideExplanation } from './slides/explanation-slide.component';
-import { SlideVideo } from './slides/video-slide.component';
 import { SlideItem } from './slides/slide.item';
 import { SlideStart } from './slides/start-slide.component';
+import { SlideExplanation2 } from './slides/explanation2-slide.component';
+import { SlideReferences } from './slides/reference-slide.component';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
 export class HomeComponent implements AfterViewInit, OnDestroy {
@@ -24,7 +25,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ) {
     this.homeSlides.push(new SlideItem(SlideStart, {}));
     this.homeSlides.push(new SlideItem(SlideExplanation, {}));
-    this.homeSlides.push(new SlideItem(SlideVideo, {}));
+    this.homeSlides.push(new SlideItem(SlideExplanation2, {}));
+    this.homeSlides.push(new SlideItem(SlideReferences, {}));
   }
 
   ngAfterViewInit(): void {
@@ -47,6 +49,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   loadComponent(): void {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.homeSlides.length;
     const slideItem = this.homeSlides[this.currentSlideIndex];
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(slideItem.component);
@@ -57,13 +60,17 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   getSlides(): void {
     this.interval = setInterval(() => {
-      if (!this.pause) {
-        this.loadComponent();
-      }
-    }, 10000);
+      this.loadComponent();
+    }, 8000);
   }
 
   onTooglePauseClick(): void {
     this.pause = !this.pause;
+
+    if (this.pause) {
+      clearInterval(this.interval);
+    } else {
+      this.getSlides();
+    }
   }
 }
