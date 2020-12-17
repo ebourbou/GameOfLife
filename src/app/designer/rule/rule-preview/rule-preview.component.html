@@ -13,7 +13,7 @@
       <rule-display [rule]="ruleSet.ruleStringBSnotation"></rule-display>
       <p class="description">{{ruleSet.description}}</p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="showRating">
       <gol-rating [userId]="user.id" [ratingId]="ruleSet.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>
     </mat-card-actions>
   </mat-card>

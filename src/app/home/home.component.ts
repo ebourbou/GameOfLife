@@ -2,11 +2,11 @@
 import { APIService } from '../API.service';
 import { AuthService } from '../core/services/auth.service';
 import { UserService } from '../users/services/users.service';
-import { SlideExplanation } from './slides/explanation-slide.component';
 import { SlideItem } from './slides/slide.item';
-import { SlideStart } from './slides/start-slide.component';
-import { SlideExplanation2 } from './slides/explanation2-slide.component';
+import { SlideGame } from './slides/game-slide.component';
 import { SlideReferences } from './slides/reference-slide.component';
+import { SlideExplanationRules } from './slides/rules-slide.component';
+import { SlideTeaser } from './slides/teaser-slide.component';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
 export class HomeComponent implements AfterViewInit, OnDestroy {
@@ -23,10 +23,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private userService: UserService,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    this.homeSlides.push(new SlideItem(SlideStart, {}));
-    this.homeSlides.push(new SlideItem(SlideExplanation, {}));
-    this.homeSlides.push(new SlideItem(SlideExplanation2, {}));
-    this.homeSlides.push(new SlideItem(SlideReferences, {}));
+    this.homeSlides.push(new SlideItem(SlideTeaser, { page: 1 }));
+    this.homeSlides.push(new SlideItem(SlideGame, { page: 2 }));
+    this.homeSlides.push(new SlideItem(SlideExplanationRules, { page: 3 }));
+    this.homeSlides.push(new SlideItem(SlideReferences, { page: 4 }));
   }
 
   ngAfterViewInit(): void {
@@ -39,7 +39,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   onPreviousClick(): void {
-    this.currentSlideIndex = this.currentSlideIndex >= 0 ? this.currentSlideIndex - 1 : this.homeSlides.length - 1;
+    this.currentSlideIndex = this.currentSlideIndex > 0 ? this.currentSlideIndex - 1 : this.homeSlides.length - 1;
     this.loadComponent();
   }
 
@@ -49,7 +49,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   loadComponent(): void {
-    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.homeSlides.length;
     const slideItem = this.homeSlides[this.currentSlideIndex];
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(slideItem.component);
@@ -60,17 +59,33 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   getSlides(): void {
     this.interval = setInterval(() => {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.homeSlides.length;
       this.loadComponent();
-    }, 8000);
+    }, 10000);
   }
 
-  onTooglePauseClick(): void {
+  onTogglePauseClick(): void {
     this.pause = !this.pause;
 
     if (this.pause) {
       clearInterval(this.interval);
     } else {
       this.getSlides();
+    }
+  }
+
+  onKey($event: KeyboardEvent): void {
+    console.log($event.code);
+    switch ($event.code) {
+      case '20':
+        this.onTogglePauseClick();
+        break;
+      case '37':
+        this.onPreviousClick();
+        break;
+      case '39':
+        this.onNextClick();
+        break;
     }
   }
 }

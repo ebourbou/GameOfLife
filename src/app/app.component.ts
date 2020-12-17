@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/reproduction.svg')
     );
     this.matIconRegistry.addSvgIcon('runtime', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/runtime.svg'));
+    this.matIconRegistry.addSvgIcon('neighbors', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/neighbors.svg'));
   }
 
   logout(): void {

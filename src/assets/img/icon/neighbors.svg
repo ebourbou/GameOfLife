@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#B0B0B0;stroke-miterlimit:10;}
+	.st1{fill:#7B7B76;}
+	.st2{font-family:'MyriadPro-Regular';}
+	.st3{font-size:12px;}
+	.st4{fill:#E6E4F3;}
+</style>
+<g id="Ebene_1">
+	<rect x="0.93" y="0.92" class="st0" width="98.32" height="98.32"/>
+	<line class="st0" x1="0.93" y1="32.55" x2="99.25" y2="32.55"/>
+	<line class="st0" x1="0.84" y1="66.13" x2="99.16" y2="66.13"/>
+	<line class="st0" x1="33.36" y1="1" x2="33.36" y2="99.24"/>
+	<line class="st0" x1="67.1" y1="0.92" x2="67.1" y2="99.24"/>
+</g>
+<g id="Ebene_2">
+	<text transform="matrix(1 0 0 1 13.1853 19.6279)" class="st1 st2 st3">1</text>
+	<text transform="matrix(1 0 0 1 46.0439 19.6277)" class="st1 st2 st3">2</text>
+	<text transform="matrix(1 0 0 1 80.0303 19.6277)" class="st1 st2 st3">3</text>
+	<text transform="matrix(1 0 0 1 78.7422 50.876)" class="st1 st2 st3">4</text>
+	<text transform="matrix(1 0 0 1 79.386 85.9896)" class="st1 st2 st3">5</text>
+	<text transform="matrix(1 0 0 1 46.0439 85.9896)" class="st1 st2 st3">6</text>
+	<text transform="matrix(1 0 0 1 13.1853 85.9896)" class="st1 st2 st3">7</text>
+	<text transform="matrix(1 0 0 1 13.1851 50.876)" class="st1 st2 st3">8</text>
+</g>
+<g id="Ebene_3">
+	<rect x="34.08" y="33.16" class="st4" width="32.3" height="32.3"/>
+</g>
+</svg>

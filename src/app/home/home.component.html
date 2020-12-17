@@ -1,10 +1,10 @@
 ﻿<div class="container">
-  <ng-template #dynamicComponent class="slide"></ng-template>
+  <ng-template #dynamicComponent ></ng-template>
   <div class="action">
     <button mat-icon-button class="control" aria-label="Zurück" (click)="onPreviousClick()">
       <mat-icon>navigate_before</mat-icon>
     </button>
-    <button mat-icon-button class="control" aria-label="Pause" (click)="onTooglePauseClick()">
+    <button mat-icon-button class="control" aria-label="Pause" (click)="onTogglePauseClick()">
       <mat-icon>{{pause ? 'play_arrow':'pause'}}</mat-icon>
     </button>
     <button mat-icon-button class="control" aria-label="Weiter" (click)="onNextClick()">

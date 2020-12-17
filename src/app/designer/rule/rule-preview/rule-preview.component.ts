@@ -15,7 +15,7 @@ import { UserUtils } from '../../../users/utils/user-utils';
 })
 export class RulePreviewComponent implements OnInit {
   @Input() ruleSet: RuleSet;
-  @Input() rating: number;
+  @Input() showRating = true;
 
   user: User;
   disabled = false;

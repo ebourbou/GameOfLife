@@ -33,6 +33,7 @@ import { StatisticModule } from './statistic/statistic.module';
 import { LocalRuleService } from './shared/service/rule/local-rule.service';
 import { GamerModule } from './gamer/gamer.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeModule } from './home/home.module';
 
 registerLocaleData(localeDECH);
 
@@ -53,14 +54,15 @@ registerLocaleData(localeDECH);
     EffectsModule.forRoot([]),
     MatToolbarModule,
     StatisticModule,
+    HomeModule,
     GamerModule,
   ],
-  declarations: [AppComponent, HomeComponent, ConfirmDeleteDialog],
+  declarations: [AppComponent, ConfirmDeleteDialog],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    // { provide: ErrorHandler, useClass: CustomErrorHandler },
+    //{ provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: PatternService, useClass: PatternService },

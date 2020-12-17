@@ -29,6 +29,6 @@ import { RuleDisplayComponent } from './rule/rule-preview/rule-display.component
     RuleCarouselComponent,
   ],
   providers: [BreakpointService],
-  exports: [PatternPreviewComponent, PatternCarouselComponent, RuleCarouselComponent],
+  exports: [PatternPreviewComponent, PatternCarouselComponent, RuleCarouselComponent, RulePreviewComponent],
 })
 export class DesignerModule {}

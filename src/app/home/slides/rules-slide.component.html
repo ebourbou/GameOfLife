@@ -1,0 +1,23 @@
+<article>
+  <h1>Das Spielfeld</h1>
+  <section><p>Das GameOfLife ist ein von John Conway 1970 entworfenes Simulationsspiel. Das Spielfeld ist in Zeilen und Spalten unterteilt und im Idealfall unendlich groß.</p>
+    <div class="cells">
+      <div>Jedes Feld repräsentiert eine Zelle, die entweder tot (Zelle leer) oder lebendig (Zelle gefüllt) ist. Beim Übergang zur nächsten Generation entscheidet sich für jede Zelle über "Geburt" ,Überleben oder Tod anhand ihrer 8 Nachbarzellen. Die Folgegeneration wird für alle Zellen gleichzeitig berechnet und ersetzt die aktuelle Generation.</div>
+      <img class="neighbors" src="../../../assets/img/icon/neighbors.svg">
+    </div>
+  </section>
+  <div class="rules">
+    <div class="ruleImages">
+      <p>Die ursprüngliche erste Regeln von Conway hat folgende Eigenschaften:</p>
+      <div class="rule"><div><img class="pattern" src="../../../assets/img/stayAlive.gif"></div><div>Eine lebende Zelle mit genau 2 oder 3 lebenden Nachbarn überlebt in er nächsten Generation.</div></div>
+      <div class="rule"><div><img class="pattern" src="../../../assets/img/die.gif"></div><div>Eine lebende Zelle mit vier oder mehr Nachbarn stirbt an Überbevölkerung. Hat eine lebende Zelle nur einen oder keinen Nachbarn so stirbt sie an Isolation</div></div>
+      <div class="rule"><div><img class="pattern" src="../../../assets/img/born.gif"></div><div>Hat eine tote Zelle (leeres Quadrat) genau drei lebende Nachbarn, findet auf diesem Quadrat die Geburt einer neuen Zelle statt.</div></div>
+      <div class="rule"><div><img class="pattern" src="../../../assets/img/noChange.gif"></div><div>Ale restlichen Zellen sind in der Folgegeneration tot.</div></div>
+    </div>
+    <div class="rulePreview">
+      <h2>B/S Notation</h2>
+      Im Spiel haben wir einige der gängigen Regeln implementiert. Sie werden in der BS Notation dargestellt. B (birth) ist eine Liste mit den Zahlen lebender Nachbarn, die eine tote Zelle zum Leben erwecken. S (survival) ist eine Liste mit den Zahlen lebender Nachbarn, die eine Zelle weiterleben lässt.
+      <rule-preview [ruleSet]="conwayRuleset" [showRating]="false"></rule-preview>
+    </div>
+  </div>
+</article>

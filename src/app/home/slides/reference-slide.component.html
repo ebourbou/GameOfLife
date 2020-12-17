@@ -1,5 +1,16 @@
 <article>
-    <h1>Weitere Infos</h1>
-    <p>In Video erklärt John Conway die Entstehung vom GameOfLife sowie die möglichen Anwendungen.</p>
-   <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank"><img class="conway" src="../../../assets/img/JConway.jpg" alt="John Conway"></a>
+  <h1>Patterns</h1>
+  <section class="patterns">
+    Bestimmte Pattern/Muster, Anordnung von lebenden Zellen, haben besondere Eigenschaften. So gibt es statische Muster, die sich (ohne Einfluss von Aussen) nicht verändern. Dann gibt es oszillierende Muster, die nach einer definierten Anzahl von Nachfolgegenerationen wieder genau dem Anfangszustand entsprechen. Ausserdem wurden Raumschiff Muster entdeckt, die nach n Zyklen wieder dem verschobenen Urspungsmuster gleichen.
+    <p class="hint"><mat-icon color="primary">info</mat-icon>Beim Hoovern über das Pattern wird es animiert nach den Conway Rules B3/S23 </p>
+    <div class="patternPreview">
+      <pattern-preview class="blinker" [pattern]="blinker" [ruleSet]="conwayRules" [showRating]="false"></pattern-preview>
+      <pattern-preview class="blinker" [pattern]="oscillator" [ruleSet]="conwayRules" [showRating]="false"></pattern-preview>
+    </div>
+  </section>
+  <h1>Weitere Infos</h1>
+    <section class="more-info">
+      <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank"><img class="conway" src="../../../assets/img/JConway.jpg" alt="John Conway"></a>
+      <p>In Video erklärt John Conway die Entdeckung vom GameOfLife sowie die möglichen Anwendungen.</p>
+  </section>
 </article>
