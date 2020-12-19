@@ -14,8 +14,7 @@ export class Game {
   constructor(public board: Board, public generations: number, user: string) {
     this.name = this.id;
     this.author = user;
-    this.description =
-      `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} von ${this.author} am ` + this.dateAsString();
+    this.description = `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} am ` + this.dateAsString();
   }
 
   nextGeneration(): void {

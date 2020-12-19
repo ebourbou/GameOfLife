@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
@@ -7,6 +7,7 @@ import { CellState } from '../../shared/model/CellState';
 
 @Component({
   selector: 'gol-board',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })

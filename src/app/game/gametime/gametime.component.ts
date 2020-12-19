@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 
 @Component({
   selector: 'app-gametime',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './gametime.component.html',
   styleUrls: ['./gametime.component.scss'],
 })
