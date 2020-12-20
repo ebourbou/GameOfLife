@@ -5,6 +5,8 @@ import { GameUtils } from './GameUtils';
 import { Cell } from '../model/Cell';
 import { APIService } from '../../API.service';
 import { AbstractRuleService } from './rule/abstract-rule.service';
+import { UserUtils } from '../../users/utils/user-utils';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +18,24 @@ export class GameService {
     return from(this.api.ListGames().then((result) => result.items.map((item) => this.fromAwsGame(item))));
   }
 
+  getAllGamesFiltered(): Observable<Game[]> {
+    return from(
+      this.api
+        .ListGames()
+        .then((result) =>
+          result.items
+            .filter((awsgame) => awsgame.userId === UserUtils.loadUserFromLocal().id || JSON.parse(awsgame.description).isPublic)
+            .map((item) => this.fromAwsGame(item))
+        )
+    );
+  }
+
   getGame(id: string): Observable<Game> {
     return from(this.api.GetGame(id).then((result) => this.fromAwsGame(result)));
   }
 
-  addGame(game: Game): Observable<Game> {
-    const input: any = this.toAwsGame(game);
+  addGame(isPublic: boolean, game: Game): Observable<Game> {
+    const input: any = this.toAwsGame(isPublic, game);
     delete input.id;
     return from(this.api.CreateGame(input).then((result) => this.fromAwsGame(result)));
   }
@@ -33,14 +47,15 @@ export class GameService {
     this.ruleService.getRuleSet(awsGame.ruleSetId).subscribe((r) => (game.ruleSet = r));
     game.date = new Date(awsGame.creationDate);
     game.score = { overallScore: awsGame.score, tags: JSON.parse(awsGame.scoreTags) };
+    game.isPublic = JSON.parse(awsGame.description).isPublic;
     return game;
   }
 
-  private toAwsGame(game: Game): any {
+  private toAwsGame(isPublic: boolean, game: Game): any {
     return {
       name: game.name,
       userId: game.author,
-      description: game.description,
+      description: JSON.stringify({ description: game.description, isPublic }),
       generations: game.generations,
       id: game.id,
       pattern: this.cellStatesAsDotOString(game.board.cells),

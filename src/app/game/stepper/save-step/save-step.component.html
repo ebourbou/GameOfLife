@@ -1,9 +1,15 @@
-<p>Speichern:</p>
-<form [formGroup]="saveFormGroup">
-  <div>
-    <button mat-raised-button color="primary" type="button" [disabled]="isBusy" (click)="onSaveGame()">
-      <span *ngIf="isBusy" class="spinner-border spinner-border-sm mr-1"></span>
-      Speichern
-    </button>
-  </div>
-</form>
+<p>Speichere und veröffentliche dein Spiel:</p>
+<span class="slider" >
+  <mat-slide-toggle
+    [(ngModel)]="isPublicGame" >
+    Veröffentlichen
+  </mat-slide-toggle>
+  <mat-icon class="help-icon" matTooltip="Das gespeicherte Spiel ist nur für dich oder aber für alle zugänglich.">help</mat-icon>
+</span>
+<div class="button_block">
+  <button mat-button mat-raised-button [disabled]="isBusy" type="button" (click)="onReset()" >Neues Spiel</button>
+  <button mat-raised-button color="primary" type="button"  [disabled]="isBusy" (click)="onSaveGame()">
+    <span *ngIf="isBusy" class="spinner-border spinner-border-sm mr-1"></span>
+    Speichern
+  </button>
+</div>

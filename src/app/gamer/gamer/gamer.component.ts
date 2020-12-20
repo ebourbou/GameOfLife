@@ -28,7 +28,13 @@ export class GamerComponent implements OnInit {
   expandedGame: Game | null;
   selectedView: string;
   privateGamesOnly = false;
-  showSpinner: boolean;
+  private loadUsersFinished = false;
+  private loadGamesFinished = false;
+
+  get showSpinner(): boolean {
+    return !(this.loadGamesFinished && this.loadUsersFinished);
+  }
+
   dataSource = new MatTableDataSource<Game>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,10 +46,11 @@ export class GamerComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedView = 'carousel';
-    this.loadGames();
+    this.loadGamesFiltered();
     this.user = UserUtils.loadUserFromLocal();
     this.userService.getUsers().then((list: ListUsersQuery) => {
       this.users = list.items.map((item) => ({ id: item.id, name: item.username }));
+      this.loadUsersFinished = true;
     });
   }
 
@@ -53,16 +60,15 @@ export class GamerComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  private loadGames(): void {
-    this.showSpinner = true;
+  private loadGamesFiltered(): void {
     this.gameService
-      .getAllGames()
+      .getAllGamesFiltered()
       .pipe(map((games) => games.filter((game) => (this.privateGamesOnly ? game.author === this.user.id : true))))
       .subscribe((games) => {
         this.dataSource.data = games;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.showSpinner = false;
+        this.loadGamesFinished = true;
       });
   }
 
@@ -72,12 +78,15 @@ export class GamerComponent implements OnInit {
 
   showAndLoadPrivateGamesOnly(checked: boolean): void {
     if (checked !== this.privateGamesOnly) {
-      this.loadGames();
+      this.loadGamesFiltered();
     }
     this.privateGamesOnly = checked;
   }
 
   toUserName(authorId: string): string {
+    if (!this.users) {
+      return null;
+    }
     return this.users.find((user) => user.id === authorId).name;
   }
 }

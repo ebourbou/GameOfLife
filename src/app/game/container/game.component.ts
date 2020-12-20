@@ -183,8 +183,8 @@ export class GameComponent implements OnInit {
     this.store.dispatch(stepChanged({ step }));
   }
 
-  onSaveGame(game: Game): void {
-    this.store.dispatch(addGame({ game }));
+  onSaveGame(params: { isPublic: boolean; game: Game }): void {
+    this.store.dispatch(addGame(params));
   }
 
   onApplyGame(id: string): void {
@@ -206,6 +206,6 @@ export class GameComponent implements OnInit {
   }
 
   onSwitchCellState($event): void {
-    this.store.dispatch(switchCellState({ x: $event.row, y: $event.column }));
+    this.store.dispatch(switchCellState({ x: $event.column, y: $event.row }));
   }
 }

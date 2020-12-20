@@ -32,13 +32,12 @@
   </mat-step>
 
   <mat-step label="Analysieren" state="analyze">
-    <app-analysis-step>
-    </app-analysis-step>
   </mat-step>
 
   <mat-step label="Speichern" state="save" >
     <app-save-step [isBusy]="isBusy"
-                   (doSaveGame)="onSaveGame()" >
+                   (doSaveGame)="onSaveGame($event)"
+                   (doReset)="onResetAll()" >
     </app-save-step >
   </mat-step>
 

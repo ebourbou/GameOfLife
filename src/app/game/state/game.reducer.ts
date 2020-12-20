@@ -133,7 +133,7 @@ export const gameActionReducer = createReducer(
   on(GameActions.switchCellState, (state, action) => {
     const newState = { ...state };
     const newGame = deepCopy(state.game);
-    newGame.board.getCell(action.y, action.x).setState(CellState.ALIVE);
+    newGame.board.getCell(action.x, action.y).setState(CellState.ALIVE);
     newState.game = newGame;
     return newState;
   }),
@@ -229,7 +229,6 @@ export const gameActionReducer = createReducer(
       loading: false,
     };
   }),
-
   on(GameActions.applyGame, (state) => {
     return {
       ...state,

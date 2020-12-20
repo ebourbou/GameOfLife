@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-play-step',
@@ -12,7 +12,8 @@ export class PlayStepComponent implements OnInit {
   @Input()
   set isGameFinished(isGameFinished: boolean) {
     if (isGameFinished) {
-      this.doNextStepProgrammatically.emit();
+      this.doNextStepProgrammatically.emit(); // hop over play step
+      this.doNextStepProgrammatically.emit(); // hop over analysis step
     }
   }
 
