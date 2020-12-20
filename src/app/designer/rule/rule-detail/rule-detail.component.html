@@ -1,4 +1,58 @@
 <div *ngIf="ruleSet">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Regelsatz {{ruleSet.shortName}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  >
+        <div class="header">
+          <mat-form-field >
+            <mat-label>Name</mat-label>
+            <input matNativeControl ngModel type="text" name="name" [(ngModel)]="ruleSet.shortName" required [disabled]="true">
+          </mat-form-field>
+        </div>
+        <div class="fields-editor">
+          <div class="fields">
+            <mat-form-field appearance="fill" matTooltip="Regeln werden typischerweise als Regelsätze in der B/S-Notation ausgedrückt, wobei zwei Zahlenlisten die Anzahl der Nachbarn angeben, die dazu führen, dass eine tote Zelle geboren wird (B) bzw. eine lebende Zelle überlebt (S); Conway's Game of Life hat den Regelsatz B3/S23">
+              <mat-label>B/S Notation</mat-label>
+              <input  matNativeControl ngModel type="text" name="B/S Notation" [(ngModel)]="ruleSet.ruleStringBSnotation" required [disabled]="true" >
+            </mat-form-field>
+            <div>
+              <mat-label>Schwierigkeit [{{("0"+ruleSet.difficulty).slice(-2)}}]</mat-label>
+              <mat-slider
+                [max]="10"
+                [min]="0"
+                [step]="1"
+                [thumbLabel]= true
+                [(ngModel)]="ruleSet.difficulty"
+                ngModel name="difficulty"
+                [disabled]="true">
+              </mat-slider>
+            </div>
+            <div>
+              <mat-slide-toggle
+                name="locked"
+                [checked]="true"
+                [disabled]="true">
+                Gesperrt
+              </mat-slide-toggle>
+              <mat-icon class="help-icon" matTooltip="Gesperrte Regelsätze können nur von Admin Benutzern verändert werden">help</mat-icon>
+            </div>
+          </div>
+        </div>
+        <mat-form-field appearance="fill" class="description">
+          <mat-label>Beschreibung</mat-label>
+          <textarea matNativeControl ngModel
+                    class
+                    [(ngModel)]="ruleSet.description" name="description"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="5"
+                    [disabled]="true">{{ruleSet.description}}</textarea>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
   <div class="preview">
     <rule-preview *ngIf="(demoPattern$ | async)" [ruleSet]="innerRuleSet" ></rule-preview>
     <ng-container *ngIf="!(demoPattern$ | async)"><mat-spinner class="spinner"></mat-spinner></ng-container>

@@ -28,6 +28,7 @@ import {
   applyGame,
   startAnalysis,
   toggleMaximize,
+  switchCellState,
 } from '../state/game.actions';
 import { Observable } from 'rxjs';
 import { GameState } from '../state/game.reducer';
@@ -57,6 +58,7 @@ import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { Score } from '../../statistic/service/score';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -84,8 +86,7 @@ export class GameComponent implements OnInit {
   public allGenerationStatistics$: Observable<GenerationStatistic[]>;
   public score$: Observable<Score>;
 
-  constructor(private defaults: DefaultsService, private store: Store<GameState>) {
-    this.startFromScratch();
+  constructor(private route: ActivatedRoute, private router: Router, private defaults: DefaultsService, private store: Store<GameState>) {
     this.game$ = this.store.select(selectGame);
     this.controls$ = this.store.select(selectControls);
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
@@ -105,7 +106,15 @@ export class GameComponent implements OnInit {
     this.score$ = this.store.select(selectScore);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Allows for ngOnInit to be called on routing to the same routing Component since we will never reuse a route
+    this.startFromScratch();
+    this.route.queryParams.subscribe((params) => {
+      if (params.id) {
+        this.onApplyGame(params.id);
+      }
+    });
+  }
 
   async onResize(size: any): Promise<void> {
     const controls = await this.getControls();
@@ -194,5 +203,9 @@ export class GameComponent implements OnInit {
 
   onToggleMaximize(): void {
     this.store.dispatch(toggleMaximize());
+  }
+
+  onSwitchCellState($event): void {
+    this.store.dispatch(switchCellState({ x: $event.row, y: $event.column }));
   }
 }

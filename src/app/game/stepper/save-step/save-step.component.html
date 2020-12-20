@@ -1,7 +1,7 @@
 <p>Speichern:</p>
 <form [formGroup]="saveFormGroup">
   <div>
-    <button mat-raised-button color="primary" type="button" (click)="onSaveGame()">
+    <button mat-raised-button color="primary" type="button" [disabled]="isBusy" (click)="onSaveGame()">
       <span *ngIf="isBusy" class="spinner-border spinner-border-sm mr-1"></span>
       Speichern
     </button>

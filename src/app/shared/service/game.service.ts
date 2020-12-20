@@ -29,7 +29,6 @@ export class GameService {
   private fromAwsGame(awsGame): Game {
     const game = new Game(GameUtils.build(awsGame.sizeX, awsGame.sizeY), awsGame.generations, awsGame.userId);
     GameUtils.applyPatternFromString(game.board, 0, 0, awsGame.pattern, awsGame.sizeX, awsGame.sizeY);
-    game.description = awsGame.description;
     game.id = awsGame.id;
     this.ruleService.getRuleSet(awsGame.ruleSetId).subscribe((r) => (game.ruleSet = r));
     game.date = new Date(awsGame.creationDate);

@@ -22,6 +22,7 @@ export const nextGenerationSuccess = createAction('[Game] Next Generation Succes
 export const startAnalysis = createAction('[Game] Start Analysis', props<{ game: Game; generationStatistics: GenerationStatistic[] }>());
 export const startAnalysisSuccess = createAction('[Game] Start Analysis Success', props<{ score: Score }>());
 
+export const switchCellState = createAction('[Game] Switch Cell State', props<{ x: number; y: number }>());
 export const patternSelected = createAction('[Game] Pattern Selected', props<{ selectedPattern: Pattern }>());
 export const applyPattern = createAction('[Game] Pattern Apply', props<{ row: number; column: number }>());
 

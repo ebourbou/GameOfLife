@@ -5,7 +5,11 @@ import { Score } from '../../statistic/service/score';
 export class Game {
   public name: string;
   public id = '' + Date.now();
-  public description: string;
+
+  public get description(): string {
+    return `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} am ` + this.dateAsString();
+  }
+
   public author;
   public date = new Date();
   public ruleSet: RuleSet;
@@ -14,7 +18,6 @@ export class Game {
   constructor(public board: Board, public generations: number, user: string) {
     this.name = this.id;
     this.author = user;
-    this.description = `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} am ` + this.dateAsString();
   }
 
   nextGeneration(): void {

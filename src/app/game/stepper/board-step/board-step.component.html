@@ -1,10 +1,10 @@
 <div>
 <p>Bestimme die Grösse des Spielfeldes und die Dauer des Spieles:</p>
-  <mat-button-toggle-group multiple="false" (change)="onChangeSize($event.value)" >
+  <mat-button-toggle-group multiple="false" [value]="selectedSize" (change)="onChangeSize($event.value)" [disabled]="isBusy">
     <mat-button-toggle value="small" aria-label="Klein">
       <mat-icon svgIcon="small"></mat-icon>
     </mat-button-toggle>
-    <mat-button-toggle value="medium" aria-label="Mittel" checked="true">
+    <mat-button-toggle value="medium" aria-label="Mittel">
       <mat-icon svgIcon="medium"></mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="large" aria-label="Gross">
@@ -14,14 +14,15 @@
   <p></p>
     <mat-label>Generationen</mat-label>
     <mat-slider
-      #generations
+      [disabled]="isBusy"
       [max]="500"
       [min]="10"
       [step]="10"
       [thumbLabel]= true
+      [value]="controls.generations"
       (valueChange)="onChangeGenerations($event)">
     </mat-slider>
   <div>
-    <button mat-button matStepperNext mat-raised-button color="primary"  style="float: right;">Weiter</button>
+    <button mat-button matStepperNext mat-raised-button [disabled]="isBusy" color="primary"  style="float: right;">Weiter</button>
   </div>
 </div>

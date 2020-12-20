@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Controls } from '../../model/Controls';
-import { Game } from '../../model/Game';
 import { DefaultsService } from '../../../shared/service/defaults.service';
 import { MatSlider } from '@angular/material/slider';
 
@@ -9,7 +8,7 @@ import { MatSlider } from '@angular/material/slider';
   templateUrl: './board-step.component.html',
   styleUrls: ['./board-step.component.scss'],
 })
-export class BoardStepComponent implements OnInit, AfterViewInit {
+export class BoardStepComponent implements OnInit {
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
@@ -18,18 +17,19 @@ export class BoardStepComponent implements OnInit, AfterViewInit {
   @Input()
   controls: Controls;
 
-  @ViewChild('generations') generationsComponent: MatSlider;
+  @Input()
+  isBusy: boolean;
 
   private sizes: Map<string, { x: number; y: number }>;
+
+  get selectedSize(): string {
+    return [...this.sizes.entries()].find((entry) => entry[1].x === this.controls.xAxisSize && entry[1].y === this.controls.yAxisSize)[0];
+  }
 
   constructor(private defaults: DefaultsService) {}
 
   ngOnInit(): void {
     this.loadSizes();
-  }
-
-  ngAfterViewInit(): void {
-    this.generationsComponent.value = this.controls.generations;
   }
 
   onChangeGenerations(generations: number): void {

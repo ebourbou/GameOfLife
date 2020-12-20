@@ -2,6 +2,7 @@
 
   <mat-step label="Spielfeld" state="playfield" [stepControl]="rootGroup" [editable]="!isGameFinished" >
       <app-board-step
+                      [isBusy]="isBusy"
                       [controls]="controls"
                       (doResize)="onResize($event)"
                       (doChangeGenerations)="onChangeGenerations($event)" >
@@ -9,6 +10,7 @@
   </mat-step>
   <mat-step label="Zellen" state="cellInput" [stepControl]="rootGroup" [editable]="!isGameFinished" >
     <app-cell-step [allPatterns]="allPatterns"
+                   [isBusy]="isBusy"
                    (doPatternSelected)="onPatternSelected($event)"
                    (doRandomCells)="onRandom()"
                    (doInvertCells)="onInvert()"
@@ -18,6 +20,7 @@
 
   <mat-step label="Regeln" state="rules" [editable]="!isGameFinished" >
     <app-rule-step [allRuleSets]="allRuleSets"
+                   [isBusy]="isBusy"
                    (doRuleSetSelected)="onRuleSetSelected($event)">
     </app-rule-step>
   </mat-step>

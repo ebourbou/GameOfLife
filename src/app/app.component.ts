@@ -83,8 +83,6 @@ export class AppComponent implements OnInit {
       if (navigated) {
         this.notificationService.info('Benutzer abgemeldet ');
       }
-      //TODO: logout sollte jeglichen state wegwerfen. etwa so:
-      // location.reload();
     });
   }
 

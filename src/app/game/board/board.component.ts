@@ -22,6 +22,9 @@ export class BoardComponent implements OnInit {
   public doStartGame: EventEmitter<void> = new EventEmitter();
 
   @Output()
+  public doSwitchCellState: EventEmitter<Cell> = new EventEmitter();
+
+  @Output()
   public doStartAnalysis: EventEmitter<GenerationStatistic[]> = new EventEmitter();
 
   @Output()
@@ -109,9 +112,19 @@ export class BoardComponent implements OnInit {
   }
 
   /* Freehand drawing mode*/
-  toggle(mouseEvent: MouseEvent, cell: Cell): void {
-    if (mouseEvent.buttons > 0 && !this.patternSelected) {
-      cell.setState(CellState.ALIVE);
+  onMouseMove(mouseEvent: MouseEvent, cell: Cell): void {
+    if (mouseEvent.buttons > 0) {
+      this.onClick(cell);
+    }
+  }
+
+  onClick(cell: Cell): void {
+    if (this.isEditable) {
+      if (this.patternSelected) {
+        this.onApplyPattern(cell);
+      } else {
+        this.doSwitchCellState.emit(cell);
+      }
     }
   }
 }

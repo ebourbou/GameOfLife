@@ -8,6 +8,7 @@ import { Board } from '../../shared/model/Board';
 import { Pattern } from '../../shared/model/pattern';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { StepperStep } from '../stepper/StepperStep';
+import { CellState } from '../../shared/model/CellState';
 
 export const gameFeatureKey = 'game';
 
@@ -16,7 +17,6 @@ export interface GameState {
   allPatterns: Pattern[];
   patternSelected: Pattern;
   allRuleSets: RuleSet[];
-  ruleSetSelected: RuleSet;
   allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
   loading: boolean;
@@ -36,7 +36,6 @@ export const initialState: GameState = {
   allPatterns: [],
   patternSelected: null,
   allRuleSets: [],
-  ruleSetSelected: null,
   allGenerationStatistics: [],
   generationStatistic: null,
   loading: false,
@@ -93,10 +92,9 @@ export const gameActionReducer = createReducer(
   on(GameActions.changeGenerations, (state, action) => {
     const newControls = { ...state.controls };
     newControls.generations = action.generations;
-    return {
-      ...state,
-      controls: newControls,
-    };
+    const newGame = deepCopy(state.game);
+    newGame.generations = action.generations;
+    return { ...state, controls: newControls, game: newGame };
   }),
   on(GameActions.startGameSuccess, (state) => {
     const newState = { ...state };
@@ -132,7 +130,13 @@ export const gameActionReducer = createReducer(
     newGame.score = action.score;
     return { ...state, running: false, readyToRun: false, gameFinished: true, game: newGame };
   }),
-
+  on(GameActions.switchCellState, (state, action) => {
+    const newState = { ...state };
+    const newGame = deepCopy(state.game);
+    newGame.board.getCell(action.y, action.x).setState(CellState.ALIVE);
+    newState.game = newGame;
+    return newState;
+  }),
   on(GameActions.patternSelected, (state, action) => {
     return {
       ...state,

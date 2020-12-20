@@ -16,6 +16,9 @@ export class RuleStepComponent implements OnInit {
   @Input()
   ruleSetSelected: RuleSet;
 
+  @Input()
+  isBusy: boolean;
+
   constructor() {}
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
-<div *ngIf="game" class="container" >
-  <mat-card class="game-preview mat-elevation-z8" >
+<div *ngIf="game"  >
+  <mat-card class="game-preview mat-elevation-z8" (dblclick)="doNavigate()">
     <mat-card-content class="content">
-      <gol-board  class="preview" matTooltip="{{game.description}}" [board]="game.board" isMasked="true"></gol-board>
+      <gol-board  class="preview" matTooltip="{{game.description}}" [board]="game.board" isMasked="true" ></gol-board>
     </mat-card-content>
     <mat-card-footer  class="footer">
       <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>

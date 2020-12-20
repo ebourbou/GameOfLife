@@ -15,6 +15,9 @@ export class CellStepComponent implements OnInit {
   @Input()
   allPatterns: Pattern[];
 
+  @Input()
+  isBusy: boolean;
+
   @Output()
   public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
   @Output()
