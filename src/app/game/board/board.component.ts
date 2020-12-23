@@ -4,7 +4,6 @@ import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { CellState } from '../../shared/model/CellState';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'gol-board',
@@ -127,22 +126,5 @@ export class BoardComponent implements OnInit {
         this.doSwitchCellState.emit(cell);
       }
     }
-  }
-
-  dropPattern(event: DragEvent, cell: Cell): void {
-    event.preventDefault();
-    const data = event.dataTransfer.getData('text');
-
-    this.onApplyPattern(cell);
-  }
-
-  allowDrop(event: DragEvent): boolean {
-    if (event.preventDefault) {
-      event.preventDefault(); // Necessary. Allows us to drop.
-    }
-
-    event.dataTransfer.dropEffect = 'copy'; // See the section on the DataTransfer object.
-
-    return false;
   }
 }

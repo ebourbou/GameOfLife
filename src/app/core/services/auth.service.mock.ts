@@ -68,7 +68,7 @@ export class AuthServiceMock {
   public login(username, password): Observable<any> {
     const userLoaded = this.userPool.find((user) => user.username === username && user.password === password);
     if (userLoaded) {
-      localStorage.setItem('user', JSON.stringify(userLoaded));
+      sessionStorage.setItem('user', JSON.stringify(userLoaded));
       this.userSource.next(userLoaded);
       this.authenticated.next(true);
     }

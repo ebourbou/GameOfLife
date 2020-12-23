@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, OnInit {
       .auth()
       .currentAuthenticatedUser()
       .then((result) => {
-        const userStr = localStorage.getItem('user');
+        const userStr = sessionStorage.getItem('user');
         if (!userStr) {
           // load user
           let user: User;
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate, OnInit {
             if (value) {
               user = UserUtils.fromAws(value);
               if (user) {
-                localStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.setItem('user', JSON.stringify(user));
               }
             }
           });

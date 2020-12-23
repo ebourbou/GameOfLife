@@ -2,7 +2,6 @@ import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '
 import { CommonModule } from '@angular/common';
 import { Pattern } from '../../shared/model/pattern';
 import { PatternService } from '../../shared/service/patterns.service';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Cell } from '../../shared/model/Cell';
 
 @Component({

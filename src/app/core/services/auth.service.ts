@@ -86,7 +86,7 @@ export class AuthService {
           if (value) {
             user = UserUtils.fromAws(value);
             if (user) {
-              localStorage.setItem('user', JSON.stringify(user));
+              sessionStorage.setItem('user', JSON.stringify(user));
               this.userSource.next(user);
             }
           } else {
@@ -98,7 +98,7 @@ export class AuthService {
             this.userService
               .createUser(user)
               .then((result) => {
-                localStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.setItem('user', JSON.stringify(user));
               })
               .catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
           }
@@ -142,7 +142,7 @@ export class AuthService {
               return false;
             }
           )
-          .finally(() => localStorage.clear());
+          .finally(() => sessionStorage.clear());
       })
       .catch((err) => this.notificationService.error('Fehler beim Benutzer speichern: letztes login:' + err));
 

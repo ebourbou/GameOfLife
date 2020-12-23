@@ -13,7 +13,6 @@ export class DivGamePreviewComponent implements OnInit {
 
   @Input()
   navigationEnabled = false;
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

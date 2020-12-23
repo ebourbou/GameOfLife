@@ -7,7 +7,6 @@
       </mat-grid-tile>
       <mat-grid-tile *ngFor="let index of indices" [ngClass]="(currentPatternIndex === index ? 'highPattern' : null)">
        <pattern-preview  class="slide" [showRating]="false" [pattern]="patterns[index]"
-                        draggable="true"
                         (click)="onSelect(index)"
                         ></pattern-preview>
       </mat-grid-tile>

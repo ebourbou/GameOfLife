@@ -32,9 +32,9 @@ export class UserUtils {
   }
 
   static loadUserFromLocal(): User {
-    const userStr = localStorage.getItem('user');
+    const userStr = sessionStorage.getItem('user');
     if (userStr) {
-      return JSON.parse(localStorage.getItem('user'));
+      return JSON.parse(sessionStorage.getItem('user'));
     } else {
       return null;
     }

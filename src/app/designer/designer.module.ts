@@ -12,10 +12,9 @@ import { PatternCarouselComponent } from './pattern-carousel/pattern-carousel.co
 import { RuleCarouselComponent } from './rule-carousel/rule-carousel.component';
 import { RulePreviewComponent } from './rule/rule-preview/rule-preview.component';
 import { RuleDisplayComponent } from './rule/rule-preview/rule-display.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule, DragDropModule],
+  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule],
   declarations: [
     PatternDetailComponent,
     PatternsComponent,
