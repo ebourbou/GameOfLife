@@ -15,8 +15,9 @@
                (doInvertCells)="onInvertCells()"
                (doStepChanged)="onStepChanged($event)"
                (doRuleSetSelected)="onRuleSetSelected($event)"
-               (doSaveGame)="onSaveGame(game)"
-               (doApplyGame)="onApplyGame($event)">
+               (doSaveGame)="onSaveGame({isPublic: $event, game: game})"
+               (doResetAll)="startFromScratch()"
+  >
   </app-stepper>
   <gol-board *ngIf="!(isGameFinished$ | async)"
              [board]="game.board"

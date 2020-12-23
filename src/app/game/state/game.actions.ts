@@ -45,7 +45,7 @@ export const invertCells = createAction('[Game] Invert Cells');
 export const stepChanged = createAction('[Game] Step Changed', props<{ step: StepperStep }>());
 export const toggleMaximize = createAction('[Game] Toggle Maximize Board');
 
-export const addGame = createAction('[Game] Add Game', props<{ game: Game }>());
+export const addGame = createAction('[Game] Add Game', props<{ isPublic: boolean; game: Game }>());
 export const applyGame = createAction('[Game] Apply Game', props<{ id: string }>());
 export const applyGameSuccess = createAction('[Game] Apply Game Success', props<{ game: Game }>());
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, delay, map, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, delay, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -63,8 +63,9 @@ export class GameEffects {
     return this.actions$.pipe(
       ofType(GameActions.addGame),
       concatMap((payload) =>
-        this.gameService.addGame(payload.game).pipe(
+        this.gameService.addGame(payload.isPublic, payload.game).pipe(
           map((game) => GameActions.saveGameSuccess({ id: game.id })),
+          tap(() => this.notificationService.info('Spiel gespeichert!')),
           catchError((error) => of(GameActions.errorAction({ errors: [payload, error] })))
         )
       )

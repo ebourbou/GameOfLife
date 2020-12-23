@@ -5,8 +5,8 @@ import { Pattern } from '../../shared/model/pattern';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
-import { Game } from '../model/Game';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stepper',
@@ -50,13 +50,13 @@ export class StepperComponent implements OnInit {
   @Output()
   public doRuleSetSelected: EventEmitter<RuleSet> = new EventEmitter();
   @Output()
-  private doSaveGame: EventEmitter<void> = new EventEmitter();
+  private doSaveGame: EventEmitter<boolean> = new EventEmitter();
   @Output()
-  private doApplyGame: EventEmitter<string> = new EventEmitter();
+  private doResetAll: EventEmitter<void> = new EventEmitter();
 
   rootGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.rootGroup = this.formBuilder.group({});
@@ -87,10 +87,6 @@ export class StepperComponent implements OnInit {
     this.doResize.emit(size);
   }
 
-  onApplyGame(id: string): void {
-    this.doApplyGame.emit(id);
-  }
-
   selectionChange(event: StepperSelectionEvent): void {
     const nextStep = StepperStep[StepperStep[event.selectedIndex]];
     this.doStepChanged.emit(nextStep);
@@ -100,11 +96,28 @@ export class StepperComponent implements OnInit {
     this.doRuleSetSelected.emit(ruleSet);
   }
 
-  onSaveGame(): void {
-    this.doSaveGame.emit();
+  onSaveGame(isPublic: boolean): void {
+    this.doSaveGame.emit(isPublic);
   }
 
   onNextStepProgrammatically(): void {
     this.stepper.next();
+  }
+
+  onResetAll(): void {
+    // 1st method: initialize state --- but sequence of actions not in order. patterns lost
+    // also set newDefaultGame to use initialState (instead of current) in GameOfLife/src/app/game/state/game.reducer.ts:55
+    // this.doResetAll.emit();
+    // this.stepper.reset();
+    //
+    // 2nd method:  override the route reuse strategy
+    // see also { onSameUrlNavigation: 'reload' } in app-routing-module
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // this.router.navigate(['/game']);
+    //
+    // 3rd method: navigate away and into game again
+    // this.router.navigate(['/']).then(() => {
+    //  this.router.navigate(['/game']);
+    // });
   }
 }

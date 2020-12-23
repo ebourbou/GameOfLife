@@ -14,6 +14,7 @@ export class Game {
   public date = new Date();
   public ruleSet: RuleSet;
   public score: Score;
+  public isPublic = false;
 
   constructor(public board: Board, public generations: number, user: string) {
     this.name = this.id;

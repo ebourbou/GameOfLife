@@ -25,7 +25,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DivGamePreviewComponent } from './preview/game-preview/div-game-preview.component';
 import { GamePreviewComponent } from './preview/game.preview.component';
 import { GameCarouselComponent } from './game-carousel/game-carousel.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LoginComponent } from '../auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -58,5 +58,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule,
   ],
   exports: [BoardComponent, DivGamePreviewComponent, GamePreviewComponent, GameCarouselComponent],
+
+  entryComponents: [LoginComponent],
 })
 export class GameModule {}

@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Controls } from '../../model/Controls';
 import { DefaultsService } from '../../../shared/service/defaults.service';
-import { MatSlider } from '@angular/material/slider';
 
 @Component({
   selector: 'app-board-step',
