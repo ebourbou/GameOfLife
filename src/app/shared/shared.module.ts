@@ -29,7 +29,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -61,7 +60,6 @@ const MATERIAL = [
   MatSlideToggleModule,
   MatSidenavModule,
   MatTooltipModule,
-  DragDropModule,
 ];
 
 @NgModule({

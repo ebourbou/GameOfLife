@@ -16,7 +16,6 @@ import { RuleStepComponent } from './stepper/rule-step/rule-step.component';
 import { PlayStepComponent } from './stepper/play-step/play-step.component';
 import { SaveStepComponent } from './stepper/save-step/save-step.component';
 import { GametimeComponent } from './gametime/gametime.component';
-import { AnalysisStepComponent } from './stepper/analysis-step/analysis-step.component';
 import { GameStatisticComponent } from './game-statistic/game-statistic.component';
 import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-grouped-pipe';
 import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
@@ -38,7 +37,6 @@ import { LoginComponent } from '../auth/login/login.component';
     PlayStepComponent,
     SaveStepComponent,
     GametimeComponent,
-    AnalysisStepComponent,
     GameStatisticComponent,
     ToMeasureSeriesGroupedPipe,
     LastGenerationToMeasurePipe,
@@ -55,7 +53,6 @@ import { LoginComponent } from '../auth/login/login.component';
     EffectsModule.forFeature([GameEffects]),
     DesignerModule,
     NgxChartsModule,
-    DragDropModule,
   ],
   exports: [BoardComponent, DivGamePreviewComponent, GamePreviewComponent, GameCarouselComponent],
 
