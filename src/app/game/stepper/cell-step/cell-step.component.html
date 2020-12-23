@@ -13,6 +13,7 @@
   <app-pattern-carousel [autoLoadPatterns]="false"
                         [highLightSelection]="true"
                         [patterns]="allPatterns"
+                        [visiblePatterns]="5"
                         [isSelected]="drawMode != 0"
                         (doPatternSelected)="onPatternSelected($event)"
                         (doDeSelect)="onDeselectPattern()">

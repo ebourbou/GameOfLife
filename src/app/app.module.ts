@@ -34,6 +34,12 @@ import { LocalRuleService } from './shared/service/rule/local-rule.service';
 import { GamerModule } from './gamer/gamer.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeModule } from './home/home.module';
+import { AuthServiceMock } from './core/services/auth.service.mock';
+import { AuthService } from './core/services/auth.service';
+import { PatternMockService } from './shared/service/patterns-mock.service';
+import { UserMockService } from './users/services/users-mock.service';
+import { RatingService } from './shared/service/rating.service';
+import { RatingServiceMock } from './shared/service/rating.service.mock';
 
 registerLocaleData(localeDECH);
 
@@ -65,6 +71,8 @@ registerLocaleData(localeDECH);
     //{ provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
+    { provide: AuthService, useClass: AuthService },
+    { provide: RatingService, useClass: RatingService },
     { provide: PatternService, useClass: PatternService },
     { provide: AbstractRuleService, useClass: LocalRuleService },
     { provide: GameService, useClass: GameService },

@@ -1,13 +1,30 @@
-<div *ngIf="patterns" [ngClass]="(isSelected && highLightSelection ? 'carousel highlighted' : 'carousel')">
-  <div>
-    <pattern-preview class="slide" [pattern]="patterns[currentPatternIndex]"></pattern-preview>
-    <button class="control prev" (click)="onPreviousClick()">
+<div *ngIf="patterns" >
+  <mat-grid-list class="pattern-list" rowHeight="150" cols="{{this.visiblePatterns+2}}" >
+      <mat-grid-tile>
+        <button class="control prev" (click)="onPreviousClick()">
+        <span class="arrow left"></span>
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile *ngFor="let index of indices" [ngClass]="(currentPatternIndex === index ? 'highPattern' : null)">
+       <pattern-preview  class="slide" [showRating]="false" [pattern]="patterns[index]"
+                        draggable="true"
+                        (click)="onSelect(index)"
+                        ></pattern-preview>
+      </mat-grid-tile>
+      <mat-grid-tile>
+      <button class="control next" (click)="onNextClick()">
+        <span class="arrow right"></span>
+      </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!--<button class="control prev" (click)="onPreviousClick()">
       <span class="arrow left"></span>
     </button>
     <button class="control action" (click)="onSelect()">
     </button>
     <button class="control next" (click)="onNextClick()">
       <span class="arrow right"></span>
-    </button>
-  </div>
+    </button>-->
 </div>
+

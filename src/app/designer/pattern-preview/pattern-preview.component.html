@@ -2,17 +2,17 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>{{pattern.name}}</mat-card-title>
-      <mat-card-subtitle matTooltip="Regel für Preview: {{ruleSet.shortName}}">{{pattern.author}} {{pattern.year}} {{ruleSet.ruleStringBSnotation}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="showRating" matTooltip="Regel für Preview: {{ruleSet.shortName}}">{{pattern.author}} {{pattern.year}} {{ruleSet.ruleStringBSnotation}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content >
-      <div class="pattern" (mouseover)="startAnimation()" (mouseout)="stopAnimation()" >
+      <div class="pattern"> <!--(mouseover)="startAnimation()" (mouseout)="stopAnimation()"-->
         <mat-grid-list rowHeight="1:1" cols="{{this.board.width}}" >
           <mat-grid-tile *ngFor="let cell of this.board.cells" [ngClass]="(cell.isAlive() ? 'isAlive' : 'isDead')"></mat-grid-tile>
         </mat-grid-list>
       </div>
     </mat-card-content>
     <mat-card-actions *ngIf="showRating">
-      <gol-rating [userId]="user.id" [ratingId]="pattern.id"  (ratingUpdated)="onRatingChanged($event)"></gol-rating>
+      <gol-rating [userId]="user.id" [ratingId]="pattern.id"></gol-rating>
       <mat-icon class="info" color="primary" aria-label="{{pattern.description}}" matTooltip="{{pattern.description}}">info</mat-icon>
     </mat-card-actions>
   </mat-card>

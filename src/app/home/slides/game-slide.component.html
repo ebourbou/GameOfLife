@@ -1,5 +1,6 @@
-<article *ngIf="game.board">
+<article>
+  <div *ngIf="game.board">
     <h1>Game of Life.</h1>
     <gol-board  class="preview" [board]="game.board"></gol-board>
+  </div>
 </article>
-

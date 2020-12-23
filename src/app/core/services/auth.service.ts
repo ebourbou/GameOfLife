@@ -6,7 +6,6 @@ import { Auth } from '@aws-amplify/auth';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { APIService } from '../../API.service';
 import { User } from '../../shared/model/user';
-import { Role } from '../../shared/model/role';
 import { UserUtils } from '../../users/utils/user-utils';
 import { UserService } from '../../users/services/users.service';
 import { AmplifyService } from 'aws-amplify-angular';
@@ -44,7 +43,7 @@ export class AuthService {
           return null;
         }
       )
-      .catch((reason) => this.notificationService.error('Fehler beim Benuter laden: ' + reason));
+      .catch((reason) => this.notificationService.error('Fehler beim Benutzer laden: ' + reason));
     this.authenticated.next(false);
     return null;
   }
@@ -83,32 +82,27 @@ export class AuthService {
         this.authenticated.next(true);
 
         let user: User;
-        this.userService
-          .getUser(cognitoUser.attributes.sub)
-          .then((value) => {
-            if (value) {
-              user = UserUtils.fromAws(value);
-              if (user) {
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSource.next(user);
-              }
-            } else {
-              // for some reason user was not yet created
-              user = new User();
-              user.id = cognitoUser.attributes.sub;
-              user.username = username;
-              user.email = cognitoUser.attributes.email;
-              this.userService
-                .createUser(user)
-                .then((result) => {
-                  localStorage.setItem('user', JSON.stringify(user));
-                })
-                .catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
+        this.userService.getUser(cognitoUser.attributes.sub).then((value) => {
+          if (value) {
+            user = UserUtils.fromAws(value);
+            if (user) {
+              localStorage.setItem('user', JSON.stringify(user));
+              this.userSource.next(user);
             }
-          })
-          .catch((error) => {
-            console.log('Error login' + JSON.stringify(error));
-          });
+          } else {
+            // no user yet,create
+            user = new User();
+            user.id = cognitoUser.attributes.sub;
+            user.username = username;
+            user.email = cognitoUser.attributes.email;
+            this.userService
+              .createUser(user)
+              .then((result) => {
+                localStorage.setItem('user', JSON.stringify(user));
+              })
+              .catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
+          }
+        });
       })
     );
   }
@@ -169,17 +163,5 @@ export class AuthService {
       return pool.signInUserSession.idToken.jwtToken;
     });
     return null;
-  }
-
-  public isAdmin(): boolean {
-    return this.isAuthenticated() && this.getUser().role === Role.Admin;
-  }
-
-  public isDesigner(): boolean {
-    return this.isAuthenticated() && this.getUser().role === Role.Designer;
-  }
-
-  public isLoggedIn(): boolean {
-    return this.getToken() != null;
   }
 }

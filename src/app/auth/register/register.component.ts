@@ -55,11 +55,16 @@ export class RegisterComponent implements OnInit {
             // Validation
             const verificationCode = this.form.controls.code.value;
             this.authService.verify(this.user.username, verificationCode.toString()).then(() => {
-              this.router.navigate(['/login']).then((navigated: boolean) => {
-                if (navigated) {
-                  this.notificationService.info('Benutzer Registrierung abgeschlossen');
-                }
-              });
+              this.router
+                .navigate(['/login'])
+                .then((navigated: boolean) => {
+                  if (navigated) {
+                    this.notificationService.info('Benutzer Registrierung abgeschlossen');
+                  }
+                })
+                .catch((reason) => {
+                  this.notificationService.error('Verifizierung fehlgeschlagen. Falscher Code');
+                });
             });
           },
           (error) => {

@@ -6,17 +6,17 @@
      <mat-card-subtitle>Login</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-        <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" >
+        <form novalidate #form="ngForm" (ngSubmit)="onSubmit()" >
           <div>
             <mat-form-field appearance="fill">
-              <mat-label>Benutzer</mat-label>
+              <mat-label aria-label="benutzer">Benutzer</mat-label>
               <input matInput ngModel type="text" name="username" [ngModel]="user.username" placeholder="Benutzer"
                      required minLength="3" autocomplete="username">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field appearance="fill">
-              <mat-label>Passwort</mat-label>
+              <mat-label aria-label="passwort">Passwort</mat-label>
               <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [ngModel]="user.password" placeholder="Passwort"
                      required #password="ngModel" autocomplete="current-password">
               <button type="button" mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePwd">
@@ -25,13 +25,13 @@
             </mat-form-field>
           </div>
           <div>
-                <button mat-raised-button color="primary" type="submit"
-                 [disabled]="!form.valid">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Anmelden
-                </button>
-                <a class="register-link" routerLink="../register" >Kein Login? Registrieren..</a>
-            </div>
+              <button mat-raised-button color="primary" type="submit"
+               [disabled]="!form.valid" aria-label="Anmelden">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Anmelden
+              </button>
+              <a class="register-link" routerLink="../register" >Kein Login? Registrieren..</a>
+           </div>
         </form>
     </mat-card-content>
   </mat-card>

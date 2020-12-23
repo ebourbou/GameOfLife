@@ -12,8 +12,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 import { NotificationService } from '../../shared/service/notification.service';
-import { UserService } from '../../users/services/users.service';
 import { UserUtils } from '../../users/utils/user-utils';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -22,17 +23,17 @@ import { UserUtils } from '../../users/utils/user-utils';
 })
 export class PatternDetailComponent implements OnInit, OnChanges {
   @Input() pattern: Pattern;
+  patternOriginal: Pattern;
 
   user: User;
   isAddMode: boolean;
   loading = false;
   submitted = false;
   public editor: Board;
+  id: string;
 
   @ViewChild('form', { read: NgForm }) form: NgForm;
   @ViewChild('editor') patternEditor: PatternEditorComponent;
-
-  patternOriginal: Pattern;
 
   constructor(
     public dialog: MatDialog,
@@ -79,12 +80,12 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   openConfirmDeleteDialog(patternToDelete: Pattern): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
       width: '25em',
-      data: { patternName: this.pattern.name },
+      data: { patternName: patternToDelete.name },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.patternService.deletePattern(patternToDelete.id).then((dlgRes) => {
+        this.patternService.deletePattern(patternToDelete.id).subscribe((dlgRes) => {
           this.notificationService.info('Pattern ' + dlgRes.name + ' wurde gelöscht');
         });
       }
@@ -101,7 +102,7 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   initPattern(): void {
     this.isAddMode = true;
 
-    this.pattern = {
+    const emptyPattern: Pattern = {
       id: null,
       name: '',
       description: '',
@@ -116,19 +117,21 @@ export class PatternDetailComponent implements OnInit, OnChanges {
     };
   }
 
-  createPattern(patternToCreate: Pattern): Pattern {
-    this.patternService
-      .addPattern(patternToCreate)
-      .then((data) => {
+  createPattern(patternToCreate: Pattern): Observable<Pattern> {
+    this.patternService.addPattern(patternToCreate).subscribe(
+      (data) => {
         this.notificationService.info('Pattern ' + patternToCreate.name + ' wurde angelegt');
         return data;
-      })
-      .catch((reason) => this.notificationService.error('Fehler: ' + reason)); // Error
+      },
+      (error) => {
+        this.notificationService.error('Fehler: ' + error);
+      }
+    );
     return null;
   }
 
   updatePattern(patternToUpdate: Pattern): void {
-    this.patternService.updatePattern(patternToUpdate).then((result) => {
+    this.patternService.updatePattern(patternToUpdate).subscribe((result) => {
       this.notificationService.info('Pattern ' + result.name + ' wurde aktualisiert.');
     });
   }

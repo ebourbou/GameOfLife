@@ -18,29 +18,25 @@ import { PatternUtils } from '../../designer/util/pattern-util';
 export class PatternService {
   constructor(private apiService: APIService) {}
 
-  async getPatterns(): Promise<ListPatternsQuery> {
-    return this.apiService.ListPatterns();
-  }
-
   getPatternsObservable(): Observable<Pattern[]> {
-    return from(this.getPatterns().then((result) => result.items.map((item) => PatternUtils.fromAwsPattern(item))));
+    return from(this.apiService.ListPatterns().then((result) => result.items.map((item) => PatternUtils.fromAwsPattern(item))));
   }
 
-  getPattern(id: string): Promise<GetPatternQuery> {
-    return this.apiService.GetPattern(id);
+  getPattern(id: string): Observable<Pattern> {
+    return from(this.apiService.GetPattern(id));
   }
 
-  addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
+  addPattern(pattern: Pattern): Observable<Pattern> {
     const input: any = PatternUtils.toAwsPattern(pattern);
     delete input.id;
-    return this.apiService.CreatePattern(input);
+    return from(this.apiService.CreatePattern(input));
   }
 
-  updatePattern(pattern: Pattern): Promise<UpdatePatternMutation> {
-    return this.apiService.UpdatePattern(PatternUtils.toAwsPattern(pattern));
+  updatePattern(pattern: Pattern): Observable<Pattern> {
+    return from(this.apiService.UpdatePattern(PatternUtils.toAwsPattern(pattern)));
   }
 
-  deletePattern(idToDelete: string): Promise<DeletePatternMutation> {
-    return this.apiService.DeletePattern({ id: idToDelete });
+  deletePattern(idToDelete: string): Observable<Pattern> {
+    return from(this.apiService.DeletePattern({ id: idToDelete }));
   }
 }

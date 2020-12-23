@@ -17,24 +17,22 @@ export class RatingService {
     return this.apiService.CreateRating(input);
   }
 
-  getRating(userId: string, ratingId: string): Observable<{ rating: number; userVoted: boolean; voteCount: number }> {
+  getRating(userId: string, ratingId: string): Promise<{ rating: number; userVoted: boolean; voteCount: number }> {
     if (!userId || !ratingId) {
       throwError('Benutzer oder rating id nicht gesetzt');
     }
     let averageRating = 0;
     let all = 1;
     let voted = false;
-    return from(
-      this.apiService.ListRatings({ rateId: { eq: ratingId } }).then((value) => {
-        all = Math.max(1, value.items.length);
-        value.items.forEach((rating) => {
-          averageRating += rating.rating;
-          if (rating.userId === userId) {
-            voted = true;
-          }
-        });
-        return { rating: averageRating / all, userVoted: voted, voteCount: all };
-      })
-    );
+    return this.apiService.ListRatings({ rateId: { eq: ratingId } }).then((value) => {
+      all = Math.max(1, value.items.length);
+      value.items.forEach((rating) => {
+        averageRating += rating.rating;
+        if (rating.userId === userId) {
+          voted = true;
+        }
+      });
+      return { rating: averageRating / all, userVoted: voted, voteCount: all };
+    });
   }
 }

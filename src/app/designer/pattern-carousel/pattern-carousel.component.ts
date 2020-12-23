@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Pattern } from '../../shared/model/pattern';
 import { PatternService } from '../../shared/service/patterns.service';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { Cell } from '../../shared/model/Cell';
 
 @Component({
   selector: 'app-pattern-carousel',
@@ -8,13 +11,14 @@ import { PatternService } from '../../shared/service/patterns.service';
   styleUrls: ['./pattern-carousel.component.scss'],
 })
 export class PatternCarouselComponent implements OnInit {
-  private currentPatternIndex = 0;
+  @Input() visiblePatterns = 5;
+  public currentPatternIndex = 0;
 
   private innerIsSelected: boolean;
 
   @Input()
   set isSelected(isSelected: boolean) {
-    isSelected ? this.onSelect() : this.onDeselect();
+    isSelected ? this.onSelect(0) : this.onDeselect();
   }
 
   get isSelected(): boolean {
@@ -35,8 +39,14 @@ export class PatternCarouselComponent implements OnInit {
 
   @Input()
   public highLightSelection: boolean;
+  public selectedPattern: Pattern;
+  public indices: Array<number> = new Array<number>();
 
-  constructor(private patternService: PatternService) {}
+  constructor(private patternService: PatternService, private appRef: ApplicationRef) {
+    for (let i = 0; i < 5; i++) {
+      this.indices.push(i % 5);
+    }
+  }
 
   ngOnInit(): void {
     if (this.autoLoadPatterns) {
@@ -45,25 +55,37 @@ export class PatternCarouselComponent implements OnInit {
   }
 
   private onPreviousClick(): void {
+    this.indices.pop();
+    this.indices[0] === 0 ? this.indices.unshift(this.patterns.length - 1) : this.indices.unshift(this.indices[0] - 1);
+    /*
     const previous = this.currentPatternIndex - 1;
-    this.currentPatternIndex = previous < 0 ? this.patterns.length - 1 : previous;
+    this.currentPatternIndex = previous < 0 ? this.patterns.length - 1 : previous;*/
     this.onDeselect();
+    this.appRef.tick();
   }
 
   private onNextClick(): void {
+    this.indices.shift();
+    this.indices[this.visiblePatterns - 1] === this.patterns.length - 1
+      ? this.indices.push(0)
+      : this.indices.push(this.indices[this.visiblePatterns - 1] + 1);
+    /*
     const next = this.currentPatternIndex + 1;
-    this.currentPatternIndex = next === this.patterns.length ? 0 : next;
+    this.currentPatternIndex = next === this.patterns.length ? 0 : next;*/
     this.onDeselect();
+    this.appRef.tick();
   }
 
-  onSelect(): void {
+  onSelect(index: number): void {
     this.innerIsSelected = true;
-    this.doPatternSelected.emit(this.patterns[this.currentPatternIndex]);
+    this.doPatternSelected.emit(this.patterns[index]);
+    this.currentPatternIndex = index;
   }
 
   onDeselect(): void {
     this.innerIsSelected = false;
     this.doDeSelect.emit();
+    this.currentPatternIndex = -1;
   }
 
   private loadPatterns(): void {

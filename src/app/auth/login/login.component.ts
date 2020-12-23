@@ -35,19 +35,19 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  onSubmit(form: NgForm): void {
+  onSubmit(): void {
     this.loginInvalid = false;
     this.submitted = true;
     this.loading = true;
 
-    this.amplifyService.authStateChange$.subscribe((authState) => {
+    /*this.amplifyService.authStateChange$.subscribe((authState) => {
       if (!authState.user) {
         this.user = null;
       } else if (this.user) {
         this.user.username = authState.user.username;
         this.user.email = authState.user.attributes.email;
       }
-    });
+    });*/
 
     this.authService.login(this.form.controls.username.value, this.form.controls.password.value).subscribe(
       (data) => {

@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  APIService,
-  CreatePatternMutation,
-  DeletePatternMutation,
-  GetPatternQuery,
-  ListPatternsQuery,
-  UpdatePatternMutation,
-} from '../../API.service';
+import { CreatePatternMutation, GetPatternQuery, ListPatternsQuery, UpdatePatternMutation } from '../../API.service';
 
-import { Pattern } from '../../shared/model/pattern';
-import { AmplifyService } from 'aws-amplify-angular';
-import { PatternUtils } from '../util/pattern-util';
+import { Pattern } from '../model/pattern';
+import { PatternUtils } from '../../designer/util/pattern-util';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +10,6 @@ import { PatternUtils } from '../util/pattern-util';
 export class PatternMockService {
   private MOCK_PATTERNS: any[] = [
     {
-      __typename: 'Pattern',
       author: 'John Conway',
       sizeX: 3,
       sizeY: 3,
@@ -31,7 +22,6 @@ export class PatternMockService {
       year: 1970,
     },
     {
-      __typename: 'Pattern',
       author: 'Richard K. Guy',
       sizeX: 3,
       sizeY: 3,
@@ -45,7 +35,6 @@ export class PatternMockService {
       year: 1969,
     },
     {
-      __typename: 'Pattern',
       author: 'Sol Goodman',
       sizeX: 8,
       sizeY: 8,
@@ -64,36 +53,44 @@ export class PatternMockService {
 
   getPatterns(): Promise<ListPatternsQuery> {
     return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(this.RESULT), 250);
+      setTimeout(() => resolve(this.RESULT), 500);
     });
   }
 
   getPattern(id: string): Promise<GetPatternQuery> {
     return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id == id)), 250);
+      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id === id)), 250);
     });
   }
 
   addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
     return new Promise((resolve, reject) => {
       pattern.id = '' + Math.random;
-      this.MOCK_PATTERNS.push(PatternUtils.toAwsPattern(pattern));
-      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id == pattern.id)), 250);
+      this.MOCK_PATTERNS.push(pattern);
+      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id === pattern.id)), 500);
     });
   }
 
   updatePattern(pattern: Pattern): Promise<UpdatePatternMutation> {
     return new Promise((resolve, reject) => {
-      this.RESULT.items.find((value) => value.id == pattern.id);
-      this.MOCK_PATTERNS.push(PatternUtils.toAwsPattern(pattern));
-      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id == pattern.id)), 250);
+      const found = this.RESULT.items.find((value) => value.id === pattern.id);
+      found.pattern = pattern.pattern;
+      found.sizeX = pattern.sizeX;
+      found.sizeY = pattern.sizeY;
+      found.author = pattern.author;
+      found.description = pattern.description;
+      found.name = pattern.name;
+      found.type = pattern.type;
+      found.year = pattern.year;
+      found.locked = pattern.locked;
+      setTimeout(() => resolve(found), 250);
     });
   }
 
   deletePattern(idToDelete: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const index = this.RESULT.items.findIndex((value) => value.id == idToDelete);
-      setTimeout(() => resolve(this.RESULT.items.splice(index, 1)), 250);
+      const index = this.RESULT.items.findIndex((value) => value.id === idToDelete);
+      setTimeout(() => resolve(this.RESULT.items.splice(index, 1)), 500);
     });
   }
 }

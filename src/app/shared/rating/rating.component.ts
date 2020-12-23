@@ -48,7 +48,7 @@ export class RatingComponent implements OnInit, OnChanges {
 
   private loadRating(): void {
     this.loading = true;
-    this.ratingService.getRating(this.userId, this.ratingId).subscribe((value) => {
+    this.ratingService.getRating(this.userId, this.ratingId).then((value) => {
       this.disabled = value.userVoted;
       this.rating = value.rating;
       this.voteCount = value.voteCount;
