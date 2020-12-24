@@ -6,8 +6,6 @@ import { GenericSurviveRule } from './GenericSurviveRule';
 import { DieAlwaysRule } from './DieAlwaysRule';
 
 export class LiveFreeOrDieRuleSet extends AbstractRuleSet {
-  private rules: Rule[] = [];
-
   constructor() {
     super(
       'liveFreeOrDieRuleSet',
@@ -18,9 +16,5 @@ export class LiveFreeOrDieRuleSet extends AbstractRuleSet {
       '3'
     );
     this.rules.push(new GenericBirthRule([2]), new GenericSurviveRule([0]), new DieAlwaysRule());
-  }
-
-  applyRules(cell: Cell): void {
-    this.rules.find((rule) => rule.doesMatch(cell)).apply(cell);
   }
 }

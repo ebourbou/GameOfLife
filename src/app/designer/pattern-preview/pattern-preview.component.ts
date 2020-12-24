@@ -2,7 +2,6 @@ import { ApplicationRef, Component, Input, OnChanges, OnInit, SimpleChanges, Vie
 import { Pattern } from '../../shared/model/pattern';
 import { Board } from '../../shared/model/Board';
 import { GameUtils } from '../../shared/service/GameUtils';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
 import { PatternService } from '../../shared/service/patterns.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
@@ -12,6 +11,7 @@ import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { NotificationService } from '../../shared/service/notification.service';
 import { UserUtils } from '../../users/utils/user-utils';
 import { CommonModule } from '@angular/common';
+import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 
 @Component({
   selector: 'pattern-preview',
@@ -38,12 +38,9 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     private ratingService: RatingService,
     private patternService: PatternService,
     private authService: AuthService,
-    private appRef: ApplicationRef
-  ) {
-    if (!this.ruleSet) {
-      this.ruleSet = new ConwaysRuleSet();
-    }
-  }
+    private appRef: ApplicationRef,
+    private ruleService: AbstractRuleService
+  ) {}
 
   startAnimation(): void {
     if (this.id == null) {
@@ -67,6 +64,9 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.user = UserUtils.loadUserFromLocal();
+    if (!this.ruleSet) {
+      this.ruleService.getRuleSet('conway').subscribe((r) => (this.ruleSet = r));
+    }
   }
 
   async ngOnChanges(changes: SimpleChanges) {

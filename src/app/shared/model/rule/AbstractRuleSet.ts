@@ -1,5 +1,6 @@
 import { Cell } from '../Cell';
 import { RuleSet } from './RuleSet';
+import { Rule } from './Rule';
 
 export abstract class AbstractRuleSet implements RuleSet {
   id: string;
@@ -8,6 +9,7 @@ export abstract class AbstractRuleSet implements RuleSet {
   difficulty: number;
   ruleStringBSnotation: string;
   demoPatternId: string;
+  rules: Rule[] = [];
 
   protected constructor(
     id: string,
@@ -25,5 +27,7 @@ export abstract class AbstractRuleSet implements RuleSet {
     this.demoPatternId = demoPatternId;
   }
 
-  abstract applyRules(cell: Cell): void;
+  applyRules(cell: Cell): void {
+    this.rules.find((rule) => rule.doesMatch(cell)).apply(cell);
+  }
 }
