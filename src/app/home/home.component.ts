@@ -24,7 +24,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
     this.homeSlides.push(new SlideItem(SlideTeaser, { page: 1 }));
-    this.homeSlides.push(new SlideItem(SlideGame, { page: 2 }));
+    //this.homeSlides.push(new SlideItem(SlideGame, { page: 2 }));
     this.homeSlides.push(new SlideItem(SlideExplanationRules, { page: 3 }));
     this.homeSlides.push(new SlideItem(SlideReferences, { page: 4 }));
   }

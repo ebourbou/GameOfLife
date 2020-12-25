@@ -105,19 +105,6 @@ export class StepperComponent implements OnInit {
   }
 
   onResetAll(): void {
-    // 1st method: initialize state --- but sequence of actions not in order. patterns lost
-    // also set newDefaultGame to use initialState (instead of current) in GameOfLife/src/app/game/state/game.reducer.ts:55
-    // this.doResetAll.emit();
-    // this.stepper.reset();
-    //
-    // 2nd method:  override the route reuse strategy
-    // see also { onSameUrlNavigation: 'reload' } in app-routing-module
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // this.router.navigate(['/game']);
-    //
-    // 3rd method: navigate away and into game again
-    // this.router.navigate(['/']).then(() => {
-    //  this.router.navigate(['/game']);
-    // });
+    this.stepper.reset();
   }
 }

@@ -54,7 +54,7 @@ export const gameActionReducer = createReducer(
   initialState,
   on(GameActions.newDefaultGame, GameActions.newGame, (state) => {
     return {
-      ...state,
+      ...Object.assign({}, initialState),
       loading: true,
     };
   }),
@@ -241,6 +241,12 @@ export const gameActionReducer = createReducer(
       ...state,
       game: action.game,
       controls: new Controls(action.game.board.width, action.game.board.height, action.game.generations, state.controls.speed),
+      loading: false,
+    };
+  }),
+  on(GameActions.resetGame, (state, action) => {
+    return {
+      ...initialState,
       loading: false,
     };
   }),

@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 <ng-container *ngIf="game$ | async as game" class="game">
-  <app-stepper class="stepper"
+  <app-stepper class="stepper" #stepper
                [controls]="controls$ | async"
                [allRuleSets]="allRuleSets$ | async"
                [allPatterns]="allPatterns$ | async"

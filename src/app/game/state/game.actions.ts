@@ -37,6 +37,7 @@ export const applyRuleSet = createAction('[Game] RuleSet Apply', props<{ ruleSet
 export const togglePause = createAction('[Game] Pause Toggled');
 
 export const endGame = createAction('[Game] End');
+export const resetGame = createAction('[Game] Reset');
 export const endGameSuccess = createAction('[Game] End Success');
 
 export const resetCells = createAction('[Game] Reset Cells');

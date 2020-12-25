@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Game } from '../model/Game';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -29,8 +29,9 @@ import {
   startAnalysis,
   toggleMaximize,
   switchCellState,
+  resetGame,
 } from '../state/game.actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { GameState } from '../state/game.reducer';
 import {
   selectAllGenerationStatistics,
@@ -52,13 +53,15 @@ import {
   selectScore,
 } from '../state/game.selectors';
 import { Controls } from '../model/Controls';
-import { take } from 'rxjs/operators';
+import { filter, map, startWith, take } from 'rxjs/operators';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/Cell';
 import { StepperStep } from '../stepper/StepperStep';
 import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { Score } from '../../statistic/service/score';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { MatStepper } from '@angular/material/stepper';
+import { StepperComponent } from '../stepper/stepper.component';
 
 @Component({
   selector: 'app-game',
@@ -66,7 +69,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   public game$: Observable<Game>;
   public controls$: Observable<Controls>;
   public generationStatistic$: Observable<GenerationStatistic>;
@@ -85,6 +88,9 @@ export class GameComponent implements OnInit {
   public games$: Observable<Game[]>;
   public allGenerationStatistics$: Observable<GenerationStatistic[]>;
   public score$: Observable<Score>;
+  private navigationSubscription: Subscription;
+
+  @ViewChild('stepper') private stepper: StepperComponent;
 
   constructor(private route: ActivatedRoute, private router: Router, private defaults: DefaultsService, private store: Store<GameState>) {
     this.game$ = this.store.select(selectGame);
@@ -106,8 +112,29 @@ export class GameComponent implements OnInit {
     this.score$ = this.store.select(selectScore);
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+    this.store.dispatch(resetGame());
+  }
+
   ngOnInit(): void {
-    // Allows for ngOnInit to be called on routing to the same routing Component since we will never reuse a route
+    this.navigationSubscription = this.router.events
+      .pipe(
+        startWith('Initial load'),
+        filter((event) => event instanceof NavigationEnd)
+      )
+      .subscribe((value) => {
+        this.init();
+      });
+    this.init();
+  }
+
+  init(): void {
+    if (this.stepper) {
+      this.stepper.onResetAll();
+    }
     this.startFromScratch();
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
@@ -192,6 +219,7 @@ export class GameComponent implements OnInit {
   }
 
   startFromScratch(): void {
+    //
     this.store.dispatch(newDefaultGame());
     this.store.dispatch(loadPatterns());
     this.store.dispatch(loadRuleSets());

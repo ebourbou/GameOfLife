@@ -41,7 +41,7 @@ export class SaveStepComponent implements OnInit {
     }
 
     this.doSaveGame.emit(this.isPublicGame);
-    // this.doReset.emit();
+    // TODO this.doReset.emit();
   }
 
   onReset(): void {
