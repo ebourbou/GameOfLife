@@ -1,7 +1,7 @@
-import { Cell } from '../Cell';
-import { RuleSet } from './RuleSet';
+import { Cell } from '../cell';
+import { Ruleset } from './ruleset';
 
-export abstract class AbstractRuleSet implements RuleSet {
+export abstract class AbstractRuleset implements Ruleset {
   id: string;
   shortName: string;
   description: string;

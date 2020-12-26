@@ -1,7 +1,7 @@
-import { Rule } from './Rule';
-import { Cell } from '../Cell';
+import { Rule } from './rule';
+import { Cell } from '../cell';
 
-export interface RuleSet {
+export interface Ruleset {
   id: string;
   shortName: string;
   description: string;

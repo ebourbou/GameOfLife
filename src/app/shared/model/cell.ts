@@ -1,4 +1,4 @@
-import { CellState } from './CellState';
+import { CellState } from './cell-state';
 
 export class Cell {
   neighbours: Cell[];

@@ -4,15 +4,15 @@ import { catchError, concatMap, delay, map, switchMap, tap } from 'rxjs/operator
 import { of } from 'rxjs';
 import * as GameActions from './game.actions';
 import { DefaultsService } from '../../shared/service/defaults.service';
-import { Game } from '../model/Game';
-import { GameUtils } from '../../shared/service/GameUtils';
-import { Controls } from '../model/Controls';
+import { Game } from '../model/game';
+import { Controls } from '../model/controls';
 import { NotificationService } from '../../shared/service/notification.service';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
 import { UserUtils } from '../../users/utils/user-utils';
+import { GameUtils } from '../../shared/service/game-utils';
 
 @Injectable()
 export class GameEffects {

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit } from '@angular/core';
-import { Game } from '../model/Game';
+import { Game } from '../model/game';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { User } from '../../shared/model/user';
 import { PatternService } from '../../shared/service/patterns.service';

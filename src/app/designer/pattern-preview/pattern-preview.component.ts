@@ -1,17 +1,18 @@
 import { ApplicationRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
-import { Board } from '../../shared/model/Board';
-import { GameUtils } from '../../shared/service/GameUtils';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
+import { Board } from '../../shared/model/board';
+
+import { ConwaysRuleSet } from '../../shared/service/rule/conway/conways-rule-set';
 import { PatternService } from '../../shared/service/patterns.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { RatingService } from '../../shared/service/rating.service';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 import { NotificationService } from '../../shared/service/notification.service';
 import { UserUtils } from '../../users/utils/user-utils';
 import { CommonModule } from '@angular/common';
+import { GameUtils } from '../../shared/service/game-utils';
 
 @Component({
   selector: 'pattern-preview',
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./pattern-preview.component.scss'],
 })
 export class PatternPreviewComponent implements OnInit, OnChanges {
-  @Input() ruleSet: RuleSet;
+  @Input() ruleSet: Ruleset;
 
   @Input() pattern: Pattern;
   @Input() showRating = true;

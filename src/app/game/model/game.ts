@@ -1,5 +1,5 @@
-import { Board } from '../../shared/model/Board';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Board } from '../../shared/model/board';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 import { Score } from '../../statistic/service/score';
 
 export class Game {
@@ -12,7 +12,7 @@ export class Game {
 
   public author;
   public date = new Date();
-  public ruleSet: RuleSet;
+  public ruleSet: Ruleset;
   public score: Score;
   public isPublic = false;
 

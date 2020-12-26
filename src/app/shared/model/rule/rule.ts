@@ -1,4 +1,4 @@
-import { Cell } from '../Cell';
+import { Cell } from '../cell';
 
 export interface Rule {
   readonly description: string;

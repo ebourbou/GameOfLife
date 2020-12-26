@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { RuleSet } from '../../model/rule/RuleSet';
+import { Ruleset } from '../../model/rule/ruleset';
 
 export interface RuleService {
-  getRuleSets(): Observable<RuleSet[]>;
-  getRuleSet(id: string): Observable<RuleSet>;
+  getRuleSets(): Observable<Ruleset[]>;
+  getRuleSet(id: string): Observable<Ruleset>;
 }

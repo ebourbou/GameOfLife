@@ -1,8 +1,8 @@
-import { Cell } from '../model/Cell';
-import { Board } from '../model/Board';
-import { CellState } from '../model/CellState';
+import { Cell } from '../model/cell';
+import { Board } from '../model/board';
+import { CellState } from '../model/cell-state';
 import { GenerationStatistic } from '../model/generation-statistic';
-import { Game } from '../../game/model/Game';
+import { Game } from '../../game/model/game';
 import { Pattern } from '../model/pattern';
 import { Observable, of } from 'rxjs';
 

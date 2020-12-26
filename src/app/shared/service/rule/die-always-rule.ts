@@ -1,6 +1,6 @@
-import { AbstractRule } from '../../model/rule/AbstractRule';
-import { Cell } from '../../model/Cell';
-import { CellState } from '../../model/CellState';
+import { AbstractRule } from '../../model/rule/abstract-rule';
+import { Cell } from '../../model/cell';
+import { CellState } from '../../model/cell-state';
 
 export class DieAlwaysRule extends AbstractRule {
   constructor() {

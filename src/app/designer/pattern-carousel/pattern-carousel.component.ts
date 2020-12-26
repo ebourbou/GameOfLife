@@ -2,7 +2,7 @@ import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '
 import { CommonModule } from '@angular/common';
 import { Pattern } from '../../shared/model/pattern';
 import { PatternService } from '../../shared/service/patterns.service';
-import { Cell } from '../../shared/model/Cell';
+import { Cell } from '../../shared/model/cell';
 
 @Component({
   selector: 'app-pattern-carousel',

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { GameStatisticUtils } from './game-statistic-utils';
-import { Game } from '../model/Game';
+import { Game } from '../model/game';
 import { Score } from '../../statistic/service/score';
 
 @Component({

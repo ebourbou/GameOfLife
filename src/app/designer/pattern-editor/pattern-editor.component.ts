@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { CellState } from '../../shared/model/CellState';
-import { Board } from '../../shared/model/Board';
-import { GameUtils } from '../../shared/service/GameUtils';
+import { CellState } from '../../shared/model/cell-state';
+import { Board } from '../../shared/model/board';
 import { NgForm } from '@angular/forms';
 import { PatternUtils } from '../util/pattern-util';
+import { GameUtils } from '../../shared/service/game-utils';
 
 @Component({
   selector: 'app-pattern-editor',

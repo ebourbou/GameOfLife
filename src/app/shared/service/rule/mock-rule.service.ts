@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { RuleSet } from '../../model/rule/RuleSet';
+import { Ruleset } from '../../model/rule/ruleset';
 
 export interface MockRuleService {
-  getRuleSets(): Observable<RuleSet[]>;
+  getRuleSets(): Observable<Ruleset[]>;
 }

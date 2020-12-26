@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 
 @Component({
@@ -11,10 +11,10 @@ export class RuleCarouselComponent implements OnInit {
   private currentIndex = 0;
 
   @Input()
-  public ruleSets: RuleSet[];
+  public ruleSets: Ruleset[];
 
   @Output()
-  public doSelected: EventEmitter<RuleSet> = new EventEmitter();
+  public doSelected: EventEmitter<Ruleset> = new EventEmitter();
 
   @Input()
   public autoLoadRules: boolean;

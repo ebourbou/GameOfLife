@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { RuleSet } from '../../model/rule/RuleSet';
+import { Ruleset } from '../../model/rule/ruleset';
 import { RuleService } from './rule.service';
 import { Injectable } from '@angular/core';
 
@@ -7,6 +7,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export abstract class AbstractRuleService implements RuleService {
-  abstract getRuleSets(): Observable<RuleSet[]>;
-  abstract getRuleSet(id: string): Observable<RuleSet>;
+  abstract getRuleSets(): Observable<Ruleset[]>;
+  abstract getRuleSet(id: string): Observable<Ruleset>;
 }

@@ -1,5 +1,5 @@
-import { AbstractRule } from '../../model/rule/AbstractRule';
-import { Cell } from '../../model/Cell';
+import { AbstractRule } from '../../model/rule/abstract-rule';
+import { Cell } from '../../model/cell';
 
 export class DoNothingRule extends AbstractRule {
   constructor() {

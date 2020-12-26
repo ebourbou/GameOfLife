@@ -1,13 +1,13 @@
 import { Observable, of } from 'rxjs';
-import { RuleSet } from '../../model/rule/RuleSet';
-import { ConwaysRuleSet } from './conway/ConwaysRuleSet';
-import { ReplicatorRuleSet } from './ReplicatorRuleSet';
+import { Ruleset } from '../../model/rule/ruleset';
+import { ConwaysRuleSet } from './conway/conways-rule-set';
+import { ReplicatorRuleset } from './replicator-ruleset';
 import { AbstractRuleService } from './abstract-rule.service';
-import { LiveFreeOrDieRuleSet } from './LiveFreeOrDieRuleSet';
-import { LifeWithoutDeathRuleSet } from './LifeWithoutDeathRuleSet';
-import { MazeRuleSet } from './MazeRuleSet';
-import { PedestrianLifeRuleSet } from './PedestrianLifeRuleSet';
-import { AntiLifeRuleSet } from './AntiLifeRuleSet';
+import { LiveFreeOrDieRuleset } from './live-free-or-die-ruleset';
+import { LifeWithoutDeathRuleset } from './life-without-death-ruleset';
+import { MazeRuleset } from './maze-ruleset';
+import { PedestrianLifeRuleset } from './pedestrian-life-ruleset';
+import { AntiLifeRuleset } from './anti-life-ruleset';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -16,19 +16,19 @@ import { Injectable } from '@angular/core';
 export class LocalRuleService extends AbstractRuleService {
   private static ruleSets = [
     new ConwaysRuleSet(),
-    new ReplicatorRuleSet(),
-    new LiveFreeOrDieRuleSet(),
-    new LifeWithoutDeathRuleSet(),
-    new MazeRuleSet(),
-    new PedestrianLifeRuleSet(),
-    new AntiLifeRuleSet(),
+    new ReplicatorRuleset(),
+    new LiveFreeOrDieRuleset(),
+    new LifeWithoutDeathRuleset(),
+    new MazeRuleset(),
+    new PedestrianLifeRuleset(),
+    new AntiLifeRuleset(),
   ];
 
-  getRuleSets(): Observable<RuleSet[]> {
+  getRuleSets(): Observable<Ruleset[]> {
     return of(LocalRuleService.ruleSets);
   }
 
-  getRuleSet(id: string): Observable<RuleSet> {
+  getRuleSet(id: string): Observable<Ruleset> {
     return of(LocalRuleService.ruleSets.find((r) => r.id === id));
   }
 }

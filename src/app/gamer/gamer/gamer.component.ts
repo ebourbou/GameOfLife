@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Game } from '../../game/model/Game';
+import { Game } from '../../game/model/game';
 import { GameService } from '../../shared/service/game.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { map } from 'rxjs/operators';

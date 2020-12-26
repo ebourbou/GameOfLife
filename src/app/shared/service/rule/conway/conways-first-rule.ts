@@ -1,6 +1,6 @@
-import { Cell } from '../../../model/Cell';
-import { CellState } from '../../../model/CellState';
-import { AbstractRule } from '../../../model/rule/AbstractRule';
+import { Cell } from '../../../model/cell';
+import { CellState } from '../../../model/cell-state';
+import { AbstractRule } from '../../../model/rule/abstract-rule';
 
 export class ConwaysFirstRule extends AbstractRule {
   constructor() {

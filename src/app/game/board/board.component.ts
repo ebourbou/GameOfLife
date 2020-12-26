@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Board } from '../../shared/model/Board';
+import { Board } from '../../shared/model/board';
 import { Pattern } from '../../shared/model/pattern';
-import { Cell } from '../../shared/model/Cell';
+import { Cell } from '../../shared/model/cell';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
-import { CellState } from '../../shared/model/CellState';
+import { CellState } from '../../shared/model/cell-state';
 
 @Component({
   selector: 'gol-board',

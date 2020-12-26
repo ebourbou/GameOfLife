@@ -2,8 +2,8 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Pattern } from '../../shared/model/pattern';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { ConwaysRuleSet } from '../../shared/service/rule/conway/conways-rule-set';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 
 @Component({
   styleUrls: ['reference-slide.component.scss'],
@@ -35,7 +35,7 @@ export class SlideReferences implements SlideComponent {
     type: 'oscillator',
     locked: true,
   };
-  conwayRules: RuleSet;
+  conwayRules: Ruleset;
 
   constructor() {
     this.conwayRules = new ConwaysRuleSet();

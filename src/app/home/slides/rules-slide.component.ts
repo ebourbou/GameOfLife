@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/ConwaysRuleSet';
+import { ConwaysRuleSet } from '../../shared/service/rule/conway/conways-rule-set';
 
 @Component({
   styleUrls: ['rules-slide.component.scss'],

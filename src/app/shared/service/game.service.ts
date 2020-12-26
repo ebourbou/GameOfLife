@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { Game } from '../../game/model/Game';
-import { GameUtils } from './GameUtils';
-import { Cell } from '../model/Cell';
+import { Game } from '../../game/model/game';
+import { Cell } from '../model/cell';
 import { APIService } from '../../API.service';
 import { AbstractRuleService } from './rule/abstract-rule.service';
 import { UserUtils } from '../../users/utils/user-utils';
 import { filter, map } from 'rxjs/operators';
+import { GameUtils } from './game-utils';
 
 @Injectable({
   providedIn: 'root',

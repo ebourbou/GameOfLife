@@ -1,6 +1,6 @@
-import { Cell } from '../../model/Cell';
-import { CellState } from '../../model/CellState';
-import { AbstractRule } from '../../model/rule/AbstractRule';
+import { Cell } from '../../model/cell';
+import { CellState } from '../../model/cell-state';
+import { AbstractRule } from '../../model/rule/abstract-rule';
 
 export class GenericBirthRule extends AbstractRule {
   private neighbours: number[];
@@ -8,7 +8,6 @@ export class GenericBirthRule extends AbstractRule {
     super('Eine tote Zelle mit ' + neighbours.join(',') + ' lebenden Nachbarn wird in der Folgegeneration neu geboren.');
     this.neighbours = neighbours;
   }
-
 
   doesMatch(cell: Cell): boolean {
     return !cell.isAlive() && this.neighbours.includes(cell.livingNeighbours());

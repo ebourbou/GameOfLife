@@ -1,14 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import * as GameActions from './game.actions';
-import { Game } from '../model/Game';
+import { Game } from '../model/game';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
-import { Controls } from '../model/Controls';
-import { GameUtils } from '../../shared/service/GameUtils';
-import { Board } from '../../shared/model/Board';
+import { Controls } from '../model/controls';
+import { Board } from '../../shared/model/board';
 import { Pattern } from '../../shared/model/pattern';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
-import { StepperStep } from '../stepper/StepperStep';
-import { CellState } from '../../shared/model/CellState';
+import { Ruleset } from '../../shared/model/rule/ruleset';
+import { StepperStep } from '../stepper/stepper-step';
+import { CellState } from '../../shared/model/cell-state';
+import { GameUtils } from '../../shared/service/game-utils';
 
 export const gameFeatureKey = 'game';
 
@@ -16,7 +16,7 @@ export interface GameState {
   game: Game;
   allPatterns: Pattern[];
   patternSelected: Pattern;
-  allRuleSets: RuleSet[];
+  allRuleSets: Ruleset[];
   allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
   loading: boolean;

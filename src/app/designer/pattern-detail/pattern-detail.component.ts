@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PatternsComponent } from '../pattern-list/patterns.component';
-import { Board } from '../../shared/model/Board';
+import { Board } from '../../shared/model/board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { PatternService } from '../../shared/service/patterns.service';
 import { PatternUtils } from '../util/pattern-util';

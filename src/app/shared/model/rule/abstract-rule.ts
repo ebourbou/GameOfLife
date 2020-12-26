@@ -1,5 +1,5 @@
-import { Cell } from '../Cell';
-import { Rule } from './Rule';
+import { Cell } from '../cell';
+import { Rule } from './rule';
 
 export abstract class AbstractRule implements Rule {
   readonly description: string;

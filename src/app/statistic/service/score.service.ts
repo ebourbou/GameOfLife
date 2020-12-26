@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../../game/model/Game';
+import { Game } from '../../game/model/game';
 import { ScoreLevel } from './score-level.enum';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Observable, of } from 'rxjs';

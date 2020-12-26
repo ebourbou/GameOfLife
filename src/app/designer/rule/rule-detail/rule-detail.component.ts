@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RuleSet } from '../../../shared/model/rule/RuleSet';
+import { Ruleset } from '../../../shared/model/rule/ruleset';
 import { Pattern } from '../../../shared/model/pattern';
 import { PatternService } from '../../../shared/service/patterns.service';
 import { from, Observable, of } from 'rxjs';
@@ -11,15 +11,15 @@ import { from, Observable, of } from 'rxjs';
 })
 export class RuleDetailComponent implements OnInit {
   public demoPattern$: Observable<Pattern>;
-  public innerRuleSet: RuleSet;
+  public innerRuleSet: Ruleset;
 
   @Input()
-  set ruleSet(ruleSet: RuleSet) {
+  set ruleSet(ruleSet: Ruleset) {
     this.innerRuleSet = ruleSet;
     this.loadDemoPatternOfRuleSet(ruleSet);
   }
 
-  get ruleSet(): RuleSet {
+  get ruleSet(): Ruleset {
     return this.innerRuleSet;
   }
 
@@ -27,7 +27,7 @@ export class RuleDetailComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  loadDemoPatternOfRuleSet(ruleSet: RuleSet): void {
+  loadDemoPatternOfRuleSet(ruleSet: Ruleset): void {
     this.demoPattern$ = from(this.patternService.getPattern(ruleSet.demoPatternId));
   }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Controls } from '../../model/Controls';
+import { Controls } from '../../model/controls';
 import { DefaultsService } from '../../../shared/service/defaults.service';
 
 @Component({

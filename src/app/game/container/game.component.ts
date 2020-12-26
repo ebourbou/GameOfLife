@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
-import { Game } from '../model/Game';
+import { Game } from '../model/game';
 import { DefaultsService } from '../../shared/service/defaults.service';
 import { Store } from '@ngrx/store';
 import {
@@ -52,12 +52,12 @@ import {
   selectPatternSelected,
   selectScore,
 } from '../state/game.selectors';
-import { Controls } from '../model/Controls';
+import { Controls } from '../model/controls';
 import { filter, map, startWith, take } from 'rxjs/operators';
 import { Pattern } from '../../shared/model/pattern';
-import { Cell } from '../../shared/model/Cell';
-import { StepperStep } from '../stepper/StepperStep';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { Cell } from '../../shared/model/cell';
+import { StepperStep } from '../stepper/stepper-step';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 import { Score } from '../../statistic/service/score';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
@@ -75,7 +75,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public generationStatistic$: Observable<GenerationStatistic>;
   public allPatterns$: Observable<Pattern[]>;
   public patternSelected$: Observable<Pattern>;
-  public allRuleSets$: Observable<RuleSet[]>;
+  public allRuleSets$: Observable<Ruleset[]>;
   public isMasked$: Observable<boolean>;
   public isEditable$: Observable<boolean>;
   public isPaused$: Observable<boolean>;
@@ -162,7 +162,7 @@ export class GameComponent implements OnInit, OnDestroy {
     return this.controls$.pipe((controls) => controls, take(1)).toPromise();
   }
 
-  onRuleSetSelected(ruleSet: RuleSet): void {
+  onRuleSetSelected(ruleSet: Ruleset): void {
     this.store.dispatch(applyRuleSet({ ruleSet }));
   }
 

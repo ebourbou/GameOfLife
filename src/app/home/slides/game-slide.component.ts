@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
-import { GameUtils } from '../../shared/service/GameUtils';
-import { Game } from '../../game/model/Game';
+
+import { Game } from '../../game/model/game';
 import { UserUtils } from '../../users/utils/user-utils';
 import { BoardComponent } from '../../game/board/board.component';
 import { User } from '../../shared/model/user';
+import { GameUtils } from '../../shared/service/game-utils';
 
 @Component({
   styleUrls: ['game-slide.component.scss'],
