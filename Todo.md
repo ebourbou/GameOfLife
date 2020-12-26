@@ -3,7 +3,6 @@
 - Redirect not verified user to verification
 - X Reset password? Admin
 - User management via user class on dynamo DB role only change
-- Pattern Editor using AppSync (Master/Detail using routing) , dynamic data reloading/subscribing
 
 
 # AWS setup

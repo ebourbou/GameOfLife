@@ -8,6 +8,13 @@ import { AmplifyService } from 'aws-amplify-angular';
 import { AuthService } from '../core/services/auth.service';
 import { NotificationService } from '../shared/service/notification.service';
 import { AuthServiceMock } from '../core/services/auth.service.mock';
+import { BehaviorSubject, of } from 'rxjs';
+
+class RouterStub {
+  navigateByUrl(url: string): string {
+    return url;
+  }
+}
 
 describe('Component: Account', () => {
   beforeEach(async(() => {
@@ -15,12 +22,20 @@ describe('Component: Account', () => {
     const MockNotificationService = TestBed.configureTestingModule({ providers: [NotificationService] });
     const MockUserService = TestBed.configureTestingModule({ providers: [UserService] });
 
+    const activatedRouteStub = {
+      paramMap: {
+        subscribe() {
+          return of();
+        },
+      },
+    };
+
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [FormsModule],
       providers: [
-        { provide: AmplifyService, useClass: MockAmplifyService },
-        { provide: ActivatedRoute, useClass: ActivatedRoute },
+        { provide: AmplifyService, userClass: MockAmplifyService },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useClass: Router },
         { provide: AuthService, useClass: AuthServiceMock },
         { provide: NotificationService, useClass: MockNotificationService },
@@ -39,30 +54,44 @@ describe('Component: Account', () => {
       notificationService: NotificationService
     ) => {
       const component = new LoginComponent(amplifyService, activatedRoute, router, authService, notificationService);
+
       expect(component).toBeTruthy();
     }
   ));
-  /*describe('when the login page loads', () => {
-    it('then the login name should be defaulted', inject(
-      [AmplifyService, ActivatedRoute, Router, AuthService, NotificationService],
-      (
-        amplifyService: AmplifyService,
-        activatedRoute: ActivatedRoute,
-        router: Router,
-        authService: AuthService,
-        notificationService: NotificationService
-      ) => {
-        const component = new LoginComponent(amplifyService, activatedRoute, router, authService, notificationService);
-        expect(component.login.username).toEqual('');
-      }
-    ));*/
-  /* it('then the error message should not be displayed', inject([Router, UserService], (router: Router, userService: UserService) => {
-      let component = new LoginComponent(router, userService);
-      expect(component.showErrorMessage).toBe(false);
-    }));*/
 });
 
-/*describe('when a valid username and password are entered', () => {
+describe('when the login page loads', () => {
+  it('then the login name should be defaulted', inject(
+    [AmplifyService, ActivatedRoute, Router, AuthService, NotificationService],
+    (
+      amplifyService: AmplifyService,
+      activatedRoute: ActivatedRoute,
+      router: Router,
+      authService: AuthService,
+      notificationService: NotificationService
+    ) => {
+      const component = new LoginComponent(amplifyService, activatedRoute, router, authService, notificationService);
+      component.ngOnInit();
+
+      it('form invalid when empty', () => {
+        expect(component.form.valid).toBeFalsy();
+      });
+
+      component.form.controls.login.setValue('user');
+      component.form.controls.password.setValue('wrong_password');
+
+      // expect(component.form.login.username).toEqual('');
+    }
+  ));
+});
+/*  ));
+     it('then the error message should not be displayed', inject([Router, UserService], (router: Router, userService: UserService) => {
+        let component = new LoginComponent(router, userService);
+        expect(component.showErrorMessage).toBe(false);
+      }));
+});
+
+describe('when a valid username and password are entered', () => {
     it('then the home route should be displayed', inject([Router, UserService], (router: Router, userService: UserService) => {
       spyOn(userService, 'login').and.returnValue(Observable.of(true));
       spyOn(router, 'navigateByUrl').and.returnValue('');
@@ -80,10 +109,6 @@ describe('Component: Account', () => {
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       expect(component.showErrorMessage).toBe(true);
     }));
-  });*/
+  });
 
-class RouterStub {
-  navigateByUrl(url: string): string {
-    return url;
-  }
-}
+*/
