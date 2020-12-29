@@ -11,7 +11,6 @@ import { RatingService } from '../../shared/service/rating.service';
 import { Ruleset } from '../../shared/model/rule/ruleset';
 import { NotificationService } from '../../shared/service/notification.service';
 import { UserUtils } from '../../users/utils/user-utils';
-import { CommonModule } from '@angular/common';
 import { GameUtils } from '../../shared/service/game-utils';
 
 @Component({
@@ -70,7 +69,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     this.user = UserUtils.loadUserFromLocal();
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
     await this.pattern;
     await this.board;
     if (this.pattern) {

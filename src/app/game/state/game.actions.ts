@@ -2,10 +2,10 @@ import { createAction, props } from '@ngrx/store';
 import { Game } from '../model/game';
 import { Controls } from '../model/controls';
 import { Pattern } from '../../shared/model/pattern';
-import { Ruleset } from '../../shared/model/rule/ruleset';
 import { StepperStep } from '../stepper/stepper-step';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Score } from '../../statistic/service/score';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());

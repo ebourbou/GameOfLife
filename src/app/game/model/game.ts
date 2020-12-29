@@ -1,6 +1,6 @@
 import { Board } from '../../shared/model/board';
-import { Ruleset } from '../../shared/model/rule/ruleset';
 import { Score } from '../../statistic/service/score';
+import { Ruleset } from '../../shared/model/rule/ruleset';
 
 export class Game {
   public name: string;

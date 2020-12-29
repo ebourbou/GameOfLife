@@ -38,16 +38,14 @@ export class PatternCarouselComponent implements OnInit {
 
   @Input()
   public highLightSelection: boolean;
-  public selectedPattern: Pattern;
   public indices: Array<number> = new Array<number>();
 
-  constructor(private patternService: PatternService, private appRef: ApplicationRef) {
-    for (let i = 0; i < 5; i++) {
-      this.indices.push(i % 5);
-    }
-  }
+  constructor(private patternService: PatternService, private appRef: ApplicationRef) {}
 
   ngOnInit(): void {
+    for (let i = 0; i < this.visiblePatterns; i++) {
+      this.indices.push(i);
+    }
     if (this.autoLoadPatterns) {
       this.loadPatterns();
     }
@@ -56,22 +54,16 @@ export class PatternCarouselComponent implements OnInit {
   private onPreviousClick(): void {
     this.indices.pop();
     this.indices[0] === 0 ? this.indices.unshift(this.patterns.length - 1) : this.indices.unshift(this.indices[0] - 1);
-    /*
-    const previous = this.currentPatternIndex - 1;
-    this.currentPatternIndex = previous < 0 ? this.patterns.length - 1 : previous;*/
-    this.onDeselect();
+    //this.onDeselect();
     this.appRef.tick();
   }
 
   private onNextClick(): void {
-    this.indices.shift();
     this.indices[this.visiblePatterns - 1] === this.patterns.length - 1
       ? this.indices.push(0)
       : this.indices.push(this.indices[this.visiblePatterns - 1] + 1);
-    /*
-    const next = this.currentPatternIndex + 1;
-    this.currentPatternIndex = next === this.patterns.length ? 0 : next;*/
-    this.onDeselect();
+    //this.onDeselect();
+    this.indices.shift();
     this.appRef.tick();
   }
 

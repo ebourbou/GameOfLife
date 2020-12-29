@@ -1,25 +1,10 @@
 
 
-.carousel2 {
-
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.highlighted {
-  border: 0.1em solid darkblue ;
-}
-
-.pattern-list {
-  height: 200px;
-}
-
 .highPattern {
-  border: solid 1px blue;
 }
-.slide:hover {
-  transform: scale(1.025);
+
+.opaque {
+  opacity: 0.2;
 }
 
 // =========================

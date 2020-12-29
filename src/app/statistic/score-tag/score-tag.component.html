@@ -1,4 +1,4 @@
-<mat-chip-list *ngIf="size == 0">
+<mat-chip-list class="mat-chip-list-stacked" *ngIf="size == 0">
   <mat-chip *ngFor="let chip of tags"  matTooltip="{{toolTipFor(chip)}}" [class]="getClasses(chip.level)" >
     <mat-icon svgIcon="{{iconFor(chip)}}" ></mat-icon>
     {{nameFor(chip)}}

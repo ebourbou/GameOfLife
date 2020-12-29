@@ -17,6 +17,9 @@ export class RulePreviewComponent implements OnInit {
   @Input() ruleSet: Ruleset;
   @Input() showRating = true;
 
+  @Input()
+  size: Size = Size.LARGE;
+
   user: User;
   disabled = false;
   @ViewChild('rating') ratingComponent: RatingComponent;
@@ -28,4 +31,9 @@ export class RulePreviewComponent implements OnInit {
   }
 
   onRatingChanged(rating: any): void {}
+}
+
+enum Size {
+  LARGE,
+  SMALL,
 }

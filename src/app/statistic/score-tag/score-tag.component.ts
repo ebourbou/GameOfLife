@@ -200,13 +200,13 @@ export class ScoreTagComponent implements OnInit {
     let german;
     switch (level) {
       case ScoreLevel.LOUSY:
-        german = 'schlecht';
+        german = 'niedrig';
         break;
       case ScoreLevel.GOOD:
-        german = 'gut';
+        german = 'hoch';
         break;
       case ScoreLevel.OVERACHIEVER:
-        german = 'tiptop';
+        german = 'excellent';
     }
     return german;
   }

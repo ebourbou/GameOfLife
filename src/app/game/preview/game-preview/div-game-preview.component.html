@@ -5,7 +5,7 @@
     </mat-card-content>
     <mat-card-footer  class="footer">
       <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
-     <!-- <app-score-tag [tags]="game.score.tags" [size]="1"></app-score-tag>-->
+      <app-score-tag [tags]="game.score.tags" [size]="1"></app-score-tag>
       <app-score-medal [overallScore]="game.score.overallScore" [size]="1"></app-score-medal>
     </mat-card-footer>
   </mat-card>

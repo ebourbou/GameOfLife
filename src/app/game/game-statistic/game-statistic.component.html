@@ -1,6 +1,6 @@
-<mat-grid-list cols="3" rowHeight="2:1" >
-  <mat-grid-tile colspan="3" rowspan="1">
-    <ngx-charts-line-chart
+<div class="statistic-container">
+  <div class="linechart">
+    <ngx-charts-line-chart class="linechart"
       [customColors]="customColors"
       showLabels = true;
       animations = true;
@@ -13,18 +13,14 @@
       autoScale="true"
       [results]="allGenerationStatistics | toMeasureSeriesGrouped: [0,1,2,5]">
     </ngx-charts-line-chart>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1">
+  </div>
+  <div class="piechart">
     <ngx-charts-pie-grid
       [customColors]="customColors"
       [results]="allGenerationStatistics | lastGenerationToMeasure: [2,3,5,7]">
     </ngx-charts-pie-grid>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="2">
-    <app-game-preview [game]="currentGame"></app-game-preview>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="2">
-    <app-score [score]="score"></app-score>
-  </mat-grid-tile>
-
-</mat-grid-list>
+  </div>
+  <app-game-preview class="game-preview" [game]="currentGame"></app-game-preview>
+  <app-score-tag class="tag" [tags]="score.tags" [size]="0"></app-score-tag>
+  <app-score-medal class="medal" [overallScore]="score.overallScore" [size]="0"></app-score-medal>
+</div>

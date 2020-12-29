@@ -1,6 +1,6 @@
 
 <ng-container class='container' *ngFor="let star of [].constructor(5); index as i">
-  <mat-icon *ngIf="i < overallScore && i < 5 && overallScore < 6" [ngClass]="size == 0 ? 'icon_large golden': 'icon_tiny golden'" svgIcon="{{'medal_fill'}}" matTooltip="Dein Spiel wird mit {{overallScore}} Sternen bewertet"></mat-icon>
+  <mat-icon *ngIf="i < overallScore && i < 5 && overallScore < 6" [ngClass]="size == 0 ? 'icon_large golden': 'icon_tiny golden'" svgIcon="{{'medal_fill'}}" matTooltip="Mit einer Bewertung von {{overallScore}} hast du dir diese Medaille verdient."></mat-icon>
   <mat-icon *ngIf="i < overallScore && i == 4" [ngClass]="size == 0 ? 'icon_large golden' : 'icon_tiny golden'"  svgIcon="{{'mushroom_cloud'}}" matTooltip="Bravo! Das Spiel sprengt mit der Bewertung von {{overallScore}} das Berwertungssystem!" ></mat-icon>
-  <mat-icon *ngIf="i >= overallScore" [ngClass]="size == 0 ? 'icon_large opaque' : 'icon_tiny opaque'" svgIcon="{{'medal_line'}}" matTooltip="Für eine Bewertung {{overallScore}} gibts diese Medaille nicht."></mat-icon>
+  <mat-icon *ngIf="i >= overallScore" [ngClass]="size == 0 ? 'icon_large opaque' : 'icon_tiny opaque'" svgIcon="{{'medal_line'}}" matTooltip="Mit einer Bewertung von {{overallScore}} hast du diese Medaille nicht verdient."></mat-icon>
  </ng-container>
