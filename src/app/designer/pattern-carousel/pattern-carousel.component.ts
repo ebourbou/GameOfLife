@@ -1,8 +1,6 @@
-import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { PatternService } from '../../shared/service/patterns.service';
-import { Cell } from '../../shared/model/cell';
 
 @Component({
   selector: 'app-pattern-carousel',
@@ -40,7 +38,7 @@ export class PatternCarouselComponent implements OnInit {
   public highLightSelection: boolean;
   public indices: Array<number> = new Array<number>();
 
-  constructor(private patternService: PatternService, private appRef: ApplicationRef) {}
+  constructor(private patternService: PatternService) {}
 
   ngOnInit(): void {
     for (let i = 0; i < this.visiblePatterns; i++) {
@@ -54,17 +52,13 @@ export class PatternCarouselComponent implements OnInit {
   private onPreviousClick(): void {
     this.indices.pop();
     this.indices[0] === 0 ? this.indices.unshift(this.patterns.length - 1) : this.indices.unshift(this.indices[0] - 1);
-    //this.onDeselect();
-    this.appRef.tick();
   }
 
   private onNextClick(): void {
     this.indices[this.visiblePatterns - 1] === this.patterns.length - 1
       ? this.indices.push(0)
       : this.indices.push(this.indices[this.visiblePatterns - 1] + 1);
-    //this.onDeselect();
     this.indices.shift();
-    this.appRef.tick();
   }
 
   onSelect(index: number): void {
