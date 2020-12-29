@@ -10,7 +10,7 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 export class RuleCarouselComponent implements OnInit {
   private currentIndex = 0;
   public indices: Array<number> = new Array<number>();
-  @Input() visibleRules = 2;
+  @Input() visibleRules = 1;
 
   @Input()
   public ruleSets: RuleSet[];

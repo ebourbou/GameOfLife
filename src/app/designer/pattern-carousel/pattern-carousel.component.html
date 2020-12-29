@@ -1,10 +1,5 @@
 <div *ngIf="patterns" >
-  <mat-grid-list rowHeight="20em"  cols="{{this.visiblePatterns+2}}" >
-    <mat-grid-tile>
-      <button class="control prev" (click)="onPreviousClick()">
-        <span class="arrow left"></span>
-      </button>
-    </mat-grid-tile>
+  <mat-grid-list rowHeight="20em"  cols="{{this.visiblePatterns}}" >
       <mat-grid-tile [ngClass]="(currentPatternIndex === index ? 'highPattern' : 'opaque')"  *ngFor="let index of indices" >
        <pattern-preview
                          [showRating]="false"
@@ -12,11 +7,12 @@
                         (click)="onSelect(index)">
        </pattern-preview>
       </mat-grid-tile>
-      <mat-grid-tile>
-      <button class="control next" (click)="onNextClick()">
-        <span class="arrow right"></span>
-      </button>
-      </mat-grid-tile>
+    <button class="control prev" (click)="onPreviousClick()">
+      <span class="arrow left"></span>
+    </button>
+    <button class="control next" (click)="onNextClick()">
+      <span class="arrow right"></span>
+    </button>
     </mat-grid-list>
 </div>
 
