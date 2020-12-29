@@ -1,13 +1,15 @@
-import { Cell } from '../cell';
-import { Ruleset } from './ruleset';
+import { Cell } from '../Cell';
+import { RuleSet } from './RuleSet';
+import { Rule } from './Rule';
 
-export abstract class AbstractRuleset implements Ruleset {
+export abstract class AbstractRuleSet implements RuleSet {
   id: string;
   shortName: string;
   description: string;
   difficulty: number;
   ruleStringBSnotation: string;
   demoPatternId: string;
+  rules: Rule[] = [];
 
   protected constructor(
     id: string,
@@ -25,5 +27,7 @@ export abstract class AbstractRuleset implements Ruleset {
     this.demoPatternId = demoPatternId;
   }
 
-  abstract applyRules(cell: Cell): void;
+  applyRules(cell: Cell): void {
+    this.rules.find((rule) => rule.doesMatch(cell)).apply(cell);
+  }
 }

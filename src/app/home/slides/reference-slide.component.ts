@@ -2,14 +2,14 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Pattern } from '../../shared/model/pattern';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/conways-rule-set';
-import { Ruleset } from '../../shared/model/rule/ruleset';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 
 @Component({
   styleUrls: ['reference-slide.component.scss'],
   templateUrl: 'reference-slide.component.html',
 })
-export class SlideReferences implements SlideComponent {
+export class SlideReferences implements SlideComponent, OnInit {
   @Input() data: any;
   blinker: Pattern = {
     id: '1',
@@ -35,9 +35,11 @@ export class SlideReferences implements SlideComponent {
     type: 'oscillator',
     locked: true,
   };
-  conwayRules: Ruleset;
+  conwayRules: RuleSet;
 
-  constructor() {
-    this.conwayRules = new ConwaysRuleSet();
+  constructor(private ruleService: AbstractRuleService) {}
+
+  ngOnInit(): void {
+    this.ruleService.getRuleSet('conway').subscribe((r) => (this.conwayRules = r));
   }
 }

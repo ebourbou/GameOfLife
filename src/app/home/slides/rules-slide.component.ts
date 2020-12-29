@@ -1,12 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
-import { ConwaysRuleSet } from '../../shared/service/rule/conway/conways-rule-set';
+import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
+import { RuleSet } from '../../shared/model/rule/RuleSet';
 
 @Component({
   styleUrls: ['rules-slide.component.scss'],
   templateUrl: 'rules-slide.component.html',
 })
-export class SlideExplanationRules implements SlideComponent {
+export class SlideExplanationRules implements SlideComponent, OnInit {
   @Input() data: any;
-  conwayRuleset = new ConwaysRuleSet();
+  conwayRuleset: RuleSet;
+
+  constructor(private ruleService: AbstractRuleService) {}
+
+  ngOnInit(): void {
+    this.ruleService.getRuleSet('conway').subscribe((r) => (this.conwayRuleset = r));
+  }
 }
