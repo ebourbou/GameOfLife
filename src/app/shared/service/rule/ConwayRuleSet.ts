@@ -1,9 +1,7 @@
-import { Rule } from '../../model/rule/rule';
-import { Cell } from '../../model/cell';
 import { AbstractRuleSet } from '../../model/rule/abstract-ruleset';
 import { GenericBirthRule } from './generic-birth-rule';
 import { GenericSurviveRule } from './generic-survive-rule';
-import { DoNothingRule } from './do-nothing-rule';
+import { DieAlwaysRule } from './die-always-rule';
 
 export class ConwayRuleSet extends AbstractRuleSet {
   constructor() {
@@ -20,6 +18,6 @@ export class ConwayRuleSet extends AbstractRuleSet {
       'B3/S23',
       '3'
     );
-    this.rules.push(new GenericBirthRule([3]), new GenericSurviveRule([2, 3]), new DoNothingRule());
+    this.rules.push(new GenericBirthRule([3]), new GenericSurviveRule([2, 3]), new DieAlwaysRule());
   }
 }
