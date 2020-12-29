@@ -5,7 +5,7 @@ import { Pattern } from '../../shared/model/pattern';
 import { StepperStep } from '../stepper/stepper-step';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Score } from '../../statistic/service/score';
-import { Ruleset } from '../../shared/model/rule/ruleset';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 
 export const newDefaultGame = createAction('[Game] New Game Default');
 export const newGame = createAction('[Game] New Game', props<{ controls: Controls }>());
@@ -31,8 +31,8 @@ export const errorAction = createAction('[Game] Failure', props<{ errors: string
 export const loadPatternsSuccess = createAction('[Game] Load Patterns Success', props<{ allPatterns: Pattern[] }>());
 
 export const loadRuleSets = createAction('[Game] Load RuleSets');
-export const loadRuleSetsSuccess = createAction('[Game] Load RuleSets Success', props<{ allRuleSets: Ruleset[] }>());
-export const applyRuleSet = createAction('[Game] Ruleset Apply', props<{ ruleSet: Ruleset }>());
+export const loadRuleSetsSuccess = createAction('[Game] Load RuleSets Success', props<{ allRuleSets: RuleSet[] }>());
+export const applyRuleSet = createAction('[Game] Ruleset Apply', props<{ ruleSet: RuleSet }>());
 
 export const togglePause = createAction('[Game] Pause Toggled');
 

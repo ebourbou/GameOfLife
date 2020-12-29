@@ -1,11 +1,11 @@
 import { Cell } from './cell';
 import { CellState } from './cell-state';
-import { Ruleset } from './rule/ruleset';
+import { RuleSet } from './rule/rule-set';
 
 export class Board {
   constructor(public width: number, public height: number, public rowsAndCells: Map<number, Array<Cell>>) {}
 
-  nextGeneration(ruleSet: Ruleset): void {
+  nextGeneration(ruleSet: RuleSet): void {
     this.cells.forEach((cell) => ruleSet.applyRules(cell));
     this.cells.forEach((cell) => cell.shiftToNextGeneration());
   }

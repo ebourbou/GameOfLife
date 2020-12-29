@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Ruleset } from '../../shared/model/rule/ruleset';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 
 @Component({
@@ -10,13 +10,13 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 export class RuleCarouselComponent implements OnInit {
   private currentIndex = 0;
   public indices: Array<number> = new Array<number>();
-  @Input() visibleRules = 3;
+  @Input() visibleRules = 2;
 
   @Input()
-  public ruleSets: Ruleset[];
+  public ruleSets: RuleSet[];
 
   @Output()
-  public doSelected: EventEmitter<Ruleset> = new EventEmitter();
+  public doSelected: EventEmitter<RuleSet> = new EventEmitter();
 
   @Input()
   public autoLoadRules: boolean;
@@ -37,17 +37,21 @@ export class RuleCarouselComponent implements OnInit {
   private onPreviousClick(): void {
     this.indices.pop();
     this.indices[0] === 0 ? this.indices.unshift(this.ruleSets.length - 1) : this.indices.unshift(this.indices[0] - 1);
-    //this.onDeselect();
-    //this.appRef.tick();
+    // this.appRef.tick();
+    if (this.indices.length === 1) {
+      this.onSelect(this.indices[0]);
+    }
   }
 
   private onNextClick(): void {
     this.indices[this.visibleRules - 1] === this.ruleSets.length - 1
       ? this.indices.push(0)
       : this.indices.push(this.indices[this.visibleRules - 1] + 1);
-    //this.onDeselect();
     this.indices.shift();
-    //this.appRef.tick();
+    if (this.indices.length === 1) {
+      this.onSelect(this.indices[0]);
+    }
+    // this.appRef.tick();
   }
 
   onSelect(index: number): void {

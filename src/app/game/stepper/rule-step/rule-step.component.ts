@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Ruleset } from '../../../shared/model/rule/ruleset';
+import { RuleSet } from '../../../shared/model/rule/rule-set';
 
 @Component({
   selector: 'app-rule-step',
@@ -8,13 +8,13 @@ import { Ruleset } from '../../../shared/model/rule/ruleset';
 })
 export class RuleStepComponent implements OnInit {
   @Output()
-  public doRuleSetSelected: EventEmitter<Ruleset> = new EventEmitter();
+  public doRuleSetSelected: EventEmitter<RuleSet> = new EventEmitter();
 
   @Input()
-  allRuleSets: [Ruleset];
+  allRuleSets: [RuleSet];
 
   @Input()
-  ruleSetSelected: Ruleset;
+  ruleSetSelected: RuleSet;
 
   @Input()
   isBusy: boolean;
@@ -25,7 +25,7 @@ export class RuleStepComponent implements OnInit {
     this.onRuleSetSelected(this.allRuleSets[0]);
   }
 
-  onRuleSetSelected(ruleSet: Ruleset): void {
+  onRuleSetSelected(ruleSet: RuleSet): void {
     this.doRuleSetSelected.emit(ruleSet);
   }
 }

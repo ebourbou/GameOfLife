@@ -5,7 +5,7 @@ import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Controls } from '../model/controls';
 import { Board } from '../../shared/model/board';
 import { Pattern } from '../../shared/model/pattern';
-import { Ruleset } from '../../shared/model/rule/ruleset';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 import { StepperStep } from '../stepper/stepper-step';
 import { CellState } from '../../shared/model/cell-state';
 import { GameUtils } from '../../shared/service/game-utils';
@@ -16,7 +16,7 @@ export interface GameState {
   game: Game;
   allPatterns: Pattern[];
   patternSelected: Pattern;
-  allRuleSets: Ruleset[];
+  allRuleSets: RuleSet[];
   allGenerationStatistics: GenerationStatistic[];
   generationStatistic: GenerationStatistic;
   loading: boolean;

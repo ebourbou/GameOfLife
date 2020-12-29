@@ -1,5 +1,5 @@
 <div *ngIf="ruleSet">
-  <mat-card class="rule-preview" >
+  <mat-card class="rule-preview mat-elevation-z8" >
     <mat-card-header>
       <mat-icon mat-card-avatar svgIcon="rule" matBadge="{{ruleSet.difficulty}}" matBadgePosition="before" matBadgeColor="primary" matTooltip="Schwierigkeit {{ruleSet.difficulty}}" matTooltipPosition="above"></mat-icon>
       <mat-card-title>{{ruleSet.shortName}}</mat-card-title>
@@ -11,7 +11,7 @@
     </mat-card-header>
     <mat-card-content matTooltip="{{ruleSet.description}}">
       <rule-display [rule]="ruleSet.ruleStringBSnotation"></rule-display>
-      <p *ngIf="this.size == 0 " class="description">{{ruleSet.description}}</p>
+      <p *ngIf="this.size == 0" class="description">{{ruleSet.description}}</p>
     </mat-card-content>
     <mat-card-actions *ngIf="showRating">
       <gol-rating [userId]="user.id" [ratingId]="ruleSet.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>

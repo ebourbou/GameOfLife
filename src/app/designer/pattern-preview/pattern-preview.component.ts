@@ -1,17 +1,16 @@
 import { ApplicationRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
-import { Board } from '../../shared/model/Board';
-import { GameUtils } from '../../shared/service/GameUtils';
+import { Board } from '../../shared/model/board';
 import { PatternService } from '../../shared/service/patterns.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { RatingService } from '../../shared/service/rating.service';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
 import { NotificationService } from '../../shared/service/notification.service';
 import { UserUtils } from '../../users/utils/user-utils';
-import { CommonModule } from '@angular/common';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
+import { GameUtils } from '../../shared/service/game-utils';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 
 @Component({
   selector: 'pattern-preview',
@@ -69,7 +68,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
     }
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
     await this.pattern;
     await this.board;
     if (this.pattern) {

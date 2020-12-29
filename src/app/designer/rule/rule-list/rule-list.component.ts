@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ruleset } from '../../../shared/model/rule/ruleset';
+import { RuleSet } from '../../../shared/model/rule/rule-set';
 import { AbstractRuleService } from '../../../shared/service/rule/abstract-rule.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { AbstractRuleService } from '../../../shared/service/rule/abstract-rule.
   styleUrls: ['./rule-list.component.scss'],
 })
 export class RuleListComponent implements OnInit {
-  ruleSets: Ruleset[];
-  selected: Ruleset[];
+  ruleSets: RuleSet[];
+  selected: RuleSet[];
 
   constructor(private ruleService: AbstractRuleService) {}
 

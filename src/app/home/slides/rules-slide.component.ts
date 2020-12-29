@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 
 @Component({
   styleUrls: ['rules-slide.component.scss'],

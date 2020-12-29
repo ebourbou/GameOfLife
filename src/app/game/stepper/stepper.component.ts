@@ -4,7 +4,7 @@ import { Controls } from '../model/controls';
 import { Pattern } from '../../shared/model/pattern';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './stepper-step';
-import { Ruleset } from '../../shared/model/rule/ruleset';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ export class StepperComponent implements OnInit {
   isGameFinished: boolean;
 
   @Input()
-  allRuleSets: Ruleset[];
+  allRuleSets: RuleSet[];
 
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
@@ -48,7 +48,7 @@ export class StepperComponent implements OnInit {
   @Output()
   public doStepChanged: EventEmitter<StepperStep> = new EventEmitter();
   @Output()
-  public doRuleSetSelected: EventEmitter<Ruleset> = new EventEmitter();
+  public doRuleSetSelected: EventEmitter<RuleSet> = new EventEmitter();
   @Output()
   private doSaveGame: EventEmitter<boolean> = new EventEmitter();
   @Output()
@@ -92,7 +92,7 @@ export class StepperComponent implements OnInit {
     this.doStepChanged.emit(nextStep);
   }
 
-  onRuleSetSelected(ruleSet: Ruleset): void {
+  onRuleSetSelected(ruleSet: RuleSet): void {
     this.doRuleSetSelected.emit(ruleSet);
   }
 

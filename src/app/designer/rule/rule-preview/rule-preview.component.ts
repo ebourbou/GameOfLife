@@ -1,5 +1,5 @@
-import { RuleSet } from '../../../shared/model/rule/RuleSet';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { RuleSet } from '../../../shared/model/rule/rule-set';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../../shared/model/user';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { RatingService } from '../../../shared/service/rating.service';

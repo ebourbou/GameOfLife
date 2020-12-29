@@ -12,3 +12,21 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+mat-card {
+  //width: 200px;
+  //height: 350§px;
+  box-sizing: border-box;
+}
+
+mat-card:hover{
+  z-index:1000;
+  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+}
+
+
+mat-grid-tile{
+  border: thin solid lightgray;
+}

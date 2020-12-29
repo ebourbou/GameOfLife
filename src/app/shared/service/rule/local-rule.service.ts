@@ -1,12 +1,12 @@
 import { Observable, of } from 'rxjs';
-import { RuleSet } from '../../model/rule/RuleSet';
-import { ReplicatorRuleSet } from './ReplicatorRuleSet';
+import { RuleSet } from '../../model/rule/rule-set';
+import { ReplicatorRuleSet } from './replicator-ruleset';
 import { AbstractRuleService } from './abstract-rule.service';
-import { LiveFreeOrDieRuleSet } from './LiveFreeOrDieRuleSet';
-import { LifeWithoutDeathRuleSet } from './LifeWithoutDeathRuleSet';
-import { MazeRuleSet } from './MazeRuleSet';
-import { PedestrianLifeRuleSet } from './PedestrianLifeRuleSet';
-import { AntiLifeRuleSet } from './AntiLifeRuleSet';
+import { LiveFreeOrDieRuleSet } from './live-free-or-die-ruleset';
+import { LifeWithoutDeathRuleSet } from './life-without-death-ruleset';
+import { MazeRuleSet } from './maze-ruleset';
+import { PedestrianLifeRuleSet } from './pedestrian-life-ruleset';
+import { AntiLifeRuleSet } from './anti-life-ruleset';
 import { Injectable } from '@angular/core';
 import { ConwayRuleSet } from './ConwayRuleSet';
 

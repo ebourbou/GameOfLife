@@ -7,7 +7,7 @@
       </button>
     </mat-grid-tile>
     <mat-grid-tile [ngClass]="(currentIndex === index ? 'highRule' : 'opaque')"  *ngFor="let index of indices" >
-      <rule-preview class="slide" [size]="1" [ruleSet]="this.ruleSets[index]" (click)="onSelect(index)">
+      <rule-preview  [size]="1" [ruleSet]="this.ruleSets[index]" (click)="onSelect(index)">
       </rule-preview>
     </mat-grid-tile>
     <mat-grid-tile>

@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SlideComponent } from './slide.component';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Pattern } from '../../shared/model/pattern';
-import { RuleSet } from '../../shared/model/rule/RuleSet';
+import { RuleSet } from '../../shared/model/rule/rule-set';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 
 @Component({
