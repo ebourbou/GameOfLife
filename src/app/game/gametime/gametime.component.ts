@@ -12,7 +12,7 @@ export class GametimeComponent implements OnInit {
   public doChangeSpeed: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  public doAbortAndReset: EventEmitter<void> = new EventEmitter();
+  public doStartFromScratch: EventEmitter<void> = new EventEmitter();
 
   @Output()
   public doStartGame: EventEmitter<void> = new EventEmitter();
@@ -46,8 +46,8 @@ export class GametimeComponent implements OnInit {
     this.doChangeSpeed.emit(speed);
   }
 
-  abortAndReset(): void {
-    this.doAbortAndReset.emit();
+  startFromScratch(): void {
+    this.doStartFromScratch.emit();
   }
 
   get progress(): number {

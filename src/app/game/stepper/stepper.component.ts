@@ -52,7 +52,7 @@ export class StepperComponent implements OnInit {
   @Output()
   private doSaveGame: EventEmitter<boolean> = new EventEmitter();
   @Output()
-  private doResetAll: EventEmitter<void> = new EventEmitter();
+  private doStartFromScratch: EventEmitter<void> = new EventEmitter();
 
   rootGroup: FormGroup;
 
@@ -104,7 +104,11 @@ export class StepperComponent implements OnInit {
     this.stepper.next();
   }
 
-  onResetAll(): void {
+  resetStepper(): void {
     this.stepper.reset();
+  }
+
+  onStartFromScratch(): void {
+    this.doStartFromScratch.emit();
   }
 }

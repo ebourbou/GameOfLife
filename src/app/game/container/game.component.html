@@ -16,7 +16,7 @@
                (doStepChanged)="onStepChanged($event)"
                (doRuleSetSelected)="onRuleSetSelected($event)"
                (doSaveGame)="onSaveGame({isPublic: $event, game: game})"
-               (doResetAll)="startFromScratch()"
+               (doStartFromScratch)="startFromScratch()"
   >
   </app-stepper>
   <gol-board *ngIf="!(isGameFinished$ | async)"
@@ -34,7 +34,7 @@
              (doChangeSpeed)="onChangeSpeed($event)"
              (doApplyPattern)="onApplyPattern($event)"
              (doSwitchCellState)="onSwitchCellState($event)"
-             (doAbortAndReset)="startFromScratch()"
+             (doStartFromScratch)="startFromScratch()"
              (doStartGame)="onPlay()"
              (doToggleMaximize)="onToggleMaximize()"
              (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })">

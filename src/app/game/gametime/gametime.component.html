@@ -15,7 +15,7 @@
       <mat-icon svgIcon="gol_play"></mat-icon>
       <span class="label">Starte das Spiel</span>
     </button>
-    <button class="opaque" *ngIf="isRunning" mat-stroked-button matTooltip="Verwerfe das Spiel und beginne von vorn" (click)="abortAndReset()">
+    <button disabled="true" class="opaque" *ngIf="isRunning" mat-stroked-button matTooltip="Verwerfe das Spiel und beginne von vorn" (click)="startFromScratch()">
       <mat-icon>highlight_off</mat-icon>
       <span class="label">Verwerfen</span>
     </button>

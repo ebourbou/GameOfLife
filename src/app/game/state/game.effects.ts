@@ -25,7 +25,7 @@ export class GameEffects {
   loadNewGame$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GameActions.newGame),
-      switchMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))).pipe(delay(2000)))
+      switchMap((actionPayload) => of(GameActions.newGameSuccess(this.newGame(actionPayload.controls))).pipe(delay(0)))
     );
   });
   endGame$ = createEffect(() => {

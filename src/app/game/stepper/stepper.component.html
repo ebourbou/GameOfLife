@@ -37,7 +37,7 @@
   <mat-step label="Speichern" state="save" >
     <app-save-step [isBusy]="isBusy"
                    (doSaveGame)="onSaveGame($event)"
-                   (doReset)="onResetAll()" >
+                   (doStartFromScratch)="onStartFromScratch()">
     </app-save-step >
   </mat-step>
 

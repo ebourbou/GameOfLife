@@ -132,9 +132,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   init(): void {
-    if (this.stepper) {
-      this.stepper.onResetAll();
-    }
     this.startFromScratch();
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
@@ -144,6 +141,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   async onResize(size: any): Promise<void> {
+    this.startFromScratch();
     const controls = await this.getControls();
     this.store.dispatch(newGame({ controls: { ...controls, xAxisSize: size.x, yAxisSize: size.y } }));
   }
@@ -219,7 +217,9 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   startFromScratch(): void {
-    //
+    if (this.stepper) {
+      this.stepper.resetStepper();
+    }
     this.store.dispatch(newDefaultGame());
     this.store.dispatch(loadPatterns());
     this.store.dispatch(loadRuleSets());

@@ -25,6 +25,7 @@ import { DivGamePreviewComponent } from './preview/game-preview/div-game-preview
 import { GamePreviewComponent } from './preview/game.preview.component';
 import { GameCarouselComponent } from './game-carousel/game-carousel.component';
 import { LoginComponent } from '../auth/login/login.component';
+import { LoginPromptComponent } from './stepper/save-step/login-prompt/login-prompt.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoginComponent } from '../auth/login/login.component';
     DivGamePreviewComponent,
     GamePreviewComponent,
     GameCarouselComponent,
+    LoginPromptComponent,
   ],
   imports: [
     GameRoutingModule,

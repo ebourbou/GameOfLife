@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromGame from './game.reducer';
 import { GameState } from './game.reducer';
+import { Game } from '../model/game';
 
 export const selectGameState = createFeatureSelector<fromGame.GameState>(fromGame.gameFeatureKey);
 export const selectGame = createSelector(selectGameState, (state: GameState) => state.game);
@@ -19,4 +20,4 @@ export const selectIsReadyToRun = createSelector(selectGameState, (state: GameSt
 export const selectIsReadyForAnalysis = createSelector(selectGameState, (state: GameState) => state.readyForAnalysis);
 export const selectIsGameFinished = createSelector(selectGameState, (state: GameState) => state.gameFinished);
 export const selectAllGenerationStatistics = createSelector(selectGameState, (state: GameState) => state.allGenerationStatistics);
-export const selectScore = createSelector(selectGameState, (state: GameState) => state.game.score);
+export const selectScore = createSelector(selectGame, (game: Game) => (game != null ? game.score : null));

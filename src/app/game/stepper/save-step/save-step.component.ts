@@ -6,6 +6,7 @@ import { Role } from '../../../shared/model/role';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../../auth/login/login.component';
 import { Router } from '@angular/router';
+import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 
 @Component({
   selector: 'app-save-step',
@@ -17,10 +18,12 @@ export class SaveStepComponent implements OnInit {
   public doSaveGame: EventEmitter<boolean> = new EventEmitter();
 
   @Output()
-  public doReset: EventEmitter<void> = new EventEmitter();
+  public doStartFromScratch: EventEmitter<void> = new EventEmitter();
 
   @Input()
   isBusy: boolean;
+
+  isSaved = false;
 
   @Input()
   isPublicGame = false;
@@ -30,21 +33,23 @@ export class SaveStepComponent implements OnInit {
   ngOnInit(): void {}
 
   onSaveGame(): void {
-    let user = UserUtils.loadUserFromLocal();
+    const user = UserUtils.loadUserFromLocal();
     if (!user || user.role === Role.Anonymous) {
-      const dialogRef = this.dialog.open(LoginComponent);
+      const dialogRef = this.dialog.open(LoginPromptComponent);
       dialogRef.afterClosed().subscribe((result) => {
-        // damit das funktioniert müsste
-        user = UserUtils.loadUserFromLocal();
-        this.notificationService.info(' Willkommen ' + user.username + '! Du bist jetzt angemeldet.');
+        if (result) {
+          this.router.navigate(['/auth/login']);
+        } else {
+          this.onStartFromScratch();
+        }
       });
+    } else {
+      this.doSaveGame.emit(this.isPublicGame);
     }
-
-    this.doSaveGame.emit(this.isPublicGame);
-    // TODO this.doReset.emit();
+    this.isSaved = true;
   }
 
-  onReset(): void {
-    this.doReset.emit();
+  onStartFromScratch(): void {
+    this.doStartFromScratch.emit();
   }
 }

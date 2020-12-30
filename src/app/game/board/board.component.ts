@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit {
   public doChangeSpeed: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  public doAbortAndReset: EventEmitter<void> = new EventEmitter();
+  public doStartFromScratch: EventEmitter<void> = new EventEmitter();
 
   @Output()
   public doStartGame: EventEmitter<void> = new EventEmitter();
@@ -78,8 +78,8 @@ export class BoardComponent implements OnInit {
     this.doChangeSpeed.emit(speed);
   }
 
-  onAbortAndReset(): void {
-    this.doAbortAndReset.emit();
+  onStartFromScratch(): void {
+    this.doStartFromScratch.emit();
   }
 
   onToggleMaximize(): void {

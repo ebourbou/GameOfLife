@@ -1,0 +1,26 @@
+  <header>
+    <h1>Bravo! Dein Spiel war erfolgreich!</h1>
+  </header>
+  <section>
+    <article>
+      <mat-dialog-content class="mat-typography">
+        <p>Würdest du gerne öfter spielen? Dich mit anderen Spielern messen? Deine Fortschritte verfolgen?</p>
+        In diesem Fall solltest du dich als Spieler registrieren. Als angemeldeter Spieler kannst du:
+        <ul>
+          <li>Dein Spiel speichern</li>
+          <li>Deine Spiele auflisten und ansehen</li>
+          <li>Deine Spiele für die anderen Spieler sichtbar machen und für den globalen Highscore qualifieren</li>
+          <li>Spiele wiederholen und zur Vorlage für neue Spiele machen</li>
+          <li>Und noch viel mehr...</li>
+        </ul>
+        Wir freuen uns auf dich!
+      </mat-dialog-content>
+    </article>
+  </section>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Neues Spiel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Anmelden</button>
+  </mat-dialog-actions>
+
+
+
