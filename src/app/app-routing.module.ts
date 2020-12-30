@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard], runGuardsAndResolvers: 'always' },
   { path: 'designer', loadChildren: designerModule, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/account.module').then((m) => m.AccountModule) },
+  { path: 'instructions', component: HomeComponent },
+
   {
     path: 'game',
     loadChildren: () => import('./game/game.module').then((m) => m.GameModule),

@@ -33,23 +33,23 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    sessionStorage.clear();
   }
 
-  onSubmit(): void {
+  onSubmit(action: string): void {
     this.loginInvalid = false;
     this.submitted = true;
     this.loading = true;
 
-    /*this.amplifyService.authStateChange$.subscribe((authState) => {
-      if (!authState.user) {
-        this.user = null;
-      } else if (this.user) {
-        this.user.username = authState.user.username;
-        this.user.email = authState.user.attributes.email;
-      }
-    });*/
+    let username = this.form.controls.username.value;
+    let password = this.form.controls.password.value;
 
-    this.authService.login(this.form.controls.username.value, this.form.controls.password.value).subscribe(
+    if (action === 'guest') {
+      username = 'guest';
+      password = 'anonymous';
+    }
+
+    this.authService.login(username, password).subscribe(
       (data) => {
         this.loading = false;
         this.router.navigate([this.returnUrl]).then((navigated: boolean) => {

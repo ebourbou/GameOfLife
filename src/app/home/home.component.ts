@@ -7,6 +7,7 @@ import { SlideGame } from './slides/game-slide.component';
 import { SlideReferences } from './slides/reference-slide.component';
 import { SlideExplanationRules } from './slides/rules-slide.component';
 import { SlideTeaser } from './slides/teaser-slide.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
 export class HomeComponent implements AfterViewInit, OnDestroy {
@@ -21,12 +22,19 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private authService: AuthService,
     private api: APIService,
     private userService: UserService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.homeSlides.push(new SlideItem(SlideTeaser, { page: 1 }));
-    //this.homeSlides.push(new SlideItem(SlideGame, { page: 2 }));
-    this.homeSlides.push(new SlideItem(SlideExplanationRules, { page: 3 }));
-    this.homeSlides.push(new SlideItem(SlideReferences, { page: 4 }));
+    let hideTeaser = false;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      hideTeaser = params['hideTeaser'];
+    });
+
+    if (!hideTeaser) {
+      this.homeSlides.push(new SlideItem(SlideTeaser, { page: 1 }));
+    }
+    this.homeSlides.push(new SlideItem(SlideExplanationRules, { page: 2 }));
+    this.homeSlides.push(new SlideItem(SlideReferences, { page: 3 }));
   }
 
   ngAfterViewInit(): void {

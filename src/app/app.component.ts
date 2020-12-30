@@ -105,7 +105,15 @@ export class AppComponent implements OnInit {
     });
   }
 
-  isAdmin(role: Role): boolean {
-    return role === Role.Admin;
+  hasRole(role: Role): boolean {
+    const user = this.authService.getCurrentUser();
+    return user && user.role === role;
+  }
+
+  hasAdminRole(): boolean {
+    return this.hasRole(Role.Admin);
+  }
+  hasGuestRole(): boolean {
+    return this.hasRole(Role.Anonymous);
   }
 }

@@ -1,38 +1,43 @@
 ﻿<div class="login">
   <mat-card class="loginCard">
-  <mat-card-header>
-    <div mat-card-avatar class="glider-animated"></div>
-     <mat-card-title>Game of life</mat-card-title>
-     <mat-card-subtitle>Login</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-        <form novalidate #form="ngForm" (ngSubmit)="onSubmit()" >
-          <div>
-            <mat-form-field appearance="fill">
-              <mat-label aria-label="benutzer">Benutzer</mat-label>
-              <input matInput ngModel type="text" name="username" [ngModel]="user.username" placeholder="Benutzer"
-                     required minLength="3" autocomplete="username">
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field appearance="fill">
-              <mat-label aria-label="passwort">Passwort</mat-label>
-              <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [ngModel]="user.password" placeholder="Passwort"
-                     required #password="ngModel" autocomplete="current-password">
-              <button type="button" mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePwd">
-                <mat-icon>{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-          <div>
-              <button mat-raised-button color="primary" type="submit"
-               [disabled]="!form.valid" aria-label="Anmelden">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                  Anmelden
-              </button>
-              <a class="register-link" routerLink="../register" >Kein Login? Registrieren..</a>
-           </div>
-        </form>
+    <mat-card-header>
+      <div mat-card-avatar class="glider-animated"></div>
+      <mat-card-title>Game of life</mat-card-title>
+      <mat-card-subtitle>Login</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form novalidate #form="ngForm">
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label aria-label="benutzer">Benutzer</mat-label>
+            <input matInput ngModel type="text" name="username" [ngModel]="user.username" placeholder="Benutzer"
+                   required minLength="3" autocomplete="username">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label aria-label="passwort">Passwort</mat-label>
+            <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [ngModel]="user.password" placeholder="Passwort"
+                   required #password="ngModel" autocomplete="current-password">
+            <button type="button" mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePwd">
+              <mat-icon>{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="!form.valid" aria-label="Anmelden" (click)="onSubmit('login')">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Anmelden
+          </button>
+          <a class="register-link" routerLink="../register" >Kein Login? Registrieren..</a>
+        </div>
+      </form>
     </mat-card-content>
   </mat-card>
-<div>
+  <button mat-raised-button color="primary" type="submit" class="guest-login"
+          aria-label="Gast" (click)="onSubmit('guest')">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    Als Gast spielen
+  </button>
+  <div>

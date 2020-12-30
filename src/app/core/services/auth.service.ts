@@ -16,6 +16,7 @@ export class AuthService {
   public authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private userSource: BehaviorSubject<User> = new BehaviorSubject<User>({} as any);
   user = this.userSource.asObservable();
+  private currentUser: User;
 
   constructor(
     private router: Router,
@@ -81,26 +82,13 @@ export class AuthService {
       tap((cognitoUser) => {
         this.authenticated.next(true);
 
-        let user: User;
         this.userService.getUser(cognitoUser.attributes.sub).then((value) => {
           if (value) {
-            user = UserUtils.fromAws(value);
-            if (user) {
-              sessionStorage.setItem('user', JSON.stringify(user));
-              this.userSource.next(user);
+            this.currentUser = UserUtils.fromAws(value);
+            if (this.currentUser) {
+              sessionStorage.setItem('userId', this.currentUser.id);
+              this.userSource.next(this.currentUser);
             }
-          } else {
-            // no user yet,create
-            user = new User();
-            user.id = cognitoUser.attributes.sub;
-            user.username = username;
-            user.email = cognitoUser.attributes.email;
-            this.userService
-              .createUser(user)
-              .then((result) => {
-                sessionStorage.setItem('user', JSON.stringify(user));
-              })
-              .catch((anotherError) => console.log('Error user create' + JSON.stringify(anotherError)));
           }
         });
       })
@@ -126,26 +114,29 @@ export class AuthService {
     );
   }
   /** signout */
-  public logout(): boolean {
-    const user = UserUtils.loadUserFromLocal();
-    this.userService
-      .updateLastLogin(user)
-      .then((value) => {
-        Auth.signOut()
-          .then(
-            () => {
-              this.authenticated.next(false);
-              this.userSource.next(null);
-              return true;
-            },
-            (error) => {
-              return false;
-            }
-          )
-          .finally(() => sessionStorage.clear());
-      })
-      .catch((err) => this.notificationService.error('Fehler beim Benutzer speichern: letztes login:' + err));
-
+  public logout(storeLastLogin: boolean = true): boolean {
+    if (storeLastLogin) {
+      const user = this.getCurrentUser();
+      if (user) {
+        this.userService
+          .updateLastLogin(user)
+          .then((value) => {
+            Auth.signOut()
+              .then(
+                () => {
+                  this.authenticated.next(false);
+                  this.userSource.next(null);
+                  return true;
+                },
+                (error) => {
+                  return false;
+                }
+              )
+              .finally(() => sessionStorage.clear());
+          })
+          .catch((err) => this.notificationService.error('Fehler beim Benutzer speichern: letztes login:' + err));
+      }
+    }
     return true;
   }
 
@@ -163,5 +154,27 @@ export class AuthService {
       return pool.signInUserSession.idToken.jwtToken;
     });
     return null;
+  }
+
+  public getCurrentUser(): User {
+    if (!this.currentUser && Auth.currentSession()) {
+      // load via user id from session storage
+      const userId = sessionStorage.getItem('userId');
+
+      if (userId) {
+        this.userService
+          .getUser(userId)
+          .then((value) => {
+            this.currentUser = UserUtils.fromAws(value);
+          })
+          .catch((reason) => {
+            // session not valid any more
+            this.logout(false);
+          });
+      } else {
+        return null;
+      }
+    }
+    return this.currentUser;
   }
 }
