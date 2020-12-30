@@ -50,8 +50,8 @@ export class PatternCarouselComponent implements OnInit {
   }
 
   private onPreviousClick(): void {
-    this.indices.pop();
     this.indices[0] === 0 ? this.indices.unshift(this.patterns.length - 1) : this.indices.unshift(this.indices[0] - 1);
+    this.indices.pop();
   }
 
   private onNextClick(): void {

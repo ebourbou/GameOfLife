@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../../model/game';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../../shared/service/notification.service';
+import { RatingService } from '../../../shared/service/rating.service';
+import { PatternService } from '../../../shared/service/patterns.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { User } from '../../../shared/model/user';
 
 @Component({
   selector: 'app-game-preview',
@@ -13,17 +18,25 @@ export class DivGamePreviewComponent implements OnInit {
 
   @Input()
   navigationEnabled = false;
-  constructor(private router: Router) {}
+  private user: User;
 
-  ngOnInit(): void {}
+  constructor(
+    private notificationService: NotificationService,
+    private ratingService: RatingService,
+    private patternService: PatternService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  onRatingChanged($event: any): void {
-    // todo
+  async ngOnInit(): Promise<void> {
+    this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   doNavigate(): void {
     if (this.navigationEnabled) {
-      this.router.navigate(['/game'], { queryParams: { id: this.game.id } });
+      this.router.navigate(['/game/play'], { queryParams: { id: this.game.id } });
     }
   }
 }

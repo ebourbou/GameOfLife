@@ -1,12 +1,17 @@
 <div *ngIf="game"  >
-  <mat-card class="game-preview mat-elevation-z8" (dblclick)="doNavigate()">
+  <mat-card class="game-preview mat-elevation-z10">
+    <mat-card-subtitle>{{game.description}}</mat-card-subtitle>
     <mat-card-content class="content">
       <gol-board  class="preview" matTooltip="{{game.description}}" [board]="game.board" isMasked="true" ></gol-board>
     </mat-card-content>
     <mat-card-footer  class="footer">
-      <mat-rating #rating [rating]="3" (ratingUpdated)="onRatingChanged($event)"></mat-rating>
+      <gol-rating [userId]="user.id" [ratingId]="game.id"></gol-rating>
       <app-score-tag [tags]="game.score.tags" [size]="1"></app-score-tag>
       <app-score-medal [overallScore]="game.score.overallScore" [size]="1"></app-score-medal>
     </mat-card-footer>
+    <mat-card-actions align="end">
+      <a mat-button *ngIf="navigationEnabled" [routerLink]="['/game/play']" [queryParams]="{id:this.game.id}" >
+        <mat-icon class="icon" inline="true" matListIcon>games</mat-icon>Spiel spielen</a>
+    </mat-card-actions>
   </mat-card>
 </div>

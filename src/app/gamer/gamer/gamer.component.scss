@@ -1,3 +1,11 @@
+
+.grid{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+}
+
 table {
   width: 100%;
 }
@@ -24,7 +32,7 @@ tr.element-row:not(.example-expanded-row):active {
 }
 
 .button_block {
-  float: right;
+  align-self: flex-end;
 }
 
 .spinner {
@@ -44,4 +52,10 @@ tr.element-row:not(.example-expanded-row):active {
 
 .expanded_cell {
   padding-bottom: 1em;
+}
+
+.carousel {
+  padding-top: 1em;
+  align-self: center;
+  width: 60%;
 }

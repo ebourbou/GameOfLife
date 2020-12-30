@@ -7,7 +7,7 @@ export class Game {
   public id = '' + Date.now();
 
   public get description(): string {
-    return `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} am ` + this.dateAsString();
+    return `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} vom ` + this.dateAsString();
   }
 
   public author;

@@ -24,7 +24,7 @@ import { MatPaginator } from '@angular/material/paginator';
   ],
 })
 export class GamerComponent implements OnInit {
-  columnsToShow = ['name', 'author', 'date', 'ruleSet', 'score', 'tags'];
+  columnsToShow = ['author', 'date', 'ruleSet', 'score', 'tags'];
   expandedGame: Game | null;
   selectedView: string;
   privateGamesOnly = false;
@@ -56,8 +56,10 @@ export class GamerComponent implements OnInit {
 
   public onViewChange(view: string): void {
     this.selectedView = view;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.isListView()) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private loadGamesFiltered(): void {

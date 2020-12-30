@@ -27,8 +27,6 @@ export class RulePreviewComponent implements OnInit {
   ngOnInit(): void {
     this.user = UserUtils.loadUserFromLocal();
   }
-
-  onRatingChanged(rating: any): void {}
 }
 
 enum Size {

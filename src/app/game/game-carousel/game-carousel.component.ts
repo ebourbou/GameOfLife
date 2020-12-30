@@ -7,26 +7,29 @@ import { Game } from '../model/game';
   styleUrls: ['./game-carousel.component.scss'],
 })
 export class GameCarouselComponent implements OnInit {
+  public indices: Array<number> = new Array<number>();
+  @Input() visibleGames = 1;
+
   @Input()
   public games: Game[];
 
-  private currentGameIndex = 0;
-
   constructor() {}
 
-  ngOnInit(): void {}
-
-  private onPreviousClick(): void {
-    const previous = this.currentGameIndex - 1;
-    this.currentGameIndex = previous < 0 ? this.games.length - 1 : previous;
+  ngOnInit(): void {
+    for (let i = 0; i < this.visibleGames; i++) {
+      this.indices.push(i);
+    }
   }
 
-  private onNextClick(): void {
-    const next = this.currentGameIndex + 1;
-    this.currentGameIndex = next === this.games.length ? 0 : next;
+  private doPreviousClick(): void {
+    this.indices[0] === 0 ? this.indices.unshift(this.games.length - 1) : this.indices.unshift(this.indices[0] - 1);
+    this.indices.pop();
   }
 
-  onSelect(): void {
-    console.log('do it!');
+  private doNextClick(): void {
+    this.indices[this.visibleGames - 1] === this.games.length - 1
+      ? this.indices.push(0)
+      : this.indices.push(this.indices[this.visibleGames - 1] + 1);
+    this.indices.shift();
   }
 }

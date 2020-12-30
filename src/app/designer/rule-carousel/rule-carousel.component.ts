@@ -35,9 +35,8 @@ export class RuleCarouselComponent implements OnInit {
   }
 
   private onPreviousClick(): void {
-    this.indices.pop();
     this.indices[0] === 0 ? this.indices.unshift(this.ruleSets.length - 1) : this.indices.unshift(this.indices[0] - 1);
-    // this.appRef.tick();
+    this.indices.pop();
     if (this.indices.length === 1) {
       this.onSelect(this.indices[0]);
     }

@@ -14,7 +14,7 @@
       <p *ngIf="this.size == 0" class="description">{{ruleSet.description}}</p>
     </mat-card-content>
     <mat-card-actions *ngIf="showRating">
-      <gol-rating [userId]="user.id" [ratingId]="ruleSet.id" (ratingUpdated)="onRatingChanged($event)"></gol-rating>
+      <gol-rating [userId]="user.id" [ratingId]="ruleSet.id"></gol-rating>
     </mat-card-actions>
   </mat-card>
 </div>

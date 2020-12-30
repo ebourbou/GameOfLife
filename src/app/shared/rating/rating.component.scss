@@ -1,3 +1,9 @@
+
+mat-spinner {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}
 mat-icon {
   width: 8px;
   margin-right: 0.5em;
@@ -15,9 +21,3 @@ button {
 
 // disable blue border
 button:focus {outline:0;}
-
-.loading-spinner {
-  width: 15px;
-  height: 15px;
-
-}
