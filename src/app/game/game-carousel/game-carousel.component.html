@@ -2,7 +2,7 @@
 <div *ngIf="games && games.length > 0" >
   <mat-grid-list rowHeight="35em" gutterSize="2em"  cols="{{this.visibleGames}}" >
     <mat-grid-tile class="slide" *ngFor="let index of indices">
-      <app-game-preview [game]="games[index]" [navigationEnabled]="true" ></app-game-preview>
+      <app-game-preview @carouselAnimation [game]="games[index]" [navigationEnabled]="true" ></app-game-preview>
     </mat-grid-tile>
     <button class="control prev" (click)="doPreviousClick()">
       <span class="arrow left"></span>

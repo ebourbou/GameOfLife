@@ -1,10 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../model/game';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-game-carousel',
   templateUrl: './game-carousel.component.html',
   styleUrls: ['./game-carousel.component.scss'],
+  animations: [
+    trigger('carouselAnimation', [
+      transition('void => *', [style({ opacity: 0 }), animate('600ms', style({ opacity: 1 }))]),
+      transition('* => void', [animate('600ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class GameCarouselComponent implements OnInit {
   public indices: Array<number> = new Array<number>();
