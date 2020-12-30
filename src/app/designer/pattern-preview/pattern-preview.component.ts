@@ -19,7 +19,7 @@ import { RuleSet } from '../../shared/model/rule/rule-set';
 })
 export class PatternPreviewComponent implements OnInit, OnChanges {
   @Input() ruleSet: RuleSet;
-
+  @Input() animationEnabled = true;
   @Input() pattern: Pattern;
   @Input() showRating = true;
 
@@ -27,7 +27,6 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   board: Board;
   originalPattern: string;
   rating: number;
-  disabled = false;
   id: any;
 
   @ViewChild('rating') ratingComponent: RatingComponent;
@@ -42,7 +41,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   ) {}
 
   startAnimation(): void {
-    if (this.id == null) {
+    if (this.animationEnabled && this.id == null) {
       this.id = setInterval(() => {
         this.play();
       }, 500);
@@ -50,11 +49,13 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   }
 
   stopAnimation(): void {
-    clearInterval(this.id);
-    // restore original pattern
-    this.pattern.pattern = this.originalPattern;
-    this.ngOnChanges(null);
-    this.id = null;
+    if (this.animationEnabled) {
+      clearInterval(this.id);
+      // restore original pattern
+      this.pattern.pattern = this.originalPattern;
+      this.ngOnChanges(null);
+      this.id = null;
+    }
   }
   play(): void {
     this.board.nextGeneration(this.ruleSet);
