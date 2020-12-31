@@ -7,12 +7,13 @@ import { AbstractRuleService } from './rule/abstract-rule.service';
 import { UserUtils } from '../../users/utils/user-utils';
 import { filter, map } from 'rxjs/operators';
 import { GameUtils } from './game-utils';
+import { AuthService } from '../../core/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  constructor(private api: APIService, private ruleService: AbstractRuleService) {}
+  constructor(private api: APIService, private ruleService: AbstractRuleService, private authService: AuthService) {}
 
   getAllGames(): Observable<Game[]> {
     return from(this.api.ListGames().then((result) => result.items.map((item) => this.fromAwsGame(item))));
@@ -24,7 +25,7 @@ export class GameService {
         .ListGames()
         .then((result) =>
           result.items
-            .filter((awsgame) => awsgame.userId === UserUtils.loadUserFromLocal().id || JSON.parse(awsgame.description).isPublic)
+            .filter((awsgame) => awsgame.userId === this.authService.getCurrentUser().id || JSON.parse(awsgame.description).isPublic)
             .map((item) => this.fromAwsGame(item))
         )
     );

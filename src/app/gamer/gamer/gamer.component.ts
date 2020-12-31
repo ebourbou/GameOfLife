@@ -10,6 +10,7 @@ import { UserService } from '../../users/services/users.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-gamer',
@@ -42,12 +43,12 @@ export class GamerComponent implements OnInit {
   private user: User;
   private users: { id: string; name: string }[];
 
-  constructor(private gameService: GameService, private userService: UserService) {}
+  constructor(private gameService: GameService, private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.selectedView = 'carousel';
     this.loadGamesFiltered();
-    this.user = UserUtils.loadUserFromLocal();
+    this.user = this.authService.getCurrentUser();
     this.userService.getUsers().then((list: ListUsersQuery) => {
       this.users = list.items.map((item) => ({ id: item.id, name: item.username }));
       this.loadUsersFinished = true;

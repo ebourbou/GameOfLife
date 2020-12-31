@@ -3,11 +3,11 @@ import { APIService } from '../API.service';
 import { AuthService } from '../core/services/auth.service';
 import { UserService } from '../users/services/users.service';
 import { SlideItem } from './slides/slide.item';
-import { SlideGame } from './slides/game-slide.component';
 import { SlideReferences } from './slides/reference-slide.component';
 import { SlideExplanationRules } from './slides/rules-slide.component';
 import { SlideTeaser } from './slides/teaser-slide.component';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['home.component.scss'] })
 export class HomeComponent implements AfterViewInit, OnDestroy {
@@ -17,6 +17,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('dynamicComponent', { read: ViewContainerRef }) container: ViewContainerRef;
   interval: any;
   pause = false;
+  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -26,8 +27,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     let hideTeaser = false;
-    this.activatedRoute.queryParams.subscribe((params) => {
-      hideTeaser = params['hideTeaser'];
+    this.subscription = this.activatedRoute.data.subscribe((data) => {
+      hideTeaser = data ? data.hideTeaser : false;
     });
 
     if (!hideTeaser) {
@@ -44,6 +45,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
+    this.subscription.unsubscribe();
   }
 
   onPreviousClick(): void {

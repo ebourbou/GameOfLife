@@ -97,8 +97,7 @@ export class AuthService {
 
   /** get authenticate state
    * https://github.com/aws-amplify/amplify-js/wiki/FAQ#will-amplify-automatically-refresh-the-aws-credentials?
-   * */
-  /** get authenticate state */
+   */
   public isAuthenticated(): Observable<boolean> {
     return fromPromise(Auth.currentAuthenticatedUser()).pipe(
       map(() => {
@@ -121,22 +120,21 @@ export class AuthService {
         this.userService
           .updateLastLogin(user)
           .then((value) => {
-            Auth.signOut()
-              .then(
-                () => {
-                  this.authenticated.next(false);
-                  this.userSource.next(null);
-                  return true;
-                },
-                (error) => {
-                  return false;
-                }
-              )
-              .finally(() => sessionStorage.clear());
+            Auth.signOut().then(
+              () => {
+                this.authenticated.next(false);
+                this.userSource.next(null);
+                return true;
+              },
+              (error) => {
+                return false;
+              }
+            );
           })
           .catch((err) => this.notificationService.error('Fehler beim Benutzer speichern: letztes login:' + err));
       }
     }
+    sessionStorage.clear();
     return true;
   }
 
@@ -157,24 +155,20 @@ export class AuthService {
   }
 
   public getCurrentUser(): User {
-    if (!this.currentUser && Auth.currentSession()) {
+    return this.currentUser;
+  }
+
+  public async reloadCurrentUser() {
+    console.log('getCurrentUser');
+    if (Auth.currentSession()) {
       // load via user id from session storage
       const userId = sessionStorage.getItem('userId');
 
       if (userId) {
-        this.userService
-          .getUser(userId)
-          .then((value) => {
-            this.currentUser = UserUtils.fromAws(value);
-          })
-          .catch((reason) => {
-            // session not valid any more
-            this.logout(false);
-          });
-      } else {
-        return null;
+        this.currentUser = UserUtils.fromAws(await this.userService.getUser(userId));
+        this.authenticated.next(true);
+        this.userSource.next(this.currentUser);
       }
     }
-    return this.currentUser;
   }
 }

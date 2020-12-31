@@ -5,15 +5,15 @@
         <mat-icon class="icon"  matListIcon>dashboard</mat-icon>
         Design Editor
       </a>
-      <a *ngIf="user && !hasGuestRole()" mat-list-item routerLink="designer/rules" routerLinkActive="active" (click)="sidenav_left.close()">
+      <a *ngIf="user && !hasGuestRole()"  mat-list-item routerLink="designer/rules" routerLinkActive="active" (click)="sidenav_left.close()">
         <mat-icon class="icon"  matListIcon>rule</mat-icon>
         Regel Editor
       </a>
-      <a *ngIf="user && hasAdminRole() " mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
+      <a *ngIf="user && hasAdminRole()" mat-list-item routerLink="users" routerLinkActive="active" (click)="sidenav_left.close()">
         <mat-icon class="icon"  matListIcon>settings</mat-icon>
         Rollenverwaltung
       </a>
-      <a *ngIf="user && !hasGuestRole() " mat-list-item routerLink="gamer" routerLinkActive="active" (click)="sidenav_left.close()">
+      <a *ngIf="user && !hasGuestRole()" mat-list-item routerLink="gamer" routerLinkActive="active" (click)="sidenav_left.close()">
         <mat-icon class="icon"  matListIcon>videogame_asset</mat-icon>
         Meine Spiele
       </a>
@@ -21,7 +21,7 @@
         <mat-icon class="icon" matListIcon>games</mat-icon>
         Neues Spiel
       </a>
-      <a mat-list-item routerLink="instructions" queryParams="{hideTeaser:true}" routerLinkActive="active" (click)="sidenav_left.close()">
+      <a mat-list-item routerLink="instructions" routerLinkActive="active" (click)="sidenav_left.close()">
         <mat-icon class="icon" matListIcon>announcement</mat-icon>
         Einleitung
       </a>
@@ -56,7 +56,7 @@
         Abmelden
       </button>
       <div *ngIf="user" class="user-info">
-      <mat-icon matTooltip="{{user.username}} [{{user.role}}] {{user.lastLogin | date:'medium'}}">face</mat-icon>
+        <mat-icon matTooltip="{{user.username}} [{{user.role}}] {{user.lastLogin | date:'medium'}}">face</mat-icon>
       </div>
     </mat-toolbar>
 

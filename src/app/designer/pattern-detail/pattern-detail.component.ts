@@ -151,7 +151,7 @@ export class PatternDetailComponent implements OnInit, OnChanges {
 
   isDisabled(): boolean {
     if (!this.user) {
-      this.user = UserUtils.loadUserFromLocal();
+      this.user = this.authService.getCurrentUser();
     }
     return this.pattern.locked && !this.isAdmin(this.user.role);
   }

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../../auth/login/login.component';
 import { Router } from '@angular/router';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-save-step',
@@ -28,12 +29,17 @@ export class SaveStepComponent implements OnInit {
   @Input()
   isPublicGame = false;
 
-  constructor(private router: Router, private notificationService: NotificationService, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
   onSaveGame(): void {
-    const user = UserUtils.loadUserFromLocal();
+    const user = this.authService.getCurrentUser();
     if (!user || user.role === Role.Anonymous) {
       const dialogRef = this.dialog.open(LoginPromptComponent);
       dialogRef.afterClosed().subscribe((result) => {

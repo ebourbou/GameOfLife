@@ -13,6 +13,7 @@ import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
 import { UserUtils } from '../../users/utils/user-utils';
 import { GameUtils } from '../../shared/service/game-utils';
+import { AuthService } from '../../core/services/auth.service';
 
 @Injectable()
 export class GameEffects {
@@ -115,11 +116,16 @@ export class GameEffects {
     private ruleService: AbstractRuleService,
     private gameService: GameService,
     private notificationService: NotificationService,
-    private scoreService: ScoreService
+    private scoreService: ScoreService,
+    private authService: AuthService
   ) {}
 
   private newGame(controls: Controls): any {
-    const game = new Game(GameUtils.build(controls.xAxisSize, controls.yAxisSize), controls.generations, UserUtils.loadUserFromLocal().id);
+    const game = new Game(
+      GameUtils.build(controls.xAxisSize, controls.yAxisSize),
+      controls.generations,
+      this.authService.getCurrentUser().id
+    );
     return { game, controls };
   }
 }

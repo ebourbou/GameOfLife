@@ -63,7 +63,7 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.user = UserUtils.loadUserFromLocal();
+    this.user = this.authService.getCurrentUser();
     if (!this.ruleSet) {
       this.ruleService.getRuleSet('conway').subscribe((r) => (this.ruleSet = r));
     }

@@ -5,6 +5,7 @@ import { NotificationService } from '../../../shared/service/notification.servic
 import { RatingService } from '../../../shared/service/rating.service';
 import { RatingComponent } from '../../../shared/rating/rating.component';
 import { UserUtils } from '../../../users/utils/user-utils';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'rule-preview',
@@ -22,10 +23,10 @@ export class RulePreviewComponent implements OnInit {
   disabled = false;
   @ViewChild('rating') ratingComponent: RatingComponent;
 
-  constructor(private notificationService: NotificationService, private ratingService: RatingService) {}
+  constructor(private notificationService: NotificationService, private ratingService: RatingService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.user = UserUtils.loadUserFromLocal();
+    this.user = this.authService.getCurrentUser();
   }
 }
 

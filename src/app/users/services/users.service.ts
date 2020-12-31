@@ -37,13 +37,4 @@ export class UserService {
     };
     return this.api.UpdateUser(update);
   }
-
-  getCachedUser(): User {
-    const userStr = sessionStorage.getItem('user');
-    if (userStr === null) {
-      this.router.navigate(['/auth/login']);
-      return null;
-    }
-    return UserUtils.fromAws(userStr);
-  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AmplifyService } from 'aws-amplify-angular';
 import { NavigationStart, Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { NotificationService } from './shared/service/notification.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'GameOfLife';
   user: User;
   authenticated = false;
@@ -36,8 +36,13 @@ export class AppComponent implements OnInit {
     this.subscription = router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (!router.navigated) {
-          // browser refresh
-          this.user = UserUtils.loadUserFromLocal();
+          const userId = sessionStorage.getItem('userId');
+          if (userId && this.authService.getCurrentUser() == null) {
+            this.authService.reloadCurrentUser();
+            this.user = this.authService.getCurrentUser();
+          } else {
+            this.user = null;
+          }
         }
       }
     });
@@ -96,7 +101,7 @@ export class AppComponent implements OnInit {
     this.authService.authenticated.subscribe((value) => {
       this.authenticated = value;
       if (value) {
-        this.user = UserUtils.loadUserFromLocal();
+        this.user = this.authService.getCurrentUser();
       }
     });
 
@@ -115,5 +120,9 @@ export class AppComponent implements OnInit {
   }
   hasGuestRole(): boolean {
     return this.hasRole(Role.Anonymous);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

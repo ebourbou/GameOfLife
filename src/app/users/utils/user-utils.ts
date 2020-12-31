@@ -30,13 +30,4 @@ export class UserUtils {
     };
     return u;
   }
-
-  static loadUserFromLocal(): User {
-    const userStr = sessionStorage.getItem('user');
-    if (userStr) {
-      return JSON.parse(sessionStorage.getItem('user'));
-    } else {
-      return null;
-    }
-  }
 }

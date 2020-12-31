@@ -13,7 +13,7 @@
       <rule-display [rule]="ruleSet.ruleStringBSnotation"></rule-display>
       <p *ngIf="this.size == 0" class="description">{{ruleSet.description}}</p>
     </mat-card-content>
-    <mat-card-actions *ngIf="showRating">
+    <mat-card-actions *ngIf="showRating && user">
       <gol-rating [userId]="user.id" [ratingId]="ruleSet.id"></gol-rating>
     </mat-card-actions>
   </mat-card>
