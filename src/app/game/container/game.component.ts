@@ -53,15 +53,17 @@ import {
   selectScore,
 } from '../state/game.selectors';
 import { Controls } from '../model/controls';
-import { filter, map, startWith, take } from 'rxjs/operators';
+import { filter, startWith, take } from 'rxjs/operators';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/cell';
 import { StepperStep } from '../stepper/stepper-step';
 import { RuleSet } from '../../shared/model/rule/rule-set';
 import { Score } from '../../statistic/service/score';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { MatStepper } from '@angular/material/stepper';
 import { StepperComponent } from '../stepper/stepper.component';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
+import { BreakpointService } from '../../shared/service/breakpoint.service';
 
 @Component({
   selector: 'app-game',
@@ -89,10 +91,18 @@ export class GameComponent implements OnInit, OnDestroy {
   public allGenerationStatistics$: Observable<GenerationStatistic[]>;
   public score$: Observable<Score>;
   private navigationSubscription: Subscription;
+  private screenSize$: Observable<ScreenSize>;
+  private screenOrientation$: Observable<Orientation>;
 
   @ViewChild('stepper') private stepper: StepperComponent;
 
-  constructor(private route: ActivatedRoute, private router: Router, private defaults: DefaultsService, private store: Store<GameState>) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private defaults: DefaultsService,
+    private store: Store<GameState>,
+    private breakpointService: BreakpointService
+  ) {
     this.game$ = this.store.select(selectGame);
     this.controls$ = this.store.select(selectControls);
     this.generationStatistic$ = this.store.select(selectGenerationStatistic);
@@ -110,6 +120,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.isGameFinished$ = this.store.select(selectIsGameFinished);
     this.allGenerationStatistics$ = this.store.select(selectAllGenerationStatistics);
     this.score$ = this.store.select(selectScore);
+    this.screenSize$ = this.breakpointService.subscribeToScreenSizeChanges();
+    this.screenOrientation$ = this.breakpointService.subscribeToOrientationChanges();
   }
 
   ngOnDestroy(): void {
@@ -129,6 +141,8 @@ export class GameComponent implements OnInit, OnDestroy {
         this.init();
       });
     this.init();
+    this.screenOrientation$.subscribe((s) => console.log(s));
+    this.screenSize$.subscribe((s) => console.log(s));
   }
 
   init(): void {

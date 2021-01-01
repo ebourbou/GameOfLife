@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './variables';
+@import 'variables';
 @import 'mixins';
 
 html, body { height: 100%; }
@@ -8,4 +8,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .glider-animated {
   background-image: url('../assets/img/icon/gliderAnimated.gif');
   background-size: cover;
+}
+
+@media(max-width: $app-breakpoint--sm) {
+  body{font-size: $app-text-size--sm}
+}
+
+@media(max-width: $app-breakpoint--md) {
+  body{font-size: $app-text-size--md}
+}
+
+@media(max-width: $app-breakpoint--lg) {
+  body{font-size: $app-text-size--lg}
+}
+
+@media(min-width: $app-breakpoint--lg) {
+  body{font-size: $app-text-size--xl}
 }

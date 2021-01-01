@@ -3,7 +3,8 @@ import { Board } from '../../shared/model/board';
 import { Pattern } from '../../shared/model/pattern';
 import { Cell } from '../../shared/model/cell';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
-import { CellState } from '../../shared/model/cell-state';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
   selector: 'gol-board',
@@ -44,6 +45,12 @@ export class BoardComponent implements OnInit {
 
   @Input()
   isMasked: boolean;
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   @Input()
   isEditable: boolean;

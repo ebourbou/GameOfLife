@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './shared/model/user';
 import { AuthService } from './core/services/auth.service';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
 import { UserUtils } from './users/utils/user-utils';
@@ -31,8 +31,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private notificationService: NotificationService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private metaService: Meta
   ) {
+    this.metaService.addTag({
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1.0',
+    });
+
     this.subscription = router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (!router.navigated) {

@@ -37,7 +37,9 @@
              (doStartFromScratch)="startFromScratch()"
              (doStartGame)="onPlay()"
              (doToggleMaximize)="onToggleMaximize()"
-             (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })">
+             (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })"
+             [screenSize]="screenSize$ | async"
+             [screenOrientation]="screenOrientation$ | async">
   </gol-board>
   <gol-game-statistic
     *ngIf="isGameFinished$ | async"
