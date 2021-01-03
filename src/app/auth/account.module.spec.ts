@@ -67,6 +67,5 @@ describe('Component: Account', () => {
     tick();
     component.form.controls.username.setValue('user');
     component.form.controls.password.setValue('wrong_password');
-
   }));
 });
