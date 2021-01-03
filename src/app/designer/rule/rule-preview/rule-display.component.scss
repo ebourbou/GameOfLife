@@ -1,11 +1,25 @@
 .rule-control {
- width:200px;
+ width:250px;
 
 }
 
 .label {
-  font-size: x-small;
+  font-size: xx-small;
+
 }
+.top {
+  right: 5px;
+  position: absolute;
+}
+
+.left {
+  left: 5px;
+  position: absolute;
+}
+
+
+
+
 .death {
   border: 1px lightgray;
   background: repeating-linear-gradient(

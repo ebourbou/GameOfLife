@@ -1,7 +1,8 @@
 <div *ngIf="rule" class="rule-control">
-  <mat-grid-list rowHeight="1:1" cols="15" gutterSize="1">
-    <mat-grid-tile class="label" [colspan]="7">Nachbarn</mat-grid-tile><mat-grid-tile class="label" *ngFor="let status of this.birth;  index as i" >{{i+1}}</mat-grid-tile>
-    <mat-grid-tile class="label" [colspan]="7"><div class="legend"><div class="box death"></div><div>Sterben</div></div></mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.birth" [ngClass]="(status ? 'alive' : 'death')"></mat-grid-tile>
-    <mat-grid-tile class="label" [colspan]="7"><div class="legend"><div class="box alive"></div><div>Geboren</div></div></mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.death" [ngClass]="(status ? 'alive' : 'death')"></mat-grid-tile>
+  <mat-grid-list rowHeight="1:1" cols="20" gutterSize="1">
+    <mat-grid-tile [colspan]="20"><div class="label top">... wenn sie N lebende Nachbarn hat</div></mat-grid-tile>
+    <mat-grid-tile [colspan]="12"><div class="label left">Eine Zelle</div></mat-grid-tile><mat-grid-tile class="label" *ngFor="let status of this.birth;  index as i" >{{i+1}}</mat-grid-tile>
+    <mat-grid-tile [colspan]="12"><div class="box death left"></div><div class="label">(tot) wird lebendig...</div></mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.birth" [ngClass]="(status ? 'alive' : 'death')"></mat-grid-tile>
+    <mat-grid-tile [colspan]="12"><div class="box alive left"></div><div class="label">(lebend) lebt weiter...</div></mat-grid-tile><mat-grid-tile class="cell" *ngFor="let status of this.death" [ngClass]="(status ? 'alive' : 'death')"></mat-grid-tile>
   </mat-grid-list>
 </div>
