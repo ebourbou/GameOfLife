@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Pattern } from '../../../shared/model/pattern';
+import { ScreenSize } from '../../../shared/service/screen-size.enum';
+import { Orientation } from '../../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-cell-step',
@@ -14,6 +16,12 @@ export class CellStepComponent implements OnInit {
 
   @Input()
   allPatterns: Pattern[];
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   @Input()
   isBusy: boolean;
@@ -62,6 +70,28 @@ export class CellStepComponent implements OnInit {
     } else {
       this.drawMode = DrawMode.CELL;
     }
+  }
+
+  visiblePatterns(): number {
+    let patterns = 0;
+    if (this.screenSize === ScreenSize.HANDSET && this.screenOrientation === Orientation.PORTRAIT) {
+      patterns = 1;
+    } else if (this.screenSize === ScreenSize.HANDSET && this.screenOrientation === Orientation.LANDSCAPE) {
+      patterns = 3;
+    } else if (this.screenSize === ScreenSize.TABLET && this.screenOrientation === Orientation.PORTRAIT) {
+      patterns = 3;
+    } else {
+      patterns = 6;
+    }
+    return patterns;
+  }
+
+  showPatternRating(): boolean {
+    return false; // return this.screenSize === ScreenSize.WEB;
+  }
+
+  hideSecondaryButtonLabels(): boolean {
+    return this.screenSize === 0;
   }
 }
 

@@ -1,9 +1,9 @@
   <div>
     <p>Wähle aus, nach welchem Regelsatz gespielt wird:</p>
     <app-rule-carousel
-      autoLoadRules="false"
       [ruleSets]="allRuleSets"
-      [visibleRules]="3"
+      [visibleRules]="this.visibleRules()"
+      [ruleSize]="this.screenSize == 0 ? 2 : 1"
       (doSelected)="onRuleSetSelected($event)">
     </app-rule-carousel>
     <button mat-button matStepperNext mat-raised-button [disabled]="isBusy" color="primary" style="float: right;">Weiter</button>

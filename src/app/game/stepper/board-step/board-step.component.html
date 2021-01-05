@@ -1,5 +1,5 @@
-<div>
-<p>Bestimme die Grösse des Spielfeldes und die Dauer des Spieles:</p>
+<p>Bestimme die Grösse des Spielfeldes und die Länge des Spiels:</p>
+<div [ngClass]="screenAdaptationClasses()">
   <mat-button-toggle-group multiple="false" [value]="selectedSize" (change)="onChangeSize($event.value)" [disabled]="isBusy">
     <mat-button-toggle value="small" aria-label="Klein">
       <mat-icon svgIcon="small"></mat-icon>
@@ -11,8 +11,8 @@
       <mat-icon svgIcon="large"></mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <p></p>
-    <mat-label>Generationen</mat-label>
+  <div class="generations_block">
+    <mat-label>Generationen [{{this.controls.generations}}]</mat-label>
     <mat-slider
       [disabled]="isBusy"
       [max]="500"
@@ -22,7 +22,9 @@
       [value]="controls.generations"
       (valueChange)="onChangeGenerations($event)">
     </mat-slider>
-  <div>
-    <button mat-button matStepperNext mat-raised-button [disabled]="isBusy" color="primary"  style="float: right;">Weiter</button>
+  </div>
+  <div class="filler"></div>
+  <div class="button_block">
+    <button mat-button matStepperNext mat-raised-button [disabled]="isBusy" color="primary" style="float: right;" >Weiter</button>
   </div>
 </div>

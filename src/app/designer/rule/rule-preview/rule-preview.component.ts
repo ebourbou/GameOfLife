@@ -33,4 +33,5 @@ export class RulePreviewComponent implements OnInit {
 enum Size {
   LARGE,
   SMALL,
+  TINY,
 }

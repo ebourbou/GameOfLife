@@ -1,38 +1,41 @@
-<p>Bevölkere das Spielfeld:</p>
+<p>Bevölkere das Spielfeld indem du darauf zeichnest:</p>
 <div>
   <mat-button-toggle-group [disabled]="isBusy">
     <mat-button-toggle [checked]="drawMode == 0" (change)="toggleDrawMode()" matTooltip="Einzelne Zellen zeichnen">
       <mat-icon>brush</mat-icon>
-      <span>Freihandzeichnen</span>
+      <span>Pinsel</span>
     </mat-button-toggle>
     <mat-button-toggle [checked]="drawMode != 0" (change)="toggleDrawMode()" matTooltip="Pattern einfügen">
       <mat-icon>blur_on</mat-icon>
-      <span >Pattern einfügen</span>
+      <span >Pattern</span>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <app-pattern-carousel [autoLoadPatterns]="false"
-                        [highLightSelection]="true"
-                        [patterns]="allPatterns"
-                        [visiblePatterns]="6"
-                        [isSelected]="drawMode != 0"
-                        (doPatternSelected)="onPatternSelected($event)"
-                        (doDeSelect)="onDeselectPattern()">
-  </app-pattern-carousel>
-  <div>
-    <button mat-button mat-stroked-button [disabled]="isBusy"  (click)="onRandom($event)" matTooltip="Zufällig Zellen zeichnen">
+  <p *ngIf="this.hideSecondaryButtonLabels()"></p>
+  <span>
+    <button mat-flat-button [disabled]="isBusy"  (click)="onRandom($event)" matTooltip="Zufällig Zellen zeichnen">
       <mat-icon>grain</mat-icon>
-      <span >Zufall</span>
+      <span *ngIf="!this.hideSecondaryButtonLabels()" >Zufall</span>
     </button>
-    <button mat-button mat-stroked-button [disabled]="isBusy"  (click)="onInvert($event)" matTooltip="Alle Zellen invertieren" >
+    <button mat-flat-button [disabled]="isBusy"  (click)="onInvert($event)" matTooltip="Alle Zellen invertieren" >
       <mat-icon>invert_colors</mat-icon>
-      <span >Invertieren</span>
+      <span *ngIf="!this.hideSecondaryButtonLabels()">Invertieren</span>
     </button>
-    <button mat-button mat-stroked-button [disabled]="isBusy"  (click)="onReset($event)">
+    <button mat-flat-button [disabled]="isBusy"  (click)="onReset($event)"  matTooltip="Alle Zellen löschen" >
       <mat-icon>format_color_reset</mat-icon>
-      <span >Alles löschen</span>
+      <span *ngIf="!this.hideSecondaryButtonLabels()">Alles löschen</span>
     </button>
-    <button mat-button matStepperNext mat-raised-button color="primary" [disabled]="isBusy"  style="float: right;">Weiter</button>
-    <button mat-button matStepperPrevious mat-raised-button type="button" style="float: right;">Zurück</button>
+  </span>
+  <app-pattern-carousel
+    [patterns]="allPatterns"
+    [visiblePatterns]="this.visiblePatterns()"
+    [isSelected]="drawMode != 0"
+    [showRating]="this.showPatternRating()"
+    (doPatternSelected)="onPatternSelected($event)"
+    (doDeSelect)="onDeselectPattern()">
+  </app-pattern-carousel>
+  <div class="button-group" style="float: right;">
+    <button mat-button matStepperPrevious mat-raised-button type="button" >Zurück</button>
+    <button mat-button matStepperNext mat-raised-button color="primary" [disabled]="isBusy" >Weiter</button>
   </div>
 
 </div>

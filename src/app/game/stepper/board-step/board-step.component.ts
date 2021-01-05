@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Controls } from '../../model/controls';
 import { DefaultsService } from '../../../shared/service/defaults.service';
+import { ScreenSize } from '../../../shared/service/screen-size.enum';
+import { Orientation } from '../../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-board-step',
@@ -18,6 +20,12 @@ export class BoardStepComponent implements OnInit {
 
   @Input()
   isBusy: boolean;
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   private sizes: Map<string, { x: number; y: number }>;
 
@@ -44,5 +52,15 @@ export class BoardStepComponent implements OnInit {
       this.sizes = sizes;
     });
     // TODO Wie war das mit unsubscribe und memory leaks? besser async pipe im html und binding property?
+  }
+
+  screenAdaptationClasses(): string[] {
+    const classes = [];
+    if (this.screenOrientation === Orientation.PORTRAIT && this.screenSize === ScreenSize.HANDSET) {
+      classes.push('board-step_narrow');
+    } else {
+      classes.push('board-step-wide');
+    }
+    return classes;
   }
 }

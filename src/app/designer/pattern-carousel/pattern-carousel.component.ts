@@ -8,22 +8,41 @@ import { PatternService } from '../../shared/service/patterns.service';
   styleUrls: ['./pattern-carousel.component.scss'],
 })
 export class PatternCarouselComponent implements OnInit {
-  @Input() visiblePatterns = 5;
+  noOfPatternsVisible = 6;
+
+  @Input()
+  set visiblePatterns(patterns: number) {
+    this.noOfPatternsVisible = patterns;
+    this.computeIndicesAndShiftToCurrentPatternIndex();
+  }
+
+  get visiblePatterns(): number {
+    return this.noOfPatternsVisible;
+  }
+
   public currentPatternIndex = 0;
 
-  private innerIsSelected: boolean;
+  selected = false;
 
   @Input()
   set isSelected(isSelected: boolean) {
-    isSelected ? this.onSelect(0) : this.onDeselect();
+    if (isSelected) {
+      this.onSelect(this.currentPatternIndex);
+    } else {
+      this.onDeselect();
+    }
+    this.selected = isSelected;
   }
 
   get isSelected(): boolean {
-    return this.innerIsSelected;
+    return this.selected;
   }
 
   @Input()
   public patterns: Pattern[];
+
+  @Input()
+  public showRating: boolean;
 
   @Output()
   public doPatternSelected: EventEmitter<Pattern> = new EventEmitter();
@@ -31,53 +50,49 @@ export class PatternCarouselComponent implements OnInit {
   @Output()
   public doDeSelect: EventEmitter<void> = new EventEmitter();
 
-  @Input()
-  public autoLoadPatterns: boolean;
-
-  @Input()
-  public highLightSelection: boolean;
   public indices: Array<number> = new Array<number>();
 
   constructor(private patternService: PatternService) {}
 
   ngOnInit(): void {
+    this.computeIndicesAndShiftToCurrentPatternIndex();
+  }
+
+  private computeIndicesAndShiftToCurrentPatternIndex(): void {
+    this.indices = new Array<number>();
     for (let i = 0; i < this.visiblePatterns; i++) {
       this.indices.push(i);
     }
-    if (this.autoLoadPatterns) {
-      this.loadPatterns();
+    const originalPatternIndex = this.currentPatternIndex;
+    for (let currentIndex = 0; currentIndex < originalPatternIndex; currentIndex++) {
+      this.onNextClick();
     }
   }
 
-  private onPreviousClick(): void {
+  onPreviousClick(): void {
     this.indices[0] === 0 ? this.indices.unshift(this.patterns.length - 1) : this.indices.unshift(this.indices[0] - 1);
     this.indices.pop();
+    if (this.indices.length === 1) {
+      this.onSelect(this.indices[0]);
+    }
   }
 
-  private onNextClick(): void {
+  onNextClick(): void {
     this.indices[this.visiblePatterns - 1] === this.patterns.length - 1
       ? this.indices.push(0)
       : this.indices.push(this.indices[this.visiblePatterns - 1] + 1);
     this.indices.shift();
+    if (this.indices.length === 1) {
+      this.onSelect(this.indices[0]);
+    }
   }
 
   onSelect(index: number): void {
-    this.innerIsSelected = true;
     this.doPatternSelected.emit(this.patterns[index]);
     this.currentPatternIndex = index;
   }
 
   onDeselect(): void {
-    this.innerIsSelected = false;
     this.doDeSelect.emit();
-    this.currentPatternIndex = -1;
-  }
-
-  private loadPatterns(): void {
-    this.patternService.getPatternsObservable().subscribe((patterns) => {
-      this.patterns = patterns;
-      this.currentPatternIndex = 0;
-    });
-    // TODO Wie war das mit unsubscribe und memory leaks? besser async pipe im html und binding property?
   }
 }

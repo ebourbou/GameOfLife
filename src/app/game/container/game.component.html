@@ -7,6 +7,8 @@
                [isBusy]="isLoading$ | async"
                [isRunning]="isRunning$ | async"
                [isGameFinished]="isGameFinished$ | async"
+               [screenSize]="screenSize$ | async"
+               [screenOrientation]="screenOrientation$ | async"
                (doResize)="onResize($event)"
                (doChangeGenerations)="onChangeGenerations($event)"
                (doPatternSelected)="onPatternSelected($event)"

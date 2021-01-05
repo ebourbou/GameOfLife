@@ -1,16 +1,26 @@
-<mat-horizontal-stepper linear="true" (selectionChange)="selectionChange($event)" #stepper >
+<mat-horizontal-stepper [class]="screenAdaptationClasses()" linear="true" (selectionChange)="selectionChange($event)" #stepper >
 
-  <mat-step label="Spielfeld" state="playfield" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+  <mat-step state="playfield" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+    <ng-template matStepLabel>
+      <div matTooltip="Wähle das Spielfeld">Spielfeld</div>
+    </ng-template>
       <app-board-step
                       [isBusy]="isBusy"
                       [controls]="controls"
+                      [screenSize]="screenSize"
+                      [screenOrientation]="screenOrientation"
                       (doResize)="onResize($event)"
                       (doChangeGenerations)="onChangeGenerations($event)" >
       </app-board-step>
   </mat-step>
-  <mat-step label="Zellen" state="cellInput" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+  <mat-step state="cellInput" [stepControl]="rootGroup" [editable]="!isGameFinished" >
+    <ng-template matStepLabel>
+      <div matTooltip="Bevölkere das Spielfeld">Zellen</div>
+    </ng-template>
     <app-cell-step [allPatterns]="allPatterns"
                    [isBusy]="isBusy"
+                   [screenSize]="screenSize"
+                   [screenOrientation]="screenOrientation"
                    (doPatternSelected)="onPatternSelected($event)"
                    (doRandomCells)="onRandom()"
                    (doInvertCells)="onInvert()"
@@ -18,23 +28,37 @@
     </app-cell-step>
   </mat-step>
 
-  <mat-step label="Regeln" state="rules" [editable]="!isGameFinished" >
+  <mat-step state="rules" [editable]="!isGameFinished" >
+    <ng-template matStepLabel>
+      <div matTooltip="Bestimme die Regeln">Regeln</div>
+    </ng-template>
     <app-rule-step [allRuleSets]="allRuleSets"
                    [isBusy]="isBusy"
+                   [screenSize]="screenSize"
+                   [screenOrientation]="screenOrientation"
                    (doRuleSetSelected)="onRuleSetSelected($event)">
     </app-rule-step>
   </mat-step>
 
-  <mat-step label="Spielen" state="play" [editable]="!isGameFinished" >
+  <mat-step state="play" [editable]="!isGameFinished" >
+    <ng-template matStepLabel>
+      <div matTooltip="Spiele das Spiel">Spielen</div>
+    </ng-template>
     <app-play-step [isGameFinished]="isGameFinished"
                    (doNextStepProgrammatically)="onNextStepProgrammatically()">
     </app-play-step >
   </mat-step>
 
-  <mat-step label="Analysieren" state="analyze">
+  <mat-step state="analyze">
+    <ng-template matStepLabel>
+      <div matTooltip="Analysiere das Spiel">Analysieren</div>
+    </ng-template>
   </mat-step>
 
-  <mat-step label="Speichern" state="save" >
+  <mat-step state="save" >
+    <ng-template matStepLabel>
+      <div matTooltip="Speichere das Spiel">Speichern</div>
+    </ng-template>
     <app-save-step [isBusy]="isBusy"
                    (doSaveGame)="onSaveGame($event)"
                    (doStartFromScratch)="onStartFromScratch()">

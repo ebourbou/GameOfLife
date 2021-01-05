@@ -1,6 +1,5 @@
-.rule-preview {
-  width: 350px;
-}
+@import '~@angular/material/theming';
+
 
 .description{
   padding-top: 15px;
@@ -14,19 +13,21 @@
 }
 
 mat-card {
-  //width: 200px;
-  //height: 350§px;
-  box-sizing: border-box;
-}
+  @include mat-elevation-transition;
+  @include mat-elevation(8);
 
-mat-card:hover{
-  z-index:1000;
-  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  &:hover {
+    @include mat-elevation(16);
+  }
 }
 
 
 mat-grid-tile{
   border: thin solid lightgray;
+}
+
+.info {
+  position: absolute;
+  bottom:3%;
+  right:3%;
 }

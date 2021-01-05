@@ -115,6 +115,7 @@ export class BoardComponent implements OnInit {
         classes.push('isApplyCellState');
       }
     }
+    classes.push(...this.screenAdaptationClasses());
     return classes;
   }
 
@@ -133,5 +134,16 @@ export class BoardComponent implements OnInit {
         this.doSwitchCellState.emit(cell);
       }
     }
+  }
+
+  screenAdaptationClasses(): string[] {
+    const classes = [];
+    if (this.screenOrientation === Orientation.PORTRAIT) {
+      classes.push('portrait');
+    }
+    if (this.screenSize < ScreenSize.WEB) {
+      classes.push('handset');
+    }
+    return classes;
   }
 }

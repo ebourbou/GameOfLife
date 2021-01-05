@@ -1,14 +1,13 @@
-mat-card {
-  //width: 200px;
-  //height: 350§px;
-  box-sizing: border-box;
-}
+@import '~@angular/material/theming';
 
-mat-card:hover{
-  z-index:1000;
-  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+
+mat-card {
+  @include mat-elevation-transition;
+  @include mat-elevation(8);
+
+  &:hover {
+    @include mat-elevation(16);
+  }
 }
 gol-rating {
 
@@ -24,7 +23,9 @@ mat-card-actions {
 }
 
 .info {
-  margin-left: auto;
+  position: absolute;
+  bottom:3%;
+  right:3%;
 }
 
 .rule-name {

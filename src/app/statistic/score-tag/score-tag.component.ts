@@ -206,7 +206,7 @@ export class ScoreTagComponent implements OnInit {
         german = 'hoch';
         break;
       case ScoreLevel.OVERACHIEVER:
-        german = 'excellent';
+        german = 'exzellent';
     }
     return german;
   }

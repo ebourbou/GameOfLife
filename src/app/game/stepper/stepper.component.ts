@@ -7,6 +7,8 @@ import { StepperStep } from './stepper-step';
 import { RuleSet } from '../../shared/model/rule/rule-set';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-stepper',
@@ -32,6 +34,12 @@ export class StepperComponent implements OnInit {
 
   @Input()
   allRuleSets: RuleSet[];
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
@@ -110,5 +118,16 @@ export class StepperComponent implements OnInit {
 
   onStartFromScratch(): void {
     this.doStartFromScratch.emit();
+  }
+
+  screenAdaptationClasses(): string[] {
+    const classes = [];
+    if (
+      this.screenSize === ScreenSize.HANDSET ||
+      (this.screenSize === ScreenSize.TABLET && this.screenOrientation === Orientation.PORTRAIT)
+    ) {
+      classes.push('handset');
+    }
+    return classes;
   }
 }

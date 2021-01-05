@@ -1,9 +1,11 @@
 <div *ngIf="patterns" >
-  <mat-grid-list rowHeight="20em"  cols="{{this.visiblePatterns}}" >
-      <mat-grid-tile [ngClass]="(currentPatternIndex === index ? 'highPattern' : 'opaque')"  *ngFor="let index of indices" >
+  <mat-grid-list [rowHeight]="this.showRating ? '27em' : '18em'"  cols="{{this.visiblePatterns}}" >
+      <mat-grid-tile
+        *ngFor="let index of indices"
+        [ngClass]="(currentPatternIndex === index && this.isSelected ? 'highPattern' : 'opaque')">
        <pattern-preview
          [animationEnabled]="false"
-         [showRating]="false"
+         [showRating]="this.showRating"
          [pattern]="patterns[index]"
          (click)="onSelect(index)">
        </pattern-preview>

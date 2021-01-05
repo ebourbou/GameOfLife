@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { AmplifyService } from 'aws-amplify-angular';
 import { NavigationStart, Router } from '@angular/router';
@@ -10,8 +10,11 @@ import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
 import { UserUtils } from './users/utils/user-utils';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { NotificationService } from './shared/service/notification.service';
+import { BreakpointService } from './shared/service/breakpoint.service';
+import { ScreenSize } from './shared/service/screen-size.enum';
+import { Orientation } from './shared/service/orientation.enum';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +22,8 @@ import { NotificationService } from './shared/service/notification.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  screenSize$: Observable<ScreenSize>;
+
   title = 'GameOfLife';
   user: User;
   authenticated = false;
@@ -32,7 +37,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private metaService: Meta
+    private metaService: Meta,
+    private breakpointService: BreakpointService
   ) {
     this.metaService.addTag({
       name: 'viewport',
@@ -114,6 +120,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.user.subscribe((value) => {
       this.user = value;
     });
+
+    this.screenSize$ = this.breakpointService.subscribeToScreenSizeChanges();
   }
 
   hasRole(role: Role): boolean {

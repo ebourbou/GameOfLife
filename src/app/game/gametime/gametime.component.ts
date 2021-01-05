@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-gametime',
@@ -38,6 +40,12 @@ export class GametimeComponent implements OnInit {
   @Input()
   isReadyForAnalysis: boolean;
 
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -56,6 +64,10 @@ export class GametimeComponent implements OnInit {
 
   onStartGame(): void {
     this.doStartGame.emit();
+  }
+
+  showSmallSlider(): boolean {
+    return this.screenOrientation === Orientation.PORTRAIT && this.screenSize === ScreenSize.HANDSET;
   }
 
   onStartAnalysis(): void {

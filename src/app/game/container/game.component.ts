@@ -141,8 +141,6 @@ export class GameComponent implements OnInit, OnDestroy {
         this.init();
       });
     this.init();
-    this.screenOrientation$.subscribe((s) => console.log(s));
-    this.screenSize$.subscribe((s) => console.log(s));
   }
 
   init(): void {

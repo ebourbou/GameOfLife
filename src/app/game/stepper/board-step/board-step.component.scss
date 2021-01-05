@@ -1,7 +1,24 @@
 
 
-.game {
-  width: 15em;
-  //height: 250px;
+.board-step-narrow {
+  display: flex;
+  flex-direction: column;
+
+  .button_block {
+    align-self: flex-end;
+  }
 }
 
+.board-step-wide {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .filler {
+    flex-grow: 1;
+  }
+
+  .generations_block {
+    margin-left: 1em;
+  }
+}
