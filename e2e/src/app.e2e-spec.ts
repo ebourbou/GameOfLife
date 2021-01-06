@@ -1,9 +1,13 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 import { inject } from '@angular/core';
+import { LoginComponent } from '../../src/app/auth/login/login.component';
+import { ComponentFixture } from '@angular/core/testing';
 
 describe('GameOfLife App', () => {
   let page: AppPage;
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(() => {
     page = new AppPage();
@@ -11,7 +15,13 @@ describe('GameOfLife App', () => {
 
   it('should display title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('GameOfLife');
+    expect(browser.getTitle()).toEqual('GameOfLife', (expectationFailOutput) => {
+      console.log('------' + expectationFailOutput);
+      console.log('------' + expectationFailOutput);
+    });
+    // page.clickLogin();
+    // page.clickLogin().then((value) => console.log('_______' + value));
+    // typeof page;
   });
 
   afterEach(async () => {
@@ -24,17 +34,11 @@ describe('GameOfLife App', () => {
     );
   });
 
-  describe('Login to GameOfIfe', () => {
+  describe('Login to GameOfLife', () => {
     it('should have a login Button', () => {
-        expect(true).toBe(true);
+      expect(true).toBe(true);
     });
 
-    it(' should show login',() => {
-
-    });
-
-    it(' should show login',() => {
-
-    });
-  }
+    it(' should show login', () => {});
+  });
 });

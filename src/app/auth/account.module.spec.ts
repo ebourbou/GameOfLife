@@ -1,5 +1,5 @@
 import 'jasmine';
-import { async, ComponentFixture, fakeAsync, inject, TestBed, TestBedStatic, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, inject, TestBed, TestBedStatic, tick } from '@angular/core/testing';
 import { UserService } from '../users/services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -54,18 +54,26 @@ describe('Component: Account', () => {
       .then(() => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
-        //   debug = fixture.debugElement.query(By.css('form'));
-        //   el = debug.nativeElement;
       });
   }));
 
-  it('testing form the proper way', fakeAsync(() => {
+  it('form invalid when empty', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+    component.form.controls.username.setValue('');
+    component.form.controls.password.setValue('');
+    expect(component.form.valid).toBeFalsy();
+  }));
+
+  /*it('testing with valid user', fakeAsync(() => {
     // This first detectChanges is necessary to properly set up the form
     fixture.detectChanges();
 
     // Tick needs to be called in order for form controls to be registered properly.
     tick();
     component.form.controls.username.setValue('user');
-    component.form.controls.password.setValue('wrong_password');
-  }));
+    component.form.controls.password.setValue('useruser');
+    component.onSubmit('login');
+    flush();
+  }));*/
 });

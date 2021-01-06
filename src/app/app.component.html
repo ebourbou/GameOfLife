@@ -44,14 +44,14 @@
         <mat-icon>menu</mat-icon>
       </button>
       <span class="spacer"></span>
-      <div mat-card-avatar class="glider-animated" routerLink="/" routerLinkActive="active"></div>
-      <span *ngIf="(screenSize$ | async) != 0"><a class="title" routerLink="/" routerLinkActive="active">Game of Life</a></span>
+     <!-- <div mat-card-avatar class="glider-animated" routerLink="/" routerLinkActive="active"></div>-->
+      <span *ngIf="(screenSize$ | async) != 0"><a class="title" routerLink="/" routerLinkActive="active"><mat-icon class="title-icon" svgIcon="golTitle"></mat-icon></a></span>
       <span class="spacer"></span>
 
       <button *ngIf="!user" mat-raised-button color="primary" matTooltip="Login" (click)="showLogin()">
         Anmelden
       </button>
-      <button *ngIf="user" mat-raised-button color="primary" matTooltip="Logout" (click)="logout()">
+      <button *ngIf="user" class="login" mat-raised-button color="primary" matTooltip="Logout" (click)="logout()">
         Abmelden
       </button>
       <div *ngIf="user" class="user-info">

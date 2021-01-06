@@ -90,6 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     this.matIconRegistry.addSvgIcon('runtime', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/runtime.svg'));
     this.matIconRegistry.addSvgIcon('neighbors', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/neighbors.svg'));
+    this.matIconRegistry.addSvgIcon('golTitle', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/icon/GameOfLife.svg'));
   }
 
   logout(): void {
