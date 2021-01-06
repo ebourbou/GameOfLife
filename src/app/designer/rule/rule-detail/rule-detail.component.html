@@ -1,4 +1,5 @@
-<div *ngIf="ruleSet">
+<div class="content"*ngIf="ruleSet">
+  <div class="rule">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Regelsatz {{ruleSet.shortName}}</mat-card-title>
@@ -53,8 +54,9 @@
       </form>
     </mat-card-content>
   </mat-card>
+  </div>
   <div class="preview">
-    <rule-preview *ngIf="(demoPattern$ | async)" [ruleSet]="innerRuleSet" ></rule-preview>
+    <p><span mat-card-title>Vorschau der Regel</span>Beim Überfahren mit der Maus wird das <span class="rule-high">{{(demoPattern$ | async).name}}</span> nach der <span class="rule-high">{{ruleSet.shortName}}</span> Regel animiert.</p>
     <ng-container *ngIf="!(demoPattern$ | async)"><mat-spinner class="spinner"></mat-spinner></ng-container>
     <pattern-preview *ngIf="demoPattern$ | async" [showRating]="false" [pattern]="demoPattern$ | async" [ruleSet]="innerRuleSet"></pattern-preview>
   </div>
