@@ -9,5 +9,30 @@
     $timing: cubic-bezier(.29, .09, .24, .99)) {
 
     transition: $target $duration $timing;
+}
+
+@mixin carousel-control {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  z-index: 100;
+  position: absolute;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.6;
+
+  .arrow {
+    transform: scale(3);
+    color: #00ff2f;
+    text-shadow: 0px 0px 1px #00ff2f;
+  }
+
+  &:active {
+    opacity: 1;
+  }
 
 }

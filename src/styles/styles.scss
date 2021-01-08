@@ -10,18 +10,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-size: cover;
 }
 
-@media(max-width: $app-breakpoint--sm) {
-  body{font-size: $app-text-size--sm}
-}
-
-@media(max-width: $app-breakpoint--md) {
-  body{font-size: $app-text-size--md}
-}
-
-@media(max-width: $app-breakpoint--lg) {
-  body{font-size: $app-text-size--lg}
-}
-
-@media(min-width: $app-breakpoint--lg) {
-  body{font-size: $app-text-size--xl}
-}

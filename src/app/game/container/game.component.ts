@@ -153,9 +153,10 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   async onResize(size: any): Promise<void> {
-    this.startFromScratch();
     const controls = await this.getControls();
     this.store.dispatch(newGame({ controls: { ...controls, xAxisSize: size.x, yAxisSize: size.y } }));
+    this.store.dispatch(loadPatterns());
+    this.store.dispatch(loadRuleSets());
   }
 
   onPatternSelected(pattern: Pattern): void {
@@ -229,10 +230,10 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   startFromScratch(): void {
+    this.store.dispatch(newDefaultGame());
     if (this.stepper) {
       this.stepper.resetStepper();
     }
-    this.store.dispatch(newDefaultGame());
     this.store.dispatch(loadPatterns());
     this.store.dispatch(loadRuleSets());
   }

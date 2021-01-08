@@ -146,4 +146,16 @@ export class BoardComponent implements OnInit {
     }
     return classes;
   }
+
+  cellSizeClasses(): string {
+    let cellSizeClass;
+    if (this.board.width < 50) {
+      cellSizeClass = 'cell-small';
+    } else if (this.board.width < 200) {
+      cellSizeClass = 'cell-medium';
+    } else {
+      cellSizeClass = 'cell-large';
+    }
+    return cellSizeClass;
+  }
 }

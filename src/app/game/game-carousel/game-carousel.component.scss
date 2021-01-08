@@ -1,4 +1,4 @@
-
+@import '../../../styles/mixins';
 
 .slide {
   position: center;
@@ -6,57 +6,16 @@
   height: 100%;
 }
 
-// =========================
-// Next and Prev buttons
-// =========================
-.control {
-  border: none;
-  background-color: transparent;
-  outline: 0;
-  position: absolute;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.5em;
-  font-weight: bold;
-  font-size: 4em;
-  user-select: none;
-  height: 100%;
-
-  &:hover, &:focus {
-    opacity: 1;
-  }
-
-  /* Position the buttons */
-  &.next {
-    right: 0;
-  }
-
-  &.action {
-    bottom: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  &.prev {
-    left: 0;
-  }
+.carousel-control-left {
+  @include carousel-control;
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-/* style the arrows */
-.arrow {
-  display: block;
-  border-left: 0.1em solid greenyellow;
-  border-bottom: 0.1em solid greenyellow;
-  width: 0.5em;
-  height: 0.5em;
-
-  &.left {
-    transform: rotate(45deg);
-  }
-  &.right {
-    transform: rotate(225deg);
-  }
+.carousel-control-right {
+  @include carousel-control;
+  right: 0%;
+  top: 50%;
+  transform: translate(50%, -50%);
 }

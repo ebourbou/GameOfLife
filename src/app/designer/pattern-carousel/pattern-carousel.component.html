@@ -10,11 +10,11 @@
          (click)="onSelect(index)">
        </pattern-preview>
       </mat-grid-tile>
-    <button class="control prev" (click)="onPreviousClick()">
-      <span class="arrow left"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-left" aria-label="Vorheriges Pattern" (click)="onPreviousClick()">
+      <mat-icon class="arrow">navigate_before</mat-icon>
     </button>
-    <button class="control next" (click)="onNextClick()">
-      <span class="arrow right"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-right" aria-label="Nächstes Pattern" (click)="onNextClick()">
+      <mat-icon class="arrow">navigate_next</mat-icon>
     </button>
     </mat-grid-list>
 </div>

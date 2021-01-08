@@ -121,6 +121,12 @@ export class GameEffects {
   ) {}
 
   private newGame(controls: Controls): any {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.notificationService.error(
+        'Cannot continue, lost the current user somewhere along the way! AuthService.getCurrentUser() returns undefined!'
+      );
+    }
     const game = new Game(
       GameUtils.build(controls.xAxisSize, controls.yAxisSize),
       controls.generations,

@@ -1,15 +1,15 @@
 
 <div *ngIf="ruleSets" >
   <mat-grid-list rowHeight="17em" cols="{{this.visibleRules}}" >
-    <mat-grid-tile [ngClass]="(currentIndex === index ? 'highRule' : 'opaque')"  *ngFor="let index of indices" >
+    <mat-grid-tile [ngClass]="(currentIndex !== index ? 'opaque': null)"  *ngFor="let index of indices" >
       <rule-preview [size]="ruleSize" [ruleSet]="this.ruleSets[index]" (click)="onSelect(index)">
       </rule-preview>
     </mat-grid-tile>
-    <button class="control prev" (click)="onPreviousClick()">
-      <span class="arrow left"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-left" aria-label="Vorheriges Element" (click)="onPreviousClick()">
+      <mat-icon class="arrow">navigate_before</mat-icon>
     </button>
-    <button class="control next" (click)="onNextClick()">
-      <span class="arrow right"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-right" aria-label="Nächstes Element" (click)="onNextClick()">
+      <mat-icon class="arrow">navigate_next</mat-icon>
     </button>
   </mat-grid-list>
 </div>

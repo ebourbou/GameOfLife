@@ -4,11 +4,11 @@
     <mat-grid-tile class="slide" *ngFor="let index of indices">
       <app-game-preview @carouselAnimation [game]="games[index]" [navigationEnabled]="true" ></app-game-preview>
     </mat-grid-tile>
-    <button class="control prev" (click)="doPreviousClick()">
-      <span class="arrow left"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-left" aria-label="Vorheriges Spiel" (click)="doPreviousClick()">
+      <mat-icon class="arrow">navigate_before</mat-icon>
     </button>
-    <button class="control next" (click)="doNextClick()">
-      <span class="arrow right"></span>
+    <button mat-icon-button disableRipple="true" class="carousel-control-right" aria-label="Nächstes Spiel" (click)="doNextClick()">
+      <mat-icon class="arrow">navigate_next</mat-icon>
     </button>
   </mat-grid-list>
 </div>

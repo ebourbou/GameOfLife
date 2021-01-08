@@ -33,12 +33,28 @@
   justify-content: center;
 }
 
-.cell {
+.cell-large {
+  width: 0.5%;
+  height: 0.5%;
+  background: none;
+  border-radius: 50%;
+  padding-bottom: 0.5%; /* = width for a 1:1 aspect ratio */
+}
+
+.cell-medium {
   width: 1%;
   height: 1%;
   background: none;
   border-radius: 50%;
   padding-bottom: 1%; /* = width for a 1:1 aspect ratio */
+}
+
+.cell-small {
+  width: 2%;
+  height: 2%;
+  background: none;
+  border-radius: 50%;
+  padding-bottom: 2%; /* = width for a 1:1 aspect ratio */
 }
 
 .isAlive {

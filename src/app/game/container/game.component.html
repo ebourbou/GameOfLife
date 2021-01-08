@@ -1,6 +1,8 @@
 <router-outlet></router-outlet>
 <ng-container *ngIf="game$ | async as game" class="game">
-  <app-stepper class="stepper" #stepper
+  <mat-card class="game-preview mat-elevation-z1">
+    <mat-card-content class="content">
+      <app-stepper class="stepper" #stepper
                [controls]="controls$ | async"
                [allRuleSets]="allRuleSets$ | async"
                [allPatterns]="allPatterns$ | async"
@@ -18,31 +20,40 @@
                (doStepChanged)="onStepChanged($event)"
                (doRuleSetSelected)="onRuleSetSelected($event)"
                (doSaveGame)="onSaveGame({isPublic: $event, game: game})"
-               (doStartFromScratch)="startFromScratch()"
-  >
-  </app-stepper>
-  <gol-board *ngIf="!(isGameFinished$ | async)"
-             [board]="game.board"
-             [isMasked]="isMasked$ | async"
-             [isLoading]="isLoading$ | async"
-             [isEditable]="isEditable$ | async"
-             [isRunning]="isRunning$ | async"
-             [isBoardMaximized]="isBoardMaximized$ | async"
-             [isReadyToRun]="isReadyToRun$ | async"
-             [isReadyForAnalysis]="isReadyForAnalysis$ | async"
-             [generationStatistic]="generationStatistic$ | async"
-             [allGenerationStatistics]="allGenerationStatistics$ | async"
-             [patternSelected]="patternSelected$ | async"
-             (doChangeSpeed)="onChangeSpeed($event)"
-             (doApplyPattern)="onApplyPattern($event)"
-             (doSwitchCellState)="onSwitchCellState($event)"
-             (doStartFromScratch)="startFromScratch()"
-             (doStartGame)="onPlay()"
-             (doToggleMaximize)="onToggleMaximize()"
-             (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })"
-             [screenSize]="screenSize$ | async"
-             [screenOrientation]="screenOrientation$ | async">
-  </gol-board>
+               (doStartFromScratch)="startFromScratch()">
+      </app-stepper>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="!(isGameFinished$ | async)" >
+    <mat-card class="board mat-elevation-z1">
+      <mat-card-content>
+        <gol-board *ngIf="!(isGameFinished$ | async)"
+                   [board]="game.board"
+                   [isMasked]="isMasked$ | async"
+                   [isLoading]="isLoading$ | async"
+                   [isEditable]="isEditable$ | async"
+                   [isRunning]="isRunning$ | async"
+                   [isBoardMaximized]="isBoardMaximized$ | async"
+                   [isReadyToRun]="isReadyToRun$ | async"
+                   [isReadyForAnalysis]="isReadyForAnalysis$ | async"
+                   [generationStatistic]="generationStatistic$ | async"
+                   [allGenerationStatistics]="allGenerationStatistics$ | async"
+                   [patternSelected]="patternSelected$ | async"
+                   (doChangeSpeed)="onChangeSpeed($event)"
+                   (doApplyPattern)="onApplyPattern($event)"
+                   (doSwitchCellState)="onSwitchCellState($event)"
+                   (doStartFromScratch)="startFromScratch()"
+                   (doStartGame)="onPlay()"
+                   (doToggleMaximize)="onToggleMaximize()"
+                   (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })"
+                   [screenSize]="screenSize$ | async"
+                   [screenOrientation]="screenOrientation$ | async">
+        </gol-board>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
   <gol-game-statistic
     *ngIf="isGameFinished$ | async"
     [allGenerationStatistics]="allGenerationStatistics$ | async"
