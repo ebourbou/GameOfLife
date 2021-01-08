@@ -31,7 +31,7 @@
       <span class="label">Analyse</span>
     </button>
   </div>
-  <button class="bottom_right opaque" mat-icon-button aria-label="Maximiere oder minimiere das Spielfeld" (click)="onToggleMaximizeBoard()">
+  <button class="bottom_right opaque" *ngIf="this.screenSize > 1" mat-icon-button aria-label="Maximiere oder minimiere das Spielfeld" (click)="onToggleMaximizeBoard()">
     <mat-icon *ngIf="isBoardMaximized">fullscreen_exit</mat-icon>
     <mat-icon *ngIf="!isBoardMaximized">fullscreen</mat-icon>
   </button>

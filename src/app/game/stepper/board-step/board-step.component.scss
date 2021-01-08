@@ -4,8 +4,15 @@
   display: flex;
   flex-direction: column;
 
+  .generations_block {
+    margin-top: 1em;
+  }
   .button_block {
     align-self: flex-end;
+  }
+
+  mat-button-toggle-group {
+    align-self: flex-start;
   }
 }
 
@@ -14,11 +21,19 @@
   flex-direction: row;
   justify-content: space-between;
 
+  mat-button-toggle-group {
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+
   .filler {
     flex-grow: 1;
+    flex-shrink: 1;
   }
 
   .generations_block {
+    align-self: flex-end;
     margin-left: 1em;
+    flex-shrink: 1;
   }
 }

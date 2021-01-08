@@ -57,7 +57,7 @@ export class BoardStepComponent implements OnInit {
   screenAdaptationClasses(): string[] {
     const classes = [];
     if (this.screenOrientation === Orientation.PORTRAIT && this.screenSize === ScreenSize.HANDSET) {
-      classes.push('board-step_narrow');
+      classes.push('board-step-narrow');
     } else {
       classes.push('board-step-wide');
     }
