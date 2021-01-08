@@ -1,4 +1,8 @@
-.statistic-container {
+mat-card {
+  margin-top: 2em;
+}
+
+.statistic-container-wide {
   display: grid;
   justify-items: center;
   align-items: center;
@@ -8,6 +12,11 @@
  "linechart linechart linechart"
  "piechart piechart piechart"
  "medal preview tag";
+}
+
+.statistic-container-narrow {
+  display: flex;
+  flex-direction: column;
 }
 
 .linechart {

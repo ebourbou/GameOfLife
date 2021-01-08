@@ -8,3 +8,7 @@
   font-size: 24px;
   height: 24px;
 }
+
+:host ::ng-deep .mat-horizontal-content-container {
+  padding:1.5em !important;
+}

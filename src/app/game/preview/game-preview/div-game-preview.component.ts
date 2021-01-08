@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../../model/game';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../shared/service/notification.service';
-import { RatingService } from '../../../shared/service/rating.service';
-import { PatternService } from '../../../shared/service/patterns.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../shared/model/user';
+import { BreakpointService } from '../../../shared/service/breakpoint.service';
+import { ScreenSize } from '../../../shared/service/screen-size.enum';
 
 @Component({
   selector: 'app-game-preview',
@@ -20,18 +19,15 @@ export class DivGamePreviewComponent implements OnInit {
   navigationEnabled = false;
   private user: User;
 
-  constructor(
-    private notificationService: NotificationService,
-    private ratingService: RatingService,
-    private patternService: PatternService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  isHandSet: boolean;
+
+  constructor(private authService: AuthService, private breakpointService: BreakpointService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     this.authService.user.subscribe((user) => {
       this.user = user;
     });
+    this.breakpointService.subscribeToScreenSizeChanges().subscribe((s) => (this.isHandSet = s === ScreenSize.HANDSET));
   }
 
   doNavigate(): void {

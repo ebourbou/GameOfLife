@@ -1,4 +1,5 @@
-<div class="statistic-container">
+<mat-card>
+  <mat-card-content [ngClass]="this.screenSize > 0 ? 'statistic-container-wide' : 'statistic-container-narrow'">
   <div class="linechart">
     <ngx-charts-line-chart class="linechart"
       [customColors]="customColors"
@@ -14,13 +15,14 @@
       [results]="allGenerationStatistics | toMeasureSeriesGrouped: [0,1,2,5]">
     </ngx-charts-line-chart>
   </div>
-  <div class="piechart">
+  <div *ngIf="this.screenSize > 0"  class="piechart">
     <ngx-charts-pie-grid
       [customColors]="customColors"
       [results]="allGenerationStatistics | lastGenerationToMeasure: [2,3,5,7]">
     </ngx-charts-pie-grid>
   </div>
   <app-game-preview class="game-preview" [game]="currentGame"></app-game-preview>
-  <app-score-tag class="tag" [tags]="score.tags" [size]="0"></app-score-tag>
-  <app-score-medal class="medal" [overallScore]="score.overallScore" [size]="0"></app-score-medal>
-</div>
+  <app-score-tag *ngIf="this.screenSize > 0" class="tag" [tags]="score.tags" [size]="0"></app-score-tag>
+  <app-score-medal *ngIf="this.screenSize > 0" class="medal" [overallScore]="score.overallScore" [size]="0"></app-score-medal>
+  </mat-card-content>
+</mat-card>

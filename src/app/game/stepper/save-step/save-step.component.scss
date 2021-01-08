@@ -1,11 +1,37 @@
-.slider {
-  padding-right: 1em;
-}
+
 
 .help-icon {
   transform: scale(0.5);
 }
 
-.button_block {
-  float: right;
+.save-step-narrow {
+  display: flex;
+  flex-direction: column;
+  .slider {
+    padding-right: 1em;
+    padding-bottom: 1em;
+  }
+  .button_block {
+    align-self: flex-end;
+  }
+}
+
+.save-step-wide {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  slider {
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+  .filler {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+  .button_block {
+    align-self: flex-end;
+    margin-left: 1em;
+    flex-shrink: 1;
+  }
 }

@@ -3,6 +3,8 @@ import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { GameStatisticUtils } from './game-statistic-utils';
 import { Game } from '../model/game';
 import { Score } from '../../statistic/service/score';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
   selector: 'gol-game-statistic',
@@ -18,6 +20,12 @@ export class GameStatisticComponent implements OnInit {
   currentGame: Game;
   @Input()
   score: Score;
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   constructor() {
     this.customColors = GameStatisticUtils.getColors();

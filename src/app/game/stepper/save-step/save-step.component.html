@@ -1,15 +1,18 @@
 <p>Speichere und veröffentliche dein Spiel:</p>
-<span class="slider" >
-  <mat-slide-toggle
-    [(ngModel)]="isPublicGame" >
-    Veröffentlichen
-  </mat-slide-toggle>
-  <mat-icon class="help-icon" matTooltip="Das gespeicherte Spiel ist nur für dich oder aber für alle zugänglich.">help</mat-icon>
-</span>
-<div class="button_block">
-  <button mat-button mat-raised-button [disabled]="isBusy" type="button" (click)="onStartFromScratch()" >Neues Spiel</button>
-  <button mat-raised-button color="primary" type="button"  [disabled]="this.isBusy || this.isSaved" (click)="onSaveGame()">
-    <span *ngIf="isBusy" class="spinner-border spinner-border-sm mr-1"></span>
-    Speichern
-  </button>
+<div [ngClass]="this.screenSize == 0 && this.screenOrientation == 1 ? 'save-step-narrow' : 'save-step-wide'" >
+  <span class="slider" >
+    <mat-slide-toggle
+      [(ngModel)]="isPublicGame" >
+      Veröffentlichen
+    </mat-slide-toggle>
+    <mat-icon class="help-icon" matTooltip="Das gespeicherte Spiel ist nur für dich oder aber für alle zugänglich.">help</mat-icon>
+  </span>
+  <div class="filler"></div>
+  <div class="button_block">
+    <button mat-button mat-raised-button [disabled]="isBusy" type="button" (click)="onStartFromScratch()" >NeuesSpiel</button>
+    <button mat-raised-button color="primary" type="button"  [disabled]="this.isBusy || this.isSaved" (click)="onSaveGame()">
+      <span *ngIf="isBusy" class="spinner-border spinner-border-sm mr-1"></span>
+      Speichern
+    </button>
+  </div>
 </div>

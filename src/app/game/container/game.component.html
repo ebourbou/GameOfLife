@@ -58,6 +58,8 @@
     *ngIf="isGameFinished$ | async"
     [allGenerationStatistics]="allGenerationStatistics$ | async"
     [score]="score$ | async"
+    [screenSize]="screenSize$ | async"
+    [screenOrientation]="screenOrientation$ | async"
     [currentGame]="game">
   </gol-game-statistic>
 </ng-container>

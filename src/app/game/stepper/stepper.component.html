@@ -60,6 +60,8 @@
       <div matTooltip="Speichere das Spiel">Speichern</div>
     </ng-template>
     <app-save-step [isBusy]="isBusy"
+                   [screenSize]="screenSize"
+                   [screenOrientation]="screenOrientation"
                    (doSaveGame)="onSaveGame($event)"
                    (doStartFromScratch)="onStartFromScratch()">
     </app-save-step >

@@ -8,6 +8,8 @@ import { LoginComponent } from '../../../auth/login/login.component';
 import { Router } from '@angular/router';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { ScreenSize } from '../../../shared/service/screen-size.enum';
+import { Orientation } from '../../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-save-step',
@@ -28,6 +30,12 @@ export class SaveStepComponent implements OnInit {
 
   @Input()
   isPublicGame = false;
+
+  @Input()
+  screenSize: ScreenSize;
+
+  @Input()
+  screenOrientation: Orientation;
 
   constructor(
     private router: Router,

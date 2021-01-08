@@ -26,3 +26,10 @@
 .thumb {
   transform: scale(0.8);
 }
+
+.tiny-icons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
