@@ -3,7 +3,6 @@ import { Game } from '../../game/model/game';
 import { GameService } from '../../shared/service/game.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { map } from 'rxjs/operators';
-import { UserUtils } from '../../users/utils/user-utils';
 import { User } from '../../shared/model/user';
 import { ListUsersQuery } from '../../API.service';
 import { UserService } from '../../users/services/users.service';
@@ -11,6 +10,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AuthService } from '../../core/services/auth.service';
+import { BreakpointService } from '../../shared/service/breakpoint.service';
+import { ScreenSize } from '../../shared/service/screen-size.enum';
+import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
   selector: 'app-gamer',
@@ -25,16 +27,24 @@ import { AuthService } from '../../core/services/auth.service';
   ],
 })
 export class GamerComponent implements OnInit {
-  columnsToShow = ['author', 'date', 'ruleSet', 'score', 'tags'];
+  get showSpinner(): boolean {
+    return !(this.loadGamesFinished && this.loadUsersFinished);
+  }
+
+  constructor(
+    private gameService: GameService,
+    private userService: UserService,
+    private authService: AuthService,
+    private breakpointService: BreakpointService
+  ) {}
+  columnsToShow = [];
   expandedGame: Game | null;
   selectedView: string;
   privateGamesOnly = false;
   private loadUsersFinished = false;
   private loadGamesFinished = false;
-
-  get showSpinner(): boolean {
-    return !(this.loadGamesFinished && this.loadUsersFinished);
-  }
+  isHandSet: boolean;
+  isPortrait: boolean;
 
   dataSource = new MatTableDataSource<Game>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,8 +52,6 @@ export class GamerComponent implements OnInit {
 
   private user: User;
   private users: { id: string; name: string }[];
-
-  constructor(private gameService: GameService, private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.selectedView = 'carousel';
@@ -53,6 +61,22 @@ export class GamerComponent implements OnInit {
       this.users = list.items.map((item) => ({ id: item.id, name: item.username }));
       this.loadUsersFinished = true;
     });
+    this.breakpointService.subscribeToScreenSizeChanges().subscribe((s) => {
+      this.isHandSet = s === ScreenSize.HANDSET;
+      this.updateColumnsToShow();
+    });
+    this.breakpointService.subscribeToOrientationChanges().subscribe((s) => {
+      this.isPortrait = s === Orientation.PORTRAIT;
+      this.updateColumnsToShow();
+    });
+  }
+
+  updateColumnsToShow(): void {
+    if (this.isHandSet && this.isPortrait) {
+      this.columnsToShow = ['author', 'date', 'score'];
+    } else {
+      this.columnsToShow = ['author', 'date', 'ruleSet', 'size', 'generations', 'score', 'tags'];
+    }
   }
 
   public onViewChange(view: string): void {
@@ -71,6 +95,24 @@ export class GamerComponent implements OnInit {
         this.dataSource.data = games;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'date':
+              return item.dateAsString();
+            case 'score':
+              return item.score.overallScore;
+            case 'author':
+              return item.author;
+            case 'ruleSet':
+              return item.ruleSet.shortName;
+            case 'size':
+              return item.board.width * item.board.height;
+            case 'generations':
+              return item.generations;
+            default:
+              return item[property];
+          }
+        };
         this.loadGamesFinished = true;
       });
   }

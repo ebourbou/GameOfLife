@@ -46,12 +46,17 @@ tr.element-row:not(.example-expanded-row):active {
   padding-right: 1em;
 }
 
+.centered {
+  text-align: center;
+}
+
 .help-icon {
   transform: scale(0.5);
 }
 
 .expanded_cell {
   padding-bottom: 1em;
+  margin: auto;
 }
 
 .carousel {

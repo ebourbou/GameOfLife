@@ -11,7 +11,7 @@ export class Game {
     return `Spiel ${this.board.width} x ${this.board.height} x ${this.generations} vom ` + this.dateAsString();
   }
 
-  public author;
+  public author: string;
   public date = new Date();
   public ruleSet: RuleSet;
   public score: Score;
@@ -32,5 +32,19 @@ export class Game {
 
   dateAsString(): string {
     return this.date.toLocaleDateString('de-CH') + ' um ' + this.date.toLocaleTimeString('de-CH');
+  }
+
+  dateAsShortString(): string {
+    return this.date.toLocaleDateString('de-CH', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  scoreToNumber(): number {
+    return this.score.tags.map((score) => score.level).reduce((a, b) => a + b, 0);
   }
 }
