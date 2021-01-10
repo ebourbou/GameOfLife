@@ -7,6 +7,7 @@ Das Spiel des Lebens (engl. Conway’s Game of Life) ist ein vom Mathematiker Jo
 (Quelle: https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens)
 
 ## Installation und Starten
+- Installieren der Angular CLI: `npm install -g @angular/cli`
 - Ausführen `git clone https://github.com/ebourbou/GameOfLife.git`
 - Das `aws-exports.js` aus dem Installations Mail in `GameOfLife/src` kopieren.
 - Ausführen von `npm install`

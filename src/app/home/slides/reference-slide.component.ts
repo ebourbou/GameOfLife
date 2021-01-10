@@ -8,8 +8,8 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
   styleUrls: ['reference-slide.component.scss'],
   templateUrl: 'reference-slide.component.html',
 })
-export class SlideReferences implements SlideComponent, OnInit {
-  @Input() data: any;
+export class SlideReferencesComponent implements SlideComponent, OnInit {
+  @Input() data = '';
   blinker: Pattern = {
     id: '1',
     name: 'Blinker',

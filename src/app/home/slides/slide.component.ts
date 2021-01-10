@@ -1,3 +1,3 @@
 export interface SlideComponent {
-  data: any;
+  data: string;
 }

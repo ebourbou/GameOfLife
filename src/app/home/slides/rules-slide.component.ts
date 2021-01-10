@@ -7,8 +7,8 @@ import { RuleSet } from '../../shared/model/rule/rule-set';
   styleUrls: ['rules-slide.component.scss'],
   templateUrl: 'rules-slide.component.html',
 })
-export class SlideExplanationRules implements SlideComponent, OnInit {
-  @Input() data: any;
+export class SlideExplanationRulesComponent implements SlideComponent, OnInit {
+  @Input() data = '';
   conwayRuleset: RuleSet;
 
   constructor(private ruleService: AbstractRuleService) {}
