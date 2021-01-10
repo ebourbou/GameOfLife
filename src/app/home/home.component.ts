@@ -32,10 +32,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     });
 
     if (!hideTeaser) {
-      this.homeSlides.push(new SlideItem(SlideTeaser, { page: 1 }));
+      this.homeSlides.push(new SlideItem(SlideTeaser, { text: 'Entdecke Welten...' }));
     }
-    this.homeSlides.push(new SlideItem(SlideExplanationRules, { page: 2 }));
-    this.homeSlides.push(new SlideItem(SlideReferences, { page: 3 }));
+    this.homeSlides.push(new SlideItem(SlideExplanationRules, {}));
+    if (!hideTeaser) {
+      this.homeSlides.push(new SlideItem(SlideTeaser, { text: '...erschaffe Leben...' }));
+    }
+    this.homeSlides.push(new SlideItem(SlideReferences, {}));
+    if (!hideTeaser) {
+      this.homeSlides.push(new SlideItem(SlideTeaser, { text: '...spiel das Spiel des Lebens' }));
+    }
   }
 
   ngAfterViewInit(): void {
