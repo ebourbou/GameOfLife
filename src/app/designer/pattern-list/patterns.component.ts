@@ -1,15 +1,12 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
-import { EventEmitter } from 'events';
 import { MatListOption } from '@angular/material/list';
 import { APIService } from '../../API.service';
-import { PatternUtils } from '../util/pattern-util';
 import { PatternService } from '../../shared/service/patterns.service';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
 import { Observable, of } from 'rxjs';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-patterns',

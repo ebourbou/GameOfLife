@@ -64,16 +64,4 @@ describe('Component: Account', () => {
     component.form.controls.password.setValue('');
     expect(component.form.valid).toBeFalsy();
   }));
-
-  /*it('testing with valid user', fakeAsync(() => {
-    // This first detectChanges is necessary to properly set up the form
-    fixture.detectChanges();
-
-    // Tick needs to be called in order for form controls to be registered properly.
-    tick();
-    component.form.controls.username.setValue('user');
-    component.form.controls.password.setValue('useruser');
-    component.onSubmit('login');
-    flush();
-  }));*/
 });
