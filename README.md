@@ -14,8 +14,8 @@ Das Spiel des Lebens (engl. Conway’s Game of Life) ist ein vom Mathematiker Jo
 - Zum Starten `ng serve` und im Browser auf `http://localhost:4200/` navigieren.
 
 ## Online
-Das Spiel ist auf [https://ebourbou.github.io/GameOfLife/] deployed und steht zur Verfügung. 
-Es handelt sich jedoch nur um experimentelle, temporäre Installation.
+Das Spiel ist online spielbar auf [ebourbou.github.io/GameOfLife](https://ebourbou.github.io/GameOfLife/)
+Es handelt sich jedoch um experimentelle, temporäre Installation ohne Anspruch auf Vollständigkeit oder Korrektheit.
 
 ## Known bugs / Limitationen
 - AWS Verification kein erneutes Senden Verifikations Code 
