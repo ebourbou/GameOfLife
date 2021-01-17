@@ -31,11 +31,12 @@ Es handelt sich jedoch um experimentelle, temporäre Installation ohne Anspruch 
 
 
 ## Deployment auf GitHub
-ng build erzeugt eine Distribution im Verzeichnis ./docs und deployed diese auf github:
+ng build erzeugt eine Distribution im Verzeichnis ./docs. Durch das pushen auf github wird diese dann auf github.io deployed (wie alles im docs folder):
 - Branch gh-pages auschecken
-- Alle Links zum Verzeichnis 'assets' anpassen. Die Struktur der Sourcen ist tief geschachtelt. Diese wird beim build zusammengestaucht. Zu sehen im dist-Verzeichnis. Das assets-Verzeichnis ist dann direkt unter dem Root (wo die JS und HTML sind), Links müssen daher so aussehen: 'assets/img/icon... 
 - vom root (dort wo das package.json ist)> ng build --prod --output-path docs --base-href /GameOfLife/
-- pushen
+- als Ergebnis hat man die Distribution im Folder docs
+- Dort im main.js alle Links zum Verzeichnis 'assets' anpassen. Die Struktur der Sourcen ist hierarchisch. Diese wird beim build zusammengestaucht. Zu sehen im dist-Verzeichnis. Das assets-Verzeichnis ist dann direkt unter dem Root (wo die JS und HTML sind), Links müssen daher alle so aussehen: './assets/img/icon...' 
+- einchecken und pushen
 
 Siehe auch
 - https://angular.io/guide/deployment
