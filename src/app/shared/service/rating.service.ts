@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService, UpdateRatingMutation } from '../../API.service';
 
-import { from, Observable, of, throwError } from 'rxjs';
-import { RatingUtils } from './pattern-rating-util';
+import { throwError } from 'rxjs';
 import { Rating } from '../model/pattern-rating';
 
 @Injectable({
@@ -11,8 +10,20 @@ import { Rating } from '../model/pattern-rating';
 export class RatingService {
   constructor(private apiService: APIService) {}
 
+  private static toAwsPattern(rating): Rating {
+    let patRate: any;
+    patRate = {
+      id: rating.id,
+      userId: rating.userId,
+      rateId: rating.rateId,
+      comment: rating.comment,
+      rating: rating.rating,
+    };
+    return patRate;
+  }
+
   createRating(rating: Rating): Promise<UpdateRatingMutation> {
-    const input: any = RatingUtils.toAwsPattern(rating);
+    const input: any = RatingService.toAwsPattern(rating);
     delete input.id;
     return this.apiService.CreateRating(input);
   }

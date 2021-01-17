@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PatternDetailComponent } from './pattern-detail/pattern-detail.component';
 import { PatternsComponent } from './pattern-list/patterns.component';
 import { DesignerRoutingModule } from './designer-routing.module';
@@ -14,7 +13,7 @@ import { RulePreviewComponent } from './rule/rule-preview/rule-preview.component
 import { RuleDisplayComponent } from './rule/rule-preview/rule-display.component';
 
 @NgModule({
-  imports: [SharedModule, DesignerRoutingModule, ReactiveFormsModule],
+  imports: [SharedModule, DesignerRoutingModule],
   declarations: [
     PatternDetailComponent,
     PatternsComponent,

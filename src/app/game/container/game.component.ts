@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GenerationStatistic } from '../../shared/model/generation-statistic';
 import { Game } from '../model/game';
 import { DefaultsService } from '../../shared/service/defaults.service';
@@ -24,7 +24,6 @@ import {
   startGame,
   startGameSuccess,
   stepChanged,
-  togglePause,
   applyGame,
   startAnalysis,
   toggleMaximize,
@@ -59,7 +58,7 @@ import { Cell } from '../../shared/model/cell';
 import { StepperStep } from '../stepper/stepper-step';
 import { RuleSet } from '../../shared/model/rule/rule-set';
 import { Score } from '../../statistic/service/score';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StepperComponent } from '../stepper/stepper.component';
 import { ScreenSize } from '../../shared/service/screen-size.enum';
 import { Orientation } from '../../shared/service/orientation.enum';
@@ -91,8 +90,8 @@ export class GameComponent implements OnInit, OnDestroy {
   public allGenerationStatistics$: Observable<GenerationStatistic[]>;
   public score$: Observable<Score>;
   private navigationSubscription: Subscription;
-  private screenSize$: Observable<ScreenSize>;
-  private screenOrientation$: Observable<Orientation>;
+  screenSize$: Observable<ScreenSize>;
+  screenOrientation$: Observable<Orientation>;
 
   @ViewChild('stepper') private stepper: StepperComponent;
 
@@ -137,7 +136,7 @@ export class GameComponent implements OnInit, OnDestroy {
         startWith('Initial load'),
         filter((event) => event instanceof NavigationEnd)
       )
-      .subscribe((value) => {
+      .subscribe(() => {
         this.init();
       });
     this.init();
@@ -167,7 +166,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.store.dispatch(applyPattern({ row: centerCell.row, column: centerCell.column }));
   }
 
-  // fixme Die Effects sollten selber auf den Store zugreifen. Siehe https://ngrx.io/guide/effects ganz unten.
+  // Die Effects sollten selber auf den Store zugreifen. Siehe https://ngrx.io/guide/effects ganz unten.
   // und auch hier. punkt 4: https://indepth.dev/start-using-ngrx-effects-for-this/
   private async getControls(): Promise<Controls> {
     return this.controls$.pipe((controls) => controls, take(1)).toPromise();
@@ -177,13 +176,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.store.dispatch(applyRuleSet({ ruleSet }));
   }
 
-  onTogglePause(): void {
-    this.store.dispatch(togglePause());
-  }
-
-  // fixme Das alles sollte ein Effect sein.
+  //  Das alles sollte ein Effect sein.
   async onPlay(): Promise<void> {
-    const gameStartTime = Date.now();
     this.store.dispatch(startGame());
     this.store.dispatch(startGameSuccess());
     const controls = await this.getControls();

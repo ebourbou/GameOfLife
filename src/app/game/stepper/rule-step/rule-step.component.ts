@@ -38,7 +38,7 @@ export class RuleStepComponent implements OnInit {
   }
 
   visibleRules(): number {
-    let rules = 0;
+    let rules;
     if (this.screenSize === ScreenSize.HANDSET) {
       rules = 1;
     } else if (this.screenOrientation === Orientation.PORTRAIT) {

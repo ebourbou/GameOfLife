@@ -3,12 +3,12 @@
       <mat-grid-tile
         *ngFor="let index of indices"
         [ngClass]="(currentPatternIndex === index && this.isSelected ? 'highPattern' : 'opaque')">
-       <pattern-preview
+       <app-pattern-preview
          [animationEnabled]="false"
          [showRating]="this.showRating"
          [pattern]="patterns[index]"
          (click)="onSelect(index)">
-       </pattern-preview>
+       </app-pattern-preview>
       </mat-grid-tile>
     <button mat-icon-button disableRipple="true" class="carousel-control-left" aria-label="Vorheriges Pattern" (click)="onPreviousClick()">
       <mat-icon class="arrow">navigate_before</mat-icon>

@@ -1,20 +1,17 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
 import { NgForm } from '@angular/forms';
-import { ConfirmDeleteDialog } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PatternsComponent } from '../pattern-list/patterns.component';
 import { Board } from '../../shared/model/board';
 import { PatternEditorComponent } from '../pattern-editor/pattern-editor.component';
 import { PatternService } from '../../shared/service/patterns.service';
-import { PatternUtils } from '../util/pattern-util';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 import { NotificationService } from '../../shared/service/notification.service';
-import { UserUtils } from '../../users/utils/user-utils';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -78,7 +75,7 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   }
 
   openConfirmDeleteDialog(patternToDelete: Pattern): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
       width: '25em',
       data: { patternName: patternToDelete.name },
     });
@@ -101,20 +98,6 @@ export class PatternDetailComponent implements OnInit, OnChanges {
 
   initPattern(): void {
     this.isAddMode = true;
-
-    const emptyPattern: Pattern = {
-      id: null,
-      name: '',
-      description: '',
-      author: '',
-      year: null,
-      heat: null,
-      sizeX: 5,
-      sizeY: 5,
-      pattern: PatternUtils.initPattern(5, 5),
-      type: null,
-      locked: false,
-    };
   }
 
   createPattern(patternToCreate: Pattern): Observable<Pattern> {
@@ -141,12 +124,12 @@ export class PatternDetailComponent implements OnInit, OnChanges {
   }
 
   // Reset on size changingØ
-  private updateSize(): void {
+  updateSize(): void {
     this.pattern.pattern = null;
   }
 
   isAdmin(role: Role): boolean {
-    return role && role === Role.Admin ? true : false;
+    return role && role === Role.Admin;
   }
 
   isDisabled(): boolean {

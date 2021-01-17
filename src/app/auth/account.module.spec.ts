@@ -1,19 +1,18 @@
 import 'jasmine';
-import { async, ComponentFixture, fakeAsync, flush, inject, TestBed, TestBedStatic, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { UserService } from '../users/services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { FormsModule, NgForm } from '@angular/forms';
-import { AmplifyService, FormComponent } from 'aws-amplify-angular';
+import { FormsModule } from '@angular/forms';
+import { AmplifyService } from 'aws-amplify-angular';
 import { AuthService } from '../core/services/auth.service';
 import { NotificationService } from '../shared/service/notification.service';
 import { AuthServiceMock } from '../core/services/auth.service.mock';
-import { BehaviorSubject, of } from 'rxjs';
-import { DebugElement } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { By } from 'protractor';
+import { Observable, of } from 'rxjs';
 
 class RouterStub {
+  // noinspection JSUnusedGlobalSymbols
   navigateByUrl(url: string): string {
     return url;
   }
@@ -22,40 +21,43 @@ class RouterStub {
 describe('Component: Account', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let debug: DebugElement;
-  let el: HTMLElement;
+  // let debug: DebugElement;
+  // let el: HTMLElement;
 
-  beforeEach(async(() => {
-    const MockAmplifyService = TestBed.configureTestingModule({ providers: [AmplifyService] });
-    const MockNotificationService = TestBed.configureTestingModule({ providers: [NotificationService] });
-    const MockUserService = TestBed.configureTestingModule({ providers: [UserService] });
+  beforeEach(
+    waitForAsync(() => {
+      const MockAmplifyService = TestBed.configureTestingModule({ providers: [AmplifyService] });
+      const MockNotificationService = TestBed.configureTestingModule({ providers: [NotificationService] });
+      const MockUserService = TestBed.configureTestingModule({ providers: [UserService] });
 
-    const activatedRouteStub = {
-      paramMap: {
-        subscribe() {
-          return of();
+      // noinspection JSUnusedLocalSymbols
+      const activatedRouteStub = {
+        paramMap: {
+          subscribe(): Observable<void> {
+            return of();
+          },
         },
-      },
-    };
+      };
 
-    TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [BrowserModule, FormsModule],
-      providers: [
-        { provide: AmplifyService, userClass: MockAmplifyService },
-        { provide: ActivatedRoute, useValue: { snapshot: { queryParams: { returnUrl: '' } } } },
-        { provide: AuthService, useClass: AuthServiceMock },
-        { provide: NotificationService, useClass: MockNotificationService },
-        { provide: UserService, useClass: MockUserService },
-        { provide: Router, useClass: RouterStub },
-      ],
+      TestBed.configureTestingModule({
+        declarations: [LoginComponent],
+        imports: [BrowserModule, FormsModule],
+        providers: [
+          { provide: AmplifyService, userClass: MockAmplifyService },
+          { provide: ActivatedRoute, useValue: { snapshot: { queryParams: { returnUrl: '' } } } },
+          { provide: AuthService, useClass: AuthServiceMock },
+          { provide: NotificationService, useClass: MockNotificationService },
+          { provide: UserService, useClass: MockUserService },
+          { provide: Router, useClass: RouterStub },
+        ],
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(LoginComponent);
+          component = fixture.componentInstance;
+        });
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LoginComponent);
-        component = fixture.componentInstance;
-      });
-  }));
+  );
 
   it('form invalid when empty', fakeAsync(() => {
     fixture.detectChanges();

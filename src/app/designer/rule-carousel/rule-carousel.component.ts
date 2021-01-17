@@ -7,7 +7,7 @@ import { RuleSet } from '../../shared/model/rule/rule-set';
   styleUrls: ['./rule-carousel.component.scss'],
 })
 export class RuleCarouselComponent implements OnInit {
-  private currentIndex = 0;
+  currentIndex = 0;
   private noOfRulesVisible = 1;
   public indices: Array<number> = new Array<number>();
 

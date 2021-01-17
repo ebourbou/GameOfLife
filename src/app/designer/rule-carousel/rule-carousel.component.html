@@ -2,8 +2,8 @@
 <div *ngIf="ruleSets" >
   <mat-grid-list rowHeight="17em" cols="{{this.visibleRules}}" >
     <mat-grid-tile [ngClass]="(currentIndex !== index ? 'opaque': null)"  *ngFor="let index of indices" >
-      <rule-preview [size]="ruleSize" [ruleSet]="this.ruleSets[index]" (click)="onSelect(index)">
-      </rule-preview>
+      <app-rule-preview [size]="ruleSize" [ruleSet]="this.ruleSets[index]" (click)="onSelect(index)">
+      </app-rule-preview>
     </mat-grid-tile>
     <button mat-icon-button disableRipple="true" class="carousel-control-left" aria-label="Vorheriges Element" (click)="onPreviousClick()">
       <mat-icon class="arrow">navigate_before</mat-icon>

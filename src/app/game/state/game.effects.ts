@@ -11,10 +11,10 @@ import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.ser
 import { PatternService } from '../../shared/service/patterns.service';
 import { GameService } from '../../shared/service/game.service';
 import { ScoreService } from '../../statistic/service/score.service';
-import { UserUtils } from '../../users/utils/user-utils';
 import { GameUtils } from '../../shared/service/game-utils';
 import { AuthService } from '../../core/services/auth.service';
 
+// noinspection JSUnusedGlobalSymbols
 @Injectable()
 export class GameEffects {
   loadDefaultGame$ = createEffect(() => {

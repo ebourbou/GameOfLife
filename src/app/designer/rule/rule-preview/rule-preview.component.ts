@@ -4,11 +4,10 @@ import { User } from '../../../shared/model/user';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { RatingService } from '../../../shared/service/rating.service';
 import { RatingComponent } from '../../../shared/rating/rating.component';
-import { UserUtils } from '../../../users/utils/user-utils';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'rule-preview',
+  selector: 'app-rule-preview',
   templateUrl: './rule-preview.component.html',
   styleUrls: ['./rule-preview.component.scss'],
 })

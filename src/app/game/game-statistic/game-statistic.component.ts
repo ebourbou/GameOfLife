@@ -7,7 +7,7 @@ import { ScreenSize } from '../../shared/service/screen-size.enum';
 import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
-  selector: 'gol-game-statistic',
+  selector: 'app-game-statistic',
   templateUrl: './game-statistic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./game-statistic.component.scss'],

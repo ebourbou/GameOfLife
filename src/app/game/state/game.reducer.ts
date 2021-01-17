@@ -52,7 +52,7 @@ export const initialState: GameState = {
 
 export const gameActionReducer = createReducer(
   initialState,
-  on(GameActions.newDefaultGame, GameActions.newGame, (state) => {
+  on(GameActions.newDefaultGame, GameActions.newGame, () => {
     return {
       ...Object.assign({}, initialState),
       loading: true,
@@ -244,7 +244,7 @@ export const gameActionReducer = createReducer(
       loading: false,
     };
   }),
-  on(GameActions.resetGame, (state, action) => {
+  on(GameActions.resetGame, () => {
     return {
       ...initialState,
       loading: false,

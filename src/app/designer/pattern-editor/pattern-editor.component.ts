@@ -41,7 +41,6 @@ export class PatternEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-  // TODO use GameUtils
   invert(): void {
     this.form.form.markAsDirty();
     this.pattern = this.save();

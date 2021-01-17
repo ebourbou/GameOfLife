@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RuleSet } from '../../../shared/model/rule/rule-set';
 import { Pattern } from '../../../shared/model/pattern';
 import { PatternService } from '../../../shared/service/patterns.service';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rule-detail',

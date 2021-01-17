@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { APIService, CreatePatternMutation, CreateUserMutation, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
+import { APIService, CreateUserMutation, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
 import { User } from '../../shared/model/user';
 import { UserUtils } from '../utils/user-utils';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private api: APIService, private router: Router) {}
+  constructor(private api: APIService) {}
 
   createUser(user: User): Promise<CreateUserMutation> {
     const input: any = UserUtils.toAwsPattern(user);

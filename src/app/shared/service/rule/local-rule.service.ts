@@ -8,7 +8,7 @@ import { MazeRuleSet } from './maze-ruleset';
 import { PedestrianLifeRuleSet } from './pedestrian-life-ruleset';
 import { AntiLifeRuleSet } from './anti-life-ruleset';
 import { Injectable } from '@angular/core';
-import { ConwayRuleSet } from './ConwayRuleSet';
+import { ConwayRuleSet } from './conway-rule-set';
 
 @Injectable({
   providedIn: 'root',

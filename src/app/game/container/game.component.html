@@ -28,7 +28,7 @@
   <div *ngIf="!(isGameFinished$ | async)" >
     <mat-card class="board mat-elevation-z1">
       <mat-card-content>
-        <gol-board *ngIf="!(isGameFinished$ | async)"
+        <app-board
                    [board]="game.board"
                    [isMasked]="isMasked$ | async"
                    [isLoading]="isLoading$ | async"
@@ -49,17 +49,17 @@
                    (doStartAnalysis)="onStartAnalysis({ generationStatistics:$event, game: game })"
                    [screenSize]="screenSize$ | async"
                    [screenOrientation]="screenOrientation$ | async">
-        </gol-board>
+        </app-board>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <gol-game-statistic
+  <app-game-statistic
     *ngIf="isGameFinished$ | async"
     [allGenerationStatistics]="allGenerationStatistics$ | async"
     [score]="score$ | async"
     [screenSize]="screenSize$ | async"
     [screenOrientation]="screenOrientation$ | async"
     [currentGame]="game">
-  </gol-game-statistic>
+  </app-game-statistic>
 </ng-container>

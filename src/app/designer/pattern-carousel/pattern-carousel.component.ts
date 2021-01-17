@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Pattern } from '../../shared/model/pattern';
-import { PatternService } from '../../shared/service/patterns.service';
 
 @Component({
   selector: 'app-pattern-carousel',
@@ -52,7 +51,7 @@ export class PatternCarouselComponent implements OnInit {
 
   public indices: Array<number> = new Array<number>();
 
-  constructor(private patternService: PatternService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.computeIndicesAndShiftToCurrentPatternIndex();

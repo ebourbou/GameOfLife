@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UserService } from '../../../users/services/users.service';
 import { NotificationService } from '../../../shared/service/notification.service';
-import { UserUtils } from '../../../users/utils/user-utils';
 import { Role } from '../../../shared/model/role';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../../../auth/login/login.component';
 import { Router } from '@angular/router';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 import { AuthService } from '../../../core/services/auth.service';
@@ -52,7 +49,7 @@ export class SaveStepComponent implements OnInit {
       const dialogRef = this.dialog.open(LoginPromptComponent);
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/login']).then(null);
         } else {
           this.onStartFromScratch();
         }

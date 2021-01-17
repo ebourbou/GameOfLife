@@ -8,14 +8,14 @@
 
 .carousel-control-left {
   @include carousel-control;
-  left: 0%;
+  left: 0;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
 .carousel-control-right {
   @include carousel-control;
-  right: 0%;
+  right: 0;
   top: 50%;
   transform: translate(50%, -50%);
 }

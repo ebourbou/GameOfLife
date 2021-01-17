@@ -4,7 +4,6 @@ import { CellState } from '../model/cell-state';
 import { GenerationStatistic } from '../model/generation-statistic';
 import { Game } from '../../game/model/game';
 import { Pattern } from '../model/pattern';
-import { Observable, of } from 'rxjs';
 
 export class GameUtils {
   private static DEAD_BORDER_CELL: Cell = new Cell(-99, -99, CellState.DEAD);

@@ -1,3 +1,4 @@
+// noinspection JSUnusedGlobalSymbols
 export enum StepperStep {
   BOARD,
   CELL,

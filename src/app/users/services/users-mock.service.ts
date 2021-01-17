@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { APIService, GetUserQuery, ListUsersQuery, UpdateUserMutation } from '../../API.service';
+import { GetUserQuery, ListUsersQuery } from '../../API.service';
 import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 
@@ -10,7 +10,7 @@ export class UserMockService {
   private currentUser: User;
   private userPool = new Array<User>();
 
-  constructor(private api: APIService) {
+  constructor() {
     this.userPool.push({
       id: Date(),
       username: 'user',
@@ -31,23 +31,14 @@ export class UserMockService {
   }
 
   getUsers(): Promise<ListUsersQuery> {
-    return new Promise((response, reject) => {
+    return new Promise(() => {
       return { items: this.userPool };
     });
   }
 
-  getUser(id: string): Promise<GetUserQuery> {
-    return new Promise((resolve, reject) => {
+  getUser(): Promise<GetUserQuery> {
+    return new Promise(() => {
       return this.currentUser;
-    });
-  }
-
-  updateUserRole(user: User): Promise<UpdateUserMutation> {
-    const foundUser = this.userPool.find((u) => u.id === user.id);
-
-    foundUser.role = user.role;
-    return new Promise<UpdateUserMutation>((resolve, reject) => {
-      return foundUser;
     });
   }
 }

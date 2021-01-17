@@ -1,9 +1,8 @@
 ﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
 import { ErrorStateMatcher } from '@angular/material/core';
-import { AmplifyService } from 'aws-amplify-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
@@ -35,13 +34,12 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private amplifyService: AmplifyService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
 
-  async onSubmit(form: NgForm) {
+  async onSubmit(): Promise<void> {
     if (!this.validationMode) {
       console.log(this.form.value);
       this.submitted = true;
@@ -50,7 +48,7 @@ export class RegisterComponent implements OnInit {
       this.authService
         .register(this.form.controls.username.value, this.form.controls.password.value, this.form.controls.email.value)
         .subscribe(
-          (data) => {
+          () => {
             this.loading = false;
             // Validation
             const verificationCode = this.form.controls.code.value;
@@ -62,7 +60,7 @@ export class RegisterComponent implements OnInit {
                     this.notificationService.info('Benutzer Registrierung abgeschlossen');
                   }
                 })
-                .catch((reason) => {
+                .catch(() => {
                   this.notificationService.error('Verifizierung fehlgeschlagen. Falscher Code');
                 });
             });

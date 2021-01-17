@@ -12,15 +12,15 @@
   </mat-button-toggle-group>
   <p *ngIf="this.hideSecondaryButtonLabels()"></p>
   <span>
-    <button mat-flat-button [disabled]="isBusy"  (click)="onRandom($event)" matTooltip="Zufällig Zellen zeichnen">
+    <button mat-flat-button [disabled]="isBusy"  (click)="onRandom()" matTooltip="Zufällig Zellen zeichnen">
       <mat-icon>grain</mat-icon>
       <span *ngIf="!this.hideSecondaryButtonLabels()" >Zufall</span>
     </button>
-    <button mat-flat-button [disabled]="isBusy"  (click)="onInvert($event)" matTooltip="Alle Zellen invertieren" >
+    <button mat-flat-button [disabled]="isBusy"  (click)="onInvert()" matTooltip="Alle Zellen invertieren" >
       <mat-icon>invert_colors</mat-icon>
       <span *ngIf="!this.hideSecondaryButtonLabels()">Invertieren</span>
     </button>
-    <button mat-flat-button [disabled]="isBusy"  (click)="onReset($event)"  matTooltip="Alle Zellen löschen" >
+    <button mat-flat-button [disabled]="isBusy"  (click)="onReset()"  matTooltip="Alle Zellen löschen" >
       <mat-icon>format_color_reset</mat-icon>
       <span *ngIf="!this.hideSecondaryButtonLabels()">Alles löschen</span>
     </button>

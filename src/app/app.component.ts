@@ -1,20 +1,17 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AmplifyService } from 'aws-amplify-angular';
 import { NavigationStart, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './shared/model/user';
 import { AuthService } from './core/services/auth.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { UserService } from './users/services/users.service';
 import { Role } from './shared/model/role';
-import { UserUtils } from './users/utils/user-utils';
 import { Observable, Subscription } from 'rxjs';
 import { NotificationService } from './shared/service/notification.service';
 import { BreakpointService } from './shared/service/breakpoint.service';
 import { ScreenSize } from './shared/service/screen-size.enum';
-import { Orientation } from './shared/service/orientation.enum';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (!router.navigated) {
           const userId = sessionStorage.getItem('userId');
           if (userId && this.authService.getCurrentUser() == null) {
-            this.authService.reloadCurrentUser();
+            this.authService.reloadCurrentUser().then(() => null);
             this.user = this.authService.getCurrentUser();
           } else {
             this.user = null;

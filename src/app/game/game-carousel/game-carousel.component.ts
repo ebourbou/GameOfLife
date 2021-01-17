@@ -28,12 +28,12 @@ export class GameCarouselComponent implements OnInit {
     }
   }
 
-  private doPreviousClick(): void {
+  doPreviousClick(): void {
     this.indices[0] === 0 ? this.indices.unshift(this.games.length - 1) : this.indices.unshift(this.indices[0] - 1);
     this.indices.pop();
   }
 
-  private doNextClick(): void {
+  doNextClick(): void {
     this.indices[this.visibleGames - 1] === this.games.length - 1
       ? this.indices.push(0)
       : this.indices.push(this.indices[this.visibleGames - 1] + 1);

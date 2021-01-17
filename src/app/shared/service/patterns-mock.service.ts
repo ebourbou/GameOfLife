@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CreatePatternMutation, GetPatternQuery, ListPatternsQuery, UpdatePatternMutation } from '../../API.service';
+import { GetPatternQuery, ListPatternsQuery, UpdatePatternMutation } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
-import { PatternUtils } from '../../designer/util/pattern-util';
 
 @Injectable({
   providedIn: 'root',
@@ -52,27 +51,19 @@ export class PatternMockService {
   private RESULT: ListPatternsQuery = { items: this.MOCK_PATTERNS, __typename: 'PatternConnection', nextToken: '' };
 
   getPatterns(): Promise<ListPatternsQuery> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => resolve(this.RESULT), 500);
     });
   }
 
   getPattern(id: string): Promise<GetPatternQuery> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => resolve(this.RESULT.items.find((value) => value.id === id)), 250);
     });
   }
 
-  addPattern(pattern: Pattern): Promise<CreatePatternMutation> {
-    return new Promise((resolve, reject) => {
-      pattern.id = '' + Math.random;
-      this.MOCK_PATTERNS.push(pattern);
-      setTimeout(() => resolve(this.RESULT.items.find((value) => value.id === pattern.id)), 500);
-    });
-  }
-
   updatePattern(pattern: Pattern): Promise<UpdatePatternMutation> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const found = this.RESULT.items.find((value) => value.id === pattern.id);
       found.pattern = pattern.pattern;
       found.sizeX = pattern.sizeX;
@@ -88,7 +79,7 @@ export class PatternMockService {
   }
 
   deletePattern(idToDelete: string): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const index = this.RESULT.items.findIndex((value) => value.id === idToDelete);
       setTimeout(() => resolve(this.RESULT.items.splice(index, 1)), 500);
     });

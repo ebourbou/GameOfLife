@@ -17,6 +17,7 @@ export class ScoreMedalComponent implements OnInit {
   ngOnInit(): void {}
 }
 
+// noinspection JSUnusedGlobalSymbols
 enum Size {
   LARGE,
   SMALL,

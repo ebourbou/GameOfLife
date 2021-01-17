@@ -119,14 +119,14 @@ export class AuthService {
       if (user) {
         this.userService
           .updateLastLogin(user)
-          .then((value) => {
+          .then(() => {
             Auth.signOut().then(
               () => {
                 this.authenticated.next(false);
                 this.userSource.next(null);
                 return true;
               },
-              (error) => {
+              () => {
                 return false;
               }
             );
@@ -138,9 +138,9 @@ export class AuthService {
     return true;
   }
 
-  public async updateUser(mail: string, role: string) {
+  public async updateUser(mail: string, role: string): Promise<void> {
     const user = await Auth.currentAuthenticatedUser();
-    const result = await Auth.updateUserAttributes(user, {
+    await Auth.updateUserAttributes(user, {
       'custom:role': role,
       email: mail,
     });
@@ -158,9 +158,9 @@ export class AuthService {
     return this.currentUser;
   }
 
-  public async reloadCurrentUser() {
+  public async reloadCurrentUser(): Promise<void> {
     console.log('getCurrentUser');
-    if (Auth.currentSession()) {
+    if (await Auth.currentSession()) {
       // load via user id from session storage
       const userId = sessionStorage.getItem('userId');
 

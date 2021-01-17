@@ -28,6 +28,7 @@ export class Board {
     return this.cells.filter((n) => n.state === CellState.DEAD && n.previousState === CellState.ALIVE);
   }
 
+  // noinspection JSUnusedGlobalSymbols
   averageAgeOfDeathLastGeneration(): number {
     const withoutInfants = this.newlyDeads()
       .map((c) => c.generationsSinceLastSwitch)

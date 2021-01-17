@@ -7,13 +7,12 @@ import { User } from '../../shared/model/user';
 import { RatingComponent } from '../../shared/rating/rating.component';
 import { RatingService } from '../../shared/service/rating.service';
 import { NotificationService } from '../../shared/service/notification.service';
-import { UserUtils } from '../../users/utils/user-utils';
 import { AbstractRuleService } from '../../shared/service/rule/abstract-rule.service';
 import { GameUtils } from '../../shared/service/game-utils';
 import { RuleSet } from '../../shared/model/rule/rule-set';
 
 @Component({
-  selector: 'pattern-preview',
+  selector: 'app-pattern-preview',
   templateUrl: './pattern-preview.component.html',
   styleUrls: ['./pattern-preview.component.scss'],
 })
@@ -53,7 +52,6 @@ export class PatternPreviewComponent implements OnInit, OnChanges {
       clearInterval(this.id);
       // restore original pattern
       this.pattern.pattern = this.originalPattern;
-      this.ngOnChanges(null);
       this.id = null;
     }
   }

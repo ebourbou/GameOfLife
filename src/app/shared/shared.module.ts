@@ -16,7 +16,6 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { CarouselComponent } from './carousel/carousel.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -28,8 +27,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatChipsModule } from '@angular/material/chips';
+import { FlexModule } from '@angular/flex-layout';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const MATERIAL = [
   MatBadgeModule,
@@ -62,11 +63,13 @@ const MATERIAL = [
   MatSidenavModule,
   MatTooltipModule,
   MatChipsModule,
+  MatSortModule,
+  MatPaginatorModule,
 ];
 
 @NgModule({
-  declarations: [CarouselComponent, RatingComponent],
-  imports: [CommonModule, PasswordStrengthMeterModule, ...MATERIAL],
-  exports: [CommonModule, RouterModule, FormsModule, ...MATERIAL, RatingComponent, CarouselComponent],
+  declarations: [RatingComponent],
+  imports: [CommonModule, PasswordStrengthMeterModule, ...MATERIAL, FlexModule],
+  exports: [CommonModule, RouterModule, FormsModule, ...MATERIAL, RatingComponent, FlexModule],
 })
 export class SharedModule {}

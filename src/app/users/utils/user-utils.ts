@@ -2,7 +2,7 @@ import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 
 export class UserUtils {
-  public static enumSelector(definition) {
+  public static enumSelector(definition): { title: string; value: any }[] {
     return Object.keys(definition).map((key) => ({ value: definition[key], title: key }));
   }
 

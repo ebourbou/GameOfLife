@@ -1,5 +1,3 @@
-import { Rule } from '../../model/rule/rule';
-import { Cell } from '../../model/cell';
 import { AbstractRuleSet } from '../../model/rule/abstract-ruleset';
 import { GenericBirthRule } from './generic-birth-rule';
 import { GenericSurviveRule } from './generic-survive-rule';

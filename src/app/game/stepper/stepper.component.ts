@@ -6,7 +6,6 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { StepperStep } from './stepper-step';
 import { RuleSet } from '../../shared/model/rule/rule-set';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
 import { ScreenSize } from '../../shared/service/screen-size.enum';
 import { Orientation } from '../../shared/service/orientation.enum';
 
@@ -64,7 +63,7 @@ export class StepperComponent implements OnInit {
 
   rootGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.rootGroup = this.formBuilder.group({});

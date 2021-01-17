@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Game } from '../../game/model/game';
 import { GameService } from '../../shared/service/game.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -13,6 +13,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { BreakpointService } from '../../shared/service/breakpoint.service';
 import { ScreenSize } from '../../shared/service/screen-size.enum';
 import { Orientation } from '../../shared/service/orientation.enum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gamer',
@@ -26,7 +27,9 @@ import { Orientation } from '../../shared/service/orientation.enum';
     ]),
   ],
 })
-export class GamerComponent implements OnInit {
+export class GamerComponent implements OnInit, OnDestroy {
+  private screenSizeSubscription: Subscription;
+  private orientationSubscription: Subscription;
   get showSpinner(): boolean {
     return !(this.loadGamesFinished && this.loadUsersFinished);
   }
@@ -61,11 +64,12 @@ export class GamerComponent implements OnInit {
       this.users = list.items.map((item) => ({ id: item.id, name: item.username }));
       this.loadUsersFinished = true;
     });
-    this.breakpointService.subscribeToScreenSizeChanges().subscribe((s) => {
+
+    this.screenSizeSubscription = this.breakpointService.subscribeToScreenSizeChanges().subscribe((s) => {
       this.isHandSet = s === ScreenSize.HANDSET;
       this.updateColumnsToShow();
     });
-    this.breakpointService.subscribeToOrientationChanges().subscribe((s) => {
+    this.orientationSubscription = this.breakpointService.subscribeToOrientationChanges().subscribe((s) => {
       this.isPortrait = s === Orientation.PORTRAIT;
       this.updateColumnsToShow();
     });
@@ -133,5 +137,10 @@ export class GamerComponent implements OnInit {
       return null;
     }
     return this.users.find((user) => user.id === authorId).name;
+  }
+
+  ngOnDestroy(): void {
+    this.screenSizeSubscription.unsubscribe();
+    this.orientationSubscription.unsubscribe();
   }
 }

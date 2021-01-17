@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { Role } from '../../shared/model/role';
 import { UserUtils } from '../utils/user-utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../services/users.service';
@@ -42,9 +41,9 @@ export class AddEditComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.updateUserRole(user).then((value) => {
+    this.userService.updateUserRole(user).then(() => {
       this.notificationService.info('Benutzerrolle für ' + this.user.username + ' wurde aktualisiert.');
-      this.router.navigate(['/users']);
+      this.router.navigate(['/users']).then(() => null);
     });
     this.loading = false;
   }

@@ -7,7 +7,7 @@ import { ScreenSize } from '../../shared/service/screen-size.enum';
 import { Orientation } from '../../shared/service/orientation.enum';
 
 @Component({
-  selector: 'gol-board',
+  selector: 'app-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],

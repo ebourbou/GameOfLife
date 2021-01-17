@@ -1,15 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Auth } from '@aws-amplify/auth';
-import { fromPromise } from 'rxjs/internal-compatibility';
-import { APIService } from '../../API.service';
 import { User } from '../../shared/model/user';
-import { UserUtils } from '../../users/utils/user-utils';
-import { UserService } from '../../users/services/users.service';
-import { AmplifyService } from 'aws-amplify-angular';
-import { NotificationService } from '../../shared/service/notification.service';
 import { Role } from '../../shared/model/role';
 
 @Injectable({ providedIn: 'root' })
@@ -59,11 +50,6 @@ export class AuthServiceMock {
     return of(user);
   }
 
-  /** confirm code */
-  public verify(username, code): Observable<any> {
-    return fromPromise(username);
-  }
-
   /** signin */
   public login(username, password): Observable<any> {
     const userLoaded = this.userPool.find((user) => user.username === username && user.password === password);
@@ -75,14 +61,6 @@ export class AuthServiceMock {
     return of(userLoaded);
   }
 
-  /** get authenticate state
-   * https://github.com/aws-amplify/amplify-js/wiki/FAQ#will-amplify-automatically-refresh-the-aws-credentials?
-   */
-  /** get authenticate state */
-  public isAuthenticated(): Observable<boolean> {
-    return of(this.currentUser != null);
-  }
-
   /** signout */
   public logout(): boolean {
     this.currentUser = null;
@@ -91,15 +69,8 @@ export class AuthServiceMock {
     return true;
   }
 
-  public async updateUser(mail: string, role: string) {
+  public async updateUser(mail: string, role: string): Promise<void> {
     this.currentUser.email = mail;
     this.currentUser.role = Role[role];
-  }
-
-  public getToken(): string {
-    Auth.currentUserPoolUser().then((pool) => {
-      return pool.signInUserSession.idToken.jwtToken;
-    });
-    return null;
   }
 }

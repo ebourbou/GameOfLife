@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RuleSet } from '../../../shared/model/rule/rule-set';
 import { AbstractRuleService } from '../../../shared/service/rule/abstract-rule.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-rule-list',
   templateUrl: './rule-list.component.html',
   styleUrls: ['./rule-list.component.scss'],
 })
-export class RuleListComponent implements OnInit {
+export class RuleListComponent implements OnInit, OnDestroy {
   ruleSets: RuleSet[];
   selected: RuleSet[];
+
+  private subscription: Subscription;
 
   constructor(private ruleService: AbstractRuleService) {}
 
   ngOnInit(): void {
-    this.ruleService.getRuleSets().subscribe((nextRuleSets) => {
+    this.subscription = this.ruleService.getRuleSets().subscribe((nextRuleSets) => {
       this.ruleSets = nextRuleSets;
       this.selected = [this.ruleSets[0]];
     });
-    // TODO Wie war das mit unsubscribe und memory leaks? besser async pipe im html und binding property?
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -7,10 +7,6 @@ import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../shared/service/notification.service';
 
-/*
- TODO:  password confirm field
- */
-
 @Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.scss'] })
 export class LoginComponent implements OnInit {
   user = new User();

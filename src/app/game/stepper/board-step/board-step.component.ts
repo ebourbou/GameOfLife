@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Controls } from '../../model/controls';
 import { DefaultsService } from '../../../shared/service/defaults.service';
 import { ScreenSize } from '../../../shared/service/screen-size.enum';
 import { Orientation } from '../../../shared/service/orientation.enum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-board-step',
   templateUrl: './board-step.component.html',
   styleUrls: ['./board-step.component.scss'],
 })
-export class BoardStepComponent implements OnInit {
+export class BoardStepComponent implements OnInit, OnDestroy {
   @Output()
   public doResize: EventEmitter<{ x: number; y: number }> = new EventEmitter();
   @Output()
@@ -28,6 +29,7 @@ export class BoardStepComponent implements OnInit {
   screenOrientation: Orientation;
 
   private sizes: Map<string, { x: number; y: number }>;
+  private subsription: Subscription;
 
   get selectedSize(): string {
     return [...this.sizes.entries()].find((entry) => entry[1].x === this.controls.xAxisSize && entry[1].y === this.controls.yAxisSize)[0];
@@ -36,7 +38,13 @@ export class BoardStepComponent implements OnInit {
   constructor(private defaults: DefaultsService) {}
 
   ngOnInit(): void {
-    this.loadSizes();
+    this.subsription = this.defaults.defaultSizes().subscribe((sizes) => {
+      this.sizes = sizes;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subsription.unsubscribe();
   }
 
   onChangeGenerations(generations: number): void {
@@ -45,13 +53,6 @@ export class BoardStepComponent implements OnInit {
 
   onChangeSize($event: any): void {
     this.doResize.emit(this.sizes.get($event));
-  }
-
-  private loadSizes(): void {
-    this.defaults.defaultSizes().subscribe((sizes) => {
-      this.sizes = sizes;
-    });
-    // TODO Wie war das mit unsubscribe und memory leaks? besser async pipe im html und binding property?
   }
 
   screenAdaptationClasses(): string[] {

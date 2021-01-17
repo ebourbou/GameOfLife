@@ -1,17 +1,12 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../service/notification.service';
 import { Rating } from '../model/pattern-rating';
-import { RatingUtils } from '../service/pattern-rating-util';
 import { APIService } from '../../API.service';
-import { AppComponent } from '../../app.component';
-import { API } from '@aws-amplify/api';
-import { Observable } from 'rxjs';
 import { RatingService } from '../service/rating.service';
 
 @Component({
-  selector: 'gol-rating',
+  selector: 'app-rating',
   templateUrl: 'rating.component.html',
   styleUrls: ['rating.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
@@ -35,7 +30,7 @@ export class RatingComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.apiService.OnCreateRatingListener.subscribe((value) => {
+    this.apiService.OnCreateRatingListener.subscribe(() => {
       console.log('Detected rating change');
       this.loadRating();
     });
@@ -68,7 +63,7 @@ export class RatingComponent implements OnInit, OnChanges {
       };
       this.ratingService
         .createRating(ratingUpdate)
-        .then((value) => this.notificationService.info('Rating wurde gespeichert'))
+        .then(() => this.notificationService.info('Rating wurde gespeichert'))
         .catch((reason) => {
           this.notificationService.error('Fehler beim Rating speichern: ' + reason);
         });
@@ -88,14 +83,6 @@ export class RatingComponent implements OnInit, OnChanges {
     } else {
       return 'star_border';
     }
-  }
-
-  setDisabled(disabled: boolean): void {
-    this.disabled = disabled;
-  }
-
-  setRating(rating: number): void {
-    this.rating = rating;
   }
 
   tooltip(): string {

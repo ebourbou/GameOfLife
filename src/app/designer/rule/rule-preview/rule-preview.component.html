@@ -11,10 +11,10 @@
       <mat-icon class="info" color="primary" aria-label="{{ruleSet.description}}" matTooltip="{{ruleSet.description}}">info</mat-icon>
     </mat-card-header>
     <mat-card-content *ngIf="this.size != 2">
-      <rule-display [rule]="ruleSet.ruleStringBSnotation"></rule-display>
+      <app-rule-display [rule]="ruleSet.ruleStringBSnotation"></app-rule-display>
     </mat-card-content>
     <mat-card-actions *ngIf="showRating && user">
-      <gol-rating [userId]="user.id" [ratingId]="ruleSet.id"></gol-rating>
+      <app-rating [userId]="user.id" [ratingId]="ruleSet.id"></app-rating>
     </mat-card-actions>
   </mat-card>
 </div>

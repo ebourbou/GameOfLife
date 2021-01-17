@@ -21,8 +21,7 @@ import { ToMeasureSeriesGroupedPipe } from './game-statistic/to-measure-series-g
 import { LastGenerationToMeasurePipe } from './game-statistic/last-generation-to-measure.pipe';
 import { LastGenerationToPercentagePipe } from './game-statistic/last-generation-to-percentage.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { DivGamePreviewComponent } from './preview/game-preview/div-game-preview.component';
-import { GamePreviewComponent } from './preview/game.preview.component';
+import { GamePreviewUsingBoardComponent } from './preview/game-preview-using-board.component';
 import { GameCarouselComponent } from './game-carousel/game-carousel.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { LoginPromptComponent } from './stepper/save-step/login-prompt/login-prompt.component';
@@ -42,8 +41,7 @@ import { LoginPromptComponent } from './stepper/save-step/login-prompt/login-pro
     ToMeasureSeriesGroupedPipe,
     LastGenerationToMeasurePipe,
     LastGenerationToPercentagePipe,
-    DivGamePreviewComponent,
-    GamePreviewComponent,
+    GamePreviewUsingBoardComponent,
     GameCarouselComponent,
     LoginPromptComponent,
   ],
@@ -56,7 +54,7 @@ import { LoginPromptComponent } from './stepper/save-step/login-prompt/login-pro
     DesignerModule,
     NgxChartsModule,
   ],
-  exports: [BoardComponent, DivGamePreviewComponent, GamePreviewComponent, GameCarouselComponent],
+  exports: [BoardComponent, GamePreviewUsingBoardComponent, GameCarouselComponent],
 
   entryComponents: [LoginComponent],
 })

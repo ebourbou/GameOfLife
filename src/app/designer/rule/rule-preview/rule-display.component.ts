@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'rule-display',
+  selector: 'app-rule-display',
   templateUrl: './rule-display.component.html',
   styleUrls: ['./rule-display.component.scss'],
 })

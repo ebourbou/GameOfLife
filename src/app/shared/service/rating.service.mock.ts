@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { APIService, UpdateRatingMutation } from '../../API.service';
+import { UpdateRatingMutation } from '../../API.service';
 
-import { from, Observable, of, throwError } from 'rxjs';
-import { RatingUtils } from './pattern-rating-util';
 import { Rating } from '../model/pattern-rating';
 
 @Injectable({
@@ -12,7 +10,7 @@ export class RatingServiceMock {
   // rateId => (userId,rating)
   private ratings = new Map<string, Map<string, number>>();
 
-  constructor(private apiService: APIService) {}
+  constructor() {}
 
   createRating(rating: Rating): Promise<UpdateRatingMutation> {
     if (this.ratings.has(rating.rateId)) {
@@ -26,7 +24,7 @@ export class RatingServiceMock {
       newEntry.set(rating.userId, rating.rating);
       this.ratings.set(rating.rateId, newEntry);
     }
-    return new Promise<UpdateRatingMutation>((resolve) => true);
+    return new Promise<UpdateRatingMutation>(() => true);
   }
 
   getRating(userId: string, ratingId: string): Promise<{ rating: number; userVoted: boolean; voteCount: number }> {
@@ -46,6 +44,6 @@ export class RatingServiceMock {
       }
     });
 
-    return new Promise((resolve) => ({ rating: rating / all, userVoted: voted, voteCount: all }));
+    return new Promise(() => ({ rating: rating / all, userVoted: voted, voteCount: all }));
   }
 }

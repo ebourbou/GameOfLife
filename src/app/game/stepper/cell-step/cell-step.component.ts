@@ -46,15 +46,15 @@ export class CellStepComponent implements OnInit {
     this.doPatternSelected.emit(pattern);
   }
 
-  onRandom(event: Event): void {
+  onRandom(): void {
     this.doRandomCells.emit();
   }
 
-  onReset(event: Event): void {
+  onReset(): void {
     this.doResetCells.emit();
   }
 
-  onInvert(event: Event): void {
+  onInvert(): void {
     this.doInvertCells.emit();
   }
 
@@ -73,7 +73,7 @@ export class CellStepComponent implements OnInit {
   }
 
   visiblePatterns(): number {
-    let patterns = 0;
+    let patterns;
     if (this.screenSize === ScreenSize.HANDSET && this.screenOrientation === Orientation.PORTRAIT) {
       patterns = 1;
     } else if (this.screenSize === ScreenSize.HANDSET && this.screenOrientation === Orientation.LANDSCAPE) {

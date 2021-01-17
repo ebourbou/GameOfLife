@@ -1,4 +1,4 @@
-import { async, TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { BreakpointService } from './breakpoint.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { of } from 'rxjs';

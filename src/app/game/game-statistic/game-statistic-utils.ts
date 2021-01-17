@@ -4,7 +4,7 @@ export class GameStatisticUtils {
   private static labels = ['Geborene', 'Gestorbene', 'Lebendige', 'Tote', 'Lebenserwartung', 'Pioniere', 'Zustandsänderungen', 'Zuschauer'];
 
   static getColors(): any {
-    const colors = [
+    return [
       { name: this.toName(0).toLowerCase(), value: '#3498DB' },
       { name: this.toName(1).toLowerCase(), value: '#F8C471' },
       { name: this.toName(2).toLowerCase(), value: '#82E0AA' },
@@ -14,7 +14,6 @@ export class GameStatisticUtils {
       { name: this.toName(6).toLowerCase(), value: '#FAD7A0' },
       { name: this.toName(7).toLowerCase(), value: '#D5DBDB' },
     ];
-    return colors;
   }
 
   static toName(metric: number): string {

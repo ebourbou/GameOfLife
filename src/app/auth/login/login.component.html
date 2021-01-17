@@ -17,7 +17,7 @@
           <mat-form-field appearance="fill">
             <mat-label aria-label="passwort">Passwort</mat-label>
             <input matInput ngModel [type]="hidePwd ? 'password' : 'text'" name="password" [ngModel]="user.password" placeholder="Passwort"
-                   required #password="ngModel" autocomplete="current-password">
+                   required  autocomplete="current-password">
             <button type="button" mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePwd">
               <mat-icon>{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
@@ -39,4 +39,4 @@
     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
     Als Gast spielen
   </button>
-  <div>
+</div>

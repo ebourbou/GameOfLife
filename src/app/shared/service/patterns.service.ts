@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  APIService,
-  CreatePatternMutation,
-  DeletePatternMutation,
-  GetPatternQuery,
-  ListPatternsQuery,
-  UpdatePatternMutation,
-} from '../../API.service';
+import { APIService } from '../../API.service';
 
 import { Pattern } from '../model/pattern';
 import { from, Observable } from 'rxjs';

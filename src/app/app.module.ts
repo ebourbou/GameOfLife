@@ -1,4 +1,4 @@
-import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import localeDECH from '@angular/common/locales/de-CH';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from './shared/shared.module';
-import { ConfirmDeleteDialog } from './designer/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ConfirmDeleteDialogComponent } from './designer/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DesignerModule } from './designer/designer.module';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { JwtInterceptor } from './auth/jwt.interceptor';
@@ -24,7 +24,6 @@ import { registerLocaleData } from '@angular/common';
 import { UserService } from './users/services/users.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HomeComponent } from './home/home.component';
 import { PatternService } from './shared/service/patterns.service';
 import { AbstractRuleService } from './shared/service/rule/abstract-rule.service';
 import { GameService } from './shared/service/game.service';
@@ -34,12 +33,8 @@ import { LocalRuleService } from './shared/service/rule/local-rule.service';
 import { GamerModule } from './gamer/gamer.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeModule } from './home/home.module';
-import { AuthServiceMock } from './core/services/auth.service.mock';
 import { AuthService } from './core/services/auth.service';
-import { PatternMockService } from './shared/service/patterns-mock.service';
-import { UserMockService } from './users/services/users-mock.service';
 import { RatingService } from './shared/service/rating.service';
-import { RatingServiceMock } from './shared/service/rating.service.mock';
 
 registerLocaleData(localeDECH);
 
@@ -63,12 +58,11 @@ registerLocaleData(localeDECH);
     HomeModule,
     GamerModule,
   ],
-  declarations: [AppComponent, ConfirmDeleteDialog],
+  declarations: [AppComponent, ConfirmDeleteDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    //{ provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: LOCALE_ID, useValue: 'de-CH' },
     { provide: UserService, useClass: UserService },
     { provide: AuthService, useClass: AuthService },

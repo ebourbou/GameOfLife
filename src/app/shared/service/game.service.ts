@@ -4,8 +4,6 @@ import { Game } from '../../game/model/game';
 import { Cell } from '../model/cell';
 import { APIService } from '../../API.service';
 import { AbstractRuleService } from './rule/abstract-rule.service';
-import { UserUtils } from '../../users/utils/user-utils';
-import { filter, map } from 'rxjs/operators';
 import { GameUtils } from './game-utils';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -14,6 +12,27 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class GameService {
   constructor(private api: APIService, private ruleService: AbstractRuleService, private authService: AuthService) {}
+
+  private static cellStatesAsDotOString(cells: Array<Cell>): string {
+    return cells.map((cell) => (cell.state ? 'O' : '.')).join('');
+  }
+
+  private static toAwsGame(isPublic: boolean, game: Game): any {
+    return {
+      name: game.name,
+      userId: game.author,
+      description: JSON.stringify({ description: game.description, isPublic }),
+      generations: game.generations,
+      id: game.id,
+      pattern: GameService.cellStatesAsDotOString(game.board.cells),
+      sizeX: game.board.width,
+      sizeY: game.board.height,
+      ruleSetId: game.ruleSet.id,
+      creationDate: game.date,
+      score: game.score.overallScore,
+      scoreTags: JSON.stringify(game.score.tags),
+    };
+  }
 
   getAllGames(): Observable<Game[]> {
     return from(this.api.ListGames().then((result) => result.items.map((item) => this.fromAwsGame(item))));
@@ -36,7 +55,7 @@ export class GameService {
   }
 
   addGame(isPublic: boolean, game: Game): Observable<Game> {
-    const input: any = this.toAwsGame(isPublic, game);
+    const input: any = GameService.toAwsGame(isPublic, game);
     delete input.id;
     return from(this.api.CreateGame(input).then((result) => this.fromAwsGame(result)));
   }
@@ -50,26 +69,5 @@ export class GameService {
     game.score = { overallScore: awsGame.score, tags: JSON.parse(awsGame.scoreTags) };
     game.isPublic = JSON.parse(awsGame.description).isPublic;
     return game;
-  }
-
-  private toAwsGame(isPublic: boolean, game: Game): any {
-    return {
-      name: game.name,
-      userId: game.author,
-      description: JSON.stringify({ description: game.description, isPublic }),
-      generations: game.generations,
-      id: game.id,
-      pattern: this.cellStatesAsDotOString(game.board.cells),
-      sizeX: game.board.width,
-      sizeY: game.board.height,
-      ruleSetId: game.ruleSet.id,
-      creationDate: game.date,
-      score: game.score.overallScore,
-      scoreTags: JSON.stringify(game.score.tags),
-    };
-  }
-
-  private cellStatesAsDotOString(cells: Array<Cell>): string {
-    return cells.map((cell) => (cell.state ? 'O' : '.')).join('');
   }
 }

@@ -4,10 +4,10 @@
     <mat-card-subtitle>
       <app-score-medal [overallScore]="game.score.overallScore" [size]="1"></app-score-medal></mat-card-subtitle>
     <mat-card-content class="content">
-      <gol-board  class="preview" matTooltip="{{game.description}}" [board]="game.board" isMasked="true" ></gol-board>
+      <app-board class="preview" matTooltip="{{game.description}}" [board]="game.board" isMasked="true" ></app-board>
     </mat-card-content>
     <mat-card-footer  [ngClass]="this.isHandSet ? 'footer-narrow' : 'footer-wide'">
-      <gol-rating [userId]="user.id" [ratingId]="game.id"></gol-rating>
+      <app-rating [userId]="user.id" [ratingId]="game.id"></app-rating>
       <app-score-tag [tags]="game.score.tags" [size]="1"></app-score-tag>
     </mat-card-footer>
     <mat-card-actions align="end">

@@ -1,8 +1,9 @@
 import { Board } from '../../shared/model/board';
 import { Score } from '../../statistic/service/score';
 import { RuleSet } from '../../shared/model/rule/rule-set';
-import { ConwayRuleSet } from '../../shared/service/rule/ConwayRuleSet';
+import { ConwayRuleSet } from '../../shared/service/rule/conway-rule-set';
 
+// noinspection JSUnusedGlobalSymbols
 export class Game {
   public name: string;
   public id = '' + Date.now();
@@ -24,7 +25,7 @@ export class Game {
 
   nextGeneration(): void {
     if (!this.ruleSet) {
-      // FIXME: Due to incorrect use of state the ruleSet might be not set always.
+      // Due to incorrect use of state the ruleSet might be not set always.
       this.ruleSet = new ConwayRuleSet();
     }
     this.board.nextGeneration(this.ruleSet);

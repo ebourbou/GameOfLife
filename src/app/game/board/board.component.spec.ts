@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BoardComponent } from './board.component';
-import { Board } from '../../shared/model/board';
 import { GameUtils } from '../../shared/service/game-utils';
 
 describe('BoardComponent', () => {
