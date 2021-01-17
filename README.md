@@ -14,5 +14,6 @@ Das Spiel des Lebens (engl. Conway’s Game of Life) ist ein vom Mathematiker Jo
 - Zum Starten `ng serve` und im Browser auf `http://localhost:4200/` navigieren.
 
 ## Known bugs / Limitationen
-- AWS Verification kein erneutes Senden Verifikations Code oder Passwort Reset möglich
--  
+- AWS Verification kein erneutes Senden Verifikations Code 
+- Passwort Reset ist nur über die aws console möglich
+- Benutzer sind nicht löschbar, auch nur über die aws console 
