@@ -43,7 +43,7 @@ export class GamePreviewUsingBoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.breakpointSubscription.unsubscribe();
-    this.authSubscription.unsubscribe();
+    this.breakpointSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
   }
 }
