@@ -28,3 +28,16 @@ Es handelt sich jedoch um experimentelle, temporäre Installation ohne Anspruch 
     * Spiele lassen sich nicht pausieren oder abbrechen.
     * Sporadische ExpressionChangedAfterItHasBeenChecked-Errors. Wir konnten diese noch nicht genauer eingrenzen.
     * Refresh-Probleme im Pattern-Carousel bei sehr kleinen Viewports.
+
+
+## Deployment auf GitHub
+ng build erzeugt eine Distribution im Verzeichnis ./docs und deployed diese auf github:
+- Branch gh-pages auschecken
+- Alle Links zum Verzeichnis 'assets' anpassen. Die Struktur der Sourcen ist tief geschachtelt. Diese wird beim build zusammengestaucht. Zu sehen im dist-Verzeichnis. Das assets-Verzeichnis ist dann direkt unter dem Root (wo die JS und HTML sind), Links müssen daher so aussehen: 'assets/img/icon... 
+- vom root (dort wo das package.json ist)> ng build --prod --output-path docs --base-href /GameOfLife/
+- pushen
+
+Siehe auch
+- https://angular.io/guide/deployment
+- https://docs.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch
+- https://stackoverflow.com/questions/56379595/images-are-not-loading-after-deploying-angular-app-on-github-pages
