@@ -12,6 +12,7 @@ import { User } from '../../shared/model/user';
 import { Role } from '../../shared/model/role';
 import { NotificationService } from '../../shared/service/notification.service';
 import { Observable } from 'rxjs';
+import { PatternUtils } from '../util/pattern-util';
 
 @Component({
   selector: 'app-pattern-detail',
@@ -98,6 +99,19 @@ export class PatternDetailComponent implements OnInit, OnChanges {
 
   initPattern(): void {
     this.isAddMode = true;
+    this.pattern = {
+      id: null,
+      name: '',
+      description: '',
+      author: '',
+      year: null,
+      heat: null,
+      sizeX: 5,
+      sizeY: 5,
+      pattern: PatternUtils.initPattern(5, 5),
+      type: null,
+      locked: false,
+    };
   }
 
   createPattern(patternToCreate: Pattern): Observable<Pattern> {
