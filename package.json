@@ -38,7 +38,7 @@
     "@swimlane/ngx-charts": "^16.0.0",
     "@types/jest": "^26.0.19",
     "angular-password-strength-meter": "^2.0.0",
-    "aws-amplify": "^3.3.4",
+    "aws-amplify": "^3.3.14",
     "aws-amplify-angular": "^5.0.43",
     "d3": "^6.2.0",
     "process": "^0.11.10",

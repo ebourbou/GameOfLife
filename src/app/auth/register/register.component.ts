@@ -50,20 +50,7 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.loading = false;
-            // Validation
-            const verificationCode = this.form.controls.code.value;
-            this.authService.verify(this.user.username, verificationCode.toString()).then(() => {
-              this.router
-                .navigate(['/login'])
-                .then((navigated: boolean) => {
-                  if (navigated) {
-                    this.notificationService.info('Benutzer Registrierung abgeschlossen');
-                  }
-                })
-                .catch(() => {
-                  this.notificationService.error('Verifizierung fehlgeschlagen. Falscher Code');
-                });
-            });
+            this.validationMode = true;
           },
           (error) => {
             console.log('error signing up:', error);
@@ -85,6 +72,20 @@ export class RegisterComponent implements OnInit {
             this.notificationService.error('Fehler beim Registrieren: ' + errMsg);
           }
         );
+    } else {
+      const verificationCode = this.form.controls.code.value;
+      this.authService.verify(this.user.username, verificationCode.toString()).then(() => {
+        this.router
+          .navigate(['/login'])
+          .then((navigated: boolean) => {
+            if (navigated) {
+              this.notificationService.info('Benutzer Registrierung abgeschlossen');
+            }
+          })
+          .catch(() => {
+            this.notificationService.error('Verifizierung fehlgeschlagen. Falscher Code');
+          });
+      });
     }
   }
 }
