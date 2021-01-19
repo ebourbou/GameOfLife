@@ -25,7 +25,7 @@ export class UserUtils {
       id: user.id,
       username: user.username,
       email: user.email,
-      role: Role.Anonymous,
+      role: Role.User,
       lastLogin: new Date(),
     };
     return u;
