@@ -7,6 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../shared/model/user';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../shared/service/notification.service';
+import { Role } from '../../shared/model/role';
+import { UserService } from '../../users/services/users.service';
+import { Auth } from '@aws-amplify/auth';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class FormErrorStateMatcher implements ErrorStateMatcher {
@@ -22,6 +25,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   hidePwd = true;
   submitted = false;
+  id = null;
 
   matcher = new FormErrorStateMatcher();
 
@@ -34,7 +38,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private notificationService: NotificationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {}
@@ -47,9 +52,10 @@ export class RegisterComponent implements OnInit {
       this.authService
         .register(this.form.controls.username.value, this.form.controls.password.value, this.form.controls.email.value)
         .subscribe(
-          () => {
+          (data) => {
             this.loading = false;
             this.validationMode = true;
+            this.id = data.id;
           },
           (error) => {
             this.loading = false;
@@ -75,7 +81,19 @@ export class RegisterComponent implements OnInit {
         );
     } else {
       const verificationCode = this.form.controls.code.value;
-      this.authService.verify(this.user.username, verificationCode.toString(), this.user.email).then(() => {
+      this.authService.verify(this.user.username, verificationCode.toString(), this.user.email).then((data) => {
+        // create user
+        Auth.currentAuthenticatedUser().then((u) => {
+          const userDB = new User();
+          userDB.username = this.user.username;
+          userDB.id = u.attributes.sub;
+          userDB.email = this.user.email;
+          userDB.role = Role.User;
+          this.userService.createUser(userDB);
+
+          console.log('Created ' + userDB.id);
+        });
+
         this.router
           .navigate(['/login'])
           .then((navigated: boolean) => {

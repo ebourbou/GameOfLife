@@ -59,13 +59,6 @@ export class AuthService {
         attributes: {
           email: mail,
         },
-      }).then((response) => {
-        if (response.userConfirmed) {
-          const userDB = new User();
-          userDB.username = user;
-          userDB.email = mail;
-          this.userService.createUser(userDB).catch((error) => this.notificationService.error('Fehler beim Benutzer anlegen: ' + error));
-        }
       })
     );
   }
@@ -83,19 +76,10 @@ export class AuthService {
       tap((cognitoUser) => {
         this.authenticated.next(true);
 
+        console.log('Loading ' + cognitoUser.attributes.sub);
         this.userService.getUser(cognitoUser.attributes.sub).then(
           (value) => {
-            if (!value) {
-              // create user
-              const userDB = new User();
-              userDB.username = username;
-              userDB.email = cognitoUser.attributes.email;
-              userDB.role = Role.User;
-              this.userService.createUser(userDB).then(() => {
-                sessionStorage.setItem('userId', cognitoUser.attributes.sub);
-                this.userSource.next(userDB);
-              });
-            } else {
+            if (value) {
               this.currentUser = UserUtils.fromAws(value);
               if (this.currentUser) {
                 sessionStorage.setItem('userId', this.currentUser.id);
