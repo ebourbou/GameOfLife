@@ -50,3 +50,12 @@ Siehe auch
 - https://angular.io/guide/deployment
 - https://docs.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch
 - https://stackoverflow.com/questions/56379595/images-are-not-loading-after-deploying-angular-app-on-github-pages
+
+
+## Deployment auf S3
+Es ist über die Kommando-Konsole im Root des Projekts einmalig der Command 
+   `amplify add hosting`
+auszuführen. Danach reicht für ein Deployment der Command
+`amplify publish`
+
+http://amefife-20210119124623-hostingbucket-dev.s3-website.us-east-2.amazonaws.com/
