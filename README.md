@@ -36,3 +36,26 @@ user   | useruser
     * Spiele lassen sich nicht pausieren oder abbrechen.
     * Sporadische ExpressionChangedAfterItHasBeenChecked-Errors. Wir konnten diese noch nicht genauer eingrenzen.
     * Refresh-Probleme im Pattern-Carousel bei sehr kleinen Viewports.
+- Erstellen/verändern/löschen von Regeln ist nicht implementiert. Lediglich die Anzeige und die Verwendung ist ausgearbeitet. Da es sich um ein simples CRUD Konstrukt handelt und die Regeln statisch sind, haben wir es wegen Zeitmangel ausgelassen.
+
+## Deployment auf GitHub
+ng build erzeugt eine Distribution im Verzeichnis ./docs. Durch das pushen auf github wird diese dann auf github.io deployed (wie alles im docs folder):
+- Branch gh-pages auschecken
+- vom root (dort wo das package.json ist)> ng build --prod --output-path docs --base-href /GameOfLife/
+- als Ergebnis hat man die Distribution im Folder docs
+- Dort im main.js alle Links zum Verzeichnis 'assets' anpassen. Die Struktur der Sourcen ist hierarchisch. Diese wird beim build zusammengestaucht. Zu sehen im dist-Verzeichnis. Das assets-Verzeichnis ist dann direkt unter dem Root (wo die JS und HTML sind), Links müssen daher alle so aussehen: './assets/img/icon...' 
+- einchecken und pushen
+
+Siehe auch
+- https://angular.io/guide/deployment
+- https://docs.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch
+- https://stackoverflow.com/questions/56379595/images-are-not-loading-after-deploying-angular-app-on-github-pages
+
+
+## Deployment auf S3
+Es ist über die Kommando-Konsole im Root des Projekts einmalig der Command 
+   `amplify add hosting`
+auszuführen. Danach reicht für ein Deployment der Command
+`amplify publish`
+
+http://amefife-20210119124623-hostingbucket-dev.s3-website.us-east-2.amazonaws.com/
