@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit {
         .register(this.form.controls.username.value, this.form.controls.password.value, this.form.controls.email.value)
         .subscribe(
           (data) => {
+            console.log('Register: ' + JSON.stringify(data));
             this.loading = false;
             this.validationMode = true;
             this.id = data.id;
@@ -83,16 +84,6 @@ export class RegisterComponent implements OnInit {
       const verificationCode = this.form.controls.code.value;
       this.authService.verify(this.user.username, verificationCode.toString(), this.user.email).then((data) => {
         // create user
-        Auth.currentAuthenticatedUser().then((u) => {
-          const userDB = new User();
-          userDB.username = this.user.username;
-          userDB.id = u.attributes.sub;
-          userDB.email = this.user.email;
-          userDB.role = Role.User;
-          this.userService.createUser(userDB);
-
-          console.log('Created ' + userDB.id);
-        });
 
         this.router
           .navigate(['/login'])

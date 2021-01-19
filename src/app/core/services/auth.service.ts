@@ -81,10 +81,18 @@ export class AuthService {
           (value) => {
             if (value) {
               this.currentUser = UserUtils.fromAws(value);
-              if (this.currentUser) {
-                sessionStorage.setItem('userId', this.currentUser.id);
-                this.userSource.next(this.currentUser);
-              }
+            } else {
+              const userDB = new User();
+              userDB.username = username;
+              userDB.id = cognitoUser.attributes.sub;
+              userDB.email = cognitoUser.email;
+              userDB.role = Role.User;
+              this.userService.createUser(userDB);
+              this.currentUser = userDB;
+            }
+            if (this.currentUser) {
+              sessionStorage.setItem('userId', this.currentUser.id);
+              this.userSource.next(this.currentUser);
             }
           },
           (error) => this.notificationService.error('Fehler beim Benutzer anlegen: ' + error)
