@@ -41,7 +41,6 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     if (!this.validationMode) {
-      console.log(this.form.value);
       this.submitted = true;
       this.loading = true;
 
@@ -53,7 +52,6 @@ export class RegisterComponent implements OnInit {
             this.validationMode = true;
           },
           (error) => {
-            console.log('error signing up:', error);
             this.loading = false;
 
             let errMsg = 'unbekannt';
@@ -67,6 +65,9 @@ export class RegisterComponent implements OnInit {
               case 'UsernameExistsException':
                 errMsg = 'Benutzername wird schon verwendet';
                 break;
+              case 'CodeMismatchException':
+                errMsg = 'Verfifikationscode ist nicht richtig';
+                break;
             }
 
             this.notificationService.error('Fehler beim Registrieren: ' + errMsg);
@@ -74,7 +75,7 @@ export class RegisterComponent implements OnInit {
         );
     } else {
       const verificationCode = this.form.controls.code.value;
-      this.authService.verify(this.user.username, verificationCode.toString()).then(() => {
+      this.authService.verify(this.user.username, verificationCode.toString(), this.user.email).then(() => {
         this.router
           .navigate(['/login'])
           .then((navigated: boolean) => {

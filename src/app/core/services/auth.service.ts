@@ -10,6 +10,7 @@ import { UserUtils } from '../../users/utils/user-utils';
 import { UserService } from '../../users/services/users.service';
 import { AmplifyService } from 'aws-amplify-angular';
 import { NotificationService } from '../../shared/service/notification.service';
+import { Role } from '../../shared/model/role';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -70,7 +71,7 @@ export class AuthService {
   }
 
   /** confirm code */
-  public verify(username, code): Promise<any> {
+  public verify(username, code, mail): Promise<any> {
     return Auth.confirmSignUp(username, code);
   }
 
@@ -82,15 +83,28 @@ export class AuthService {
       tap((cognitoUser) => {
         this.authenticated.next(true);
 
-        this.userService.getUser(cognitoUser.attributes.sub).then((value) => {
-          if (value) {
-            this.currentUser = UserUtils.fromAws(value);
-            if (this.currentUser) {
-              sessionStorage.setItem('userId', this.currentUser.id);
-              this.userSource.next(this.currentUser);
+        this.userService.getUser(cognitoUser.attributes.sub).then(
+          (value) => {
+            if (!value) {
+              // create user
+              const userDB = new User();
+              userDB.username = username;
+              userDB.email = cognitoUser.attributes.email;
+              userDB.role = Role.User;
+              this.userService.createUser(userDB).then(() => {
+                sessionStorage.setItem('userId', cognitoUser.attributes.sub);
+                this.userSource.next(userDB);
+              });
+            } else {
+              this.currentUser = UserUtils.fromAws(value);
+              if (this.currentUser) {
+                sessionStorage.setItem('userId', this.currentUser.id);
+                this.userSource.next(this.currentUser);
+              }
             }
-          }
-        });
+          },
+          (error) => this.notificationService.error('Fehler beim Benutzer anlegen: ' + error)
+        );
       })
     );
   }
